@@ -6,7 +6,7 @@ set -eu
 
 SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 RUN_ONE="$SCRIPT_DIR/run_attack_pi.sh"
-TEXTURE_ROOT=${PI_OBJECT_TEXTURE_ROOT:-/data/huangsimin/tex3d/experiments/pi0_attacks}
+TEXTURE_ROOT=${PI_OBJECT_TEXTURE_ROOT:-/data/shaozhen.liu/code/tex3d/experiments/pi0_attacks}
 
 usage() {
     echo "Usage: $0 {train|adv_test|clean_test|train_and_test} [attack_pi options]"

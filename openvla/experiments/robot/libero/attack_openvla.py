@@ -25,9 +25,12 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-print("[INFO] Setting up OSMesa for CPU Rendering...")
-os.environ['MUJOCO_GL'] = 'osmesa'
-os.environ['PYOPENGL_PLATFORM'] = 'osmesa'
+if 'MUJOCO_GL' not in os.environ:
+    print("[INFO] Setting up OSMesa for CPU Rendering...")
+    os.environ['MUJOCO_GL'] = 'osmesa'
+    os.environ['PYOPENGL_PLATFORM'] = 'osmesa'
+else:
+    print(f"[INFO] Using preconfigured MUJOCO_GL={os.environ['MUJOCO_GL']}")
 
 try:
     ctypes.CDLL("libOSMesa.so")

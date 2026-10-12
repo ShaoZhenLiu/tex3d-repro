@@ -22,7 +22,7 @@ import nvdiffrast.torch as dr
 import draccus
 from omegaconf import OmegaConf
 
-PATH_TO_LIBERO_ROOT = "/data/huangsimin/LIBERO-pi"
+PATH_TO_LIBERO_ROOT = "/data/shaozhen.liu/code/tex3d-deps/libero-pi"
 if PATH_TO_LIBERO_ROOT not in sys.path:
     sys.path.append(PATH_TO_LIBERO_ROOT)
 
@@ -38,10 +38,10 @@ except ImportError:
     raise ImportError("请确保已在 openpi 环境下运行此脚本")
 
 ASSET_ROOT_SCANNED = (
-    "/data/huangsimin/LIBERO-pi/libero/libero/assets/stable_scanned_objects"
+    "/data/shaozhen.liu/code/tex3d-deps/libero-pi/libero/libero/assets/stable_scanned_objects"
 )
 ASSET_ROOT_HOPE = (
-    "/data/huangsimin/LIBERO-pi/libero/libero/assets/stable_hope_objects"
+    "/data/shaozhen.liu/code/tex3d-deps/libero-pi/libero/libero/assets/stable_hope_objects"
 )
 
 
@@ -830,8 +830,8 @@ def _extract_first_action(policy_output):
 
 def load_latent_encoder(config_path, ckpt_path, device):
     taming_candidates = [
-        Path("/data/huangsimin/taming-transformers-master"),
-        Path("/data/huangsimin/openvla/taming-transformers"),
+        Path("/data/shaozhen.liu/code/tex3d-deps/taming-transformers"),
+        Path("/data/shaozhen.liu/code/tex3d-deps/taming-transformers"),
         Path("./taming-transformers"),
         Path("./taming-transformers-master"),
     ]
@@ -852,7 +852,7 @@ def load_latent_encoder(config_path, ckpt_path, device):
     model_cfg.lossconfig = OmegaConf.create({"target": "torch.nn.Identity"})
     latent_model = VQModel(**model_cfg)
 
-    ckpt = torch.load(ckpt_path, map_location="cpu")
+    ckpt = torch.load(ckpt_path, map_location="cpu", weights_only=False)
     state_dict = ckpt["state_dict"] if isinstance(ckpt, dict) and "state_dict" in ckpt else ckpt
     latent_model.load_state_dict(state_dict, strict=False)
     latent_model.eval().to(device)
@@ -871,6 +871,71 @@ def extract_latent(encoder, img_np, device):
         feat = feat_map.mean(dim=[2, 3]).squeeze(0)
     return feat.detach()
 
+
+
+# --- LIBERO-goal suite extension (added for goal-suite reproduction) ---
+GOAL_TASKS = {
+    "goal_bowl_t1":  dict(_scanned("akita_black_bowl"), search=[["akita_black_bowl"], ["bowl"]], task_suite="libero_goal", task_id=1),
+    "goal_bowl_t3":  dict(_scanned("akita_black_bowl"), search=[["akita_black_bowl"], ["bowl"]], task_suite="libero_goal", task_id=3),
+    "goal_bowl_t4":  dict(_scanned("akita_black_bowl"), search=[["akita_black_bowl"], ["bowl"]], task_suite="libero_goal", task_id=4),
+    "goal_plate_t5": dict(_scanned("plate"), search=[["plate"]], task_suite="libero_goal", task_id=5),
+    "goal_cream_t6": dict(_hope("cream_cheese", mesh_file="hope_cream_cheese_coll.obj"), search=[["cream_cheese"], ["cheese"]], task_suite="libero_goal", task_id=6),
+    "goal_bowl_t8":  dict(_scanned("akita_black_bowl"), search=[["akita_black_bowl"], ["bowl"]], task_suite="libero_goal", task_id=8),
+}
+OBJECTS.update(GOAL_TASKS)
+# --- end extension ---
+
+
+# --- LIBERO-spatial per-task entries (pi0 spatial attack suite) ---
+SP_TASKS = {
+    "sp_bowl_t0": dict(_scanned("akita_black_bowl"), search=[["akita_black_bowl"], ["bowl"]], task_suite="libero_spatial", task_id=0),
+    "sp_bowl_t1": dict(_scanned("akita_black_bowl"), search=[["akita_black_bowl"], ["bowl"]], task_suite="libero_spatial", task_id=1),
+    "sp_bowl_t2": dict(_scanned("akita_black_bowl"), search=[["akita_black_bowl"], ["bowl"]], task_suite="libero_spatial", task_id=2),
+    "sp_bowl_t3": dict(_scanned("akita_black_bowl"), search=[["akita_black_bowl"], ["bowl"]], task_suite="libero_spatial", task_id=3),
+    "sp_bowl_t4": dict(_scanned("akita_black_bowl"), search=[["akita_black_bowl"], ["bowl"]], task_suite="libero_spatial", task_id=4),
+    "sp_bowl_t5": dict(_scanned("akita_black_bowl"), search=[["akita_black_bowl"], ["bowl"]], task_suite="libero_spatial", task_id=5),
+    "sp_bowl_t6": dict(_scanned("akita_black_bowl"), search=[["akita_black_bowl"], ["bowl"]], task_suite="libero_spatial", task_id=6),
+    "sp_bowl_t7": dict(_scanned("akita_black_bowl"), search=[["akita_black_bowl"], ["bowl"]], task_suite="libero_spatial", task_id=7),
+    "sp_bowl_t8": dict(_scanned("akita_black_bowl"), search=[["akita_black_bowl"], ["bowl"]], task_suite="libero_spatial", task_id=8),
+    "sp_bowl_t9": dict(_scanned("akita_black_bowl"), search=[["akita_black_bowl"], ["bowl"]], task_suite="libero_spatial", task_id=9),
+}
+OBJECTS.update(SP_TASKS)
+# --- end spatial extension ---
+
+
+# --- LIBERO-10 (long) suite extension ---
+LONG_TASKS = {
+    "lg_soup_t0":  dict(_hope("alphabet_soup", mesh_file="alphabet_soup_col.obj"), search=[["alphabet_soup"], ["soup"]], task_suite="libero_10", task_id=0),
+    "lg_cream_t1": dict(_hope("cream_cheese", mesh_file="hope_cream_cheese_coll.obj"), search=[["cream_cheese"], ["cheese"]], task_suite="libero_10", task_id=1),
+    "lg_bowl_t3":  dict(_scanned("akita_black_bowl"), search=[["akita_black_bowl"], ["bowl"]], task_suite="libero_10", task_id=3),
+    "lg_choc_t6":  dict(_hope("chocolate_pudding"), search=[["chocolate_pudding"], ["chocolate"], ["pudding"]], task_suite="libero_10", task_id=6),
+    "lg_soup_t7":  dict(_hope("alphabet_soup", mesh_file="alphabet_soup_col.obj"), search=[["alphabet_soup"], ["soup"]], task_suite="libero_10", task_id=7),
+}
+OBJECTS.update(LONG_TASKS)
+# --- end long extension ---
+
+
+# --- turbosquid asset root helper (long/goal 补齐) ---
+ASSET_ROOT_TS = "/data/shaozhen.liu/code/tex3d-deps/libero-pi/libero/libero/assets/turbosquid_objects"
+def _ts(name, mesh_file=None, tex_file=None):
+    base = f"{ASSET_ROOT_TS}/{name}"
+    return {
+        "xml":     f"{base}/{name}.xml",
+        "mesh":    f"{base}/{mesh_file or (name + '.obj')}",
+        "texture": f"{base}/{tex_file or 'texture.png'}",
+    }
+
+TS_TASKS = {
+    "lg_moka_t2":  dict(_ts("moka_pot", mesh_file="moka_pot_body.obj", tex_file="metal_diff.png"), search=[["moka_pot"], ["moka"]], task_suite="libero_10", task_id=2),
+    "lg_pmug_t4":  dict(_ts("porcelain_mug", tex_file="porcelain_mug_texture.png"), search=[["porcelain_mug"], ["mug"]], task_suite="libero_10", task_id=4),
+    "lg_book_t5":  dict(_ts("black_book", tex_file="black_book_texture.png"), search=[["black_book"], ["book"]], task_suite="libero_10", task_id=5),
+    "lg_moka_t8":  dict(_ts("moka_pot", mesh_file="moka_pot_body.obj", tex_file="metal_diff.png"), search=[["moka_pot"], ["moka"]], task_suite="libero_10", task_id=8),
+    "lg_wmug_t9":  dict(_ts("white_yellow_mug", tex_file="white_yellow_mug_texture.png"), search=[["white_yellow_mug"], ["yellow"]], task_suite="libero_10", task_id=9),
+    "gwine_t2":    dict(_ts("wine_bottle", mesh_file="wine_bottle_red_logo.obj", tex_file="label_wine.png"), search=[["wine_bottle"], ["wine"]], task_suite="libero_goal", task_id=2),
+    "gwine_t9":    dict(_ts("wine_bottle", mesh_file="wine_bottle_red_logo.obj", tex_file="label_wine.png"), search=[["wine_bottle"], ["wine"]], task_suite="libero_goal", task_id=9),
+}
+OBJECTS.update(TS_TASKS)
+# --- end turbosquid extension ---
 
 def compute_frame_weights(latent_features: List[torch.Tensor], tau: float) -> torch.Tensor:
     if len(latent_features) == 0:
@@ -1639,7 +1704,7 @@ def evaluate_dual_renderer_policy(
 @dataclass
 class GenerateConfig:
     pretrained_checkpoint: str = (
-        "/data/huangsimin/RLinf-Pi0-LIBERO-Spatial-Object-Goal-SFT"
+        "/data/shaozhen.liu/model/RLinf-Pi0-LIBERO-Spatial-Object-Goal-SFT"
     )
     # draccus 0.8.0 cannot decode typing.Literal values from the CLI.
     # Keep these as strings and validate them explicitly at startup instead.
@@ -1660,13 +1725,13 @@ class GenerateConfig:
     lambda_nat:   float = 0.01
 
     save_attack_artifacts: bool = True
-    local_log_dir: str = "/data/huangsimin/tex3d/experiments/pi0_attacks"
+    local_log_dir: str = "/data/shaozhen.liu/code/tex3d/experiments/pi0_attacks"
     latent_encoder_config: str = (
-        "/data/huangsimin/openvla/taming-transformers/configs/"
+        "/data/shaozhen.liu/code/tex3d-deps/taming-transformers/configs/"
         "vqgan_imagenet_f16_16384.yaml"
     )
     latent_encoder_ckpt: str = (
-        "/data/huangsimin/openvla/taming-transformers/checkpoints/"
+        "/data/shaozhen.liu/code/tex3d-deps/taming-transformers/checkpoints/"
         "vqgan_imagenet_f16_16384.ckpt"
     )
     tau:                   float = 1.0
