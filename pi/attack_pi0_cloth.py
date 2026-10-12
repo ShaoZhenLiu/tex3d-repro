@@ -341,7 +341,9 @@ def load_policy(ckpt, model_config="pi0_libero", num_denoise=1):
 # 帧采集：真实策略轨迹 + 素色桌布已注入
 # --------------------------------------------------------------------------
 def collect_cloth_frames(policy, task, init_state, num_frames, device,
-                         max_steps=400, replan_steps=5, num_steps_wait=10):
+                         max_steps=400, replan_steps=5, num_steps_wait=10,
+                         stride=1, max_frames_ep=None, weighting=None,
+                         tau=1.0, ep_tag=0):
     desc = task.language
     env, _ = _get_libero_env(task, resolution=256)
     env.reset()
@@ -365,6 +367,9 @@ def collect_cloth_frames(policy, task, init_state, num_frames, device,
     frames = []
     action_plan = deque()
     obs = None
+    # short 模式：攒够 num_frames 即停（v1 行为，帧集中于接近阶段）；
+    # full 模式：跑完整条轨迹（至成功/超时），每 stride 步取 1 帧，上限 max_frames_ep
+    cap = max_frames_ep if max_frames_ep is not None else num_frames
     try:
         # 预热等待期（dummy 步）刷新 obs 图像，使其带上素色桌布
         obs = env.set_init_state(init_state)
@@ -374,7 +379,8 @@ def collect_cloth_frames(policy, task, init_state, num_frames, device,
                 break
 
         for step in range(max_steps):
-            if len(frames) < num_frames:
+            if (len(frames) < cap
+                    and (stride <= 1 or step % stride == 0)):
                 bg_np = render_mujoco_background_without_target(
                     env, cloth_body_id, 256, search_keywords_list=CLOTH_SEARCH)
                 bg = (torch.from_numpy(bg_np).float().to(device) / 255.0
@@ -411,11 +417,23 @@ def collect_cloth_frames(policy, task, init_state, num_frames, device,
                 action_plan.extend(chunk[:min(replan_steps, len(chunk))])
             action = np.asarray(action_plan.popleft(), dtype=np.float32)
             obs, _, done, _ = env.step(action.tolist())
-            if done or env.env._check_success() or len(frames) >= num_frames:
+            if done or env.env._check_success() or len(frames) >= cap:
                 break
     finally:
         restore_mujoco_texture(sim, tex_id, *restore_info)
         _close_libero_env(env)
+    # 轨迹内 TAAO 权重：softmax 后 ×n 归一到均值 1（保持与 uniform 相同的损失量级，
+    # 否则 Σw=1 会把单帧攻击项压到 ~1/n、破坏与外观正则的配比）
+    if weighting == "taao" and len(frames) > 1:
+        feats = [f["clean_img_embs"] for f in frames]
+        w = compute_frame_weights(feats, tau=tau) * len(frames)
+        for f, wi in zip(frames, w):
+            f["w"] = float(wi)
+        print(f"[pool] ep{ep_tag} TAAO 权重: min={min(f['w'] for f in frames):.3f} "
+              f"max={max(f['w'] for f in frames):.3f} 均值=1")
+    for f in frames:
+        f.setdefault("w", 1.0)
+        f["ep"] = ep_tag
     return frames
 
 
@@ -432,6 +450,30 @@ def composite_cloth(renderer, frame):
 def tv_loss(delta):
     return (delta[:, 1:, :, :].abs().mean()
             + delta[:, :, 1:, :].abs().mean()) / 2.0
+
+
+def compute_frame_weights(latent_features, tau: float):
+    """TAAO dynamics-guided frame weights（移植自 attack_pi0.py / attack_openvla_taao.py）：
+    v=特征速度, a=特征加速度, s=max(minmax(v),minmax(a)), w=softmax(s/tau)。
+    仅在单条轨迹内部计算（多任务池禁止跨轨迹 softmax）。"""
+    if len(latent_features) == 0:
+        return torch.tensor([], dtype=torch.float32)
+    if len(latent_features) == 1:
+        return torch.ones(1, dtype=torch.float32)
+    feats = [f.detach().float().flatten() for f in latent_features]
+    device = feats[0].device
+    n = len(feats)
+    v = torch.zeros(n, device=device, dtype=torch.float32)
+    a = torch.zeros(n, device=device, dtype=torch.float32)
+    for t in range(1, n):
+        v[t] = torch.norm(feats[t] - feats[t - 1], p=2) / 2.0
+    for t in range(1, n):
+        a[t] = torch.abs(v[t] - v[t - 1])
+    def _minmax(x):
+        x_min = torch.min(x); x_max = torch.max(x)
+        return (x - x_min) / torch.clamp(x_max - x_min, min=1e-8)
+    s = torch.maximum(_minmax(v), _minmax(a))
+    return torch.softmax(s / float(max(tau, 1e-6)), dim=0)
 
 
 def train_universal(args):
@@ -467,7 +509,11 @@ def train_universal(args):
             frames = []
             for ep in range(args.pool_episodes):
                 got = collect_cloth_frames(
-                    policy, task, init_states[ep], args.frames_per_ep, device)
+                    policy, task, init_states[ep], args.frames_per_ep, device,
+                    stride=args.stride,
+                    max_frames_ep=(args.max_frames_ep
+                                   if args.pool_mode == "full" else None),
+                    weighting=args.frame_weighting, tau=args.tau, ep_tag=ep)
                 frames.extend(got)
                 print(f"[pool] task {task_id} ep{ep}: +{len(got)} 帧 "
                       f"({time.time() - started:.0f}s)")
@@ -487,7 +533,8 @@ def train_universal(args):
     t0_tex = renderer.orig_texture
 
     stamp = time.strftime("%Y%m%d_%H%M%S")
-    out_dir = os.path.join(ARTIFACT_ROOT, f"train_{stamp}")
+    out_dir = os.path.join(
+        ARTIFACT_ROOT, f"train_{stamp}" + (f"_{args.tag}" if args.tag else ""))
     os.makedirs(out_dir, exist_ok=True)
     with open(os.path.join(out_dir, "run_config.txt"), "w") as f:
         f.write(str(vars(args)) + "\n")
@@ -509,11 +556,12 @@ def train_universal(args):
         adv_obs = _model.Observation.from_dict(new_inputs)
         adv_embs, _, _ = extract_split_features(model, adv_obs)
         attack_loss = -F.mse_loss(adv_embs, frame["clean_img_embs"])
+        fw = float(frame.get("w", 1.0)) if args.frame_weighting == "taao" else 1.0
 
         tex = renderer.texture_tensor()
         ref = F.mse_loss(tex, t0_tex)
         tv = tv_loss(tex - t0_tex)
-        (attack_loss + args.lambda_ref * ref + args.lambda_tv * tv).backward()
+        (fw * attack_loss + args.lambda_ref * ref + args.lambda_tv * tv).backward()
 
         gnorm = param.grad.norm().item() if param.grad is not None else 0.0
         with torch.no_grad():
@@ -525,7 +573,8 @@ def train_universal(args):
                 f.write(f"{it:05d} | {tid} | {attack_loss.item():+.5f} | "
                         f"{ref.item():.5f} | {tv.item():.5f} | {gnorm:.3e}\n")
             print(f"[train] it{it:05d} task{tid} attack={attack_loss.item():+.4f} "
-                  f"ref={ref.item():.4f} tv={tv.item():.4f} g={gnorm:.2e}")
+                  f"ref={ref.item():.4f} tv={tv.item():.4f} "
+                  f"w={fw:.2f} g={gnorm:.2e}")
         if (it + 1) % args.checkpoint_every == 0 or it == args.iters - 1:
             Image.fromarray(renderer.export_texture()).save(
                 os.path.join(out_dir, "Universal_Cloth.png"))
@@ -814,6 +863,16 @@ def main():
                    help="只采集帧池并保存到 --pool-file，然后退出")
     p.add_argument("--load-pool", action="store_true",
                    help="从 --pool-file 载入帧池（不存在则回退现场采集）")
+    p.add_argument("--pool-mode", choices=["short", "full"], default="short",
+                   help="short=每集攒够即停(v1)；full=跑满轨迹按 stride 取帧")
+    p.add_argument("--stride", type=int, default=10,
+                   help="full 模式每 stride 环境步取 1 帧")
+    p.add_argument("--max-frames-ep", type=int, default=40,
+                   help="full 模式每集帧数上限")
+    p.add_argument("--frame-weighting", choices=["uniform", "taao"],
+                   default="uniform", help="TAAO 轨迹内帧权重（加权损失）")
+    p.add_argument("--tau", type=float, default=1.0, help="TAAO softmax 温度")
+    p.add_argument("--tag", default="", help="训练输出目录后缀")
 
     p = sub.add_parser("eval")
     p.add_argument("--condition", required=True,
