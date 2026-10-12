@@ -447,29 +447,44 @@ def train_universal(args):
         p.requires_grad = False
     model.eval()
 
+    # 帧池获取：--load-pool 优先读磁盘缓存（训练进程零环境、零 MuJoCo/EGL，
+    # 内存占用最小）；缓存缺失或未指定时现场采集。--collect-only 采集完落盘即退出，
+    # 便于"采集"与"训练"分进程执行，避免峰值叠加。
+    pool_file = args.pool_file
+    pool = None
+    total = 0
+    if args.load_pool and os.path.exists(pool_file):
+        pool = torch.load(pool_file, map_location=device, weights_only=False)
+        total = sum(len(v) for v in pool.values())
+        print(f"[pool] 从缓存载入 {pool_file}：{total} 帧，任务 {list(pool.keys())}")
+    else:
+        suite = benchmark.get_benchmark_dict()["libero_spatial"]()
+        pool = {}
+        started = time.time()
+        for task_id in args.pool_tasks:
+            task = suite.get_task(task_id)
+            init_states = suite.get_task_init_states(task_id)
+            frames = []
+            for ep in range(args.pool_episodes):
+                got = collect_cloth_frames(
+                    policy, task, init_states[ep], args.frames_per_ep, device)
+                frames.extend(got)
+                print(f"[pool] task {task_id} ep{ep}: +{len(got)} 帧 "
+                      f"({time.time() - started:.0f}s)")
+            pool[task_id] = frames
+            total += len(frames)
+        print(f"[pool] 总帧数 {total}，任务 {list(pool.keys())}")
+        if args.collect_only:
+            os.makedirs(os.path.dirname(pool_file), exist_ok=True)
+            torch.save(pool, pool_file)
+            print(f"[pool] 帧池已保存到 {pool_file}（--collect-only，进程退出）")
+            return
+    if total == 0:
+        raise RuntimeError("帧池为空")
+
     renderer = ClothRenderer(device=device, epsilon=args.epsilon,
                              init_std=args.init_std, seed=args.seed).to(device)
     t0_tex = renderer.orig_texture
-
-    suite = benchmark.get_benchmark_dict()["libero_spatial"]()
-    pool = {}
-    total = 0
-    started = time.time()
-    for task_id in args.pool_tasks:
-        task = suite.get_task(task_id)
-        init_states = suite.get_task_init_states(task_id)
-        frames = []
-        for ep in range(args.pool_episodes):
-            got = collect_cloth_frames(
-                policy, task, init_states[ep], args.frames_per_ep, device)
-            frames.extend(got)
-            print(f"[pool] task {task_id} ep{ep}: +{len(got)} 帧 "
-                  f"({time.time() - started:.0f}s)")
-        pool[task_id] = frames
-        total += len(frames)
-    print(f"[pool] 总帧数 {total}，任务 {list(pool.keys())}")
-    if total == 0:
-        raise RuntimeError("帧池为空")
 
     stamp = time.strftime("%Y%m%d_%H%M%S")
     out_dir = os.path.join(ARTIFACT_ROOT, f"train_{stamp}")
@@ -791,6 +806,12 @@ def main():
     p.add_argument("--lambda-tv", type=float, default=0.1)
     p.add_argument("--seed", type=int, default=7)
     p.add_argument("--checkpoint-every", type=int, default=1000)
+    p.add_argument("--pool-file",
+                   default=os.path.join(ARTIFACT_ROOT, "cloth_pool.pt"))
+    p.add_argument("--collect-only", action="store_true",
+                   help="只采集帧池并保存到 --pool-file，然后退出")
+    p.add_argument("--load-pool", action="store_true",
+                   help="从 --pool-file 载入帧池（不存在则回退现场采集）")
 
     p = sub.add_parser("eval")
     p.add_argument("--condition", required=True,
