@@ -546,7 +546,9 @@ def evaluate_native(policy, task, init_state, texture_arr=None, max_steps=400,
     env.set_init_state(init_state)
     sim = env.env.sim
     sim.forward()
-    align_cloth_to_table(env)
+    # original 条件无桌布（XML clean），对齐仅在有桌布的 plain/adv 条件下执行
+    if texture_arr is not None:
+        align_cloth_to_table(env)
 
     restore_info = None
     tex_id = -1
