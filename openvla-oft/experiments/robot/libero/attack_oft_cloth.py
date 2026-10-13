@@ -312,6 +312,7 @@ def collect_frames(cfg, model, processor, action_head, proprio_projector,
                     "wrist_seg": wrist_seg_t,
                     "wrist_mvp": wrist_mvp,
                     "clean_action_head": clean_action_head.float(),
+                    "clean_hidden": clean_hidden.to(torch.bfloat16),
                 })
             # 策略步进（与 transfer_pi2ov 同链，OFT 走签名兼容包装）
             img_high = base.get_libero_image(obs)
@@ -392,6 +393,10 @@ def train(args):
             torch.save(pool, args.pool_file)
             print(f"[pool] 已保存 {args.pool_file}（--collect-only 退出）")
             return
+        # 非 collect-only 也落盘，供后续 --load-pool 复用（重采一轮要 12 分钟）
+        os.makedirs(os.path.dirname(args.pool_file), exist_ok=True)
+        torch.save(pool, args.pool_file)
+        print(f"[pool] 已保存 {args.pool_file}")
 
     renderer = ClothRendererOV(device=device, epsilon=args.epsilon,
                                init_std=args.init_std, seed=args.seed).to(device)
@@ -443,7 +448,15 @@ def train(args):
                 use_film=getattr(cfg, "use_film", False),
             )
             adv_action = action_head.predict_action(adv_hidden)
-        attack = -F.mse_loss(adv_action.float(), fr["clean_action_head"])
+        # 生产配方（attack_oft.py）：动作损失 + alpha_feature×hidden 特征损失
+        attack_action = -F.mse_loss(adv_action.float(), fr["clean_action_head"])
+        if "clean_hidden" in fr:
+            attack_feat = -F.mse_loss(adv_hidden.float(),
+                                      fr["clean_hidden"].float())
+            attack = attack_action + args.alpha_feature * attack_feat
+        else:
+            attack_feat = None
+            attack = attack_action
         tex = renderer.texture_tensor()
         ref = F.mse_loss(tex, t0_tex)
         tv = tv_loss(tex - t0_tex)
@@ -453,8 +466,11 @@ def train(args):
             param.clamp_(-5.0, 5.0)
         if it % 50 == 0 or it == args.iters - 1:
             g = param.grad.norm().item() if param.grad is not None else 0.0
-            line = (f"[train] it{it:05d} task{tid} attack={attack.item():+.4f} "
-                    f"ref={ref.item():.4f} tv={tv.item():.4f} g={g:.2e}")
+            extra = (f" feat={attack_feat.item():+.4f}"
+                     if attack_feat is not None else "")
+            line = (f"[train] it{it:05d} task{tid} attack={attack.item():+.4f}"
+                    f"{extra} ref={ref.item():.4f} tv={tv.item():.4f} "
+                    f"g={g:.2e}")
             print(line, flush=True)
             with open(log_path, "a") as f:
                 f.write(line + "\n")
@@ -487,6 +503,8 @@ def main():
     p.add_argument("--init-std", type=float, default=0.01)
     p.add_argument("--lambda-ref", type=float, default=0.1)
     p.add_argument("--lambda-tv", type=float, default=0.1)
+    p.add_argument("--alpha-feature", type=float, default=10.0,
+                   help="hidden 特征损失权重（attack_oft.py 生产默认 10.0）")
     p.add_argument("--seed", type=int, default=7)
     p.add_argument("--checkpoint-every", type=int, default=500)
     p.add_argument("--tag", default="")
