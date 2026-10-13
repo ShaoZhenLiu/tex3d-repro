@@ -71,10 +71,20 @@ TEX3D_ROOT = "/data/shaozhen.liu/code/tex3d"
 CLOTH_ASSET_DIR = (
     "/data/shaozhen.liu/code/tex3d-deps/libero-pi/libero/libero/assets/tablecloth"
 )
-SCENE_XML = (
-    "/data/shaozhen.liu/code/tex3d-deps/libero-pi/libero/libero/assets/"
-    "scenes/libero_tabletop_base_style.xml"
+_SCENES_DIR = (
+    "/data/shaozhen.liu/code/tex3d-deps/libero-pi/libero/libero/assets/scenes"
 )
+# (场景 XML, 桌布 body z)：桌面场景贴桌面(运行时仍由 SurfaceAdapter 精对齐)，
+# floor 场景贴地。多场景覆盖 libero_10 等混合套件。
+SCENE_XMLS = [
+    (os.path.join(_SCENES_DIR, "libero_tabletop_base_style.xml"), 0.905),
+    (os.path.join(_SCENES_DIR, "libero_kitchen_tabletop_base_style.xml"), 0.905),
+    (os.path.join(_SCENES_DIR, "libero_living_room_tabletop_base_style.xml"), 0.905),
+    (os.path.join(_SCENES_DIR, "libero_study_base_style.xml"), 0.905),
+    (os.path.join(_SCENES_DIR, "libero_coffee_table_base_style.xml"), 0.905),
+    (os.path.join(_SCENES_DIR, "libero_floor_base_style.xml"), 0.005),
+]
+SCENE_XML = SCENE_XMLS[0][0]
 SCENE_XML_BACKUP = SCENE_XML + ".precloth"
 CLOTH_MESH = os.path.join(CLOTH_ASSET_DIR, "tablecloth.obj")
 CLOTH_T0 = os.path.join(CLOTH_ASSET_DIR, "cloth_base.png")
@@ -91,43 +101,50 @@ HELDOUT_TASKS = [5, 6, 7, 9]
 # 场景 XML 补丁（文件级，进程内唯一；带备份/恢复）
 # --------------------------------------------------------------------------
 def patch_status():
-    return "patched" if os.path.exists(SCENE_XML_BACKUP) else "clean"
+    return "patched" if all(os.path.exists(x + ".precloth")
+                            for x, _ in SCENE_XMLS) else "clean"
 
 
 def patch_scene(on: bool):
     if on:
         if patch_status() == "patched":
             return
-        shutil.copy2(SCENE_XML, SCENE_XML_BACKUP)
-        tree = ET.parse(SCENE_XML)
-        root = tree.getroot()
-        asset = root.find("asset")
-        worldbody = root.find("worldbody")
-        if asset is None or worldbody is None:
-            raise RuntimeError("场景 XML 结构异常：缺 asset/worldbody")
-        asset.append(ET.Element("mesh", {
-            "file": "../tablecloth/tablecloth.obj", "name": "tablecloth_mesh",
-            "inertia": "shell"}))
-        asset.append(ET.Element("texture", {
-            "file": "../tablecloth/cloth_base.png", "type": "2d",
-            "name": "tex-tablecloth"}))
-        asset.append(ET.Element("material", {
-            "name": "tablecloth_mat", "texture": "tex-tablecloth",
-            "texuniform": "false", "reflectance": "0.0",
-            "shininess": "0.0", "specular": "0.0"}))
-        body = ET.SubElement(worldbody, "body", {
-            "name": "tablecloth", "pos": "0 0 0.905"})
-        ET.SubElement(body, "geom", {
-            "name": "tablecloth_visual", "type": "mesh",
-            "mesh": "tablecloth_mesh", "material": "tablecloth_mat",
-            "contype": "0", "conaffinity": "0", "group": "1"})
-        tree.write(SCENE_XML)
-        print(f"[patch] 桌布已写入 {SCENE_XML}（备份 {SCENE_XML_BACKUP}；z 将在运行时对齐桌面）")
+        for xml, cloth_z in SCENE_XMLS:
+            shutil.copy2(xml, xml + ".precloth")
+            tree = ET.parse(xml)
+            root = tree.getroot()
+            asset = root.find("asset")
+            worldbody = root.find("worldbody")
+            if asset is None or worldbody is None:
+                raise RuntimeError(f"场景 XML 结构异常：{xml}")
+            asset.append(ET.Element("mesh", {
+                "file": "../tablecloth/tablecloth.obj", "name": "tablecloth_mesh",
+                "inertia": "shell"}))
+            asset.append(ET.Element("texture", {
+                "file": "../tablecloth/cloth_base.png", "type": "2d",
+                "name": "tex-tablecloth"}))
+            asset.append(ET.Element("material", {
+                "name": "tablecloth_mat", "texture": "tex-tablecloth",
+                "texuniform": "false", "reflectance": "0.0",
+                "shininess": "0.0", "specular": "0.0"}))
+            xy = "0.4 0" if cloth_z < 0.5 else "0 0"  # floor 场景布铺在机器人前方地面
+            body = ET.SubElement(worldbody, "body", {
+                "name": "tablecloth", "pos": f"{xy} {cloth_z}"})
+            ET.SubElement(body, "geom", {
+                "name": "tablecloth_visual", "type": "mesh",
+                "mesh": "tablecloth_mesh", "material": "tablecloth_mat",
+                "contype": "0", "conaffinity": "0", "group": "1"})
+            tree.write(xml)
+        print(f"[patch] 桌布已写入 {len(SCENE_XMLS)} 个场景（备份 .precloth；"
+              f"桌面场景 z 由 SurfaceAdapter 运行时对齐）")
     else:
         if patch_status() == "clean":
             return
-        shutil.move(SCENE_XML_BACKUP, SCENE_XML)
-        print("[patch] 场景 XML 已还原为无桌布版本")
+        for xml, _ in SCENE_XMLS:
+            bak = xml + ".precloth"
+            if os.path.exists(bak):
+                shutil.move(bak, xml)
+        print("[patch] 全部场景 XML 已还原为无桌布版本")
 
 
 def ensure_patch(on: bool):
@@ -152,6 +169,10 @@ def align_cloth_to_table(env, lift=0.005):
             break
     _, cloth_bid, _ = get_target_model_matrix(env, CLOTH_SEARCH)
     if table_top is None or cloth_bid == -1:
+        # floor 等无桌场景：无 table_top site，沿用 XML 静态位置（贴地/贴面）
+        if cloth_bid != -1:
+            sim.forward()
+            return sim.model.body_pos[cloth_bid].copy()
         raise RuntimeError("SurfaceAdapter：找不到 table_top site 或桌布 body")
     sim.forward()
     pos = np.array(sim.data.site_xpos[table_top], dtype=float)
@@ -500,7 +521,8 @@ def train_universal(args):
         total = sum(len(v) for v in pool.values())
         print(f"[pool] 从缓存载入 {pool_file}：{total} 帧，任务 {list(pool.keys())}")
     else:
-        suite = benchmark.get_benchmark_dict()["libero_spatial"]()
+        suite = benchmark.get_benchmark_dict()[
+            getattr(args, "suite", "libero_spatial")]()
         pool = {}
         started = time.time()
         for task_id in args.pool_tasks:
@@ -667,7 +689,8 @@ def run_eval(args):
         texture_arr = np.array(Image.open(args.texture).convert("RGB"))
 
     policy = load_policy(args.ckpt, num_denoise=args.num_denoise)
-    suite = benchmark.get_benchmark_dict()["libero_spatial"]()
+    suite = benchmark.get_benchmark_dict()[
+        getattr(args, "suite", "libero_spatial")]()
 
     tasks = HELDOUT_TASKS if args.tasks == "heldout" else \
         [int(t) for t in args.tasks.split(",")]
@@ -873,6 +896,8 @@ def main():
                    default="uniform", help="TAAO 轨迹内帧权重（加权损失）")
     p.add_argument("--tau", type=float, default=1.0, help="TAAO softmax 温度")
     p.add_argument("--tag", default="", help="训练输出目录后缀")
+    p.add_argument("--suite", default="libero_spatial",
+                   help="采集帧池的 benchmark 套件名")
 
     p = sub.add_parser("eval")
     p.add_argument("--condition", required=True,
@@ -885,6 +910,8 @@ def main():
     p.add_argument("--num-denoise", type=int, default=1)
     p.add_argument("--max-steps", type=int, default=400)
     p.add_argument("--save-videos", action="store_true")
+    p.add_argument("--suite", default="libero_spatial",
+                   help="benchmark 套件名（libero_spatial/object/goal/10...）")
 
     args = ap.parse_args()
     if args.cmd == "patch":
