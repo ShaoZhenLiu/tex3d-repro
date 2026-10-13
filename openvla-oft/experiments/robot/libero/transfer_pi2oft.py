@@ -23,9 +23,11 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+import attack_oft as base            # noqa: E402  复用其 env/模型/动作链
+# 注意：attack_oft 必须先于 OV 目录的路径插入 import，否则它内部的
+# `from libero_utils import ...` 会绑定 OV 版（get_libero_image 双参），评测即崩
 import sys as _s; _s.path.insert(0, "/data/shaozhen.liu/code/tex3d/openvla/experiments/robot/libero")
 import cloth_transfer_utils as ctu            # noqa: E402  注入四件套（attack_pi0 原样）
-import attack_oft as base            # noqa: E402  复用其 env/模型/动作链
 
 LIBERO_XML = (
     "/data/shaozhen.liu/code/tex3d-deps/libero/libero/libero/assets/"
