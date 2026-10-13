@@ -168,14 +168,39 @@ def align_cloth_to_table(env, lift=0.005):
             table_top = s
             break
     _, cloth_bid, _ = get_target_model_matrix(env, CLOTH_SEARCH)
-    if table_top is None or cloth_bid == -1:
-        # floor 等无桌场景：无 table_top site，沿用 XML 静态位置（贴地/贴面）
-        if cloth_bid != -1:
-            sim.forward()
-            return sim.model.body_pos[cloth_bid].copy()
-        raise RuntimeError("SurfaceAdapter：找不到 table_top site 或桌布 body")
+    if cloth_bid == -1:
+        raise RuntimeError("SurfaceAdapter：找不到桌布 body")
     sim.forward()
-    pos = np.array(sim.data.site_xpos[table_top], dtype=float)
+    if table_top is not None:
+        pos = np.array(sim.data.site_xpos[table_top], dtype=float)
+    else:
+        # 泛化回退：living_room/study/coffee 等场景无 table_top site，
+        # 找顶面高度 0.3-1.2m、水平面积最大的 box geom 作为桌面；
+        # floor 等无桌场景（找不到合格 geom）沿用 XML 静态位置（贴地）。
+        best, best_area = None, -1.0
+        for g in range(sim.model.ngeom):
+            if int(sim.model.geom_bodyid[g]) == int(cloth_bid):
+                continue
+            if int(sim.model.geom_type[g]) != 6:  # mjGEOM_BOX
+                continue
+            x = sim.data.geom_xpos[g]
+            s = sim.model.geom_size[g]
+            top = float(x[2] + s[2])
+            if not (0.3 <= top <= 1.2):
+                continue
+            area = float(4.0 * s[0] * s[1])
+            if area > best_area:
+                try:
+                    name = sim.model.geom_id2name(g) or f"geom{g}"
+                except Exception:
+                    name = f"geom{g}"
+                best_area, best = area, (x, top, name)
+        if best is None:
+            return sim.model.body_pos[cloth_bid].copy()
+        x, top, name = best
+        print(f"[align] 无 table_top site，回退最大桌面 geom '{name}' "
+              f"(top={top:.3f}m, area={best_area:.2f}m²)")
+        pos = np.array([x[0], x[1], top], dtype=float)
     sim.model.body_pos[cloth_bid, 0] = pos[0]
     sim.model.body_pos[cloth_bid, 1] = pos[1]
     sim.model.body_pos[cloth_bid, 2] = pos[2] + lift
