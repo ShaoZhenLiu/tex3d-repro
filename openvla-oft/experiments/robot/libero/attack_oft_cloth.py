@@ -142,6 +142,63 @@ def tv_loss(delta):
             + delta[:, :, 1:, :].abs().mean()) / 2.0
 
 
+# ------------------------------------------------------------ 腕相机视图
+def _wrist_camera_id(sim):
+    for name in ("robot0_eye_in_hand", "robot0_eye", "eye_in_hand"):
+        try:
+            return sim.model.camera_name2id(name)
+        except Exception:
+            continue
+    raise RuntimeError("未找到腕相机（robot0_eye_in_hand）")
+
+
+def get_wrist_mvp_from_matrix(env, model_matrix, resolution=(256, 256),
+                              proj_flip_x: float = -1.0,
+                              proj_flip_y: float = -1.0):
+    """与 base.get_render_mvp_from_matrix 同构，但取腕相机 robot0_eye_in_hand。"""
+    sim = env.sim if not hasattr(env, "unwrapped") else env.unwrapped.sim
+    W, H = resolution
+    cam_id = _wrist_camera_id(sim)
+    cam_pos = sim.data.cam_xpos[cam_id]
+    cam_xmat = sim.data.cam_xmat[cam_id].reshape(3, 3)
+    view_rot = cam_xmat.T
+    view_mtx = np.eye(4, dtype=np.float32)
+    view_mtx[:3, :3] = view_rot
+    view_mtx[:3, 3] = -(view_rot @ cam_pos)
+    fovy_deg = float(sim.model.cam_fovy[cam_id])
+    aspect = float(W) / float(H)
+    near, far = 0.01, 10.0
+    f = 1.0 / np.tan(np.deg2rad(fovy_deg) / 2.0)
+    proj_mtx = np.zeros((4, 4), dtype=np.float32)
+    proj_mtx[0, 0] = proj_flip_x * f / aspect
+    proj_mtx[1, 1] = proj_flip_y * f
+    proj_mtx[2, 2] = (far + near) / (near - far)
+    proj_mtx[2, 3] = (2 * far * near) / (near - far)
+    proj_mtx[3, 2] = -1.0
+    return (torch.from_numpy(proj_mtx).cuda()
+            @ torch.from_numpy(view_mtx).cuda() @ model_matrix)
+
+
+def _render_wrist_bg_without_target(env, body_id: int, resolution: int):
+    """腕视图下隐藏桌布的无布渲染（照 base._render_bg_without_target，换相机）。"""
+    sim = env.unwrapped.sim if hasattr(env, "unwrapped") else env.sim
+    geom_ids = [g for g in range(sim.model.ngeom)
+                if sim.model.geom_bodyid[g] == body_id]
+    if not geom_ids:
+        return None
+    orig_alpha = [float(sim.model.geom_rgba[g, 3]) for g in geom_ids]
+    try:
+        for g in geom_ids:
+            sim.model.geom_rgba[g, 3] = 0.0
+        img = sim.render(width=resolution, height=resolution,
+                         camera_name="robot0_eye_in_hand", mode="offscreen")
+        img = img[::-1, ::-1]
+    finally:
+        for g, a in zip(geom_ids, orig_alpha):
+            sim.model.geom_rgba[g, 3] = a
+    return img
+
+
 def collect_frames(cfg, model, processor, action_head, proprio_projector,
                    noisy_action_projector, task, init_state, num_frames, device,
                    stride=10, max_frames=40, ep_tag=0):
@@ -184,12 +241,34 @@ def collect_frames(cfg, model, processor, action_head, proprio_projector,
                 full_t = (torch.from_numpy(img.astype(np.float32) / 255.0)
                           ).permute(2, 0, 1).unsqueeze(0).to(device)
                 wrist_t = None
+                wrist_bg_t = None
+                wrist_seg_t = None
+                wrist_mvp = None
                 if use_wrist:
                     wnp = base._extract_wrist_image(obs, 256)
                     if wnp is not None:
                         wrist_t = (torch.from_numpy(
                             wnp.astype(np.float32) / 255.0)
                             ).permute(2, 0, 1).unsqueeze(0).to(device)
+                        # 腕视图对抗合成四件套：无布渲染 / RGB 差分 seg / 腕 mvp
+                        wrist_bg_np = _render_wrist_bg_without_target(
+                            env, bid, 256)
+                        if wrist_bg_np is not None:
+                            wrist_seg = (np.abs(
+                                wnp.astype(np.int16)
+                                - wrist_bg_np.astype(np.int16)
+                                ).max(axis=-1) > 10)
+                            wrist_bg_t = (
+                                torch.from_numpy(wrist_bg_np.copy()).float()
+                                .to(device) / 255.0
+                                ).permute(2, 0, 1).unsqueeze(0)
+                            wrist_seg_t = torch.from_numpy(
+                                wrist_seg.astype(np.float32)
+                                ).to(device).view(1, 1, 256, 256)
+                            wrist_mvp = get_wrist_mvp_from_matrix(
+                                env, mm, resolution=(256, 256))
+                            print(f"    [帧{t}] 主seg {seg.mean():.3f} "
+                                  f"腕seg {wrist_seg.mean():.3f}")
                 proprio = None
                 if use_proprio:
                     proprio = np.concatenate((
@@ -229,6 +308,9 @@ def collect_frames(cfg, model, processor, action_head, proprio_projector,
                     "text_inputs": inputs,
                     "proprio": proprio,
                     "wrist": wrist_t,
+                    "wrist_bg": wrist_bg_t,
+                    "wrist_seg": wrist_seg_t,
+                    "wrist_mvp": wrist_mvp,
                     "clean_action_head": clean_action_head.float(),
                 })
             # 策略步进（与 transfer_pi2ov 同链，OFT 走签名兼容包装）
@@ -330,14 +412,24 @@ def train(args):
     for it in range(args.iters):
         tid, fr = random.choice(all_frames)
         param.grad = None
+        # 主视图对抗合成
         adv_rgba, _ = renderer.render(fr["mvp"], (256, 256), model_rot=fr["rot"])
         adv_chw = adv_rgba.permute(0, 3, 1, 2)
         comp = torch.clamp(adv_chw * fr["seg"] + fr["bg"] * (1.0 - fr["seg"]),
                            0.0, 1.0)
+        # 腕视图对抗合成（OFT 双相机：只打主相机时动作头几乎不动）
+        adv_wrist_t = fr.get("wrist")
+        if fr.get("wrist_mvp") is not None and fr.get("wrist_bg") is not None:
+            adv_w_rgba, _ = renderer.render(fr["wrist_mvp"], (256, 256),
+                                            model_rot=fr["rot"])
+            adv_w_chw = adv_w_rgba.permute(0, 3, 1, 2)
+            adv_wrist_t = torch.clamp(
+                adv_w_chw * fr["wrist_seg"]
+                + fr["wrist_bg"] * (1.0 - fr["wrist_seg"]), 0.0, 1.0)
         pv = base._compose_oft_pixel_values(
             adv_rgb=comp, model_input_size=model_input_size,
             siglip_mean=sm, siglip_std=ss, dino_mean=dm, dino_std=ds,
-            wrist_tensor=fr.get("wrist")).to(torch.bfloat16)
+            wrist_tensor=adv_wrist_t).to(torch.bfloat16)
         with base.autocast(dtype=torch.bfloat16):
             _, adv_hidden = model.predict_action(
                 input_ids=fr["text_inputs"]["input_ids"],
