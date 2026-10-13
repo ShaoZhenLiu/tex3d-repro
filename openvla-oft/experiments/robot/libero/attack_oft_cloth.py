@@ -1,15 +1,25 @@
-"""OpenVLA 侧通用桌布训练（反向迁移：OV 训布 → 打 π0 / OV 自评）.
+"""OFT 侧通用桌布训练（与 OV 版 attack_ov_cloth.py 同构，动作链适配 OFT）.
 
-与 π0 侧 attack_pi0_cloth.py 同构的池化训练：
-  collect: OV 环境真实策略轨迹（素色布注入），按 stride 存帧
-           [bg(无布渲染)/seg(RGB差分)/mvp/rot/clean_ids/clean_hidden]
-  train:   sign-PGD，attack = -MSE(adv_hidden.mean(1), clean_hidden.mean(1))
-           （与 attack_openvla_taao 的 adv_action_proxy 同口径）+ λ_ref/λ_tv 外观正则
+机制照抄 attack_oft.py 生产路径（绝不走 model.generate——OFT 并行解码
+action chunk，HF 缓存里 generate 分支有 torch 兼容 bug）：
+  前向  model.predict_action(input_ids, attention_mask, pixel_values,
+        unnorm_key, proprio, proprio_projector, action_head,
+        noisy_action_projector, use_film) -> (action_tokens, hidden)
+  动作  action_head.predict_action(hidden) —— 可微 action chunk
+  像素  base._compose_oft_pixel_values（siglip+dino 双塔归一化拼接）
+  精度  torch.cuda.amp.autocast(dtype=bfloat16)（老 API，不带 device_type）
+
+池化训练：
+  collect: OFT 真实策略轨迹（素色布 T0 注入），按 stride 存帧
+           [bg(无布渲染)/seg(RGB差分)/mvp/rot/text_inputs/proprio/wrist/
+            clean_action_head]
+  train:   sign-PGD，attack = -MSE(adv_action_chunk, clean_action_chunk)
+           + λ_ref/λ_tv 外观正则
 产物: Universal_Cloth_OV.png + Ep0_Cloth_Delta_OV.pt
 
 用法:
-  python attack_ov_cloth.py train --pool-tasks 0,1,2,8 [--iters 2000] \
-      [--pool-file ov_cloth_pool.pt] [--collect-only|--load-pool] [--tag s7]
+  python attack_oft_cloth.py train --pool-tasks 0,1,2,8 [--iters 2000] \
+      [--pool-file oft_cloth_pool.pt] [--collect-only|--load-pool] [--tag s7]
 """
 import argparse
 import os
@@ -25,6 +35,7 @@ from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import attack_oft as base            # noqa: E402
+import sys as _s; _s.path.insert(0, "/data/shaozhen.liu/code/tex3d/openvla/experiments/robot/libero")
 import transfer_pi2ov as TR                    # noqa: E402  补丁/对齐/注入/常量
 
 OUT_ROOT = "/data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth"
@@ -34,8 +45,34 @@ CLOTH_T0 = TR.CLOTH_T0
 TRAIN_TASKS = [0, 1, 2, 8]
 SIGLIP_MEAN = [0.5, 0.5, 0.5]
 SIGLIP_STD = [0.5, 0.5, 0.5]
-DINO_MEAM = [0.485, 0.456, 0.406]
+DINO_MEAN = [0.485, 0.456, 0.406]
 DINO_STD = [0.229, 0.224, 0.225]
+
+
+def _norm_consts(device):
+    sm = torch.tensor(SIGLIP_MEAN, device=device).view(1, 3, 1, 1)
+    ss = torch.tensor(SIGLIP_STD, device=device).view(1, 3, 1, 1)
+    dm = torch.tensor(DINO_MEAN, device=device).view(1, 3, 1, 1)
+    ds = torch.tensor(DINO_STD, device=device).view(1, 3, 1, 1)
+    return sm, ss, dm, ds
+
+
+def _build_action_modules(cfg, model):
+    """OFT 动作头三件套（调用方式与 attack_oft.eval_libero 一致）."""
+    if base.get_action_head is None:
+        raise RuntimeError("OFT 需 openvla_utils.get_action_head（导入失败）")
+    action_head = None
+    proprio_projector = None
+    noisy_action_projector = None
+    if cfg.use_l1_regression or cfg.use_diffusion:
+        action_head = base.get_action_head(cfg, model.llm_dim)
+    if cfg.use_proprio and base.get_proprio_projector is not None:
+        proprio_projector = base.get_proprio_projector(
+            cfg, model.llm_dim, proprio_dim=8)
+    if cfg.use_diffusion and base.get_noisy_action_projector is not None:
+        noisy_action_projector = base.get_noisy_action_projector(
+            cfg, model.llm_dim)
+    return action_head, proprio_projector, noisy_action_projector
 
 
 class ClothRendererOV(base.DifferentiableRenderer):
@@ -105,7 +142,8 @@ def tv_loss(delta):
             + delta[:, :, 1:, :].abs().mean()) / 2.0
 
 
-def collect_frames(cfg, model, processor, task, init_state, num_frames, device,
+def collect_frames(cfg, model, processor, action_head, proprio_projector,
+                   noisy_action_projector, task, init_state, num_frames, device,
                    stride=10, max_frames=40, ep_tag=0):
     from libero.libero import benchmark  # noqa: F401
     env, task_description = base.get_libero_env(task, cfg.model_family,
@@ -123,17 +161,16 @@ def collect_frames(cfg, model, processor, task, init_state, num_frames, device,
     ri = TR.ctu.inject_mujoco_texture(sim, tex_id,
                                       np.array(Image.open(CLOTH_T0).convert("RGB")))
     model_input_size = base.get_image_resize_size(cfg)
-    sm = torch.tensor(SIGLIP_MEAN, device=device).view(1, 3, 1, 1)
-    ss = torch.tensor(SIGLIP_STD, device=device).view(1, 3, 1, 1)
-    dm = torch.tensor(DINO_MEAM, device=device).view(1, 3, 1, 1)
-    ds = torch.tensor(DINO_STD, device=device).view(1, 3, 1, 1)
+    use_proprio = bool(getattr(cfg, "use_proprio", False))
+    use_wrist = getattr(cfg, "num_images_in_input", 1) > 1
+    sm, ss, dm, ds = _norm_consts(device)
     frames = []
     try:
         for t in range(400):
             if len(frames) >= max_frames:
                 break
             if t % stride == 0:
-                img = base.get_libero_image(obs, 256)
+                img = base.get_libero_image(obs)
                 bg_np = base._render_bg_without_target(env, bid, 256)
                 seg = (np.abs(img.astype(np.int16)
                               - bg_np.astype(np.int16)).max(axis=-1) > 10)
@@ -142,48 +179,89 @@ def collect_frames(cfg, model, processor, task, init_state, num_frames, device,
                     env, mm, resolution=(256, 256))
                 pil = Image.fromarray(img).resize(
                     (model_input_size, model_input_size))
-                prompt = (f"In: What action should the robot take to "
-                          f"{task_description.lower()}?\nOut:")
-                inputs = processor(prompt, images=pil).to(device)
-                with torch.no_grad(), torch.autocast(dtype=torch.bfloat16):
-                    ids = model.generate(
-                        **inputs, max_new_tokens=7, do_sample=False,
-                        pad_token_id=processor.tokenizer.pad_token_id)
-                    pv224 = F.interpolate(
-                        (torch.from_numpy(img.astype(np.float32) / 255.0)
-                         ).permute(2, 0, 1).unsqueeze(0).to(device),
-                        size=(model_input_size, model_input_size),
-                        mode="bilinear", align_corners=False)
-                    pv = torch.cat([(pv224 - sm) / ss, (pv224 - dm) / ds],
-                                   dim=1).to(torch.bfloat16)
-                    fwd = model(input_ids=ids, attention_mask=torch.ones_like(ids),
-                                pixel_values=pv, output_hidden_states=True)
+                prompt = base._build_openvla_prompt(task_description)
+                inputs = processor(prompt, pil).to(device)
+                full_t = (torch.from_numpy(img.astype(np.float32) / 255.0)
+                          ).permute(2, 0, 1).unsqueeze(0).to(device)
+                wrist_t = None
+                if use_wrist:
+                    wnp = base._extract_wrist_image(obs, 256)
+                    if wnp is not None:
+                        wrist_t = (torch.from_numpy(
+                            wnp.astype(np.float32) / 255.0)
+                            ).permute(2, 0, 1).unsqueeze(0).to(device)
+                proprio = None
+                if use_proprio:
+                    proprio = np.concatenate((
+                        obs["robot0_eef_pos"],
+                        base.quat2axisangle(obs["robot0_eef_quat"]),
+                        obs["robot0_gripper_qpos"],
+                    ))
+                # clean 侧：真实观测（素色布）→ predict_action + action_head
+                with torch.no_grad():
+                    with base.autocast(dtype=torch.bfloat16):
+                        clean_pv = base._compose_oft_pixel_values(
+                            adv_rgb=full_t,
+                            model_input_size=model_input_size,
+                            siglip_mean=sm, siglip_std=ss,
+                            dino_mean=dm, dino_std=ds,
+                            wrist_tensor=wrist_t).to(torch.bfloat16)
+                        _, clean_hidden = model.predict_action(
+                            input_ids=inputs["input_ids"],
+                            attention_mask=inputs["attention_mask"],
+                            pixel_values=clean_pv,
+                            unnorm_key=cfg.unnorm_key,
+                            proprio=proprio,
+                            proprio_projector=proprio_projector,
+                            action_head=action_head,
+                            noisy_action_projector=noisy_action_projector,
+                            use_film=getattr(cfg, "use_film", False),
+                        )
+                        clean_hidden = clean_hidden.detach()
+                        clean_action_head = action_head.predict_action(
+                            clean_hidden).detach()
                 frames.append({
                     "bg": (torch.from_numpy(bg_np.copy()).float().to(device)
                            / 255.0).permute(2, 0, 1).unsqueeze(0),
                     "seg": torch.from_numpy(seg.astype(np.float32)
                                             ).to(device).view(1, 1, 256, 256),
                     "mvp": mvp, "rot": mm[:3, :3].detach().float(),
-                    "ids": ids.detach(),
-                    "clean_hidden": fwd.hidden_states[-1].detach().float(),
+                    "text_inputs": inputs,
+                    "proprio": proprio,
+                    "wrist": wrist_t,
+                    "clean_action_head": clean_action_head.float(),
                 })
-            # 策略步进（与 transfer_pi2ov 同链）
-            img_high = base.get_libero_image(obs, 256)
+            # 策略步进（与 transfer_pi2ov 同链，OFT 走签名兼容包装）
+            img_high = base.get_libero_image(obs)
             img_model = np.array(Image.fromarray(img_high).resize(
                 (model_input_size, model_input_size)))
-            observation = {
-                "full_image": img_model,
-                "state": np.concatenate((
+            observation = {"full_image": img_model}
+            if use_proprio:
+                observation["state"] = np.concatenate((
                     obs["robot0_eef_pos"],
                     base.quat2axisangle(obs["robot0_eef_quat"]),
                     obs["robot0_gripper_qpos"],
-                )),
-            }
-            action = base.get_action(cfg, model, observation, task_description,
-                                     processor=processor)
-            action = base.normalize_gripper_action(action, binarize=True)
-            action = base.invert_gripper_action(action)
-            obs, _, done, _ = env.step(action.tolist())
+                ))
+            else:
+                observation["state"] = np.zeros(8)
+            if use_wrist:
+                wnp_m = base._extract_wrist_image(obs, model_input_size)
+                if wnp_m is not None:
+                    observation["wrist_image"] = wnp_m
+            executed = base._query_action_with_compatible_signature(
+                cfg, model, observation, task_description, processor,
+                action_head=action_head,
+                proprio_projector=proprio_projector,
+                noisy_action_projector=noisy_action_projector,
+                use_film=getattr(cfg, "use_film", False))
+            if isinstance(executed, list):
+                executed = np.asarray(executed[0], dtype=np.float32)
+            else:
+                executed = np.asarray(executed, dtype=np.float32)
+            executed = base.normalize_gripper_action(executed, binarize=True)
+            if cfg.model_family == "openvla":
+                executed = base.invert_gripper_action(executed)
+            obs, _, done, _ = env.step(executed.tolist())
             if done:
                 break
     finally:
@@ -196,16 +274,19 @@ def collect_frames(cfg, model, processor, task, init_state, num_frames, device,
 def train(args):
     device = "cuda"
     random.seed(args.seed)
+    # 只在结束时撤"自己打的"补丁：若启动时补丁已被其他评测持有（patched），
+    # 盲目 unpatch 会打崩并发使用 XML 的 transfer_pi2ov 评测（2026-10-12 事故）
+    _was_clean = TR.patch_status() == "clean"
     TR.ensure_patch(True)
     cfg = base.GenerateConfig(pretrained_checkpoint=CKPT,
                               model_family="openvla")
     model = base.get_model(cfg)
     processor = base.get_processor(cfg)
+    base.check_unnorm_key(cfg, model)
     model_input_size = base.get_image_resize_size(cfg)
-    sm = torch.tensor(SIGLIP_MEAN, device=device).view(1, 3, 1, 1)
-    ss = torch.tensor(SIGLIP_STD, device=device).view(1, 3, 1, 1)
-    dm = torch.tensor(DINO_MEAM, device=device).view(1, 3, 1, 1)
-    ds = torch.tensor(DINO_STD, device=device).view(1, 3, 1, 1)
+    action_head, proprio_projector, noisy_action_projector = \
+        _build_action_modules(cfg, model)
+    sm, ss, dm, ds = _norm_consts(device)
 
     if args.load_pool and os.path.exists(args.pool_file):
         pool = torch.load(args.pool_file, map_location=device, weights_only=False)
@@ -220,7 +301,8 @@ def train(args):
             pool[tid] = []
             for ep in range(args.pool_episodes):
                 pool[tid].extend(collect_frames(
-                    cfg, model, processor, task, inits[ep],
+                    cfg, model, processor, action_head, proprio_projector,
+                    noisy_action_projector, task, inits[ep],
                     args.frames_per_ep, device, stride=args.stride,
                     max_frames=args.max_frames_ep, ep_tag=ep))
         if args.collect_only:
@@ -242,22 +324,34 @@ def train(args):
 
     param = renderer.adv_noise
     task_ids = list(pool.keys())
-    all_frames = [(tid, fr) for tid in task_ids for fr in pool[tid]]
+    all_frames = [(tid, fr) for tid in task_ids for fr in pool[tid]
+                  if fr["mvp"] is not None]
+    print(f"[train] 池 {len(all_frames)} 帧 × {args.iters} iters 开始")
     for it in range(args.iters):
         tid, fr = random.choice(all_frames)
         param.grad = None
         adv_rgba, _ = renderer.render(fr["mvp"], (256, 256), model_rot=fr["rot"])
-        comp = torch.clamp(adv_rgba * fr["seg"] + fr["bg"] * (1.0 - fr["seg"]),
+        adv_chw = adv_rgba.permute(0, 3, 1, 2)
+        comp = torch.clamp(adv_chw * fr["seg"] + fr["bg"] * (1.0 - fr["seg"]),
                            0.0, 1.0)
-        pv224 = F.interpolate(comp, size=(model_input_size, model_input_size),
-                              mode="bilinear", align_corners=False)
-        pv = torch.cat([(pv224 - sm) / ss, (pv224 - dm) / ds],
-                       dim=1).to(torch.bfloat16)
-        fwd = model(input_ids=fr["ids"], attention_mask=torch.ones_like(fr["ids"]),
-                    pixel_values=pv, output_hidden_states=True)
-        adv_h = fwd.hidden_states[-1].float().mean(dim=1)
-        clean_h = fr["clean_hidden"].float().mean(dim=1)
-        attack = -F.mse_loss(adv_h, clean_h)
+        pv = base._compose_oft_pixel_values(
+            adv_rgb=comp, model_input_size=model_input_size,
+            siglip_mean=sm, siglip_std=ss, dino_mean=dm, dino_std=ds,
+            wrist_tensor=fr.get("wrist")).to(torch.bfloat16)
+        with base.autocast(dtype=torch.bfloat16):
+            _, adv_hidden = model.predict_action(
+                input_ids=fr["text_inputs"]["input_ids"],
+                attention_mask=fr["text_inputs"]["attention_mask"],
+                pixel_values=pv,
+                unnorm_key=cfg.unnorm_key,
+                proprio=fr["proprio"],
+                proprio_projector=proprio_projector,
+                action_head=action_head,
+                noisy_action_projector=noisy_action_projector,
+                use_film=getattr(cfg, "use_film", False),
+            )
+            adv_action = action_head.predict_action(adv_hidden)
+        attack = -F.mse_loss(adv_action.float(), fr["clean_action_head"])
         tex = renderer.texture_tensor()
         ref = F.mse_loss(tex, t0_tex)
         tv = tv_loss(tex - t0_tex)
@@ -277,7 +371,8 @@ def train(args):
                 os.path.join(out_dir, "Universal_Cloth_OV.png"))
             torch.save(param.detach().cpu(),
                        os.path.join(out_dir, "Ep0_Cloth_Delta_OV.pt"))
-    TR.ensure_patch(False)
+    if _was_clean:
+        TR.ensure_patch(False)
     print(f"[train] 完成，产物在 {out_dir}")
 
 
@@ -291,7 +386,7 @@ def main():
     p.add_argument("--stride", type=int, default=10)
     p.add_argument("--max-frames-ep", type=int, default=40)
     p.add_argument("--pool-file",
-                   default=os.path.join(OUT_ROOT, "ov_cloth_pool.pt"))
+                   default=os.path.join(OUT_ROOT, "oft_cloth_pool.pt"))
     p.add_argument("--collect-only", action="store_true")
     p.add_argument("--load-pool", action="store_true")
     p.add_argument("--iters", type=int, default=2000)

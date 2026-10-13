@@ -1,12 +1,14 @@
 """π0/OV 训练的桌布纹理 → OFT 三条件迁移评测（MuJoCo 原生闭环）.
 
-在 OpenVLA 的 LIBERO 树上铺同一块桌布，检验 π0 侧优化出的对抗纹理能否跨模型迁移。
-三条件：original（无布）/ plain（素色 T0）/ adv（π0 的 Universal_Cloth.png）。
-注入与对齐机制与 π0 侧完全同源（SurfaceAdapter + tex_data 热替换）。
+在 OFT 的 LIBERO 树上铺同一块桌布，检验 π0/OV 侧优化出的对抗纹理能否跨模型迁移。
+三条件：original（无布）/ plain（素色 T0）/ adv（Universal_Cloth.png）。
+注入与对齐机制与 π0/OV 侧完全同源（SurfaceAdapter + tex_data 热替换）。
+动作链走 attack_oft.py 的 predict_action + action_head 路径
+（_query_action_with_compatible_signature 包装，不走 model.generate）。
 
 用法:
-  python transfer_pi2ov.py patch --on|--off|--status
-  python transfer_pi2ov.py eval --condition original|plain|adv \
+  python transfer_pi2oft.py patch --on|--off|--status
+  python transfer_pi2oft.py eval --condition original|plain|adv \
       --tasks 0,2,8 --trials 25 [--texture path.png] [--save-frame]
 """
 import argparse
@@ -21,6 +23,7 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+import sys as _s; _s.path.insert(0, "/data/shaozhen.liu/code/tex3d/openvla/experiments/robot/libero")
 import cloth_transfer_utils as ctu            # noqa: E402  注入四件套（attack_pi0 原样）
 import attack_oft as base            # noqa: E402  复用其 env/模型/动作链
 
@@ -34,7 +37,7 @@ BACKUP = LIBERO_XML + ".precloth"
 SEARCH = [["tablecloth"]]
 OUT_ROOT = "/data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/transfer_oft"
 CKPT = "/data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt"
-RES = 512  # 与 attack_openvla_taao 的 eval_libero 同分辨率
+RES = 512  # 与 attack_oft 的 eval_libero 同分辨率
 
 
 # ---------------------------------------------------------------- 场景补丁
@@ -112,14 +115,30 @@ def run_eval(args):
         texture_path = CLOTH_T0
     elif args.condition == "adv":
         if not args.texture:
-            raise ValueError("adv 条件需要 --texture 指向 π0 的 Universal_Cloth.png")
+            raise ValueError("adv 条件需要 --texture 指向 Universal_Cloth.png")
         texture_path = args.texture
 
     cfg = base.GenerateConfig(
         pretrained_checkpoint=CKPT, model_family="openvla")
     model = base.get_model(cfg)
     processor = base.get_processor(cfg)
+    base.check_unnorm_key(cfg, model)
     model_input_size = base.get_image_resize_size(cfg)
+    use_proprio = bool(getattr(cfg, "use_proprio", False))
+    use_wrist = getattr(cfg, "num_images_in_input", 1) > 1
+
+    # OFT 动作头三件套（与 attack_oft.eval_libero 同调用方式）
+    if base.get_action_head is None:
+        raise RuntimeError("OFT 需 openvla_utils.get_action_head（导入失败）")
+    action_head = proprio_projector = noisy_action_projector = None
+    if cfg.use_l1_regression or cfg.use_diffusion:
+        action_head = base.get_action_head(cfg, model.llm_dim)
+    if cfg.use_proprio and base.get_proprio_projector is not None:
+        proprio_projector = base.get_proprio_projector(
+            cfg, model.llm_dim, proprio_dim=8)
+    if cfg.use_diffusion and base.get_noisy_action_projector is not None:
+        noisy_action_projector = base.get_noisy_action_projector(
+            cfg, model.llm_dim)
 
     from libero.libero import benchmark
     suite = benchmark.get_benchmark_dict()["libero_spatial"]()
@@ -166,26 +185,42 @@ def run_eval(args):
                                 base.get_libero_dummy_action(cfg.model_family))
                             t += 1
                             continue
-                        img_high = base.get_libero_image(obs, RES)
+                        img_high = base.get_libero_image(obs)
                         if args.save_frame and not frame_saved:
                             Image.fromarray(img_high).save(
                                 os.path.join(out_dir, f"task{tid}_frame.png"))
                             frame_saved = True
                         img_model = np.array(Image.fromarray(img_high).resize(
                             (model_input_size, model_input_size)))
-                        observation = {
-                            "full_image": img_model,
-                            "state": np.concatenate((
+                        observation = {"full_image": img_model}
+                        if use_proprio:
+                            observation["state"] = np.concatenate((
                                 obs["robot0_eef_pos"],
                                 base.quat2axisangle(obs["robot0_eef_quat"]),
                                 obs["robot0_gripper_qpos"],
-                            )),
-                        }
-                        action = base.get_action(
+                            ))
+                        else:
+                            observation["state"] = np.zeros(8)
+                        if use_wrist:
+                            wrist_m = base._extract_wrist_image(
+                                obs, model_input_size)
+                            if wrist_m is not None:
+                                observation["wrist_image"] = wrist_m
+                        action = base._query_action_with_compatible_signature(
                             cfg, model, observation, task_description,
-                            processor=processor)
-                        action = base.normalize_gripper_action(action, binarize=True)
-                        action = base.invert_gripper_action(action)
+                            processor,
+                            action_head=action_head,
+                            proprio_projector=proprio_projector,
+                            noisy_action_projector=noisy_action_projector,
+                            use_film=getattr(cfg, "use_film", False))
+                        if isinstance(action, list):
+                            action = np.asarray(action[0], dtype=np.float32)
+                        else:
+                            action = np.asarray(action, dtype=np.float32)
+                        action = base.normalize_gripper_action(
+                            action, binarize=True)
+                        if cfg.model_family == "openvla":
+                            action = base.invert_gripper_action(action)
                         obs, _, done, _ = env.step(action.tolist())
                         if done:
                             break
