@@ -154,9 +154,10 @@ def ensure_patch(on: bool):
         patch_scene(on)
 
 
-def align_cloth_to_table(env, lift=0.005):
+def align_cloth_to_table(env, lift=0.005, floor_mode=False):
     """SurfaceAdapter：运行时把桌布对齐真实桌面（arena 会改写桌子尺寸/位置，
-    场景 XML 里的静态坐标不可信）。读 table_top site，把布摆在桌面上方 lift 米。"""
+    场景 XML 里的静态坐标不可信）。读 table_top site，把布摆在桌面上方 lift 米。
+    floor_mode=True（地面操作套件）：直接用 XML 静态贴地位置。"""
     sim = env.env.sim
     table_top = None
     for s in range(sim.model.nsite):
@@ -171,53 +172,56 @@ def align_cloth_to_table(env, lift=0.005):
     if cloth_bid == -1:
         raise RuntimeError("SurfaceAdapter：找不到桌布 body")
     sim.forward()
+    if floor_mode:
+        return sim.model.body_pos[cloth_bid].copy()
     if table_top is not None:
         pos = np.array(sim.data.site_xpos[table_top], dtype=float)
     else:
-        # 泛化回退（混合版）：box 扫描定位桌面 xy（无 site 场景），再从该 xy
-        # 垂直向下 5 条射线取命中高度中位数为 z。教训：碰撞盒顶面可能与视觉
-        # 网格差 20cm（living_room_table_col 实测 0.639 vs 视觉 0.437），
-        # z 必须以射线（含视觉网格）为准；中位数抗桌上物体干扰。
-        best, best_area = None, -1.0
-        for g in range(sim.model.ngeom):
-            if int(sim.model.geom_bodyid[g]) == int(cloth_bid):
-                continue
-            if int(sim.model.geom_type[g]) != 6:  # mjGEOM_BOX
-                continue
-            x = sim.data.geom_xpos[g]
-            s = sim.model.geom_size[g]
-            top = float(x[2] + s[2])
-            if not (0.2 <= top <= 1.2):
-                continue
-            area = float(4.0 * s[0] * s[1])
-            if area > best_area:
-                best_area, best = area, x
-        if best is None:
-            print("[align] 混合回退：未找到候选桌面 box，沿用静态位置")
-            return sim.model.body_pos[cloth_bid].copy()
+        # 泛化回退（射线网格版）：在场景 XY 平面撒 21×21 垂直射线网，
+        # 找"高度一致的最大平坦高台"(0.25-1.2m)作为桌面——xy 与 z 全部
+        # 从视觉几何直接测得。教训：碰撞盒的 z 可差 20cm、xy 也可偏移，
+        # 一律不可信；桌上物体(框/碗)形成的小平台会被"最大平台"逻辑排除。
+        # floor 等无高台场景沿用 XML 静态位置（贴地）。
         import mujoco as _mj
         m = getattr(sim.model, "_model", sim.model)
         d_ = getattr(sim.data, "_data", sim.data)
-        hits = []
-        for dx, dy in [(0, 0), (0.22, 0), (-0.22, 0), (0, 0.14), (0, -0.14)]:
-            pnt = np.array([best[0] + dx, best[1] + dy, 1.8])
-            try:
-                gid = np.zeros(1, dtype=np.int32)
-                dist = _mj.mj_ray(m, d_, pnt, np.array([0.0, 0.0, -1.0]),
-                                  None, 1, int(cloth_bid), gid)
-            except Exception as _e:
-                print(f"[align] mj_ray 异常: {type(_e).__name__}: {_e}")
-                dist = -1.0
-            if dist >= 0:
-                hits.append(1.8 - float(dist))
-        if not hits:
-            print("[align] 混合回退：射线全部失败，沿用静态位置")
+        cells = []
+        for gx in np.arange(-1.2, 1.21, 0.12):
+            for gy in np.arange(-1.2, 1.21, 0.12):
+                pnt = np.array([gx, gy, 1.8])
+                try:
+                    gid = np.zeros(1, dtype=np.int32)
+                    dist = _mj.mj_ray(m, d_, pnt, np.array([0.0, 0.0, -1.0]),
+                                      None, 1, int(cloth_bid), gid)
+                except Exception:
+                    dist = -1.0
+                if dist >= 0:
+                    z = 1.8 - float(dist)
+                    if 0.25 <= z <= 1.2:
+                        cells.append((float(gx), float(gy), z))
+        if len(cells) < 8:
+            print(f"[align] 无 table_top site 且高台射线不足({len(cells)})，沿用静态位置")
             return sim.model.body_pos[cloth_bid].copy()
-        surf = float(np.median(hits))
-        print(f"[align] 无 table_top site，混合回退：桌面 xy=({best[0]:.2f},"
-              f"{best[1]:.2f}) 射线支撑面 z={surf:.3f}（hits="
-              f"{[round(h, 3) for h in hits]}）")
-        pos = np.array([best[0], best[1], surf], dtype=float)
+        # ±1.5cm 容差聚类取最大平台（0.1m 分桶会把布压沉 3-4cm，弃用）
+        zs_sorted = sorted(c[2] for c in cells)
+        groups, cur = [], [zs_sorted[0]]
+        for z in zs_sorted[1:]:
+            if z - cur[-1] <= 0.015:
+                cur.append(z)
+            else:
+                groups.append(cur); cur = [z]
+        groups.append(cur)
+        grp_zs = max(groups, key=len)
+        z_top = float(np.median(grp_zs))
+        thr = z_top + 0.02
+        grp = [c for c in cells if abs(c[2] - z_top) <= 0.02]
+        xs = np.array([c[0] for c in grp]); ys = np.array([c[1] for c in grp])
+        cx, cy = float(xs.mean()), float(ys.mean())
+        cx = float(np.clip(cx, np.percentile(xs, 10), np.percentile(xs, 90)))
+        cy = float(np.clip(cy, np.percentile(ys, 10), np.percentile(ys, 90)))
+        print(f"[align] 无 table_top site，射线网格：平台 z={z_top:.3f} "
+              f"(n={len(grp)}/{len(cells)})，布心=({cx:.2f},{cy:.2f})")
+        pos = np.array([cx, cy, z_top], dtype=float)
     sim.model.body_pos[cloth_bid, 0] = pos[0]
     sim.model.body_pos[cloth_bid, 1] = pos[1]
     sim.model.body_pos[cloth_bid, 2] = pos[2] + lift
@@ -299,7 +303,8 @@ class ClothRenderer(DifferentiableRenderer):
         arr = (tex.squeeze(0).cpu().numpy() * 255.0).round().clip(0, 255)
         return arr.astype(np.uint8)
 
-    def render(self, mvp, resolution=(256, 256), return_clean=False, model_rot=None):
+    def render(self, mvp, resolution=(256, 256), return_clean=False, model_rot=None,
+               uv_xform=None):
         tex = self.texture_tensor()
         pos = self.pos + self.pos_offset
         pos_homo = torch.cat([pos, torch.ones_like(pos[..., :1])], dim=-1)
@@ -307,6 +312,13 @@ class ClothRenderer(DifferentiableRenderer):
         rast, _ = dr.rasterize(self.glctx, pos_clip.unsqueeze(0), self.faces,
                                resolution=resolution)
         tex_uv, _ = dr.interpolate(self.uv.unsqueeze(0), rast, self.uv_idx)
+        if uv_xform is not None:
+            # UV 域 EoT：旋转/镜像/平移纹理采样坐标（模式级位置鲁棒性）
+            u, v = tex_uv[..., 0], tex_uv[..., 1]
+            nu = uv_xform[0, 0] * u + uv_xform[0, 1] * v + uv_xform[0, 2]
+            nv = uv_xform[1, 0] * u + uv_xform[1, 1] * v + uv_xform[1, 2]
+            tex_uv = torch.stack([torch.remainder(nu, 1.0),
+                                  torch.remainder(nv, 1.0)], dim=-1)
         color = dr.texture(tex.contiguous(), tex_uv.contiguous(),
                            filter_mode="linear")
 
@@ -403,17 +415,36 @@ def load_policy(ckpt, model_config="pi0_libero", num_denoise=1):
 # --------------------------------------------------------------------------
 # 帧采集：真实策略轨迹 + 素色桌布已注入
 # --------------------------------------------------------------------------
+def jitter_cloth_placement(env, max_rot_deg=180.0, max_shift=0.03, rng=None):
+    """EoT 几何抖动：对齐后对桌布施加随机 z 轴旋转(0~max_deg)与小幅平移。
+    采集期调用——帧池自动涵盖各种摆位，模拟真实铺布的位置误差。"""
+    import numpy.random as npr
+    r = rng or npr
+    sim = env.env.sim
+    _, bid, _ = get_target_model_matrix(env, CLOTH_SEARCH)
+    theta = np.deg2rad(r.uniform(0.0, max_rot_deg))
+    dx, dy = r.uniform(-max_shift, max_shift, 2)
+    q = np.array([np.cos(theta / 2), 0.0, 0.0, np.sin(theta / 2)])
+    sim.model.body_quat[bid] = q
+    sim.model.body_pos[bid, 0] += dx
+    sim.model.body_pos[bid, 1] += dy
+    sim.forward()
+
+
 def collect_cloth_frames(policy, task, init_state, num_frames, device,
                          max_steps=400, replan_steps=5, num_steps_wait=10,
                          stride=1, max_frames_ep=None, weighting=None,
-                         tau=1.0, ep_tag=0):
+                         tau=1.0, ep_tag=0, place_jitter=False,
+                         floor_mode=False, jitter_rng=None):
     desc = task.language
     env, _ = _get_libero_env(task, resolution=256)
     env.reset()
     env.set_init_state(init_state)
     sim = env.env.sim
     sim.forward()
-    align_cloth_to_table(env)
+    align_cloth_to_table(env, floor_mode=floor_mode)
+    if place_jitter:
+        jitter_cloth_placement(env, rng=jitter_rng)
 
     _, cloth_body_id, _ = get_target_model_matrix(env, CLOTH_SEARCH)
     if cloth_body_id == -1:
@@ -503,8 +534,9 @@ def collect_cloth_frames(policy, task, init_state, num_frames, device,
 # --------------------------------------------------------------------------
 # 通用训练
 # --------------------------------------------------------------------------
-def composite_cloth(renderer, frame):
-    adv_rgba, _ = renderer.render(frame["mvp"], resolution=(256, 256))
+def composite_cloth(renderer, frame, uv_xform=None):
+    adv_rgba, _ = renderer.render(frame["mvp"], resolution=(256, 256),
+                                  uv_xform=uv_xform)
     adv_rgb = adv_rgba.permute(0, 3, 1, 2)
     seg = frame["seg"]
     return torch.clamp(adv_rgb * seg + frame["bg"] * (1.0 - seg), 0.0, 1.0)
@@ -577,7 +609,10 @@ def train_universal(args):
                     stride=args.stride,
                     max_frames_ep=(args.max_frames_ep
                                    if args.pool_mode == "full" else None),
-                    weighting=args.frame_weighting, tau=args.tau, ep_tag=ep)
+                    weighting=args.frame_weighting, tau=args.tau, ep_tag=ep,
+                    place_jitter=args.place_jitter,
+                    floor_mode=(args.suite == "libero_object"),
+                    jitter_rng=np.random.RandomState(args.seed + 1000 + ep))
                 frames.extend(got)
                 print(f"[pool] task {task_id} ep{ep}: +{len(got)} 帧 "
                       f"({time.time() - started:.0f}s)")
@@ -609,18 +644,34 @@ def train_universal(args):
     param = renderer.adv_vc_noise
     task_ids = list(pool.keys())
     history = []
-    for it in range(args.iters):
-        tid = random.choice(task_ids)
-        frame = random.choice(pool[tid])
-        param.grad = None
 
-        adv_img = composite_cloth(renderer, frame)
+    def sample_uv_xform():
+        """EoT：绕(0.5,0.5)随机旋转 0-180° + 50% 镜像 + ±0.04 UV 平移。"""
+        if not getattr(args, "uv_eot", False):
+            return None
+        ang = random.uniform(0.0, np.pi)
+        c, s = float(np.cos(ang)), float(np.sin(ang))
+        A = np.array([[c, -s, 0.5 - 0.5 * c + 0.5 * s],
+                      [s, c, 0.5 - 0.5 * s - 0.5 * c]], dtype=np.float32)
+        if random.random() < 0.5:
+            A = np.array([[-1.0, 0.0, 1.0], [0.0, 1.0, 0.0]],
+                         dtype=np.float32) @ A
+        A[0, 2] += random.uniform(-0.04, 0.04)
+        A[1, 2] += random.uniform(-0.04, 0.04)
+        return torch.from_numpy(A).to(device)
+
+    all_frames = [(tid, fr) for tid in task_ids for fr in pool[tid]]
+    for it in range(args.iters):
+        tid, fr = random.choice(all_frames)
+        param.grad = None
+        uv_a = sample_uv_xform()
+        adv_img = composite_cloth(renderer, fr, uv_xform=uv_a)
         new_inputs, _, _ = replace_image_in_processed_inputs(
-            frame["processed_inputs"], adv_img, device)
+            fr["processed_inputs"], adv_img, device)
         adv_obs = _model.Observation.from_dict(new_inputs)
         adv_embs, _, _ = extract_split_features(model, adv_obs)
-        attack_loss = -F.mse_loss(adv_embs, frame["clean_img_embs"])
-        fw = float(frame.get("w", 1.0)) if args.frame_weighting == "taao" else 1.0
+        attack_loss = -F.mse_loss(adv_embs, fr["clean_img_embs"])
+        fw = float(fr.get("w", 1.0)) if args.frame_weighting == "taao" else 1.0
 
         tex = renderer.texture_tensor()
         ref = F.mse_loss(tex, t0_tex)
@@ -652,7 +703,8 @@ def train_universal(args):
 # 原生闭环评测
 # --------------------------------------------------------------------------
 def evaluate_native(policy, task, init_state, texture_arr=None, max_steps=400,
-                    num_steps_wait=10, replan_steps=5, save_video=None):
+                    num_steps_wait=10, replan_steps=5, save_video=None,
+                    floor_mode=False):
     desc = task.language
     env, _ = _get_libero_env(task, resolution=256)
     env.reset()
@@ -661,7 +713,7 @@ def evaluate_native(policy, task, init_state, texture_arr=None, max_steps=400,
     sim.forward()
     # original 条件无桌布（XML clean），对齐仅在有桌布的 plain/adv 条件下执行
     if texture_arr is not None:
-        align_cloth_to_table(env)
+        align_cloth_to_table(env, floor_mode=floor_mode)
 
     restore_info = None
     tex_id = -1
@@ -733,6 +785,7 @@ def run_eval(args):
     policy = load_policy(args.ckpt, num_denoise=args.num_denoise)
     suite = benchmark.get_benchmark_dict()[
         getattr(args, "suite", "libero_spatial")]()
+    floor_mode = (getattr(args, "suite", "libero_spatial") == "libero_object")
 
     tasks = HELDOUT_TASKS if args.tasks == "heldout" else \
         [int(t) for t in args.tasks.split(",")]
@@ -757,7 +810,7 @@ def run_eval(args):
                 ok = evaluate_native(policy, task, init_states[ep], texture_arr,
                                      max_steps=args.max_steps,
                                      num_steps_wait=10, replan_steps=5,
-                                     save_video=video)
+                                     save_video=video, floor_mode=floor_mode)
                 succ += int(ok)
                 total_success += int(ok)
                 total_eps += 1
@@ -940,6 +993,10 @@ def main():
     p.add_argument("--tag", default="", help="训练输出目录后缀")
     p.add_argument("--suite", default="libero_spatial",
                    help="采集帧池的 benchmark 套件名")
+    p.add_argument("--place-jitter", action="store_true",
+                   help="采集期几何 EoT：桌布随机旋转(0-180°)+平移(±3cm)")
+    p.add_argument("--uv-eot", action="store_true",
+                   help="训练期 UV 域 EoT：纹理随机旋转/镜像/平移")
 
     p = sub.add_parser("eval")
     p.add_argument("--condition", required=True,
