@@ -173,6 +173,16 @@ def align_cloth_to_table(env, lift=0.005, floor_mode=False):
         raise RuntimeError("SurfaceAdapter：找不到桌布 body")
     sim.forward()
     if floor_mode:
+        # 地面操作套件：布铺在动态物体的质心处（盖住大多数物体，天然靠机械臂
+        # 工作区），高度贴地；夹紧在可达范围内。
+        cen, _, _ = _scene_object_bbox_xy(sim, cloth_bid)
+        if cen is not None:
+            cx = float(np.clip(cen[0], -0.75, 0.75))
+            cy = float(np.clip(cen[1], -0.75, 0.75))
+            sim.model.body_pos[cloth_bid, 0] = cx
+            sim.model.body_pos[cloth_bid, 1] = cy
+            sim.model.body_pos[cloth_bid, 2] = 0.005
+            sim.forward()
         return sim.model.body_pos[cloth_bid].copy()
     if table_top is not None:
         pos = np.array(sim.data.site_xpos[table_top], dtype=float)
@@ -415,15 +425,39 @@ def load_policy(ckpt, model_config="pi0_libero", num_denoise=1):
 # --------------------------------------------------------------------------
 # 帧采集：真实策略轨迹 + 素色桌布已注入
 # --------------------------------------------------------------------------
-def jitter_cloth_placement(env, max_rot_deg=180.0, max_shift=0.03, rng=None):
-    """EoT 几何抖动：对齐后对桌布施加随机 z 轴旋转(0~max_deg)与小幅平移。
-    采集期调用——帧池自动涵盖各种摆位，模拟真实铺布的位置误差。"""
+def _scene_object_bbox_xy(sim, cloth_bid):
+    """收集场景中动态物体（排除机械臂/桌布）的世界 XY，返回 (质心, x展宽, y展宽)。"""
+    xs, ys = [], []
+    for b in range(sim.model.nbody):
+        try:
+            name = sim.model.body_id2name(b) or ""
+        except Exception:
+            name = ""
+        if name.startswith("robot0") or name == "tablecloth" or int(b) == int(cloth_bid):
+            continue
+        if int(sim.model.body_dofnum[b]) <= 0:
+            continue
+        p = sim.data.xpos[b]
+        xs.append(float(p[0])); ys.append(float(p[1]))
+    if not xs:
+        return None, 0.0, 0.0
+    return (np.array([np.mean(xs), np.mean(ys)]),
+            float(np.max(xs) - np.min(xs)), float(np.max(ys) - np.min(ys)))
+
+
+def jitter_cloth_placement(env, rng=None):
+    """EoT 几何抖动（自适应版）：随机 z 轴旋转（顺/逆时针各 0-180°，即 ±180°），
+    平移幅度按物体包围盒各轴展宽的 30% 自适应（截断 1-8cm，x/y 独立采样）——
+    物体散得开多抖、紧凑少抖。采集期调用。"""
     import numpy.random as npr
     r = rng or npr
     sim = env.env.sim
     _, bid, _ = get_target_model_matrix(env, CLOTH_SEARCH)
-    theta = np.deg2rad(r.uniform(0.0, max_rot_deg))
-    dx, dy = r.uniform(-max_shift, max_shift, 2)
+    theta = float(r.uniform(-np.pi, np.pi))
+    cen, ex, ey = _scene_object_bbox_xy(sim, bid)
+    sx = float(np.clip(0.3 * (ex if ex > 0 else 0.2), 0.01, 0.08))
+    sy = float(np.clip(0.3 * (ey if ey > 0 else 0.2), 0.01, 0.08))
+    dx, dy = float(r.uniform(-sx, sx)), float(r.uniform(-sy, sy))
     q = np.array([np.cos(theta / 2), 0.0, 0.0, np.sin(theta / 2)])
     sim.model.body_quat[bid] = q
     sim.model.body_pos[bid, 0] += dx
@@ -646,16 +680,20 @@ def train_universal(args):
     history = []
 
     def sample_uv_xform():
-        """EoT：绕(0.5,0.5)随机旋转 0-180° + 50% 镜像 + ±0.04 UV 平移。"""
+        """UV 域 EoT：绕(0.5,0.5)随机旋转（顺/逆时针各 0-180°）+ 50% 镜像
+        （随机沿 u 轴水平翻或 v 轴垂直翻）+ x/y 独立的 ±0.04 平移。"""
         if not getattr(args, "uv_eot", False):
             return None
-        ang = random.uniform(0.0, np.pi)
+        ang = random.uniform(-np.pi, np.pi)
         c, s = float(np.cos(ang)), float(np.sin(ang))
         A = np.array([[c, -s, 0.5 - 0.5 * c + 0.5 * s],
                       [s, c, 0.5 - 0.5 * s - 0.5 * c]], dtype=np.float32)
         if random.random() < 0.5:
-            A = np.array([[-1.0, 0.0, 1.0], [0.0, 1.0, 0.0]],
-                         dtype=np.float32) @ A
+            if random.random() < 0.5:  # 沿 v 轴镜像（水平翻 u）
+                M = np.array([[-1.0, 0.0, 1.0], [0.0, 1.0, 0.0]], np.float32)
+            else:                       # 沿 u 轴镜像（垂直翻 v）
+                M = np.array([[1.0, 0.0, 0.0], [0.0, -1.0, 1.0]], np.float32)
+            A = M @ A
         A[0, 2] += random.uniform(-0.04, 0.04)
         A[1, 2] += random.uniform(-0.04, 0.04)
         return torch.from_numpy(A).to(device)
