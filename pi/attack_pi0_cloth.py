@@ -693,7 +693,9 @@ def train_universal(args):
                 M = np.array([[-1.0, 0.0, 1.0], [0.0, 1.0, 0.0]], np.float32)
             else:                       # 沿 u 轴镜像（垂直翻 v）
                 M = np.array([[1.0, 0.0, 0.0], [0.0, -1.0, 1.0]], np.float32)
-            A = M @ A
+            # 仿射合成须在 3x3 齐次坐标下做（(2,3)@(2,3) 的 matmul 维度不合法）
+            A = (np.vstack([M, [0.0, 0.0, 1.0]])
+                 @ np.vstack([A, [0.0, 0.0, 1.0]]))[:2]
         A[0, 2] += random.uniform(-0.04, 0.04)
         A[1, 2] += random.uniform(-0.04, 0.04)
         return torch.from_numpy(A).to(device)
