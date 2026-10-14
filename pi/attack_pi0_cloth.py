@@ -174,9 +174,10 @@ def align_cloth_to_table(env, lift=0.005):
     if table_top is not None:
         pos = np.array(sim.data.site_xpos[table_top], dtype=float)
     else:
-        # 泛化回退：living_room/study/coffee 等场景无 table_top site，
-        # 找顶面高度 0.3-1.2m、水平面积最大的 box geom 作为桌面；
-        # floor 等无桌场景（找不到合格 geom）沿用 XML 静态位置（贴地）。
+        # 泛化回退（混合版）：box 扫描定位桌面 xy（无 site 场景），再从该 xy
+        # 垂直向下 5 条射线取命中高度中位数为 z。教训：碰撞盒顶面可能与视觉
+        # 网格差 20cm（living_room_table_col 实测 0.639 vs 视觉 0.437），
+        # z 必须以射线（含视觉网格）为准；中位数抗桌上物体干扰。
         best, best_area = None, -1.0
         for g in range(sim.model.ngeom):
             if int(sim.model.geom_bodyid[g]) == int(cloth_bid):
@@ -186,21 +187,37 @@ def align_cloth_to_table(env, lift=0.005):
             x = sim.data.geom_xpos[g]
             s = sim.model.geom_size[g]
             top = float(x[2] + s[2])
-            if not (0.3 <= top <= 1.2):
+            if not (0.2 <= top <= 1.2):
                 continue
             area = float(4.0 * s[0] * s[1])
             if area > best_area:
-                try:
-                    name = sim.model.geom_id2name(g) or f"geom{g}"
-                except Exception:
-                    name = f"geom{g}"
-                best_area, best = area, (x, top, name)
+                best_area, best = area, x
         if best is None:
+            print("[align] 混合回退：未找到候选桌面 box，沿用静态位置")
             return sim.model.body_pos[cloth_bid].copy()
-        x, top, name = best
-        print(f"[align] 无 table_top site，回退最大桌面 geom '{name}' "
-              f"(top={top:.3f}m, area={best_area:.2f}m²)")
-        pos = np.array([x[0], x[1], top], dtype=float)
+        import mujoco as _mj
+        m = getattr(sim.model, "_model", sim.model)
+        d_ = getattr(sim.data, "_data", sim.data)
+        hits = []
+        for dx, dy in [(0, 0), (0.22, 0), (-0.22, 0), (0, 0.14), (0, -0.14)]:
+            pnt = np.array([best[0] + dx, best[1] + dy, 1.8])
+            try:
+                gid = np.zeros(1, dtype=np.int32)
+                dist = _mj.mj_ray(m, d_, pnt, np.array([0.0, 0.0, -1.0]),
+                                  None, 1, int(cloth_bid), gid)
+            except Exception as _e:
+                print(f"[align] mj_ray 异常: {type(_e).__name__}: {_e}")
+                dist = -1.0
+            if dist >= 0:
+                hits.append(1.8 - float(dist))
+        if not hits:
+            print("[align] 混合回退：射线全部失败，沿用静态位置")
+            return sim.model.body_pos[cloth_bid].copy()
+        surf = float(np.median(hits))
+        print(f"[align] 无 table_top site，混合回退：桌面 xy=({best[0]:.2f},"
+              f"{best[1]:.2f}) 射线支撑面 z={surf:.3f}（hits="
+              f"{[round(h, 3) for h in hits]}）")
+        pos = np.array([best[0], best[1], surf], dtype=float)
     sim.model.body_pos[cloth_bid, 0] = pos[0]
     sim.model.body_pos[cloth_bid, 1] = pos[1]
     sim.model.body_pos[cloth_bid, 2] = pos[2] + lift
