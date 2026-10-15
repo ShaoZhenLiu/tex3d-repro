@@ -145,7 +145,8 @@ def collect_frames(cfg, model, processor, task, init_state, num_frames, device,
                 prompt = (f"In: What action should the robot take to "
                           f"{task_description.lower()}?\nOut:")
                 inputs = processor(prompt, images=pil).to(device)
-                with torch.no_grad(), torch.autocast(dtype=torch.bfloat16):
+                with torch.no_grad(), torch.autocast(device_type="cuda",
+                                                     dtype=torch.bfloat16):
                     ids = model.generate(
                         **inputs, max_new_tokens=7, do_sample=False,
                         pad_token_id=processor.tokenizer.pad_token_id)
@@ -247,7 +248,8 @@ def train(args):
         tid, fr = random.choice(all_frames)
         param.grad = None
         adv_rgba, _ = renderer.render(fr["mvp"], (256, 256), model_rot=fr["rot"])
-        comp = torch.clamp(adv_rgba * fr["seg"] + fr["bg"] * (1.0 - fr["seg"]),
+        adv_chw = adv_rgba.permute(0, 3, 1, 2)
+        comp = torch.clamp(adv_chw * fr["seg"] + fr["bg"] * (1.0 - fr["seg"]),
                            0.0, 1.0)
         pv224 = F.interpolate(comp, size=(model_input_size, model_input_size),
                               mode="bilinear", align_corners=False)

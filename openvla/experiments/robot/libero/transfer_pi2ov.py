@@ -232,7 +232,8 @@ def run_eval(args):
         texture_path = args.texture
 
     cfg = base.GenerateConfig(
-        pretrained_checkpoint=CKPT, model_family="openvla")
+        pretrained_checkpoint=args.ckpt, model_family="openvla",
+        unnorm_key=args.unnorm_key)
     model = base.get_model(cfg)
     processor = base.get_processor(cfg)
     model_input_size = base.get_image_resize_size(cfg)
@@ -343,6 +344,10 @@ def main():
     p.add_argument("--max-steps", type=int, default=400,
                    help="与 π0 侧 evaluate_native 同默认，保证跨模型协议一致")
     p.add_argument("--texture", default=None)
+    p.add_argument("--ckpt", default=CKPT,
+                   help="OV checkpoint 目录（每套件用各自 SFT，避免 unnorm 统计错配）")
+    p.add_argument("--unnorm-key", default=None,
+                   help="动作反归一化统计键，如 libero_object；缺省用 checkpoint 唯一键")
     p.add_argument("--save-frame", action="store_true")
     args = ap.parse_args()
     if args.cmd == "patch":
