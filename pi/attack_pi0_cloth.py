@@ -830,7 +830,9 @@ def run_eval(args):
     tasks = HELDOUT_TASKS if args.tasks == "heldout" else \
         [int(t) for t in args.tasks.split(",")]
     stamp = time.strftime("%Y%m%d_%H%M%S")
-    out_dir = os.path.join(ARTIFACT_ROOT, f"eval_{args.condition}_{stamp}")
+    suite_name = getattr(args, "suite", "libero_spatial")
+    out_dir = os.path.join(ARTIFACT_ROOT,
+                           f"eval_{args.condition}_{suite_name}_{stamp}")
     os.makedirs(out_dir, exist_ok=True)
     result_path = os.path.join(out_dir, "evaluation_result.txt")
 
