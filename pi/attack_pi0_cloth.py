@@ -701,6 +701,82 @@ def train_universal(args):
         return torch.from_numpy(A).to(device)
 
     all_frames = [(tid, fr) for tid in task_ids for fr in pool[tid]]
+
+    # ---------- 扩展目标（导师方案）：J = λ_mse·J_mse + λ_con·J_con + λ_task·J_task − λ_reg·R ----------
+    frame_index = {id(fr): i for i, (_, fr) in enumerate(all_frames)}
+
+    def pooled_feat(embs):
+        """(1, N, D) 图像 token 均值池化 → 归一化 (D,) 向量。"""
+        v = embs[0].mean(dim=0).float()
+        return v / (v.norm() + 1e-8)
+
+    # 对比项负样本库：池内全部帧的 clean 特征（采集时已缓存，零额外前向）。
+    # 目标 = 最小化 log[exp(sim(z_a, z_own)/τ) / Σ_j exp(sim(z_a, z_j)/τ)]：
+    # 把受扰特征推离自身 clean、推向他帧分布 —— 约束方向而非范数。
+    con_bank = None
+    if getattr(args, "lambda_con", 0.0) > 0:
+        con_bank = torch.stack(
+            [pooled_feat(fr["clean_img_embs"]) for _, fr in all_frames]).to(device)
+
+    def contrast_loss(adv_embs, fr):
+        z_a = pooled_feat(adv_embs).to(con_bank.dtype)
+        sims = con_bank @ z_a / args.con_tau
+        own = torch.tensor([frame_index[id(fr)]], device=device)
+        return F.cross_entropy(sims[None], own)
+
+    # 任务条件项：指令 token 在语言融合后的 Gemma 隐藏状态（前缀全前向，无 suffix，
+    # 与 sample_actions 的 prefill 同构）。clean 参考在开跑前一次性缓存（no_grad）。
+    clean_task_vec = None
+    _task_fwd_ready = False
+
+    def _to_device(obj):
+        if torch.is_tensor(obj):
+            return obj.to(device)
+        if isinstance(obj, dict):
+            return {k: _to_device(v) for k, v in obj.items()}
+        if isinstance(obj, (list, tuple)):
+            t = type(obj)
+            return t(_to_device(v) for v in obj)
+        return obj
+
+    def task_fused_hidden(observation):
+        """返回 (D,) 指令 token 融合隐藏向量（对图像可微）。"""
+        nonlocal _task_fwd_ready
+        if not _task_fwd_ready:
+            model.paligemma_with_expert.paligemma.language_model.config._attn_implementation = "eager"
+            _task_fwd_ready = True
+        from openpi.models_pytorch.pi0_pytorch import make_att_2d_masks
+        images, img_masks, lang_tokens, lang_masks, _ = model._preprocess_observation(
+            observation, train=False)
+        prefix_embs, prefix_pad_masks, prefix_att_masks = model.embed_prefix(
+            images, img_masks, lang_tokens, lang_masks)
+        if (model.paligemma_with_expert.paligemma.language_model.layers[0]
+                .self_attn.q_proj.weight.dtype == torch.bfloat16):
+            prefix_embs = prefix_embs.to(dtype=torch.bfloat16)
+        att_2d = make_att_2d_masks(prefix_pad_masks, prefix_att_masks)
+        pos_ids = torch.cumsum(prefix_pad_masks, dim=1) - 1
+        att_4d = model._prepare_attention_masks_4d(att_2d)
+        (prefix_out, _), _ = model.paligemma_with_expert.forward(
+            attention_mask=att_4d, position_ids=pos_ids,
+            past_key_values=None, inputs_embeds=[prefix_embs, None], use_cache=False)
+        prefix_out = prefix_out.to(dtype=torch.float32)
+        n_lang = lang_tokens.shape[1]
+        lang_hidden = prefix_out[0, -n_lang:]           # 前缀尾部 = 语言段
+        m = lang_masks[0].to(prefix_out.dtype)[:, None]
+        v = (lang_hidden * m).sum(dim=0) / (m.sum() + 1e-8)
+        return v
+
+    if getattr(args, "lambda_task", 0.0) > 0:
+        with torch.no_grad():
+            clean_task_vec = torch.stack([
+                task_fused_hidden(_model.Observation.from_dict(
+                    _to_device(fr["processed_inputs"])))
+                for _, fr in all_frames]).to(device)
+        print(f"[train] 任务条件项 clean 参考已缓存 {tuple(clean_task_vec.shape)}")
+
+    # UV 覆盖日志：顶点梯度幅值累积（33x33 热图，回答"哪个 UV 区域吃到多少梯度"）
+    grad_cov = torch.zeros(param.shape[0], device=device)
+
     for it in range(args.iters):
         tid, fr = random.choice(all_frames)
         param.grad = None
@@ -713,29 +789,52 @@ def train_universal(args):
         attack_loss = -F.mse_loss(adv_embs, fr["clean_img_embs"])
         fw = float(fr.get("w", 1.0)) if args.frame_weighting == "taao" else 1.0
 
+        loss = fw * getattr(args, "lambda_mse", 1.0) * attack_loss
+        con_val = task_val = None
+        if con_bank is not None:
+            con_val = contrast_loss(adv_embs, fr)
+            loss = loss + fw * args.lambda_con * con_val
+        if clean_task_vec is not None and (it % args.task_every_k == 0
+                                           or it == args.iters - 1):
+            z_task = task_fused_hidden(adv_obs)
+            task_val = -F.mse_loss(z_task, clean_task_vec[frame_index[id(fr)]])
+            loss = loss + fw * args.lambda_task * task_val
+
         tex = renderer.texture_tensor()
         ref = F.mse_loss(tex, t0_tex)
         tv = tv_loss(tex - t0_tex)
-        (fw * attack_loss + args.lambda_ref * ref + args.lambda_tv * tv).backward()
+        (loss + args.lambda_ref * ref + args.lambda_tv * tv).backward()
 
         gnorm = param.grad.norm().item() if param.grad is not None else 0.0
+        grad_cov += param.grad.detach().abs().max(dim=-1)[0] if param.grad is not None else 0.0
         with torch.no_grad():
             param.sub_(args.attack_lr * param.grad.sign())
             param.clamp_(-5.0, 5.0)
         history.append(float(attack_loss.item()))
         if it % 50 == 0 or it == args.iters - 1:
+            extra = ""
+            if con_val is not None:
+                extra += f" con={con_val.item():+.4f}"
+            if task_val is not None:
+                extra += f" task={task_val.item():+.4f}"
             with open(log_path, "a") as f:
                 f.write(f"{it:05d} | {tid} | {attack_loss.item():+.5f} | "
-                        f"{ref.item():.5f} | {tv.item():.5f} | {gnorm:.3e}\n")
+                        f"{ref.item():.5f} | {tv.item():.5f} | {gnorm:.3e}{extra}\n")
             print(f"[train] it{it:05d} task{tid} attack={attack_loss.item():+.4f} "
                   f"ref={ref.item():.4f} tv={tv.item():.4f} "
-                  f"w={fw:.2f} g={gnorm:.2e}")
+                  f"w={fw:.2f} g={gnorm:.2e}{extra}")
         if (it + 1) % args.checkpoint_every == 0 or it == args.iters - 1:
             Image.fromarray(renderer.export_texture()).save(
                 os.path.join(out_dir, "Universal_Cloth.png"))
             torch.save(param.detach().cpu(),
                        os.path.join(out_dir, "Ep0_Cloth_Delta.pt"))
             np.save(os.path.join(out_dir, "loss_history.npy"), np.array(history))
+            side = int(round(math.sqrt(param.shape[0])))
+            cov = grad_cov.cpu().numpy().reshape(side, side)
+            np.save(os.path.join(out_dir, "grad_coverage.npy"), cov)
+            lo, hi = float(cov.min()), float(cov.max()) + 1e-12
+            vis = (np.log1p(cov - lo) / np.log1p(hi - lo) * 255).astype(np.uint8)
+            Image.fromarray(vis).save(os.path.join(out_dir, "grad_coverage.png"))
     print(f"[train] 完成，产物在 {out_dir}")
 
 
@@ -1015,6 +1114,15 @@ def main():
     p.add_argument("--init-std", type=float, default=0.01)
     p.add_argument("--lambda-ref", type=float, default=0.1)
     p.add_argument("--lambda-tv", type=float, default=0.1)
+    p.add_argument("--lambda-mse", type=float, default=1.0,
+                   help="特征 MSE 攻击项权重（四臂对比中 A4 置 0）")
+    p.add_argument("--lambda-con", type=float, default=0.0,
+                   help="排斥 InfoNCE 对比项权重（负样本=池内他帧 clean 特征）")
+    p.add_argument("--lambda-task", type=float, default=0.0,
+                   help="任务条件项权重（指令 token 融合后隐藏状态偏移）")
+    p.add_argument("--con-tau", type=float, default=0.1)
+    p.add_argument("--task-every-k", type=int, default=4,
+                   help="任务条件项每 k 个迭代计一次（7B 全前向控算力）")
     p.add_argument("--seed", type=int, default=7)
     p.add_argument("--checkpoint-every", type=int, default=1000)
     p.add_argument("--pool-file",
