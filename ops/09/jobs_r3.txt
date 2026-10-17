@@ -1,0 +1,19 @@
+# 第一批作业（清单 P1/P2/P3/P4 + §2.2 十步抽查）| name|deps|cmd
+chk10_plain||source /data/shaozhen.liu/jobq_lib.sh; pi_eval __GPU__ chk10_plain plain 0,1,2,3,4,5,6,7,8,9 2 10
+chk10_a1||source /data/shaozhen.liu/jobq_lib.sh; T=$(ls -t /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/train_*_f4a1/Universal_Cloth.png | head -1); pi_eval __GPU__ chk10_a1 adv 0,1,2,3,4,5,6,7,8,9 2 10 "$T"
+chk10_a3||source /data/shaozhen.liu/jobq_lib.sh; T=$(ls -t /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/train_*_f4a3/Universal_Cloth.png | head -1); pi_eval __GPU__ chk10_a3 adv 0,1,2,3,4,5,6,7,8,9 2 10 "$T"
+t_e1||source /data/shaozhen.liu/jobq_lib.sh; pi_train __GPU__ p1e1 1.0 0.0 0.0 off
+t_l5on||source /data/shaozhen.liu/jobq_lib.sh; pi_train __GPU__ p2l5on 1.0 0.0 0.25 on
+t_l5off||source /data/shaozhen.liu/jobq_lib.sh; pi_train __GPU__ p2l5off 1.0 0.0 0.25 off
+e_pi_e1|t_e1|source /data/shaozhen.liu/jobq_lib.sh; T=$(ls -t /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/train_*_p1e1/Universal_Cloth.png | head -1); pi_eval __GPU__ p1e1_pi adv 0,1,2,3,4,5,6,7,8,9 10 1 "$T"
+e_oft_e1|t_e1|source /data/shaozhen.liu/jobq_lib.sh; T=$(ls -t /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/train_*_p1e1/Universal_Cloth.png | head -1); oft_eval __GPU__ p1e1_oft adv 10 "$T"
+e_pi_l5on|t_l5on|source /data/shaozhen.liu/jobq_lib.sh; T=$(ls -t /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/train_*_p2l5on/Universal_Cloth.png | head -1); pi_eval __GPU__ p2l5on_pi adv 0,1,2,3,4,5,6,7,8,9 10 1 "$T"
+e_oft_l5on|t_l5on|source /data/shaozhen.liu/jobq_lib.sh; T=$(ls -t /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/train_*_p2l5on/Universal_Cloth.png | head -1); oft_eval __GPU__ p2l5on_oft adv 10 "$T"
+e_pi_l5off|t_l5off|source /data/shaozhen.liu/jobq_lib.sh; T=$(ls -t /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/train_*_p2l5off/Universal_Cloth.png | head -1); pi_eval __GPU__ p2l5off_pi adv 0,1,2,3,4,5,6,7,8,9 10 1 "$T"
+e_oft_l5off|t_l5off|source /data/shaozhen.liu/jobq_lib.sh; T=$(ls -t /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/train_*_p2l5off/Universal_Cloth.png | head -1); oft_eval __GPU__ p2l5off_oft adv 10 "$T"
+r_pi_101||source /data/shaozhen.liu/jobq_lib.sh; pi_eval __GPU__ r101_pi adv 0,1,2,3,4,5,6,7,8,9 10 1 /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/rand6040/rand6040_s101.png
+r_pi_102||source /data/shaozhen.liu/jobq_lib.sh; pi_eval __GPU__ r102_pi adv 0,1,2,3,4,5,6,7,8,9 10 1 /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/rand6040/rand6040_s102.png
+r_pi_103||source /data/shaozhen.liu/jobq_lib.sh; pi_eval __GPU__ r103_pi adv 0,1,2,3,4,5,6,7,8,9 10 1 /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/rand6040/rand6040_s103.png
+r_oft_101||source /data/shaozhen.liu/jobq_lib.sh; oft_eval __GPU__ r101_oft adv 10 /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/rand6040/rand6040_s101.png
+r_oft_102||source /data/shaozhen.liu/jobq_lib.sh; oft_eval __GPU__ r102_oft adv 10 /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/rand6040/rand6040_s102.png
+r_oft_103||source /data/shaozhen.liu/jobq_lib.sh; oft_eval __GPU__ r103_oft adv 10 /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/rand6040/rand6040_s103.png
