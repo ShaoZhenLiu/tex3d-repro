@@ -13,14 +13,16 @@ POOL=$EX/cloth_pool_fs6040.pt
 mkdir -p "$LOGD"
 
 pi_train() {  # $1=GPU $2=tag $3=lms $4=lcon $5=ltask $6=uv(on|off)
-  local g=$1 tag=$2 lms=$3 lcon=$4 ltask=$5 uv=$6 uvflag=""
+  local g=$1 tag=$2 lms=$3 lcon=$4 ltask=$5 uv=$6 sd=${7:-7} uvflag=""
   [ "$uv" = on ] && uvflag="--uv-eot"
   bash "$PI/run_cloth330.sh" "$g" train --suite libero_spatial --pool-tasks 0,2,6,8 \
-    --pool-mode full --frame-weighting taao --epsilon 0.2510 --seed 7 --iters 5000 \
+    --pool-mode full --frame-weighting taao --epsilon 0.2510 --seed "$sd" --iters 5000 \
     --load-pool --pool-file "$POOL" $uvflag --ckpt "$CKPT" \
     --lambda-mse "$lms" --lambda-con "$lcon" --lambda-task "$ltask" --tag "$tag" \
     > "$LOGD/train_$tag.log" 2>&1
-  ls -t $EX/train_*_$tag/Universal_Cloth.png 2>/dev/null | head -1
+  local tex
+  tex=$(ls -t $EX/train_*_$tag/Universal_Cloth.png 2>/dev/null | head -1)
+  [ -n "$tex" ] && [ -f "$tex" ]
 }
 
 pi_eval() {  # $1=GPU $2=name $3=cond $4=tasks $5=trials $6=nd $7=texture(optional)
