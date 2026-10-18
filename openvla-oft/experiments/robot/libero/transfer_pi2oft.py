@@ -75,8 +75,11 @@ def align_cloth(env, lift=0.005):
         except Exception:
             pass
     _, cloth_bid, _ = base.get_target_model_matrix(env, SEARCH)
-    if site_id is None or cloth_bid == -1:
-        raise RuntimeError("SurfaceAdapter：找不到 table_top site 或桌布 body")
+    if cloth_bid == -1:
+        raise RuntimeError("SurfaceAdapter：找不到桌布 body")
+    if site_id is None:
+        print("[align] 该场景无 table_top site，跳过对齐（保留 XML 默认位姿）")
+        return
     sim.forward()
     pos = np.array(sim.data.site_xpos[site_id], dtype=float)
     sim.model.body_pos[cloth_bid, 0] = pos[0]
