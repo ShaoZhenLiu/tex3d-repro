@@ -39,6 +39,12 @@ BACKUP = LIBERO_XML + ".precloth"
 SEARCH = [["tablecloth"]]
 OUT_ROOT = "/data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/transfer_oft"
 CKPT = "/data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt"
+SUITE_CKPTS = {
+    "libero_spatial": CKPT,
+    "libero_object": "/data/shaozhen.liu/code/tex3d-ws/g7/oft-object-ckpt",
+    "libero_goal": "/data/shaozhen.liu/code/tex3d-ws/g7/oft-goal-ckpt",
+    "libero_10": "/data/shaozhen.liu/code/tex3d-ws/g7/oft-10-ckpt",
+}
 RES = 512  # 与 attack_oft 的 eval_libero 同分辨率
 
 
@@ -143,7 +149,7 @@ def run_eval(args):
             cfg, model.llm_dim)
 
     from libero.libero import benchmark
-    suite = benchmark.get_benchmark_dict()["libero_spatial"]()
+    suite = benchmark.get_benchmark_dict()[args.suite]()
 
     stamp = time.strftime("%Y%m%d_%H%M%S")
     out_dir = os.path.join(OUT_ROOT, f"{args.condition}_{stamp}")
@@ -261,6 +267,10 @@ def main():
     p.add_argument("--trials", type=int, default=25)
     p.add_argument("--init-offset", type=int, default=0,
                    help="init state id offset (R1 frozen confirm: 10)")
+    p.add_argument("--suite", default="libero_spatial",
+                   choices=list(SUITE_CKPTS), help="benchmark 套件")
+    p.add_argument("--ckpt", default=None,
+                   help="默认按套件映射 g7/oft-*-ckpt")
     p.add_argument("--texture", default=None)
     p.add_argument("--save-frame", action="store_true")
     args = ap.parse_args()
