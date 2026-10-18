@@ -27,7 +27,9 @@ import attack_oft as base            # noqa: E402  复用其 env/模型/动作�
 # 注意：attack_oft 必须先于 OV 目录的路径插入 import，否则它内部的
 # `from libero_utils import ...` 会绑定 OV 版（get_libero_image 双参），评测即崩
 import sys as _s; _s.path.insert(0, "/data/shaozhen.liu/code/tex3d/openvla/experiments/robot/libero")
-import cloth_transfer_utils as ctu            # noqa: E402  注入四件套（attack_pi0 原样）
+import cloth_transfer_utils as ctu
+sys.path.insert(0, "/data/shaozhen.liu/code/tex3d/openvla/experiments/robot/libero")
+import transfer_pi2ov as _ovpatch            # noqa: E402  注入四件套（attack_pi0 原样）
 
 LIBERO_XML = (
     "/data/shaozhen.liu/code/tex3d-deps/libero/libero/libero/assets/"
@@ -50,46 +52,15 @@ RES = 512  # 与 attack_oft 的 eval_libero 同分辨率
 
 # ---------------------------------------------------------------- 场景补丁
 def patch_status():
-    return "patched" if os.path.exists(BACKUP) else "clean"
+    return _ovpatch.patch_status()
 
 
 def patch_scene(on: bool):
-    if on:
-        if patch_status() == "patched":
-            return
-        shutil.copy2(LIBERO_XML, BACKUP)
-        tree = ET.parse(LIBERO_XML)
-        root, asset, worldbody = tree.getroot(), tree.find("asset"), tree.find("worldbody")
-        if asset is None or worldbody is None:
-            raise RuntimeError("场景 XML 结构异常：缺 asset/worldbody")
-        asset.append(ET.Element("mesh", {
-            "file": "../tablecloth/tablecloth.obj", "name": "tablecloth_mesh",
-            "inertia": "shell"}))
-        asset.append(ET.Element("texture", {
-            "file": "../tablecloth/cloth_base.png", "type": "2d",
-            "name": "tex-tablecloth"}))
-        asset.append(ET.Element("material", {
-            "name": "tablecloth_mat", "texture": "tex-tablecloth",
-            "texuniform": "false", "reflectance": "0.0",
-            "shininess": "0.0", "specular": "0.0"}))
-        body = ET.SubElement(worldbody, "body", {
-            "name": "tablecloth", "pos": "0 0 0.905"})
-        ET.SubElement(body, "geom", {
-            "name": "tablecloth_visual", "type": "mesh",
-            "mesh": "tablecloth_mesh", "material": "tablecloth_mat",
-            "contype": "0", "conaffinity": "0", "group": "1"})
-        tree.write(LIBERO_XML)
-        print(f"[patch] 桌布已写入 LIBERO 树 {LIBERO_XML}（运行时将对齐桌面）")
-    else:
-        if patch_status() == "clean":
-            return
-        shutil.move(BACKUP, LIBERO_XML)
-        print("[patch] LIBERO 树场景 XML 已还原")
+    _ovpatch.patch_scene(on)
 
 
 def ensure_patch(on: bool):
-    if patch_status() != ("patched" if on else "clean"):
-        patch_scene(on)
+    _ovpatch.ensure_patch(on)
 
 
 def align_cloth(env, lift=0.005):
