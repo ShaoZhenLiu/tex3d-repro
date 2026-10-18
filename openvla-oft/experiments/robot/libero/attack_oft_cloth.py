@@ -520,7 +520,8 @@ def train(args):
         if "clean_hidden" in fr:
             attack_feat = -F.mse_loss(adv_hidden.float(),
                                       fr["clean_hidden"].float())
-            attack = attack_action + args.alpha_feature * attack_feat
+            attack = (getattr(args, "alpha_action", 1.0) * attack_action
+               + args.alpha_feature * attack_feat)
         else:
             attack_feat = None
             attack = attack_action
@@ -570,6 +571,8 @@ def main():
     p.add_argument("--init-std", type=float, default=0.01)
     p.add_argument("--lambda-ref", type=float, default=0.1)
     p.add_argument("--lambda-tv", type=float, default=0.1)
+    p.add_argument("--alpha-action", type=float, default=1.0,
+                   help="动作 MSE 权重（R0-F 纯特征 MSE 臂置 0）")
     p.add_argument("--alpha-feature", type=float, default=10.0,
                    help="hidden 特征损失权重（attack_oft.py 生产默认 10.0）")
     p.add_argument("--seed", type=int, default=7)
