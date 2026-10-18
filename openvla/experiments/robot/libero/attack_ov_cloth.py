@@ -29,8 +29,9 @@ import transfer_pi2ov as TR                    # noqa: E402  补丁/对齐/注�
 
 OUT_ROOT = "/data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/ov_cloth"
 CKPT = TR.CKPT
-CLOTH_MESH = os.path.join(TR.CLOTH_DIR, "tablecloth.obj")
-CLOTH_T0 = TR.CLOTH_T0
+CLOTH_DIR = "/data/shaozhen.liu/code/tex3d-deps/libero/libero/libero/assets/tablecloth"
+CLOTH_MESH = os.path.join(CLOTH_DIR, "tablecloth.obj")
+CLOTH_T0 = os.path.join(CLOTH_DIR, "cloth_base.png")
 TRAIN_TASKS = [0, 1, 2, 8]
 SIGLIP_MEAN = [0.5, 0.5, 0.5]
 SIGLIP_STD = [0.5, 0.5, 0.5]
@@ -51,7 +52,7 @@ class ClothRendererOV(base.DifferentiableRenderer):
                 self.adv_noise.copy_(
                     torch.randn(self.adv_noise.shape, generator=g).to(device)
                     * init_std)
-        gm_path = os.path.join(TR.CLOTH_DIR, "cloth_gain_map.npy")
+        gm_path = os.path.join(CLOTH_DIR, "cloth_gain_map.npy")
         self.gain_map = None
         if os.path.exists(gm_path):
             gm = np.load(gm_path)
@@ -76,7 +77,7 @@ class ClothRendererOV(base.DifferentiableRenderer):
         arr = (tex.squeeze(0).cpu().numpy() * 255.0).round().clip(0, 255)
         return arr.astype(np.uint8)
 
-    def render(self, mvp, resolution=(256, 256), model_rot=None):
+    def render(self, mvp, resolution=(256, 256), model_rot=None, uv_xform=None):
         tex = self.texture_tensor()
         pos_homo = torch.cat([self.pos, torch.ones_like(self.pos[..., :1])], dim=-1)
         pos_clip = torch.matmul(pos_homo, mvp.t())
@@ -84,6 +85,13 @@ class ClothRendererOV(base.DifferentiableRenderer):
                                     self.faces.int(), resolution=resolution)
         tex_uv, _ = base.dr.interpolate(self.uv.unsqueeze(0), rast,
                                         self.uv_idx.int())
+        if uv_xform is not None:
+            # UV 域 EoT（与 π0 侧同实现）
+            u, v = tex_uv[..., 0], tex_uv[..., 1]
+            nu = uv_xform[0, 0] * u + uv_xform[0, 1] * v + uv_xform[0, 2]
+            nv = uv_xform[1, 0] * u + uv_xform[1, 1] * v + uv_xform[1, 2]
+            tex_uv = torch.stack([torch.remainder(nu, 1.0),
+                                  torch.remainder(nv, 1.0)], dim=-1)
         color = base.dr.texture(tex.contiguous(), tex_uv.contiguous(),
                                 filter_mode="linear")
         vn_world = (model_rot @ self.vn.T).T if model_rot is not None else self.vn
@@ -105,6 +113,64 @@ def tv_loss(delta):
             + delta[:, :, 1:, :].abs().mean()) / 2.0
 
 
+def _scene_object_bbox_xy(sim, cloth_bid):
+    """动态物体世界 XY 包围盒（排除机械臂/桌布），返回 (质心, x展宽, y展宽)。"""
+    xs, ys = [], []
+    for b in range(sim.model.nbody):
+        try:
+            name = sim.model.body_id2name(b) or ""
+        except Exception:
+            name = ""
+        if name.startswith("robot0") or name == "tablecloth" or int(b) == int(cloth_bid):
+            continue
+        if int(sim.model.body_dofnum[b]) <= 0:
+            continue
+        p = sim.data.xpos[b]
+        xs.append(float(p[0])); ys.append(float(p[1]))
+    if not xs:
+        return None, 0.0, 0.0
+    return (np.array([np.mean(xs), np.mean(ys)]),
+            float(np.max(xs) - np.min(xs)), float(np.max(ys) - np.min(ys)))
+
+
+def jitter_cloth_placement(env, rng=None):
+    """采集期摆放抖动（与 π0 侧同实现）：z 轴 ±180° + 按物体包围盒自适应 1-8cm 平移。"""
+    import numpy.random as npr
+    r = rng or npr
+    sim = env.env.sim
+    _, bid, _ = base.get_target_model_matrix(env, TR.SEARCH)
+    theta = float(r.uniform(-np.pi, np.pi))
+    cen, ex, ey = _scene_object_bbox_xy(sim, bid)
+    sx = float(np.clip(0.3 * (ex if ex > 0 else 0.2), 0.01, 0.08))
+    sy = float(np.clip(0.3 * (ey if ey > 0 else 0.2), 0.01, 0.08))
+    dx, dy = float(r.uniform(-sx, sx)), float(r.uniform(-sy, sy))
+    q = np.array([np.cos(theta / 2), 0.0, 0.0, np.sin(theta / 2)])
+    sim.model.body_quat[bid] = q
+    sim.model.body_pos[bid, 0] += dx
+    sim.model.body_pos[bid, 1] += dy
+    sim.forward()
+
+
+def sample_uv_xform(uv_eot, device):
+    """训练期 UV 域 EoT（与 π0 侧同实现）：±180° 旋转 + 50% 镜像 + ±0.04 平移。"""
+    if not uv_eot:
+        return None
+    ang = random.uniform(-np.pi, np.pi)
+    c, s_ = float(np.cos(ang)), float(np.sin(ang))
+    A = np.array([[c, -s_, 0.5 - 0.5 * c + 0.5 * s_],
+                  [s_, c, 0.5 - 0.5 * s_ - 0.5 * c]], dtype=np.float32)
+    if random.random() < 0.5:
+        if random.random() < 0.5:
+            M = np.array([[-1.0, 0.0, 1.0], [0.0, 1.0, 0.0]], np.float32)
+        else:
+            M = np.array([[1.0, 0.0, 0.0], [0.0, -1.0, 1.0]], np.float32)
+        A = (np.vstack([M, [0.0, 0.0, 1.0]])
+             @ np.vstack([A, [0.0, 0.0, 1.0]]))[:2]
+    A[0, 2] += random.uniform(-0.04, 0.04)
+    A[1, 2] += random.uniform(-0.04, 0.04)
+    return torch.from_numpy(A).to(device)
+
+
 def collect_frames(cfg, model, processor, task, init_state, num_frames, device,
                    stride=10, max_frames=40, ep_tag=0):
     from libero.libero import benchmark  # noqa: F401
@@ -122,6 +188,8 @@ def collect_frames(cfg, model, processor, task, init_state, num_frames, device,
     tex_id = TR.ctu.find_target_texture_id(sim, bid, TR.SEARCH)
     ri = TR.ctu.inject_mujoco_texture(sim, tex_id,
                                       np.array(Image.open(CLOTH_T0).convert("RGB")))
+    if getattr(collect_frames, "_jitter", False):
+        jitter_cloth_placement(env)
     model_input_size = base.get_image_resize_size(cfg)
     sm = torch.tensor(SIGLIP_MEAN, device=device).view(1, 3, 1, 1)
     ss = torch.tensor(SIGLIP_STD, device=device).view(1, 3, 1, 1)
@@ -219,6 +287,7 @@ def train(args):
             task = suite.get_task(tid)
             inits = suite.get_task_init_states(tid)
             pool[tid] = []
+            collect_frames._jitter = getattr(args, "place_jitter", False)
             for ep in range(args.pool_episodes):
                 pool[tid].extend(collect_frames(
                     cfg, model, processor, task, inits[ep],
@@ -247,7 +316,9 @@ def train(args):
     for it in range(args.iters):
         tid, fr = random.choice(all_frames)
         param.grad = None
-        adv_rgba, _ = renderer.render(fr["mvp"], (256, 256), model_rot=fr["rot"])
+        uv_a = sample_uv_xform(getattr(args, "uv_eot", False), device)
+        adv_rgba, _ = renderer.render(fr["mvp"], (256, 256), model_rot=fr["rot"],
+                                      uv_xform=uv_a)
         adv_chw = adv_rgba.permute(0, 3, 1, 2)
         comp = torch.clamp(adv_chw * fr["seg"] + fr["bg"] * (1.0 - fr["seg"]),
                            0.0, 1.0)
@@ -303,6 +374,10 @@ def main():
     p.add_argument("--lambda-ref", type=float, default=0.1)
     p.add_argument("--lambda-tv", type=float, default=0.1)
     p.add_argument("--seed", type=int, default=7)
+    p.add_argument("--uv-eot", action="store_true",
+                   help="训练期 UV 域 EoT（与 π0 侧同实现）")
+    p.add_argument("--place-jitter", action="store_true",
+                   help="采集期桌布摆放抖动（与 π0 侧同实现）")
     p.add_argument("--checkpoint-every", type=int, default=500)
     p.add_argument("--tag", default="")
     args = ap.parse_args()

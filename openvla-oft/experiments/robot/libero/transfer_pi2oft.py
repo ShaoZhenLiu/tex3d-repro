@@ -165,7 +165,7 @@ def run_eval(args):
                 env, task_description = base.get_libero_env(
                     task, cfg.model_family, resolution=RES)
                 env.reset()
-                obs = env.set_init_state(init_states[ep])
+                obs = env.set_init_state(init_states[ep + getattr(args, "init_offset", 0)])
                 sim = env.env.sim
                 sim.forward()
                 restore_info, tex_id, done = None, -1, False
@@ -259,6 +259,8 @@ def main():
                    choices=["original", "plain", "adv"])
     p.add_argument("--tasks", default="0,2,8")
     p.add_argument("--trials", type=int, default=25)
+    p.add_argument("--init-offset", type=int, default=0,
+                   help="init state id offset (R1 frozen confirm: 10)")
     p.add_argument("--texture", default=None)
     p.add_argument("--save-frame", action="store_true")
     args = ap.parse_args()

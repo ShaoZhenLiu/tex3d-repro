@@ -948,7 +948,9 @@ def run_eval(args):
             for ep in range(n):
                 video = (os.path.join(out_dir, f"task{tid}_ep{ep:02d}.mp4")
                          if ep == 0 and args.save_videos else None)
-                ok = evaluate_native(policy, task, init_states[ep], texture_arr,
+                ok = evaluate_native(policy, task,
+                                     init_states[ep + getattr(args, "init_offset", 0)],
+                                     texture_arr,
                                      max_steps=args.max_steps,
                                      num_steps_wait=10, replan_steps=5,
                                      save_video=video, floor_mode=floor_mode)
@@ -1157,6 +1159,8 @@ def main():
     p.add_argument("--texture", default=None)
     p.add_argument("--ckpt", default=DEFAULT_CKPT)
     p.add_argument("--num-denoise", type=int, default=1)
+    p.add_argument("--init-offset", type=int, default=0,
+                   help="初态编号偏移（R1 冻结确认用 10-19 → 传 10）")
     p.add_argument("--max-steps", type=int, default=400)
     p.add_argument("--save-videos", action="store_true")
     p.add_argument("--suite", default="libero_spatial",
