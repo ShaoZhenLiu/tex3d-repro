@@ -17,7 +17,7 @@ export MUJOCO_GL=egl
 export MUJOCO_EGL_DEVICE_ID="$GPU"
 export PYOPENGL_PLATFORM=egl
 export OPENPI_DATA_HOME=/data/shaozhen.liu/.cache/openpi
-export MPLCONFIGDIR=/tmp/attack_pi_mpl
+export MPLCONFIGDIR=/data/shaozhen.liu/tmp/attack_pi_mpl
 export HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false WANDB_MODE=disabled
 export PYTHONUNBUFFERED=1
 export PYTHONPATH="/data/shaozhen.liu/code/tex3d-deps/taming-transformers${PYTHONPATH:+:$PYTHONPATH}"
