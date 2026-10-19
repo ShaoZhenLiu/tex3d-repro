@@ -921,7 +921,8 @@ def run_eval(args):
             raise ValueError("adv 条件需要 --texture Universal_Cloth.png")
         texture_arr = np.array(Image.open(args.texture).convert("RGB"))
 
-    policy = load_policy(args.ckpt, num_denoise=args.num_denoise)
+    policy = load_policy(args.ckpt, model_config=args.model_config,
+                         num_denoise=args.num_denoise)
     suite = benchmark.get_benchmark_dict()[
         getattr(args, "suite", "libero_spatial")]()
     floor_mode = (getattr(args, "suite", "libero_spatial") == "libero_object")
@@ -1158,6 +1159,9 @@ def main():
     p.add_argument("--trials", type=int, default=50)
     p.add_argument("--texture", default=None)
     p.add_argument("--ckpt", default=DEFAULT_CKPT)
+    p.add_argument("--model-config", default="pi0_libero",
+                   choices=["pi0_libero", "pi05_libero"],
+                   help="openpi 训练配置：π0 用 pi0_libero，RLinf π0.5 用 pi05_libero")
     p.add_argument("--num-denoise", type=int, default=1)
     p.add_argument("--init-offset", type=int, default=0,
                    help="初态编号偏移（R1 冻结确认用 10-19 → 传 10）")
