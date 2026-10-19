@@ -22,7 +22,7 @@ export HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false WANDB_MODE=disabled
 export PYTHONUNBUFFERED=1
 export PYTHONPATH="/data/shaozhen.liu/code/tex3d-deps/taming-transformers${PYTHONPATH:+:$PYTHONPATH}"
 
-PYTHON_BIN=/data/shaozhen.liu/envs/tex3d-pi0-mj330/bin/python
+PYTHON_BIN="${PI_PY_BIN:-/data/shaozhen.liu/envs/tex3d-pi0-mj330/bin/python}"
 TORCH_LIB_DIR=$(dirname "$PYTHON_BIN")/../lib/python3.11/site-packages/torch/lib
 export LD_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu:$TORCH_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
