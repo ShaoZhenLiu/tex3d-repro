@@ -6,3 +6,4 @@ libero-eval
 *.pt
 *.mp4
 *.npy
+pi/tmp*/
