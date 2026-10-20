@@ -230,16 +230,22 @@ def psm_text_loss(mdl, adv_tok, txt_hidden, vis_mask, tokenizer, tau=0.3,
 
 
 def vis_token_mask(batch, P, device):
-    """主/腕 seg 并集 → g×g token 网格（OFT 双视图同网格 12ch 拼接，token 共享位置）."""
-    g = int(round(P ** 0.5))
-    m = None
-    for fr in batch:
-        s = fr["seg"]
-        w = fr.get("wrist_seg")
-        u = torch.clamp(s + (w if w is not None else 0), 0.0, 1.0)
-        m = u if m is None else torch.cat([m, u], dim=0)
-    small = F.interpolate(m, size=(g, g), mode="bilinear", align_corners=False)
-    return small.reshape(small.size(0), -1).to(device)                # [B,P]
+    """布面 token mask：OFT fused 骨干把双视图按 [主 16×16][腕 16×16] 拼接
+    （modeling_prismatic FusedVisionTower.forward 的 cat(dim=1) 核实，P=512）——
+    主/腕 seg 分别下采样到各自 g×g 后拼接。batch 元素为 (task_id, frame) 元组。"""
+    n_img = 2
+    g = int(round((P // n_img) ** 0.5))
+    parts = []
+    for seg_key in ("seg", "wrist_seg"):
+        m = None
+        for _, fr in batch:
+            s = fr.get(seg_key)
+            if s is None:
+                s = torch.zeros_like(fr["seg"])
+            m = s if m is None else torch.cat([m, s], dim=0)
+        small = F.interpolate(m, size=(g, g), mode="bilinear", align_corners=False)
+        parts.append(small.reshape(small.size(0), -1))
+    return torch.cat(parts, dim=1).to(device)                        # [B,P]
 
 
 def _stack_proprio(frames):
@@ -387,7 +393,7 @@ def train(args):
         # ---- adv projector token（带梯度）+ PSM 文本参考（no_grad 复刻前向）----
         adv_tok = proj_tokens(adv_pvs)
         fwd_cnt += 1
-        with torch.no_grad():
+        with torch.no_grad(), base.autocast(dtype=torch.bfloat16):
             txt_h = text_hidden_forward(model, ids, tmask, adv_pvs, proprio_b,
                                         pproj)
             fwd_cnt += 1
