@@ -29,6 +29,10 @@ import time
 import xml.etree.ElementTree as ET
 from collections import deque
 
+# ---- 第12轮 P1：可选按查询种子记录（仅 env 显式开启时改变行为）----
+_QSEED_MODE = os.environ.get("CLOTH_QUERY_SEED", "") == "1"
+_QSEED_LOG = os.environ.get("CLOTH_QUERY_SEED_LOG", "")
+
 import numpy as np
 import torch
 import torch.nn.functional as F
@@ -532,8 +536,16 @@ def collect_cloth_frames(policy, task, init_state, num_frames, device,
 
             if not action_plan:
                 raw_inputs = build_raw_inputs(obs, desc)
+                if _QSEED_MODE and query_key is not None:
+                    qseed = (query_key[0] * 1000003 + query_key[1]) * 1000003 + nq
+                    torch.manual_seed(qseed)
+                    if _QSEED_LOG:
+                        with open(_QSEED_LOG, "a") as _qf:
+                            _qf.write("{},{},{},{}".format(
+                                query_key[0], query_key[1], nq, qseed))
                 with torch.no_grad():
                     result = policy.infer(raw_inputs)
+                nq += 1
                 chunk = result["actions"] if isinstance(result, dict) else result
                 if isinstance(chunk, torch.Tensor):
                     chunk = chunk.detach().cpu().numpy()
@@ -843,7 +855,7 @@ def train_universal(args):
 # --------------------------------------------------------------------------
 def evaluate_native(policy, task, init_state, texture_arr=None, max_steps=400,
                     num_steps_wait=10, replan_steps=5, save_video=None,
-                    floor_mode=False):
+                    floor_mode=False, query_key=None):
     desc = task.language
     env, _ = _get_libero_env(task, resolution=256)
     env.reset()
@@ -867,6 +879,7 @@ def evaluate_native(policy, task, init_state, texture_arr=None, max_steps=400,
     success = False
     frames = []
     action_plan = deque()
+    nq = 0
     obs = env.set_init_state(init_state)
     try:
         for step in range(max_steps + num_steps_wait):
@@ -954,7 +967,8 @@ def run_eval(args):
                                      texture_arr,
                                      max_steps=args.max_steps,
                                      num_steps_wait=10, replan_steps=5,
-                                     save_video=video, floor_mode=floor_mode)
+                                     save_video=video, floor_mode=floor_mode,
+                                     query_key=(tid, ep))
                 succ += int(ok)
                 total_success += int(ok)
                 total_eps += 1
