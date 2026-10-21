@@ -193,7 +193,12 @@ def text_hidden_forward(mdl, ids, tmask, pv, proprio, pproj):
     """复刻 OFT multimodal 前向取**末层文本段 hidden**（PSM 的指令表征参考）：
     lang_emb → _process_vision_features → 追加 proprio → [BOS][vision][propio][text]
     → 内层 language_model（sdpa 生产后端；无动作查询，文本段布局精确已知）。
-    仅 no_grad 使用（参考侧 detach，映射说明披露）。"""
+    仅 no_grad 使用（参考侧 detach，映射说明披露）。
+
+    第13轮核查（psm_slice_check）：历史版本取 [:, S-L:] 混入 proj 末 token
+    （B3 有 proprio → proprio 末位），漏 BOS——off-by-one 缺陷；已修正为
+    [:, 1+pn:]（纯 text rest 区）。历史 B3 结果以"PSM 参考含 1/34 proprio
+    token"限定保留（PSM 分项梯度最小，方向性影响小），不重跑。"""
     lang_emb = mdl.get_input_embeddings()(ids)
     proj = mdl._process_vision_features(pv, lang_emb, use_film=False)
     if pproj is not None and proprio is not None:
@@ -206,8 +211,7 @@ def text_hidden_forward(mdl, ids, tmask, pv, proprio, pproj):
                     tmask[:, 1:]], dim=1)
     out = mdl.language_model(inputs_embeds=embeds, attention_mask=am,
                              output_hidden_states=True)
-    S = out.hidden_states[-1].shape[1]
-    return out.hidden_states[-1][:, S - int(ids.shape[1]):, :]  # 文本段（含BOS）
+    return out.hidden_states[-1][:, 1 + int(pn):, :]  # 纯 text rest 区（不含BOS）
 
 
 def psm_text_loss(mdl, adv_tok, txt_hidden, vis_mask, tokenizer, tau=0.3,
