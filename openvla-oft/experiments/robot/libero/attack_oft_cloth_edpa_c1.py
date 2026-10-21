@@ -173,22 +173,20 @@ def train(args):
     base.check_unnorm_key(cfg, model)
     model_input_size = base.get_image_resize_size(cfg)
 
-    # ---- C1: SigLIP 塔定位（按配置/维度核实，不按变量名猜）----
-    def _tower_id(t):
-        c = getattr(t, "config", None)
-        for k in ("name_or_path", "model_type", "_name_or_path"):
-            v = getattr(c, k, None)
-            if v:
-                return str(v)
-        return "?"
+    # ---- C1: SigLIP 塔定位（timm id + embed_dim 双重核实，不按变量名猜）----
     _vb = model.vision_backbone
-    for _nm in ("featurizer", "fused_featurizer"):
+    _ids = [str(x) for x in (getattr(cfg, "timm_model_ids", None) or [])]
+    for _nm, _k in (("featurizer", 0), ("fused_featurizer", 1)):
         _t = getattr(_vb, _nm, None)
-        print("[c1] tower %-16s id=%s patches=%s" %
-              (_nm, _tower_id(_t), _t.patch_embed.num_patches))
-    _sid = _tower_id(_vb.fused_featurizer).lower()
-    assert "siglip" in _sid, "fused_featurizer 不是 SigLIP(%s)，中止" % _sid
-    print("[c1] vision_backbone_id=%s（DINOv2 在前 / SigLIP 在后）" %
+        _mid = _ids[_k] if len(_ids) > _k else "?"
+        print("[c1] tower %-16s timm_id=%s embed_dim=%s patches=%s forward=倒数第二层中间特征" %
+              (_nm, _mid, _t.embed_dim, _t.patch_embed.num_patches))
+    _mid1 = (_ids[1] if len(_ids) > 1 else "").lower()
+    _dim1 = int(_vb.fused_featurizer.embed_dim)
+    _dim0 = int(_vb.featurizer.embed_dim)
+    assert _dim0 == 1024 and _dim1 == 1152,         "塔维度异常 DINO=%s SigLIP=%s（预期 1024/1152）" % (_dim0, _dim1)
+    assert "siglip" in _mid1 or _mid1 == "",         "timm_model_ids[1] 非 SigLIP(%s)，中止" % _mid1
+    print("[c1] vision_backbone_id=%s；确认 featurizer=DINOv2-L(1024) / fused_featurizer=SigLIP-So400m(1152)" %
           getattr(cfg, "vision_backbone_id", "?"))
     sig_cap = []
     _hook = _vb.fused_featurizer.register_forward_hook(
@@ -201,7 +199,7 @@ def train(args):
     if not args.streams or not os.path.exists(args.streams):
         raise SystemExit("C1 需要 --streams（gen_fixed_streams.py 生成，seed7 复刻）")
     streams = torch.load(args.streams, map_location=device, weights_only=False)
-    assert len(streams) == args.iters, (len(streams), args.iters)
+    assert len(streams) >= args.iters, (len(streams), args.iters)
     print(f"[c1] 固定采样流 {len(streams)} iters × batch {args.edpa_batch} 已载入")
     sm, ss, dm, ds = _norm_consts(device)
 
@@ -217,6 +215,10 @@ def train(args):
     log_path = os.path.join(out_dir, "gradient_log.txt")
 
     param = renderer.adv_noise
+    if args.init_param:
+        with torch.no_grad():
+            param.copy_(torch.load(args.init_param, map_location=device).to(device))
+        print(f"[c1] 续训：载入 {args.init_param}（start_iter={args.start_iter}）")
     task_ids = list(pool.keys())
     all_frames = [(tid, fr) for tid in task_ids for fr in pool[tid]
                   if fr["mvp"] is not None]
@@ -225,6 +227,9 @@ def train(args):
           f"ascent + clean=Plain + 固定流）")
     ema_step, ema_warmup, ema_decay = 0, 100, 0.9
     ema_patch_v, ema_align_v = 0.0, 0.0
+    if args.start_iter:
+        assert args.ema_patch > 0 and args.ema_align > 0, "续训需 --ema-patch/--ema-align"
+        ema_step, ema_patch_v, ema_align_v = args.start_iter, args.ema_patch, args.ema_align
     fwd_cnt = bwd_cnt = 0
     diag_probes = {0, args.iters // 2, args.iters - 1} if args.diag else set()
     import time as _t
@@ -249,7 +254,7 @@ def train(args):
                                 0.0, 1.0)
         return comp, wrist
 
-    for it in range(args.iters):
+    for it in range(args.start_iter, args.iters):
         st = streams[it]
         batch = [all_frames[i] for i in st["idx"]]
         param.grad = None
@@ -413,6 +418,11 @@ def main():
                    help="诊断模式：固定批+固定UV，逐迭代记录，探针分项梯度")
     p.add_argument("--streams", default="",
                    help="固定采样流 .pt（gen_fixed_streams.py）")
+    p.add_argument("--init-param", default="",
+                   help="续训：载入 Ep0_Cloth_Delta_OV.pt")
+    p.add_argument("--start-iter", type=int, default=0)
+    p.add_argument("--ema-patch", type=float, default=0.0)
+    p.add_argument("--ema-align", type=float, default=0.0)
     p.add_argument("--tag", default="c1")
     args = ap.parse_args()
     if args.cmd == "train":
