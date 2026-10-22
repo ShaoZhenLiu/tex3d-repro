@@ -170,7 +170,10 @@ def main():
         if args.collect_only:
             return
 
-    all_frames = [fr for tid in sorted(pool) for fr in pool[tid]]
+    all_frames = [fr for tid in sorted(pool) for fr in pool[tid]
+                  if fr.get("img") is not None and fr.get("wrist") is not None]
+    print("[native2d] 双视图可用帧 %d / %d（缺腕视图帧剔除）"
+          % (len(all_frames), sum(len(v) for v in pool.values())), flush=True)
     # 官方 EDPA 类：绕过 __init__ 的 HF processor/bootstrap（环境装配，非攻击机制），
     # 只手工绑定 __init__ 会设置的属性；generate_one_step/compute_loss/
     # apply_random_perturbation_to_tensor 三个攻击方法**逐字零改动**复用。
@@ -193,9 +196,31 @@ def main():
     attacker.cfg = None
     attacker.device_id = device
     attacker.processor = processor
-    attacker.image_transform = image_transform
-    attacker.get_img_embedding = get_img_embedding
     attacker.get_lang_embedding = get_lang_embedding
+    # —— 双相机源适配（披露项）：官方 image_transform 输出单视图 [B,6,H,W]，
+    # 我们的 OFT 源为双相机（pixel_values=[主6|腕6] 12 通道）。保持官方
+    # patch 施加（apply_random_perturbation_to_tensor 作用于原始 [0,1] 图像）
+    # 与官方损失/更新不动，仅把"喂模型"环节换成本项目 _compose_oft_pixel_values：
+    # 被攻击相机的图像（含/不含 patch，clean 与 adv 两次调用同路径）与另一相机
+    # 干净图像拼接归一化后过 vision_backbone→projector（表征层与官方一致）。
+    sm, ss, dm, ds = M._norm_consts(device)
+    model_input_size = base.get_image_resize_size(cfg)
+    attacker.image_transform = lambda images, proc: images  # 原图直通
+    attacker._other_raw = None  # 每 iter 更新：另一相机的干净 [B,3,256,256]
+
+    def _emb(vla, images):
+        if args.camera == "primary":
+            adv_rgb, wrist_t = images, attacker._other_raw
+        else:
+            adv_rgb, wrist_t = attacker._other_raw, images
+        pv = base._compose_oft_pixel_values(
+            adv_rgb=adv_rgb, model_input_size=model_input_size,
+            siglip_mean=sm, siglip_std=ss, dino_mean=dm, dino_std=ds,
+            wrist_tensor=wrist_t).to(torch.bfloat16)
+        with base.autocast(dtype=torch.bfloat16):
+            feats = vla.vision_backbone(pv)
+            return vla.projector(feats)
+    attacker.get_img_embedding = _emb
 
     patch_size = int(np.sqrt(args.image_size ** 2 * args.ratio))
     perturbation = torch.zeros((3, patch_size, patch_size),
@@ -226,9 +251,15 @@ def main():
         for b_i, fr in enumerate(batch):
             samp_log.write("%d %d %s\n"
                            % (idx, b_i, fr["instruction"][:24]))
-        images = torch.stack(
-            [to_tensor(fr["img"] if args.camera == "primary" else fr["wrist"])
-             for fr in batch])
+        # 被攻击相机图像（patch 施加对象）与另一相机干净图像
+        if args.camera == "primary":
+            images = torch.stack([to_tensor(fr["img"]) for fr in batch])
+            attacker._other_raw = torch.stack(
+                [to_tensor(fr["wrist"]) for fr in batch]).to(device)
+        else:
+            images = torch.stack([to_tensor(fr["wrist"]) for fr in batch])
+            attacker._other_raw = torch.stack(
+                [to_tensor(fr["img"]) for fr in batch]).to(device)
         prompt = build_prompt([fr["instruction"] for fr in batch])
         instructions, instructions_masks = (
             processor.tokenizer(prompt, padding=True, return_tensors="pt")[k]
