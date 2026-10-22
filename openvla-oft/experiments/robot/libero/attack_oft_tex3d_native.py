@@ -64,7 +64,7 @@ def main():
     device = "cuda"
 
     cfg = UP.GenerateConfig(
-        pretrained_checkpoint=M.CKPT, model_family="openvla-oft",
+        pretrained_checkpoint=M.CKPT, model_family="openvla",
         task_suite_name="libero_spatial", object_name=OBJ_KEY,
         enable_attack=True, attack_iters=args.iters, attack_lr=0.05,
         alpha_action=1.0, alpha_feature=10.0, num_frames_to_attack=20,
