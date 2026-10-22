@@ -58,14 +58,34 @@ print("[psm-check] L(text ids)=%d  pn(vision+proprio)=%d  期望总长 S=1+pn+(L
       % (L, pn, S))
 print("[psm-check] 生产切片 text_hidden_forward 输出形状 = %s（长度 %d）"
       % (tuple(seg.shape), seg.shape[1]))
-print("[psm-check] 生产切片覆盖位置 = [%d, %d)；正确 text 区 = [%d, %d)"
-      % (S - L, S, 1 + pn, S))
-print("[psm-check] 位置 %d 归属：%s（应为 text 区首，实际=%s）"
-      % (S - L, "text rest 首" if S - L == 1 + pn else "proj 末 token ← off-by-one",
-         "text" if S - L == 1 + pn else "proj末token"))
+
+# 位置级验证：复刻函数体取完整末层 hidden（长度 S），断言生产切片 == full[:, 1+pn:]
+with torch.no_grad(), base.autocast(dtype=torch.bfloat16):
+    le = model.get_input_embeddings()(ids)
+    pj = model._process_vision_features(pv, le, use_film=False)
+    pj = model._process_proprio_features(pj, proprio_t, pproj)
+    embeds = torch.cat([le[:, :1, :], pj, le[:, 1:, :]], dim=1)
+    am = torch.cat([tmask[:, :1],
+                    torch.ones(tmask.shape[0], pj.shape[1], dtype=tmask.dtype,
+                               device=tmask.device),
+                    tmask[:, 1:]], dim=1)
+    full = model.language_model(inputs_embeds=embeds, attention_mask=am,
+                                output_hidden_states=True).hidden_states[-1]
+print("[psm-check] 完整序列长度=%d（应=S=%d）；text rest 区 = [%d, %d)"
+      % (full.shape[1], S, 1 + pn, S))
+ok_len = seg.shape[1] == L - 1
+ok_pos = bool(torch.allclose(seg.float(), full[:, 1 + pn:, :].float(),
+                             atol=0.0, rtol=0.0))
 tok = processor.tokenizer.convert_ids_to_tokens(
-    [int(x) for x in ids[0, 1:3]] + ["..."] + [int(x) for x in ids[0, -2:]])
+    [int(x) for x in ids[0, 1:4]]) + ["..."] + processor.tokenizer.convert_ids_to_tokens(
+    [int(x) for x in ids[0, -2:]])
 print("[psm-check] 指令文本首尾 tokens: %s" % tok)
-verdict = "PASS（切片正确）" if S - L == 1 + pn else \
-    "FAIL（off-by-one：切片含 proj 末 token、漏 BOS；影响=PSM 参考表征稀释 1/%d" % (seg.shape[1],)
+print("[psm-check] 断言1 切片长度==L-1(33): %s" % ("PASS" if ok_len else "FAIL"))
+print("[psm-check] 断言2 生产切片逐元素==full[:,1+pn:547]: %s"
+      % ("PASS" if ok_pos else "FAIL"))
+print("[psm-check] 断言3 pn==513(512 vision+1 proprio), S==547: %s"
+      % ("PASS" if (pn == 513 and S == 547 and full.shape[1] == 547)
+         else "FAIL"))
+verdict = "PASS（修后切片正确：纯 text rest 区 [1+pn, S)，不含 BOS/proprio）" \
+    if (ok_len and ok_pos and pn == 513 and S == 547) else "FAIL"
 print("[psm-check] 判定: %s" % verdict)
