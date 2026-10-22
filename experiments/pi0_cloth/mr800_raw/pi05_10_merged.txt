@@ -1,0 +1,111 @@
+condition=adv (merged: tasks0-8 from gpu5partial + task9 fresh run; reason: GPU5 died at 90/100)
+
+condition=adv
+texture=/data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261021_224922_tvfix-mr/Universal_Cloth_OV.png
+num_denoise=10 replan=5 max_steps=400
+
+Task: 9 | Ep: 0 | Success: False
+Task: 9 | Ep: 1 | Success: False
+Task: 9 | Ep: 2 | Success: False
+Task: 9 | Ep: 3 | Success: False
+Task: 9 | Ep: 4 | Success: False
+Task: 9 | Ep: 5 | Success: False
+Task: 9 | Ep: 6 | Success: False
+Task: 9 | Ep: 7 | Success: False
+Task: 9 | Ep: 8 | Success: False
+Task: 9 | Ep: 9 | Success: False
+task_9: 0/10 (0.0000)
+
+overall robot success: 0/10 (0.0000)
+attack failure rate = 1 - above
+Task: 0 | Ep: 0 | Success: True
+Task: 0 | Ep: 1 | Success: True
+Task: 0 | Ep: 2 | Success: False
+Task: 0 | Ep: 3 | Success: True
+Task: 0 | Ep: 4 | Success: True
+Task: 0 | Ep: 5 | Success: True
+Task: 0 | Ep: 6 | Success: False
+Task: 0 | Ep: 7 | Success: False
+Task: 0 | Ep: 8 | Success: False
+Task: 0 | Ep: 9 | Success: True
+Task: 1 | Ep: 0 | Success: True
+Task: 1 | Ep: 1 | Success: True
+Task: 1 | Ep: 2 | Success: True
+Task: 1 | Ep: 3 | Success: True
+Task: 1 | Ep: 4 | Success: True
+Task: 1 | Ep: 5 | Success: True
+Task: 1 | Ep: 6 | Success: True
+Task: 1 | Ep: 7 | Success: True
+Task: 1 | Ep: 8 | Success: True
+Task: 1 | Ep: 9 | Success: True
+Task: 2 | Ep: 0 | Success: True
+Task: 2 | Ep: 1 | Success: False
+Task: 2 | Ep: 2 | Success: False
+Task: 2 | Ep: 3 | Success: False
+Task: 2 | Ep: 4 | Success: False
+Task: 2 | Ep: 5 | Success: False
+Task: 2 | Ep: 6 | Success: False
+Task: 2 | Ep: 7 | Success: False
+Task: 2 | Ep: 8 | Success: False
+Task: 2 | Ep: 9 | Success: False
+Task: 3 | Ep: 0 | Success: False
+Task: 3 | Ep: 1 | Success: False
+Task: 3 | Ep: 2 | Success: False
+Task: 3 | Ep: 3 | Success: False
+Task: 3 | Ep: 4 | Success: False
+Task: 3 | Ep: 5 | Success: False
+Task: 3 | Ep: 6 | Success: False
+Task: 3 | Ep: 7 | Success: False
+Task: 3 | Ep: 8 | Success: False
+Task: 3 | Ep: 9 | Success: False
+Task: 4 | Ep: 0 | Success: False
+Task: 4 | Ep: 1 | Success: False
+Task: 4 | Ep: 2 | Success: False
+Task: 4 | Ep: 3 | Success: False
+Task: 4 | Ep: 4 | Success: False
+Task: 4 | Ep: 5 | Success: False
+Task: 4 | Ep: 6 | Success: False
+Task: 4 | Ep: 7 | Success: False
+Task: 4 | Ep: 8 | Success: False
+Task: 4 | Ep: 9 | Success: False
+Task: 5 | Ep: 0 | Success: True
+Task: 5 | Ep: 1 | Success: True
+Task: 5 | Ep: 2 | Success: False
+Task: 5 | Ep: 3 | Success: False
+Task: 5 | Ep: 4 | Success: False
+Task: 5 | Ep: 5 | Success: False
+Task: 5 | Ep: 6 | Success: True
+Task: 5 | Ep: 7 | Success: True
+Task: 5 | Ep: 8 | Success: True
+Task: 5 | Ep: 9 | Success: True
+Task: 6 | Ep: 0 | Success: False
+Task: 6 | Ep: 1 | Success: False
+Task: 6 | Ep: 2 | Success: False
+Task: 6 | Ep: 3 | Success: False
+Task: 6 | Ep: 4 | Success: False
+Task: 6 | Ep: 5 | Success: False
+Task: 6 | Ep: 6 | Success: False
+Task: 6 | Ep: 7 | Success: False
+Task: 6 | Ep: 8 | Success: False
+Task: 6 | Ep: 9 | Success: False
+Task: 7 | Ep: 0 | Success: True
+Task: 7 | Ep: 1 | Success: True
+Task: 7 | Ep: 2 | Success: True
+Task: 7 | Ep: 3 | Success: True
+Task: 7 | Ep: 4 | Success: False
+Task: 7 | Ep: 5 | Success: True
+Task: 7 | Ep: 6 | Success: True
+Task: 7 | Ep: 7 | Success: True
+Task: 7 | Ep: 8 | Success: True
+Task: 7 | Ep: 9 | Success: False
+Task: 8 | Ep: 0 | Success: False
+Task: 8 | Ep: 1 | Success: False
+Task: 8 | Ep: 2 | Success: False
+Task: 8 | Ep: 3 | Success: False
+Task: 8 | Ep: 4 | Success: False
+Task: 8 | Ep: 5 | Success: False
+Task: 8 | Ep: 6 | Success: False
+Task: 8 | Ep: 7 | Success: False
+Task: 8 | Ep: 8 | Success: False
+Task: 8 | Ep: 9 | Success: False
+overall robot success: 31/100

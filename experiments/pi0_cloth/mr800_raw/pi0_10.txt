@@ -1,0 +1,117 @@
+condition=adv
+texture=/data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261021_224922_tvfix-mr/Universal_Cloth_OV.png
+num_denoise=10 replan=5 max_steps=400
+
+Task: 0 | Ep: 0 | Success: False
+Task: 0 | Ep: 1 | Success: False
+Task: 0 | Ep: 2 | Success: False
+Task: 0 | Ep: 3 | Success: False
+Task: 0 | Ep: 4 | Success: False
+Task: 0 | Ep: 5 | Success: False
+Task: 0 | Ep: 6 | Success: False
+Task: 0 | Ep: 7 | Success: False
+Task: 0 | Ep: 8 | Success: False
+Task: 0 | Ep: 9 | Success: False
+task_0: 0/10 (0.0000)
+Task: 1 | Ep: 0 | Success: False
+Task: 1 | Ep: 1 | Success: False
+Task: 1 | Ep: 2 | Success: False
+Task: 1 | Ep: 3 | Success: False
+Task: 1 | Ep: 4 | Success: False
+Task: 1 | Ep: 5 | Success: False
+Task: 1 | Ep: 6 | Success: False
+Task: 1 | Ep: 7 | Success: False
+Task: 1 | Ep: 8 | Success: True
+Task: 1 | Ep: 9 | Success: True
+task_1: 2/10 (0.2000)
+Task: 2 | Ep: 0 | Success: False
+Task: 2 | Ep: 1 | Success: False
+Task: 2 | Ep: 2 | Success: False
+Task: 2 | Ep: 3 | Success: False
+Task: 2 | Ep: 4 | Success: False
+Task: 2 | Ep: 5 | Success: False
+Task: 2 | Ep: 6 | Success: False
+Task: 2 | Ep: 7 | Success: False
+Task: 2 | Ep: 8 | Success: False
+Task: 2 | Ep: 9 | Success: False
+task_2: 0/10 (0.0000)
+Task: 3 | Ep: 0 | Success: False
+Task: 3 | Ep: 1 | Success: False
+Task: 3 | Ep: 2 | Success: False
+Task: 3 | Ep: 3 | Success: False
+Task: 3 | Ep: 4 | Success: False
+Task: 3 | Ep: 5 | Success: False
+Task: 3 | Ep: 6 | Success: False
+Task: 3 | Ep: 7 | Success: False
+Task: 3 | Ep: 8 | Success: False
+Task: 3 | Ep: 9 | Success: False
+task_3: 0/10 (0.0000)
+Task: 4 | Ep: 0 | Success: False
+Task: 4 | Ep: 1 | Success: False
+Task: 4 | Ep: 2 | Success: False
+Task: 4 | Ep: 3 | Success: False
+Task: 4 | Ep: 4 | Success: False
+Task: 4 | Ep: 5 | Success: False
+Task: 4 | Ep: 6 | Success: False
+Task: 4 | Ep: 7 | Success: False
+Task: 4 | Ep: 8 | Success: False
+Task: 4 | Ep: 9 | Success: False
+task_4: 0/10 (0.0000)
+Task: 5 | Ep: 0 | Success: False
+Task: 5 | Ep: 1 | Success: False
+Task: 5 | Ep: 2 | Success: False
+Task: 5 | Ep: 3 | Success: False
+Task: 5 | Ep: 4 | Success: False
+Task: 5 | Ep: 5 | Success: False
+Task: 5 | Ep: 6 | Success: False
+Task: 5 | Ep: 7 | Success: False
+Task: 5 | Ep: 8 | Success: False
+Task: 5 | Ep: 9 | Success: False
+task_5: 0/10 (0.0000)
+Task: 6 | Ep: 0 | Success: False
+Task: 6 | Ep: 1 | Success: False
+Task: 6 | Ep: 2 | Success: False
+Task: 6 | Ep: 3 | Success: False
+Task: 6 | Ep: 4 | Success: False
+Task: 6 | Ep: 5 | Success: False
+Task: 6 | Ep: 6 | Success: False
+Task: 6 | Ep: 7 | Success: False
+Task: 6 | Ep: 8 | Success: False
+Task: 6 | Ep: 9 | Success: False
+task_6: 0/10 (0.0000)
+Task: 7 | Ep: 0 | Success: False
+Task: 7 | Ep: 1 | Success: False
+Task: 7 | Ep: 2 | Success: False
+Task: 7 | Ep: 3 | Success: False
+Task: 7 | Ep: 4 | Success: False
+Task: 7 | Ep: 5 | Success: False
+Task: 7 | Ep: 6 | Success: False
+Task: 7 | Ep: 7 | Success: False
+Task: 7 | Ep: 8 | Success: False
+Task: 7 | Ep: 9 | Success: False
+task_7: 0/10 (0.0000)
+Task: 8 | Ep: 0 | Success: False
+Task: 8 | Ep: 1 | Success: False
+Task: 8 | Ep: 2 | Success: False
+Task: 8 | Ep: 3 | Success: False
+Task: 8 | Ep: 4 | Success: False
+Task: 8 | Ep: 5 | Success: False
+Task: 8 | Ep: 6 | Success: False
+Task: 8 | Ep: 7 | Success: False
+Task: 8 | Ep: 8 | Success: False
+Task: 8 | Ep: 9 | Success: False
+task_8: 0/10 (0.0000)
+Task: 9 | Ep: 0 | Success: False
+Task: 9 | Ep: 1 | Success: False
+Task: 9 | Ep: 2 | Success: False
+Task: 9 | Ep: 3 | Success: False
+Task: 9 | Ep: 4 | Success: False
+Task: 9 | Ep: 5 | Success: False
+Task: 9 | Ep: 6 | Success: False
+Task: 9 | Ep: 7 | Success: False
+Task: 9 | Ep: 8 | Success: False
+Task: 9 | Ep: 9 | Success: False
+task_9: 0/10 (0.0000)
+
+overall robot success: 2/100 (0.0200)
+attack failure rate = 1 - above
