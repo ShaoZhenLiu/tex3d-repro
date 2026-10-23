@@ -44,7 +44,6 @@ import attack_oft_cloth_tvfix_mr as M       # noqa: E402  同源 ckpt/动作模�
 
 OUT_ROOT = "/data/shaozhen.liu/code/tex3d/experiments/tex3d_native"
 OBJ_KEY = "akita_black_bowl"
-TASK_ID = 0
 
 
 def sha256(path):
@@ -60,6 +59,7 @@ def main():
     ap.add_argument("--iters", type=int, default=5000)
     ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--tag", default="r1")
+    ap.add_argument("--task-id", type=int, default=0)
     args = ap.parse_args()
     device = "cuda"
 
@@ -69,7 +69,7 @@ def main():
         enable_attack=True, attack_iters=args.iters, attack_lr=0.05,
         alpha_action=1.0, alpha_feature=10.0, num_frames_to_attack=20,
         num_train_init_states=10, train_frames_per_state=1,
-        seed=args.seed, task_id=TASK_ID)
+        seed=args.seed, task_id=args.task_id)
     model = UP.get_model(cfg)
     UP.check_unnorm_key(cfg, model)
     processor = UP.get_processor(cfg)
@@ -111,8 +111,8 @@ def main():
     # ---------- 原生训练（live_test_enabled=False → 零共享资产写入） ----------
     from libero.libero import benchmark
     suite = benchmark.get_benchmark_dict()["libero_spatial"]()
-    task = suite.get_task(TASK_ID)
-    inits = suite.get_task_init_states(TASK_ID)
+    task = suite.get_task(args.task_id)
+    inits = suite.get_task_init_states(args.task_id)
     cfg.use_proprio = False
     dummy_env, train_desc = UP.get_libero_env(task, cfg.model_family,
                                               resolution=256)
@@ -136,7 +136,7 @@ def main():
     with open(os.path.join(out_dir, "run_config.txt"), "w") as f:
         f.write(str(vars(args)) + "\n")
         f.write("upstream=attack_oft.py@bfd0726c (lab EGL-guard only)\n")
-        f.write("object=%s task_id=%d mesh=%s\n" % (OBJ_KEY, TASK_ID,
+        f.write("object=%s task_id=%d mesh=%s\n" % (OBJ_KEY, args.task_id,
                                                     obj["mesh"]))
         f.write("adv_png=%s sha256=%s\n" % (adv_png, sha256(adv_png)))
         f.write("theta0_png=%s sha256=%s\n" % (theta0_png, sha256(theta0_png)))
