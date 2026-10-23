@@ -60,6 +60,9 @@ def main():
     ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--tag", default="r1")
     ap.add_argument("--task-id", type=int, default=0)
+    ap.add_argument("--suite", default="libero_spatial",
+                    help="采帧/任务文本用的套件；cfg.task_suite_name 恒为 "
+                         "libero_spatial（源模型与 unnorm 口径不变）")
     args = ap.parse_args()
     device = "cuda"
 
@@ -110,7 +113,7 @@ def main():
 
     # ---------- 原生训练（live_test_enabled=False → 零共享资产写入） ----------
     from libero.libero import benchmark
-    suite = benchmark.get_benchmark_dict()["libero_spatial"]()
+    suite = benchmark.get_benchmark_dict()[args.suite]()
     task = suite.get_task(args.task_id)
     inits = suite.get_task_init_states(args.task_id)
     cfg.use_proprio = False
@@ -136,8 +139,8 @@ def main():
     with open(os.path.join(out_dir, "run_config.txt"), "w") as f:
         f.write(str(vars(args)) + "\n")
         f.write("upstream=attack_oft.py@bfd0726c (lab EGL-guard only)\n")
-        f.write("object=%s task_id=%d mesh=%s\n" % (OBJ_KEY, args.task_id,
-                                                    obj["mesh"]))
+        f.write("object=%s suite=%s task_id=%d mesh=%s\n"
+                % (OBJ_KEY, args.suite, args.task_id, obj["mesh"]))
         f.write("adv_png=%s sha256=%s\n" % (adv_png, sha256(adv_png)))
         f.write("theta0_png=%s sha256=%s\n" % (theta0_png, sha256(theta0_png)))
         f.write("noise_pt sha256=%s\n" % sha256(noise_pt))
