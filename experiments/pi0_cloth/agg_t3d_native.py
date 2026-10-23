@@ -121,6 +121,43 @@ def main():
                 row.append("t%d %s %d/10" % (task, cond, sum(sub.values())))
         print("  %s: %s" % (tgt, " | ".join(row)))
 
+    # —— 加深口径（选项A，inits10-49；Plain/Adv/θ0 全部取自同一波 t3ddeep 文件）——
+    print()
+    print("=" * 72)
+    print("加深口径 t3ddeep：inits10-49（40/任务）；同波内配对（不跨 v6.1 CSV——")
+    print("  π0 回合级随机性已知，金丝雀先例 42 vs 35）")
+    print("=" * 72)
+    deep = {}
+    for tgt in TARGETS:
+        for cond in ("plain", "adv", "th0"):
+            p = os.path.join(EV, "t3ddeep_%s_%s.txt" % (cond, tgt))
+            if os.path.exists(p):
+                deep[(tgt, cond)] = load_result(p)
+    for tgt in TARGETS:
+        row = []
+        for cond in ("plain", "adv", "th0"):
+            if (tgt, cond) in deep:
+                d = deep[(tgt, cond)]
+                row.append("%s %d/%d=%.4f" % (cond, sum(d.values()), len(d), sr(d)))
+        print("  %s: %s" % (tgt, " | ".join(row) if row else "（未落地）"))
+        if (tgt, "adv") in deep and (tgt, "plain") in deep:
+            bo, co, nk, sym = pair(deep[(tgt, "plain")], deep[(tgt, "adv")])
+            print("    G=Plain-Adv %+.2f | b=%d c=%d p=%.4f | 键差%d"
+                  % ((sr(deep[(tgt, "plain")]) - sr(deep[(tgt, "adv")])) * 100,
+                     bo, co, mcnemar_exact(bo, co), sym))
+        if (tgt, "th0") in deep and (tgt, "plain") in deep:
+            bo, co, nk, sym = pair(deep[(tgt, "plain")], deep[(tgt, "th0")])
+            print("    G=Plain-θ0  %+.2f | b=%d c=%d p=%.4f | 键差%d"
+                  % ((sr(deep[(tgt, "plain")]) - sr(deep[(tgt, "th0")])) * 100,
+                     bo, co, mcnemar_exact(bo, co), sym))
+        if (tgt, "adv") in deep and (tgt, "th0") in deep:
+            bo, co, nk, sym = pair(deep[(tgt, "adv")], deep[(tgt, "th0")])
+            print("    Adv vs θ0: b=%d c=%d p=%.4f" % (bo, co, mcnemar_exact(bo, co)))
+        if (tgt, "adv") in deep:
+            per = ["t%d %d/40" % (t, sum(v for (tt, _), v in deep[(tgt, "adv")].items() if tt == t))
+                   for t in TASKS]
+            print("    Adv 逐任务: %s" % " | ".join(per))
+
     # —— 变体(b)：逐任务粒度 ——
     print()
     print("=" * 72)
