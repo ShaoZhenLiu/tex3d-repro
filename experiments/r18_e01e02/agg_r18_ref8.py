@@ -112,8 +112,11 @@ def e01_rows_from_logs(logdir, csv_writer_sink, problems):
         res = None
         if os.path.isfile(log):
             for line in open(log, encoding="utf-8", errors="replace"):
-                if "[eval] 结果:" in line:
-                    res = line.split("结果:")[-1].strip()
+                # 编码无关：匹配 [eval] …: <路径>/evaluation_result.txt
+                m = re.search(r"\[eval\][^:]*:\s*(\S*/evaluation_result\.txt)",
+                              line)
+                if m:
+                    res = m.group(1)
         if not res or not os.path.isfile(res):
             problems.append("E01 %s: 结果文件缺失(%s)" % (name, res))
             continue
@@ -223,6 +226,8 @@ def main():
     ap.add_argument("--e02-dirs", nargs="*", default=[])
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
+    os.makedirs(os.path.join(args.out, "data"), exist_ok=True)
+    os.makedirs(os.path.join(args.out, "tables"), exist_ok=True)
 
     problems = []
     v81 = load_v81(args.v81)
@@ -292,6 +297,7 @@ def main():
     # ---------- E02：OFT 源端 ----------
     A("")
     A("--- E02 OFT 源端（Spatial，初态10-19，400+10步） ---")
+    e02_tbl_rows = []
     if e02:
         conds = [("O", "Original"), ("P", "Plain"), ("AN8", "Native8"),
                  ("AMR", "MR8")]
@@ -316,11 +322,41 @@ def main():
                        for c, _ in conds}
                 A("  %s: O %d/40 P %d/40 N8 %d/40 MR %d/40"
                   % (grp, sub["O"], sub["P"], sub["AN8"], sub["AMR"]))
+            hdr = None
+            e02_tbl_rows.append(["summary", "%.2f" % o, "%.2f" % p,
+                                 "%.2f" % sr(cells["AN8"]),
+                                 "%.2f" % sr(cells["AMR"])])
+            e02_tbl_rows.append(["paired", "left_strong(MR败N8成)=%d" % b,
+                                 "right_strong=%d" % cp, "p=%.6g" % pp,
+                                 "succ: O=%.0f P=%.0f" % (o, p)])
+            for tid in range(10):
+                e02_tbl_rows.append([
+                    "task%d" % tid,
+                    sum(cells["O"].get((tid, i), 0) for i in range(10, 20)),
+                    sum(cells["P"].get((tid, i), 0) for i in range(10, 20)),
+                    sum(cells["AN8"].get((tid, i), 0) for i in range(10, 20)),
+                    sum(cells["AMR"].get((tid, i), 0) for i in range(10, 20))])
+            e02_tbl_rows.append(["group", "trained{0,2,6,8}",
+                                 "O=%d/40" % sum(v for k, v in cells["O"].items() if k[0] in (0, 2, 6, 8)),
+                                 "N8=%d/40" % sum(v for k, v in cells["AN8"].items() if k[0] in (0, 2, 6, 8)),
+                                 "MR=%d/40" % sum(v for k, v in cells["AMR"].items() if k[0] in (0, 2, 6, 8))])
+            e02_tbl_rows.append(["group", "untrained{1,3,4,5,7,9}",
+                                 "O=%d/60" % sum(v for k, v in cells["O"].items() if k[0] in (1, 3, 4, 5, 7, 9)),
+                                 "N8=%d/60" % sum(v for k, v in cells["AN8"].items() if k[0] in (1, 3, 4, 5, 7, 9)),
+                                 "MR=%d/60" % sum(v for k, v in cells["AMR"].items() if k[0] in (1, 3, 4, 5, 7, 9))])
         else:
             problems.append("E02 四条件未齐: %s" %
                             {c: len(cells[c]) for c, _ in conds})
     else:
         problems.append("E02: 无有效结果")
+    with open(os.path.join(args.out, "tables", "oft_source_spatial.csv"), "w",
+              newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["section", "col1", "col2_O_or_P", "col3_N8", "col4_MR"])
+        w.writerow(["# summary 行=四条件 SR%；task 行=各条件该任务 10 回合成功数",
+                    "", "", "", ""])
+        for r in e02_tbl_rows:
+            w.writerow(r)
 
     # ---------- 汇总唯一性 ----------
     A("")
