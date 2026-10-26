@@ -4,10 +4,11 @@
 #   trials 10、初态 10-19、num_denoise 10、max_steps 400、replan5、MuJoCo3.3.0）
 #   协议对齐主表 MR/TVbs8 既有行：独立查询噪声（不设 CLOTH_QUERY_SEED）。
 #   纹理冻结核验：sha256 必须等于 ee241502…（第18轮附录B Native8）。
-#   GPU 纪律：仅 0-3、每卡≤2 我方进程（flock 原子准入 + claim 文件计数）、
-#   VRAM 守卫 free≥10000MiB（π 实测≈8.6G）、60s 错峰、重试×4、动态选卡抗租户波动。
+#   GPU 纪律（2026-10-26 用户授权更新：除 GPU4 外全部可用）：候选 0/1/2/3/5/6/7、
+#   每卡≤2 我方进程（flock 原子准入 + claim 需求求和）、VRAM 守卫 need≈10000MiB
+#   （π 实测≈8.6G）、60s 错峰、重试×4、动态选卡抗租户波动。GPU4 永不使用。
 set -u
-export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4
+export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 D=/data/shaozhen.liu
 PI=$D/code/tex3d/pi
 EX=$D/code/tex3d/experiments/r18_e01e02
@@ -27,25 +28,26 @@ log() { echo "$(date '+%F %T') [e01] $*" | tee -a "$WD"; }
 gpu_used_mi() { nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits -i "$1" 2>/dev/null | tr -d ' '; }
 release_claim() { rm -f "$CLAIMD/$1".* 2>/dev/null; }
 pick_gpu() {  # $1=泳道名 $2=需要空闲MiB → 成功输出 GPU id（claim 已登记）
-  local name=$1 need=$2 tries=0 g used free cnt f pid out
+  # 准入规则：该卡已有 claim 的需求之和 + 自身需求 ≤ 当前空闲，且 claim 数<2
+  local name=$1 need=$2 tries=0 g used free cnt f pid ned sum_need out
   while [ $tries -lt 2160 ]; do
     out=$(
       (
         flock 9
-        for g in 2 3 1 0; do
+        for g in 5 7 6 2 0 1 3; do
+          sum_need=0; cnt=0
           for f in "$CLAIMD"/*."$g"; do
             [ -e "$f" ] || continue
-            pid=$(cat "$f" 2>/dev/null)
-            if [ -z "$pid" ] || ! kill -0 "$pid" 2>/dev/null; then rm -f "$f"; fi
+            read -r pid ned < "$f" 2>/dev/null || { rm -f "$f"; continue; }
+            if [ -z "$pid" ] || ! kill -0 "$pid" 2>/dev/null; then rm -f "$f"; continue; fi
+            sum_need=$((sum_need + ${ned:-10000})); cnt=$((cnt + 1))
           done
-          cnt=0
-          for f in "$CLAIMD"/*."$g"; do [ -e "$f" ] && cnt=$((cnt + 1)); done
           [ "$cnt" -ge 2 ] && continue
           used=$(gpu_used_mi "$g")
           [ -z "$used" ] && continue
           free=$((49140 - used))
-          if [ "$free" -ge "$need" ]; then
-            echo $$ > "$CLAIMD/${name}.$g"
+          if [ $((sum_need + need)) -le "$free" ]; then
+            echo "$BASHPID $need" > "$CLAIMD/${name}.$g"
             echo "$g"
             exit 0
           fi
@@ -68,7 +70,7 @@ run_cell() {  # $1=name $2=suite $3=ckpt $4=modelcfg(可空)
   if cell_done "$name"; then log "评测 $name 已完成，跳过"; return 0; fi
   [ -n "$mcfg" ] && extra=(--model-config "$mcfg")
   local log_f="$LOGD/${name}.log"
-  for attempt in 1 2 3 4; do
+  for attempt in 1 2 3 4 5 6 7 8 9 10 11 12; do
     release_claim "$name"
     g=$(pick_gpu "$name" 10000) || { log "评测 $name 等待 GPU 空闲超时 FAILED"; return 1; }
     log "评测 $name 尝试 $attempt GPU$g"
@@ -83,7 +85,7 @@ run_cell() {  # $1=name $2=suite $3=ckpt $4=modelcfg(可空)
       log "评测 $name 完成 -> $(grep -a 'overall robot success' "$res" | tail -1)"
       return 0
     fi
-    sleep 45
+    sleep 120
   done
   release_claim "$name"
   log "评测 $name 四次失败 FAILED"; return 1
