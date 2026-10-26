@@ -8,7 +8,7 @@
 #   original(patch-off) 必须等三个 patch-on 条件全部 100 回合收口后才能启动（共享 XML）。
 #   GPU 纪律（2026-10-26 用户授权更新：除 GPU4 外全部可用）：候选 0/1/2/3/5/6/7、
 #   每卡≤2 我方进程（与 E01 共用 flock 准入/claim 目录）、VRAM 守卫 need≈20000MiB
-#   （OFT 实测≈17-18G）、60s 错峰、重试×4、动态选卡。GPU4 永不使用。
+#   （OFT 实测≈16.4-18G）、60s 错峰、重试×4、动态选卡。GPU4 永不使用。
 set -u
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4
 D=/data/shaozhen.liu
@@ -34,7 +34,8 @@ gpu_used_mi() { nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits
 release_claim() { rm -f "$CLAIMD/$1".* 2>/dev/null; }
 pick_gpu() {  # $1=泳道名 $2=需要空闲MiB → 成功输出 GPU id（claim 已登记）
   # 准入规则：该卡已有 claim 的需求之和 + 自身需求 ≤ 当前空闲，且 claim 数<2
-  local name=$1 need=$2 tries=0 g used free cnt f pid ned sum_need out
+  # claim 记泳道壳 pid（函数入口捕获 BASHPID；命令替换子壳的 BASHPID 会即刻退出）
+  local name=$1 need=$2 lane_pid=$BASHPID tries=0 g used free cnt f pid ned sum_need out
   while [ $tries -lt 2880 ]; do
     out=$(
       (
@@ -52,7 +53,7 @@ pick_gpu() {  # $1=泳道名 $2=需要空闲MiB → 成功输出 GPU id（claim 
           [ -z "$used" ] && continue
           free=$((49140 - used))
           if [ $((sum_need + need)) -le "$free" ]; then
-            echo "$BASHPID $need" > "$CLAIMD/${name}.$g"
+            echo "$lane_pid $need" > "$CLAIMD/${name}.$g"
             echo "$g"
             exit 0
           fi
