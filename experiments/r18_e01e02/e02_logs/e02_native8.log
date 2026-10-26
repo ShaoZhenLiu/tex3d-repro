@@ -44,3 +44,11 @@ Task: 0 | Ep: 0 | Success: True
 Task: 0 | Ep: 1 | Success: False
 [Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
 Task: 0 | Ep: 2 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 0 | Ep: 3 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 0 | Ep: 4 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 0 | Ep: 5 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 0 | Ep: 6 | Success: True
