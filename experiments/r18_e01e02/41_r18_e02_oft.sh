@@ -34,8 +34,8 @@ gpu_used_mi() { nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits
 release_claim() { rm -f "$CLAIMD/$1".* 2>/dev/null; }
 pick_gpu() {  # $1=泳道名 $2=需要空闲MiB → 成功输出 GPU id（claim 已登记）
   # 准入规则：该卡已有 claim 的需求之和 + 自身需求 ≤ 当前空闲，且 claim 数<2
-  # claim 记泳道壳 pid（函数入口捕获 BASHPID；命令替换子壳的 BASHPID 会即刻退出）
-  local name=$1 need=$2 lane_pid=$BASHPID tries=0 g used free cnt f pid ned sum_need out
+  # claim 记泳道壳 pid（由调用方 run_cell/run_cond 传入；命令替换子壳会即刻退出）
+  local name=$1 need=$2 lane_pid=$3 tries=0 g used free cnt f pid ned sum_need out
   while [ $tries -lt 2880 ]; do
     out=$(
       (
@@ -72,13 +72,13 @@ cell_done() {
   [ -n "$res" ] && [ -f "$res" ] && [ "${n:-0}" -ge 100 ]
 }
 run_cond() {  # $1=name $2=cond $3=texture(可空)
-  local name=$1 cond=$2 tex=$3 res n g targs=()
+  local name=$1 cond=$2 tex=$3 res n g targs=() mypid=$BASHPID
   if cell_done "$name"; then log "评测 $name 已完成，跳过"; return 0; fi
   [ -n "$tex" ] && targs=(--texture "$tex")
   local log_f="$LOGD/${name}.log"
   for attempt in 1 2 3 4 5 6 7 8 9 10 11 12; do
     release_claim "$name"
-    g=$(pick_gpu "$name" 20000) || { log "评测 $name 等待 GPU 空闲超时 FAILED"; return 1; }
+    g=$(pick_gpu "$name" 20000 "$mypid") || { log "评测 $name 等待 GPU 空闲超时 FAILED"; return 1; }
     log "评测 $name 尝试 $attempt GPU$g"
     ( cd $D/code/tex3d-ws/g7 && env CUDA_VISIBLE_DEVICES=$g MUJOCO_EGL_DEVICE_ID=$g $ENVV \
       $PY $SCRIPT eval --condition "$cond" --suite libero_spatial \
