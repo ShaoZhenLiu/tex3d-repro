@@ -1,0 +1,45 @@
+2026-10-27 07:51:28.574353: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-27 07:51:28.574505: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-27 07:51:28.576712: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-27 07:51:28.588221: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+2026-10-27 07:51:30.674088: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Using LIBERO constants:
+  NUM_ACTIONS_CHUNK = 8
+  ACTION_DIM = 7
+  PROPRIO_DIM = 8
+  ACTION_PROPRIO_NORMALIZATION_TYPE = bounds_q99
+If needed, manually set the correct constants in `prismatic/vla/constants.py`!
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+[patch] 桌布已写入 6 个场景 @ /data/shaozhen.liu/code/tex3d-deps/libero/libero/libero/assets（备份 .precloth；桌面场景 z 由 SurfaceAdapter 运行时对齐）
+Instantiating pretrained VLA policy...
+Created backup of original config at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json.back.20261027_075206
+Updated config.json at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json
+Changes made:
+  - Set AutoConfig to "configuration_prismatic.OpenVLAConfig"
+  - Set AutoModelForVision2Seq to "modeling_prismatic.OpenVLAForActionPrediction"
+WARNING: `modeling_prismatic.py` is not found anywhere in the current directory.
+WARNING: `configuration_prismatic.py` is not found anywhere in the current directory.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.44it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:00,  2.03it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  2.44it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  2.81it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  2.45it/s]
+Loaded model: <class 'transformers_modules.oft-spatial-ckpt.modeling_prismatic.OpenVLAForActionPrediction'>
+[pool] 296 帧（任务 [0, 2, 6, 8]）
+[train-mr] 匹配渲染 Plain 参考缓存 296 帧已载入
+[train-e03] 重放 MR8 帧流 × 5000 iters，UV=恒等，开始
+[train-e03] it00000 bs8 attack=-0.0116 feat=-0.0012 ref=0.0000 tv=0.0007 g=1.46e-03 frames_accessed=8
+[train-e03] it00050 bs8 attack=-3.4831 feat=-0.1867 ref=0.0099 tv=0.0285 g=1.96e-01 frames_accessed=408
+[train-e03] it00100 bs8 attack=-4.8668 feat=-0.3377 ref=0.0136 tv=0.0329 g=2.66e-01 frames_accessed=808
