@@ -12,6 +12,7 @@
       --tasks 0,2,8 --trials 25 [--texture path.png] [--save-frame]
 """
 import argparse
+import hashlib
 import os
 import shutil
 import sys
@@ -100,8 +101,9 @@ def run_eval(args):
             raise ValueError("adv 条件需要 --texture 指向 Universal_Cloth.png")
         texture_path = args.texture
 
+    ckpt_used = args.ckpt or SUITE_CKPTS[args.suite]
     cfg = base.GenerateConfig(
-        pretrained_checkpoint=CKPT, model_family="openvla")
+        pretrained_checkpoint=ckpt_used, model_family="openvla")
     model = base.get_model(cfg)
     processor = base.get_processor(cfg)
     base.check_unnorm_key(cfg, model)
@@ -131,11 +133,22 @@ def run_eval(args):
     result_path = os.path.join(out_dir, "evaluation_result.txt")
 
     tasks = [int(t) for t in args.tasks.split(",")]
+    tex_sha = ""
+    if texture_path and os.path.isfile(texture_path):
+        h = hashlib.sha256()
+        with open(texture_path, "rb") as tf:
+            for blk in iter(lambda: tf.read(1 << 20), b""):
+                h.update(blk)
+        tex_sha = h.hexdigest()
     total_succ = total_eps = 0
     frame_saved = False
     with open(result_path, "w", encoding="utf-8") as f:
         f.write(f"condition={args.condition}\ntexture={texture_path}\n"
-                f"tasks={tasks} trials={args.trials}\n\n")
+                f"tasks={tasks} trials={args.trials}\n"
+                f"suite={args.suite} init_offset={getattr(args, 'init_offset', 0)} "
+                f"max_steps={args.max_steps}\n"
+                f"ckpt={ckpt_used}\n"
+                f"texture_sha256={tex_sha}\n\n")
         for tid in tasks:
             task = suite.get_task(tid)
             init_states = suite.get_task_init_states(tid)
@@ -160,7 +173,7 @@ def run_eval(args):
                             sim, tex_id,
                             np.array(Image.open(texture_path).convert("RGB")))
 
-                    t, max_steps = 0, 300
+                    t, max_steps = 0, args.max_steps
                     while t < max_steps + cfg.num_steps_wait:
                         if t < cfg.num_steps_wait:
                             obs, _, _, _ = env.step(
@@ -246,6 +259,8 @@ def main():
     p.add_argument("--ckpt", default=None,
                    help="默认按套件映射 g7/oft-*-ckpt")
     p.add_argument("--texture", default=None)
+    p.add_argument("--max-steps", type=int, default=300,
+                   help="策略动作步上限（历史 R1/门=300；r18-E02 统一 400）")
     p.add_argument("--save-frame", action="store_true")
     args = ap.parse_args()
     if args.cmd == "patch":
