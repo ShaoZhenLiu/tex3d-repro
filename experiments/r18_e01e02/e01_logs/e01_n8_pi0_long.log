@@ -46,3 +46,438 @@ Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst othe
 Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
 Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
 See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 965, in run_eval
+    ok = evaluate_native(policy, task,
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 897, in evaluate_native
+    result = policy.infer(raw_inputs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/policies/policy.py", line 94, in infer
+    "actions": self._sample_actions(sample_rng_or_pytorch_device, observation, **sample_kwargs),
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/_dynamo/eval_frame.py", line 574, in _fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/_dynamo/external_utils.py", line 45, in inner
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/models_pytorch/pi0_pytorch.py", line 385, in sample_actions
+    prefix_embs, prefix_pad_masks, prefix_att_masks = self.embed_prefix(images, img_masks, lang_tokens, lang_masks)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/models_pytorch/pi0_pytorch.py", line 202, in embed_prefix
+    img_emb = self._apply_checkpoint(image_embed_func, img)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/models_pytorch/pi0_pytorch.py", line 154, in _apply_checkpoint
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/models_pytorch/pi0_pytorch.py", line 200, in image_embed_func
+    return self.paligemma_with_expert.embed_image(img)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/models_pytorch/gemma_pytorch.py", line 86, in embed_image
+    return self.paligemma.model.get_image_features(image)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/transformers/models/paligemma/modeling_paligemma.py", line 242, in get_image_features
+    image_outputs = self.vision_tower(pixel_values)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/transformers/utils/generic.py", line 943, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/transformers/models/siglip/modeling_siglip.py", line 873, in forward
+    return self.vision_model(
+           ^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/transformers/utils/generic.py", line 943, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/transformers/models/siglip/modeling_siglip.py", line 775, in forward
+    hidden_states = self.embeddings(pixel_values, interpolate_pos_encoding=interpolate_pos_encoding)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/transformers/models/siglip/modeling_siglip.py", line 274, in forward
+    patch_embeds = self.patch_embedding(pixel_values.to(dtype=target_dtype))  # shape = [*, width, grid, grid]
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/conv.py", line 554, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/conv.py", line 549, in _conv_forward
+    return F.conv2d(
+           ^^^^^^^^^
+RuntimeError: cuDNN error: CUDNN_STATUS_INTERNAL_ERROR
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 937, in run_eval
+    policy = load_policy(args.ckpt, model_config=args.model_config,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 422, in load_policy
+    policy._model.float()
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in float
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in <lambda>
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+                                 ^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1006.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 1019.31 MiB is free. Process 341297 has 18.77 GiB memory in use. Process 381394 has 14.53 GiB memory in use. Including non-PyTorch memory, this process has 13.03 GiB memory in use. Of the allocated memory 12.55 GiB is allocated by PyTorch, and 43.57 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 937, in run_eval
+    policy = load_policy(args.ckpt, model_config=args.model_config,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 422, in load_policy
+    policy._model.float()
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in float
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in <lambda>
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+                                 ^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1006.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 1019.44 MiB is free. Process 341297 has 18.77 GiB memory in use. Process 381394 has 14.53 GiB memory in use. Including non-PyTorch memory, this process has 13.03 GiB memory in use. Of the allocated memory 12.55 GiB is allocated by PyTorch, and 43.57 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 937, in run_eval
+    policy = load_policy(args.ckpt, model_config=args.model_config,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 422, in load_policy
+    policy._model.float()
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in float
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  [Previous line repeated 5 more times]
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in <lambda>
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+                                 ^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 128.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 97.00 MiB is free. Process 98995 has 23.06 GiB memory in use. Process 330754 has 14.36 GiB memory in use. Including non-PyTorch memory, this process has 9.81 GiB memory in use. Of the allocated memory 9.32 GiB is allocated by PyTorch, and 49.57 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 937, in run_eval
+    policy = load_policy(args.ckpt, model_config=args.model_config,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 422, in load_policy
+    policy._model.float()
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in float
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  [Previous line repeated 2 more times]
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in <lambda>
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+                                 ^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.96 GiB. GPU 0 has a total capacity of 47.37 GiB of which 1.92 GiB is free. Process 98995 has 23.06 GiB memory in use. Process 330754 has 14.59 GiB memory in use. Including non-PyTorch memory, this process has 7.76 GiB memory in use. Of the allocated memory 7.30 GiB is allocated by PyTorch, and 22.07 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 937, in run_eval
+    policy = load_policy(args.ckpt, model_config=args.model_config,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 422, in load_policy
+    policy._model.float()
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in float
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in <lambda>
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+                                 ^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1006.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 1021.88 MiB is free. Process 341297 has 18.77 GiB memory in use. Process 381394 has 14.53 GiB memory in use. Including non-PyTorch memory, this process has 13.03 GiB memory in use. Of the allocated memory 12.55 GiB is allocated by PyTorch, and 43.57 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 0 | Ep: 0 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.23,0.04)
+Task: 0 | Ep: 1 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=114/125)，布心=(-0.24,0.04)
+Task: 0 | Ep: 2 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=113/125)，布心=(-0.24,0.04)
+Task: 0 | Ep: 3 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=113/125)，布心=(-0.24,0.04)
+Task: 0 | Ep: 4 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=113/125)，布心=(-0.24,0.04)
+Task: 0 | Ep: 5 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=116/125)，布心=(-0.23,0.04)
+Task: 0 | Ep: 6 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=114/125)，布心=(-0.24,0.04)
+Task: 0 | Ep: 7 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.23,0.04)
+Task: 0 | Ep: 8 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=116/125)，布心=(-0.24,0.04)
+Task: 0 | Ep: 9 | Success: False
+[eval] task 0: 0/10 (0.00%)
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=113/125)，布心=(-0.24,0.04)
+Task: 1 | Ep: 0 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 1 | Ep: 1 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 1 | Ep: 2 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=117/125)，布心=(-0.23,0.04)
+Task: 1 | Ep: 3 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=113/125)，布心=(-0.24,0.04)
+Task: 1 | Ep: 4 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=113/125)，布心=(-0.24,0.04)
+Task: 1 | Ep: 5 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 1 | Ep: 6 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=114/125)，布心=(-0.24,0.04)
+Task: 1 | Ep: 7 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 1 | Ep: 8 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=116/125)，布心=(-0.23,0.04)
+Task: 1 | Ep: 9 | Success: False
+[eval] task 1: 4/10 (40.00%)
+Task: 2 | Ep: 0 | Success: False
+Task: 2 | Ep: 1 | Success: False
+Task: 2 | Ep: 2 | Success: False
+Task: 2 | Ep: 3 | Success: False
+Task: 2 | Ep: 4 | Success: False
+Task: 2 | Ep: 5 | Success: False
+Task: 2 | Ep: 6 | Success: False
+Task: 2 | Ep: 7 | Success: False
+Task: 2 | Ep: 8 | Success: False
+Task: 2 | Ep: 9 | Success: False
+[eval] task 2: 0/10 (0.00%)
+Task: 3 | Ep: 0 | Success: False
+Task: 3 | Ep: 1 | Success: False
+Task: 3 | Ep: 2 | Success: False
+Task: 3 | Ep: 3 | Success: False
+Task: 3 | Ep: 4 | Success: False
+Task: 3 | Ep: 5 | Success: False
+Task: 3 | Ep: 6 | Success: False
+Task: 3 | Ep: 7 | Success: False
+Task: 3 | Ep: 8 | Success: False
+Task: 3 | Ep: 9 | Success: False
+[eval] task 3: 0/10 (0.00%)
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=111/125)，布心=(-0.24,0.04)
+Task: 4 | Ep: 0 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=112/125)，布心=(-0.24,0.04)
+Task: 4 | Ep: 1 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=113/125)，布心=(-0.24,0.04)
+Task: 4 | Ep: 2 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 4 | Ep: 3 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=111/125)，布心=(-0.24,0.04)
+Task: 4 | Ep: 4 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=114/125)，布心=(-0.24,0.04)
+Task: 4 | Ep: 5 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=113/125)，布心=(-0.24,0.04)
+Task: 4 | Ep: 6 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 4 | Ep: 7 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=114/125)，布心=(-0.24,0.05)
+Task: 4 | Ep: 8 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 4 | Ep: 9 | Success: False
+[eval] task 4: 0/10 (0.00%)
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=222/247)，布心=(0.00,0.01)
+Task: 5 | Ep: 0 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=222/246)，布心=(0.00,0.01)
+Task: 5 | Ep: 1 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=221/245)，布心=(0.01,0.01)
+Task: 5 | Ep: 2 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=222/246)，布心=(0.00,0.01)
+Task: 5 | Ep: 3 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=223/248)，布心=(0.00,0.01)
+Task: 5 | Ep: 4 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=221/246)，布心=(0.00,0.01)
+Task: 5 | Ep: 5 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=221/246)，布心=(0.00,0.01)
+Task: 5 | Ep: 6 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=222/247)，布心=(0.00,0.01)
+Task: 5 | Ep: 7 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=221/246)，布心=(0.00,0.01)
+Task: 5 | Ep: 8 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=222/246)，布心=(0.00,0.01)
+Task: 5 | Ep: 9 | Success: False
+[eval] task 5: 0/10 (0.00%)
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 6 | Ep: 0 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=116/125)，布心=(-0.23,0.04)
+Task: 6 | Ep: 1 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 6 | Ep: 2 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=116/125)，布心=(-0.23,0.04)
+Task: 6 | Ep: 3 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 6 | Ep: 4 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 6 | Ep: 5 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=114/125)，布心=(-0.24,0.04)
+Task: 6 | Ep: 6 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=117/125)，布心=(-0.23,0.04)
+Task: 6 | Ep: 7 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 6 | Ep: 8 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=117/125)，布心=(-0.23,0.04)
+Task: 6 | Ep: 9 | Success: False
+[eval] task 6: 0/10 (0.00%)
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 7 | Ep: 0 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=116/125)，布心=(-0.24,0.04)
+Task: 7 | Ep: 1 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=117/125)，布心=(-0.23,0.04)
+Task: 7 | Ep: 2 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 7 | Ep: 3 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 7 | Ep: 4 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 7 | Ep: 5 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=116/125)，布心=(-0.23,0.04)
+Task: 7 | Ep: 6 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=116/125)，布心=(-0.23,0.04)
+Task: 7 | Ep: 7 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 7 | Ep: 8 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=116/125)，布心=(-0.23,0.04)
+Task: 7 | Ep: 9 | Success: False
+[eval] task 7: 0/10 (0.00%)
+Task: 8 | Ep: 0 | Success: False
+Task: 8 | Ep: 1 | Success: False
+Task: 8 | Ep: 2 | Success: False
+Task: 8 | Ep: 3 | Success: False
+Task: 8 | Ep: 4 | Success: False
+Task: 8 | Ep: 5 | Success: False
+Task: 8 | Ep: 6 | Success: False
+Task: 8 | Ep: 7 | Success: False
+Task: 8 | Ep: 8 | Success: False
+Task: 8 | Ep: 9 | Success: False
+[eval] task 8: 0/10 (0.00%)
+Task: 9 | Ep: 0 | Success: False
+Task: 9 | Ep: 1 | Success: False
+Task: 9 | Ep: 2 | Success: False
+Task: 9 | Ep: 3 | Success: False
+Task: 9 | Ep: 4 | Success: False
+Task: 9 | Ep: 5 | Success: False
+Task: 9 | Ep: 6 | Success: False
+Task: 9 | Ep: 7 | Success: False
+Task: 9 | Ep: 8 | Success: False
+Task: 9 | Ep: 9 | Success: False
+[eval] task 9: 0/10 (0.00%)
+[eval] 结果: /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/eval_adv_libero_10_20261026_211742_1509829/evaluation_result.txt

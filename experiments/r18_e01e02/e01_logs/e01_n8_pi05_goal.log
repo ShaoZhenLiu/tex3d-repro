@@ -31,3 +31,505 @@ Traceback (most recent call last):
     return self._apply(lambda t: t.float() if t.is_floating_point() else t)
                                  ^^^^^^^^^
 torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1006.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 425.19 MiB is free. Process 2068 has 4.47 GiB memory in use. Process 10765 has 25.66 GiB memory in use. Including non-PyTorch memory, this process has 13.46 GiB memory in use. Process 533883 has 3.34 GiB memory in use. Of the allocated memory 12.98 GiB is allocated by PyTorch, and 43.41 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 937, in run_eval
+    policy = load_policy(args.ckpt, model_config=args.model_config,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 420, in load_policy
+    policy = policy_config.create_trained_policy(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/policies/policy_config.py", line 75, in create_trained_policy
+    return _policy.Policy(
+           ^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/policies/policy.py", line 59, in __init__
+    self._model = self._model.to(pytorch_device)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1343, in to
+    return self._apply(convert)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  [Previous line repeated 4 more times]
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1329, in convert
+    return t.to(
+           ^^^^^
+RuntimeError: CUDA error: out of memory
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 937, in run_eval
+    policy = load_policy(args.ckpt, model_config=args.model_config,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 422, in load_policy
+    policy._model.float()
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in float
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in <lambda>
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+                                 ^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1006.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 579.38 MiB is free. Process 341297 has 18.77 GiB memory in use. Process 381394 has 14.53 GiB memory in use. Including non-PyTorch memory, this process has 13.46 GiB memory in use. Of the allocated memory 12.98 GiB is allocated by PyTorch, and 43.41 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 937, in run_eval
+    policy = load_policy(args.ckpt, model_config=args.model_config,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 422, in load_policy
+    policy._model.float()
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in float
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in <lambda>
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+                                 ^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1006.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 579.44 MiB is free. Process 341297 has 18.77 GiB memory in use. Process 381394 has 14.53 GiB memory in use. Including non-PyTorch memory, this process has 13.46 GiB memory in use. Of the allocated memory 12.98 GiB is allocated by PyTorch, and 43.41 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 937, in run_eval
+    policy = load_policy(args.ckpt, model_config=args.model_config,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 422, in load_policy
+    policy._model.float()
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in float
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  [Previous line repeated 2 more times]
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in <lambda>
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+                                 ^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.96 GiB. GPU 0 has a total capacity of 47.37 GiB of which 1.49 GiB is free. Process 98995 has 23.06 GiB memory in use. Process 330754 has 14.59 GiB memory in use. Including non-PyTorch memory, this process has 8.19 GiB memory in use. Of the allocated memory 7.73 GiB is allocated by PyTorch, and 21.91 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 937, in run_eval
+    policy = load_policy(args.ckpt, model_config=args.model_config,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 422, in load_policy
+    policy._model.float()
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in float
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  [Previous line repeated 2 more times]
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in <lambda>
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+                                 ^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.96 GiB. GPU 0 has a total capacity of 47.37 GiB of which 1.49 GiB is free. Process 98995 has 23.06 GiB memory in use. Process 330754 has 14.59 GiB memory in use. Including non-PyTorch memory, this process has 8.19 GiB memory in use. Of the allocated memory 7.73 GiB is allocated by PyTorch, and 21.91 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 937, in run_eval
+    policy = load_policy(args.ckpt, model_config=args.model_config,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 422, in load_policy
+    policy._model.float()
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in float
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  [Previous line repeated 2 more times]
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in <lambda>
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+                                 ^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.96 GiB. GPU 0 has a total capacity of 47.37 GiB of which 1.49 GiB is free. Process 98995 has 23.06 GiB memory in use. Process 330754 has 14.59 GiB memory in use. Including non-PyTorch memory, this process has 8.19 GiB memory in use. Of the allocated memory 7.73 GiB is allocated by PyTorch, and 21.91 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 937, in run_eval
+    policy = load_policy(args.ckpt, model_config=args.model_config,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 422, in load_policy
+    policy._model.float()
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in float
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  [Previous line repeated 2 more times]
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in <lambda>
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+                                 ^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.96 GiB. GPU 0 has a total capacity of 47.37 GiB of which 1.49 GiB is free. Process 98995 has 23.06 GiB memory in use. Process 330754 has 14.59 GiB memory in use. Including non-PyTorch memory, this process has 8.19 GiB memory in use. Of the allocated memory 7.73 GiB is allocated by PyTorch, and 21.91 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 937, in run_eval
+    policy = load_policy(args.ckpt, model_config=args.model_config,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 422, in load_policy
+    policy._model.float()
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in float
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  [Previous line repeated 2 more times]
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in <lambda>
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+                                 ^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.96 GiB. GPU 0 has a total capacity of 47.37 GiB of which 1.49 GiB is free. Process 98995 has 23.06 GiB memory in use. Process 330754 has 14.59 GiB memory in use. Including non-PyTorch memory, this process has 8.19 GiB memory in use. Of the allocated memory 7.73 GiB is allocated by PyTorch, and 21.91 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 937, in run_eval
+    policy = load_policy(args.ckpt, model_config=args.model_config,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 422, in load_policy
+    policy._model.float()
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in float
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  [Previous line repeated 2 more times]
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in <lambda>
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+                                 ^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.96 GiB. GPU 0 has a total capacity of 47.37 GiB of which 1.49 GiB is free. Process 98995 has 23.06 GiB memory in use. Process 330754 has 14.59 GiB memory in use. Including non-PyTorch memory, this process has 8.19 GiB memory in use. Of the allocated memory 7.73 GiB is allocated by PyTorch, and 21.91 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 937, in run_eval
+    policy = load_policy(args.ckpt, model_config=args.model_config,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 422, in load_policy
+    policy._model.float()
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in float
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  [Previous line repeated 5 more times]
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in <lambda>
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+                                 ^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 128.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 71.44 MiB is free. Process 98995 has 23.06 GiB memory in use. Process 330754 has 14.06 GiB memory in use. Including non-PyTorch memory, this process has 10.14 GiB memory in use. Of the allocated memory 9.67 GiB is allocated by PyTorch, and 31.41 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 937, in run_eval
+    policy = load_policy(args.ckpt, model_config=args.model_config,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 422, in load_policy
+    policy._model.float()
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in float
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  [Previous line repeated 2 more times]
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in <lambda>
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+                                 ^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.96 GiB. GPU 0 has a total capacity of 47.37 GiB of which 1.49 GiB is free. Process 98995 has 23.06 GiB memory in use. Process 330754 has 14.59 GiB memory in use. Including non-PyTorch memory, this process has 8.19 GiB memory in use. Of the allocated memory 7.73 GiB is allocated by PyTorch, and 21.91 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+Task: 0 | Ep: 0 | Success: True
+Task: 0 | Ep: 1 | Success: True
+Task: 0 | Ep: 2 | Success: True
+Task: 0 | Ep: 3 | Success: False
+Task: 0 | Ep: 4 | Success: False
+Task: 0 | Ep: 5 | Success: True
+Task: 0 | Ep: 6 | Success: True
+Task: 0 | Ep: 7 | Success: True
+Task: 0 | Ep: 8 | Success: True
+Task: 0 | Ep: 9 | Success: True
+[eval] task 0: 8/10 (80.00%)
+Task: 1 | Ep: 0 | Success: True
+Task: 1 | Ep: 1 | Success: True
+Task: 1 | Ep: 2 | Success: True
+Task: 1 | Ep: 3 | Success: True
+Task: 1 | Ep: 4 | Success: True
+Task: 1 | Ep: 5 | Success: True
+Task: 1 | Ep: 6 | Success: True
+Task: 1 | Ep: 7 | Success: True
+Task: 1 | Ep: 8 | Success: False
+Task: 1 | Ep: 9 | Success: True
+[eval] task 1: 9/10 (90.00%)
+Task: 2 | Ep: 0 | Success: True
+Task: 2 | Ep: 1 | Success: True
+Task: 2 | Ep: 2 | Success: True
+Task: 2 | Ep: 3 | Success: True
+Task: 2 | Ep: 4 | Success: True
+Task: 2 | Ep: 5 | Success: True
+Task: 2 | Ep: 6 | Success: True
+Task: 2 | Ep: 7 | Success: True
+Task: 2 | Ep: 8 | Success: True
+Task: 2 | Ep: 9 | Success: True
+[eval] task 2: 10/10 (100.00%)
+Task: 3 | Ep: 0 | Success: False
+Task: 3 | Ep: 1 | Success: False
+Task: 3 | Ep: 2 | Success: True
+Task: 3 | Ep: 3 | Success: False
+Task: 3 | Ep: 4 | Success: False
+Task: 3 | Ep: 5 | Success: False
+Task: 3 | Ep: 6 | Success: False
+Task: 3 | Ep: 7 | Success: False
+Task: 3 | Ep: 8 | Success: False
+Task: 3 | Ep: 9 | Success: False
+[eval] task 3: 1/10 (10.00%)
+Task: 4 | Ep: 0 | Success: True
+Task: 4 | Ep: 1 | Success: True
+Task: 4 | Ep: 2 | Success: True
+Task: 4 | Ep: 3 | Success: True
+Task: 4 | Ep: 4 | Success: True
+Task: 4 | Ep: 5 | Success: True
+Task: 4 | Ep: 6 | Success: True
+Task: 4 | Ep: 7 | Success: True
+Task: 4 | Ep: 8 | Success: True
+Task: 4 | Ep: 9 | Success: True
+[eval] task 4: 10/10 (100.00%)
+Task: 5 | Ep: 0 | Success: False
+Task: 5 | Ep: 1 | Success: False
+Task: 5 | Ep: 2 | Success: False
+Task: 5 | Ep: 3 | Success: False
+Task: 5 | Ep: 4 | Success: False
+Task: 5 | Ep: 5 | Success: False
+Task: 5 | Ep: 6 | Success: False
+Task: 5 | Ep: 7 | Success: False
+Task: 5 | Ep: 8 | Success: False
+Task: 5 | Ep: 9 | Success: True
+[eval] task 5: 1/10 (10.00%)
+Task: 6 | Ep: 0 | Success: True
+Task: 6 | Ep: 1 | Success: True
+Task: 6 | Ep: 2 | Success: False
+Task: 6 | Ep: 3 | Success: True
+Task: 6 | Ep: 4 | Success: False
+Task: 6 | Ep: 5 | Success: False
+Task: 6 | Ep: 6 | Success: False
+Task: 6 | Ep: 7 | Success: False
+Task: 6 | Ep: 8 | Success: True
+Task: 6 | Ep: 9 | Success: False
+[eval] task 6: 4/10 (40.00%)
+Task: 7 | Ep: 0 | Success: True
+Task: 7 | Ep: 1 | Success: True
+Task: 7 | Ep: 2 | Success: True
+Task: 7 | Ep: 3 | Success: True
+Task: 7 | Ep: 4 | Success: True
+Task: 7 | Ep: 5 | Success: True
+Task: 7 | Ep: 6 | Success: True
+Task: 7 | Ep: 7 | Success: True
+Task: 7 | Ep: 8 | Success: True
+Task: 7 | Ep: 9 | Success: True
+[eval] task 7: 10/10 (100.00%)
+Task: 8 | Ep: 0 | Success: False
+Task: 8 | Ep: 1 | Success: True
+Task: 8 | Ep: 2 | Success: True
+Task: 8 | Ep: 3 | Success: False
+Task: 8 | Ep: 4 | Success: False
+Task: 8 | Ep: 5 | Success: True
+Task: 8 | Ep: 6 | Success: True
+Task: 8 | Ep: 7 | Success: True
+Task: 8 | Ep: 8 | Success: True
+Task: 8 | Ep: 9 | Success: True
+[eval] task 8: 7/10 (70.00%)
+Task: 9 | Ep: 0 | Success: False
+Task: 9 | Ep: 1 | Success: True
+Task: 9 | Ep: 2 | Success: False
+Task: 9 | Ep: 3 | Success: True
+Task: 9 | Ep: 4 | Success: True
+Task: 9 | Ep: 5 | Success: False
+Task: 9 | Ep: 6 | Success: True
+Task: 9 | Ep: 7 | Success: False
+Task: 9 | Ep: 8 | Success: True
+Task: 9 | Ep: 9 | Success: True
+[eval] task 9: 6/10 (60.00%)
+[eval] 结果: /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/eval_adv_libero_goal_20261026_225249_3309324/evaluation_result.txt

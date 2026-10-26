@@ -1,0 +1,897 @@
+2026-10-26 21:11:07.282429: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-26 21:11:07.282514: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-26 21:11:07.284050: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-26 21:11:07.293226: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+2026-10-26 21:11:08.523112: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Using LIBERO constants:
+  NUM_ACTIONS_CHUNK = 8
+  ACTION_DIM = 7
+  PROPRIO_DIM = 8
+  ACTION_PROPRIO_NORMALIZATION_TYPE = bounds_q99
+If needed, manually set the correct constants in `prismatic/vla/constants.py`!
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Instantiating pretrained VLA policy...
+Created backup of original config at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json.back.20261026_211130
+Updated config.json at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json
+Changes made:
+  - Set AutoConfig to "configuration_prismatic.OpenVLAConfig"
+  - Set AutoModelForVision2Seq to "modeling_prismatic.OpenVLAForActionPrediction"
+WARNING: `modeling_prismatic.py` is not found anywhere in the current directory.
+WARNING: `configuration_prismatic.py` is not found anywhere in the current directory.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.07it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.15it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.15it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.54it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.36it/s]
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 278, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 274, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 107, in run_eval
+    model = base.get_model(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/robot_utils.py", line 69, in get_model
+    model = get_vla(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/openvla_utils.py", line 304, in get_vla
+    vla = vla.to(DEVICE)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/transformers/modeling_utils.py", line 2692, in to
+    return super().to(*args, **kwargs)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1152, in to
+    return self._apply(convert)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  [Previous line repeated 3 more times]
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 825, in _apply
+    param_applied = fn(param)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1150, in convert
+    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 86.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 48.50 MiB is free. Process 212264 has 24.39 GiB memory in use. Process 1465171 has 11.50 GiB memory in use. Including non-PyTorch memory, this process has 11.40 GiB memory in use. Of the allocated memory 11.02 GiB is allocated by PyTorch, and 5.80 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+2026-10-26 21:14:36.725251: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-26 21:14:36.725313: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-26 21:14:36.726755: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-26 21:14:36.734478: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+2026-10-26 21:14:37.893828: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Using LIBERO constants:
+  NUM_ACTIONS_CHUNK = 8
+  ACTION_DIM = 7
+  PROPRIO_DIM = 8
+  ACTION_PROPRIO_NORMALIZATION_TYPE = bounds_q99
+If needed, manually set the correct constants in `prismatic/vla/constants.py`!
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Instantiating pretrained VLA policy...
+Created backup of original config at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json.back.20261026_211500
+Updated config.json at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json
+Changes made:
+  - Set AutoConfig to "configuration_prismatic.OpenVLAConfig"
+  - Set AutoModelForVision2Seq to "modeling_prismatic.OpenVLAForActionPrediction"
+WARNING: `modeling_prismatic.py` is not found anywhere in the current directory.
+WARNING: `configuration_prismatic.py` is not found anywhere in the current directory.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  2.52it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:00<00:00,  2.93it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  3.10it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.22it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.10it/s]
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 278, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 274, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 107, in run_eval
+    model = base.get_model(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/robot_utils.py", line 69, in get_model
+    model = get_vla(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/openvla_utils.py", line 304, in get_vla
+    vla = vla.to(DEVICE)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/transformers/modeling_utils.py", line 2692, in to
+    return super().to(*args, **kwargs)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1152, in to
+    return self._apply(convert)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  [Previous line repeated 3 more times]
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 825, in _apply
+    param_applied = fn(param)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1150, in convert
+    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 32.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 13.19 MiB is free. Process 212264 has 386.00 MiB memory in use. Process 1506044 has 11.28 GiB memory in use. Including non-PyTorch memory, this process has 11.28 GiB memory in use. Process 1507298 has 24.38 GiB memory in use. Of the allocated memory 10.90 GiB is allocated by PyTorch, and 2.80 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+2026-10-26 21:17:15.728075: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-26 21:17:15.728150: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-26 21:17:15.729519: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-26 21:17:15.737230: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+2026-10-26 21:17:17.015457: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Using LIBERO constants:
+  NUM_ACTIONS_CHUNK = 8
+  ACTION_DIM = 7
+  PROPRIO_DIM = 8
+  ACTION_PROPRIO_NORMALIZATION_TYPE = bounds_q99
+If needed, manually set the correct constants in `prismatic/vla/constants.py`!
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Instantiating pretrained VLA policy...
+Created backup of original config at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json.back.20261026_211740
+Updated config.json at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json
+Changes made:
+  - Set AutoConfig to "configuration_prismatic.OpenVLAConfig"
+  - Set AutoModelForVision2Seq to "modeling_prismatic.OpenVLAForActionPrediction"
+WARNING: `modeling_prismatic.py` is not found anywhere in the current directory.
+WARNING: `configuration_prismatic.py` is not found anywhere in the current directory.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  2.44it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:00<00:00,  2.97it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:00<00:00,  3.18it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.33it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.17it/s]
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 278, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 274, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 107, in run_eval
+    model = base.get_model(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/robot_utils.py", line 69, in get_model
+    model = get_vla(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/openvla_utils.py", line 304, in get_vla
+    vla = vla.to(DEVICE)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/transformers/modeling_utils.py", line 2692, in to
+    return super().to(*args, **kwargs)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1152, in to
+    return self._apply(convert)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  [Previous line repeated 3 more times]
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 825, in _apply
+    param_applied = fn(param)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1150, in convert
+    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 86.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 45.81 MiB is free. Process 212264 has 386.00 MiB memory in use. Process 1507298 has 26.70 GiB memory in use. Process 1512130 has 2.71 GiB memory in use. Including non-PyTorch memory, this process has 3.47 GiB memory in use. Process 1509829 has 14.03 GiB memory in use. Of the allocated memory 3.08 GiB is allocated by PyTorch, and 11.14 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+2026-10-26 21:19:52.299089: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-26 21:19:52.299162: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-26 21:19:52.300658: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-26 21:19:52.309324: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+2026-10-26 21:19:53.390398: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Using LIBERO constants:
+  NUM_ACTIONS_CHUNK = 8
+  ACTION_DIM = 7
+  PROPRIO_DIM = 8
+  ACTION_PROPRIO_NORMALIZATION_TYPE = bounds_q99
+If needed, manually set the correct constants in `prismatic/vla/constants.py`!
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Instantiating pretrained VLA policy...
+Created backup of original config at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json.back.20261026_212015
+Updated config.json at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json
+Changes made:
+  - Set AutoConfig to "configuration_prismatic.OpenVLAConfig"
+  - Set AutoModelForVision2Seq to "modeling_prismatic.OpenVLAForActionPrediction"
+WARNING: `modeling_prismatic.py` is not found anywhere in the current directory.
+WARNING: `configuration_prismatic.py` is not found anywhere in the current directory.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  2.65it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:00<00:00,  2.97it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:00<00:00,  3.10it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.25it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.13it/s]
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 278, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 274, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 107, in run_eval
+    model = base.get_model(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/robot_utils.py", line 69, in get_model
+    model = get_vla(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/openvla_utils.py", line 304, in get_vla
+    vla = vla.to(DEVICE)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/transformers/modeling_utils.py", line 2692, in to
+    return super().to(*args, **kwargs)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1152, in to
+    return self._apply(convert)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  [Previous line repeated 3 more times]
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 825, in _apply
+    param_applied = fn(param)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1150, in convert
+    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 86.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 37.12 MiB is free. Process 218214 has 386.00 MiB memory in use. Process 1507295 has 26.96 GiB memory in use. Including non-PyTorch memory, this process has 10.36 GiB memory in use. Process 1517653 has 9.60 GiB memory in use. Of the allocated memory 9.97 GiB is allocated by PyTorch, and 16.85 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+2026-10-26 21:22:30.135111: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-26 21:22:30.135219: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-26 21:22:30.136803: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-26 21:22:30.146150: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+2026-10-26 21:22:31.292823: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Using LIBERO constants:
+  NUM_ACTIONS_CHUNK = 8
+  ACTION_DIM = 7
+  PROPRIO_DIM = 8
+  ACTION_PROPRIO_NORMALIZATION_TYPE = bounds_q99
+If needed, manually set the correct constants in `prismatic/vla/constants.py`!
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Instantiating pretrained VLA policy...
+Created backup of original config at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json.back.20261026_212254
+Updated config.json at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json
+Changes made:
+  - Set AutoConfig to "configuration_prismatic.OpenVLAConfig"
+  - Set AutoModelForVision2Seq to "modeling_prismatic.OpenVLAForActionPrediction"
+WARNING: `modeling_prismatic.py` is not found anywhere in the current directory.
+WARNING: `configuration_prismatic.py` is not found anywhere in the current directory.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  2.74it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:00<00:00,  3.15it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:00<00:00,  3.31it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.44it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.31it/s]
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 278, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 274, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 107, in run_eval
+    model = base.get_model(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/robot_utils.py", line 69, in get_model
+    model = get_vla(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/openvla_utils.py", line 304, in get_vla
+    vla = vla.to(DEVICE)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/transformers/modeling_utils.py", line 2692, in to
+    return super().to(*args, **kwargs)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1152, in to
+    return self._apply(convert)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  [Previous line repeated 3 more times]
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 825, in _apply
+    param_applied = fn(param)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1150, in convert
+    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 86.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 17.12 MiB is free. Process 218214 has 386.00 MiB memory in use. Process 1507295 has 26.98 GiB memory in use. Including non-PyTorch memory, this process has 10.36 GiB memory in use. Process 1528820 has 9.60 GiB memory in use. Of the allocated memory 9.97 GiB is allocated by PyTorch, and 16.85 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+2026-10-26 21:51:28.929120: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-26 21:51:28.929184: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-26 21:51:28.930757: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-26 21:51:28.939291: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+2026-10-26 21:51:30.065458: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Using LIBERO constants:
+  NUM_ACTIONS_CHUNK = 8
+  ACTION_DIM = 7
+  PROPRIO_DIM = 8
+  ACTION_PROPRIO_NORMALIZATION_TYPE = bounds_q99
+If needed, manually set the correct constants in `prismatic/vla/constants.py`!
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Instantiating pretrained VLA policy...
+Created backup of original config at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json.back.20261026_215152
+Updated config.json at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json
+Changes made:
+  - Set AutoConfig to "configuration_prismatic.OpenVLAConfig"
+  - Set AutoModelForVision2Seq to "modeling_prismatic.OpenVLAForActionPrediction"
+WARNING: `modeling_prismatic.py` is not found anywhere in the current directory.
+WARNING: `configuration_prismatic.py` is not found anywhere in the current directory.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  2.64it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:00<00:00,  3.05it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  3.00it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.20it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.10it/s]
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 278, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 274, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 107, in run_eval
+    model = base.get_model(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/robot_utils.py", line 69, in get_model
+    model = get_vla(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/openvla_utils.py", line 304, in get_vla
+    vla = vla.to(DEVICE)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/transformers/modeling_utils.py", line 2692, in to
+    return super().to(*args, **kwargs)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1152, in to
+    return self._apply(convert)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  [Previous line repeated 3 more times]
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 825, in _apply
+    param_applied = fn(param)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1150, in convert
+    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 32.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 25.12 MiB is free. Process 218214 has 386.00 MiB memory in use. Including non-PyTorch memory, this process has 11.68 GiB memory in use. Process 2248149 has 9.72 GiB memory in use. Process 2249101 has 25.54 GiB memory in use. Of the allocated memory 11.28 GiB is allocated by PyTorch, and 17.79 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+2026-10-26 21:54:09.610962: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-26 21:54:09.611024: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-26 21:54:09.612251: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-26 21:54:09.619681: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+2026-10-26 21:54:10.679862: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Using LIBERO constants:
+  NUM_ACTIONS_CHUNK = 8
+  ACTION_DIM = 7
+  PROPRIO_DIM = 8
+  ACTION_PROPRIO_NORMALIZATION_TYPE = bounds_q99
+If needed, manually set the correct constants in `prismatic/vla/constants.py`!
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Instantiating pretrained VLA policy...
+Created backup of original config at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json.back.20261026_215432
+Updated config.json at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json
+Changes made:
+  - Set AutoConfig to "configuration_prismatic.OpenVLAConfig"
+  - Set AutoModelForVision2Seq to "modeling_prismatic.OpenVLAForActionPrediction"
+WARNING: `modeling_prismatic.py` is not found anywhere in the current directory.
+WARNING: `configuration_prismatic.py` is not found anywhere in the current directory.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  2.32it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:00<00:00,  2.75it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  3.00it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.18it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.00it/s]
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 278, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 274, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 107, in run_eval
+    model = base.get_model(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/robot_utils.py", line 69, in get_model
+    model = get_vla(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/openvla_utils.py", line 304, in get_vla
+    vla = vla.to(DEVICE)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/transformers/modeling_utils.py", line 2692, in to
+    return super().to(*args, **kwargs)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1152, in to
+    return self._apply(convert)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  [Previous line repeated 3 more times]
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 825, in _apply
+    param_applied = fn(param)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1150, in convert
+    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 86.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 39.12 MiB is free. Process 218214 has 386.00 MiB memory in use. Process 2249101 has 26.96 GiB memory in use. Process 2254282 has 10.09 GiB memory in use. Including non-PyTorch memory, this process has 9.89 GiB memory in use. Of the allocated memory 9.51 GiB is allocated by PyTorch, and 7.87 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+2026-10-26 21:56:47.950267: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-26 21:56:47.950366: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-26 21:56:47.952101: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-26 21:56:47.960378: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+2026-10-26 21:56:49.083056: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Using LIBERO constants:
+  NUM_ACTIONS_CHUNK = 8
+  ACTION_DIM = 7
+  PROPRIO_DIM = 8
+  ACTION_PROPRIO_NORMALIZATION_TYPE = bounds_q99
+If needed, manually set the correct constants in `prismatic/vla/constants.py`!
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Instantiating pretrained VLA policy...
+Created backup of original config at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json.back.20261026_215712
+Updated config.json at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json
+Changes made:
+  - Set AutoConfig to "configuration_prismatic.OpenVLAConfig"
+  - Set AutoModelForVision2Seq to "modeling_prismatic.OpenVLAForActionPrediction"
+WARNING: `modeling_prismatic.py` is not found anywhere in the current directory.
+WARNING: `configuration_prismatic.py` is not found anywhere in the current directory.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  2.28it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:00<00:00,  2.74it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  2.94it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.13it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  2.96it/s]
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 278, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 274, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 107, in run_eval
+    model = base.get_model(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/robot_utils.py", line 69, in get_model
+    model = get_vla(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/openvla_utils.py", line 304, in get_vla
+    vla = vla.to(DEVICE)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/transformers/modeling_utils.py", line 2692, in to
+    return super().to(*args, **kwargs)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1152, in to
+    return self._apply(convert)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  [Previous line repeated 3 more times]
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 825, in _apply
+    param_applied = fn(param)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1150, in convert
+    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 32.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 17.12 MiB is free. Process 218214 has 386.00 MiB memory in use. Process 2249101 has 26.98 GiB memory in use. Including non-PyTorch memory, this process has 9.78 GiB memory in use. Process 2266749 has 10.19 GiB memory in use. Of the allocated memory 9.39 GiB is allocated by PyTorch, and 6.87 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+2026-10-26 22:08:49.466995: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-26 22:08:49.467067: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-26 22:08:49.468544: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-26 22:08:49.476710: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+2026-10-26 22:08:50.587013: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Using LIBERO constants:
+  NUM_ACTIONS_CHUNK = 8
+  ACTION_DIM = 7
+  PROPRIO_DIM = 8
+  ACTION_PROPRIO_NORMALIZATION_TYPE = bounds_q99
+If needed, manually set the correct constants in `prismatic/vla/constants.py`!
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Instantiating pretrained VLA policy...
+Created backup of original config at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json.back.20261026_220912
+Updated config.json at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json
+Changes made:
+  - Set AutoConfig to "configuration_prismatic.OpenVLAConfig"
+  - Set AutoModelForVision2Seq to "modeling_prismatic.OpenVLAForActionPrediction"
+WARNING: `modeling_prismatic.py` is not found anywhere in the current directory.
+WARNING: `configuration_prismatic.py` is not found anywhere in the current directory.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  2.57it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:00<00:00,  2.63it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  2.84it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.06it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  2.92it/s]
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 278, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 274, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 107, in run_eval
+    model = base.get_model(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/robot_utils.py", line 69, in get_model
+    model = get_vla(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/openvla_utils.py", line 304, in get_vla
+    vla = vla.to(DEVICE)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/transformers/modeling_utils.py", line 2692, in to
+    return super().to(*args, **kwargs)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1152, in to
+    return self._apply(convert)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 825, in _apply
+    param_applied = fn(param)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1150, in convert
+    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 252.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 128.50 MiB is free. Process 341297 has 18.77 GiB memory in use. Process 2558565 has 14.22 GiB memory in use. Including non-PyTorch memory, this process has 14.22 GiB memory in use. Of the allocated memory 13.83 GiB is allocated by PyTorch, and 10.67 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+2026-10-26 22:11:36.983289: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-26 22:11:36.983347: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-26 22:11:36.984816: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-26 22:11:36.992966: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+2026-10-26 22:11:38.123748: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Using LIBERO constants:
+  NUM_ACTIONS_CHUNK = 8
+  ACTION_DIM = 7
+  PROPRIO_DIM = 8
+  ACTION_PROPRIO_NORMALIZATION_TYPE = bounds_q99
+If needed, manually set the correct constants in `prismatic/vla/constants.py`!
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Instantiating pretrained VLA policy...
+Created backup of original config at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json.back.20261026_221200
+Updated config.json at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json
+Changes made:
+  - Set AutoConfig to "configuration_prismatic.OpenVLAConfig"
+  - Set AutoModelForVision2Seq to "modeling_prismatic.OpenVLAForActionPrediction"
+WARNING: `modeling_prismatic.py` is not found anywhere in the current directory.
+WARNING: `configuration_prismatic.py` is not found anywhere in the current directory.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  2.66it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:00<00:00,  3.02it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:00<00:00,  3.14it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.32it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.19it/s]
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 278, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 274, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/libero/transfer_pi2oft.py", line 107, in run_eval
+    model = base.get_model(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/robot_utils.py", line 69, in get_model
+    model = get_vla(cfg)
+  File "/data/shaozhen.liu/code/tex3d/openvla-oft/experiments/robot/openvla_utils.py", line 304, in get_vla
+    vla = vla.to(DEVICE)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/transformers/modeling_utils.py", line 2692, in to
+    return super().to(*args, **kwargs)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1152, in to
+    return self._apply(convert)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  [Previous line repeated 3 more times]
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 825, in _apply
+    param_applied = fn(param)
+  File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1150, in convert
+    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 86.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 48.50 MiB is free. Process 341297 has 18.77 GiB memory in use. Process 2587566 has 14.47 GiB memory in use. Including non-PyTorch memory, this process has 14.04 GiB memory in use. Of the allocated memory 13.67 GiB is allocated by PyTorch, and 2.69 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+2026-10-26 22:18:08.188879: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-26 22:18:08.188948: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-26 22:18:08.190351: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-26 22:18:08.198037: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+2026-10-26 22:18:09.309474: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Using LIBERO constants:
+  NUM_ACTIONS_CHUNK = 8
+  ACTION_DIM = 7
+  PROPRIO_DIM = 8
+  ACTION_PROPRIO_NORMALIZATION_TYPE = bounds_q99
+If needed, manually set the correct constants in `prismatic/vla/constants.py`!
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Instantiating pretrained VLA policy...
+Created backup of original config at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json.back.20261026_221831
+Updated config.json at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json
+Changes made:
+  - Set AutoConfig to "configuration_prismatic.OpenVLAConfig"
+  - Set AutoModelForVision2Seq to "modeling_prismatic.OpenVLAForActionPrediction"
+WARNING: `modeling_prismatic.py` is not found anywhere in the current directory.
+WARNING: `configuration_prismatic.py` is not found anywhere in the current directory.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  2.68it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:00<00:00,  3.05it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:00<00:00,  3.19it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.28it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.18it/s]
+Loaded model: <class 'transformers_modules.oft-spatial-ckpt.modeling_prismatic.OpenVLAForActionPrediction'>
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 0 | Ep: 0 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 0 | Ep: 1 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 0 | Ep: 2 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 0 | Ep: 3 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 0 | Ep: 4 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 0 | Ep: 5 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 0 | Ep: 6 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 0 | Ep: 7 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 0 | Ep: 8 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 0 | Ep: 9 | Success: True
+[eval] task 0: 9/10
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 1 | Ep: 0 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 1 | Ep: 1 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 1 | Ep: 2 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 1 | Ep: 3 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 1 | Ep: 4 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 1 | Ep: 5 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 1 | Ep: 6 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 1 | Ep: 7 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 1 | Ep: 8 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 1 | Ep: 9 | Success: False
+[eval] task 1: 0/10
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 2 | Ep: 0 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 2 | Ep: 1 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 2 | Ep: 2 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 2 | Ep: 3 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 2 | Ep: 4 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 2 | Ep: 5 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 2 | Ep: 6 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 2 | Ep: 7 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 2 | Ep: 8 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 2 | Ep: 9 | Success: True
+[eval] task 2: 10/10
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 3 | Ep: 0 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 3 | Ep: 1 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 3 | Ep: 2 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 3 | Ep: 3 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 3 | Ep: 4 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 3 | Ep: 5 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 3 | Ep: 6 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 3 | Ep: 7 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 3 | Ep: 8 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 3 | Ep: 9 | Success: True
+[eval] task 3: 10/10
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 4 | Ep: 0 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 4 | Ep: 1 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 4 | Ep: 2 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 4 | Ep: 3 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 4 | Ep: 4 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 4 | Ep: 5 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 4 | Ep: 6 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 4 | Ep: 7 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 4 | Ep: 8 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 4 | Ep: 9 | Success: True
+[eval] task 4: 10/10
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 5 | Ep: 0 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 5 | Ep: 1 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 5 | Ep: 2 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 5 | Ep: 3 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 5 | Ep: 4 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 5 | Ep: 5 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 5 | Ep: 6 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 5 | Ep: 7 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 5 | Ep: 8 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 5 | Ep: 9 | Success: False
+[eval] task 5: 2/10
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 6 | Ep: 0 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 6 | Ep: 1 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 6 | Ep: 2 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 6 | Ep: 3 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 6 | Ep: 4 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 6 | Ep: 5 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 6 | Ep: 6 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 6 | Ep: 7 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 6 | Ep: 8 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 6 | Ep: 9 | Success: True
+[eval] task 6: 9/10
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 7 | Ep: 0 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 7 | Ep: 1 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 7 | Ep: 2 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 7 | Ep: 3 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 7 | Ep: 4 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 7 | Ep: 5 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 7 | Ep: 6 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 7 | Ep: 7 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 7 | Ep: 8 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 7 | Ep: 9 | Success: False
+[eval] task 7: 1/10
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 8 | Ep: 0 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 8 | Ep: 1 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 8 | Ep: 2 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 8 | Ep: 3 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 8 | Ep: 4 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 8 | Ep: 5 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 8 | Ep: 6 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 8 | Ep: 7 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 8 | Ep: 8 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 8 | Ep: 9 | Success: True
+[eval] task 8: 3/10
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 9 | Ep: 0 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 9 | Ep: 1 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 9 | Ep: 2 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 9 | Ep: 3 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 9 | Ep: 4 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 9 | Ep: 5 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 9 | Ep: 6 | Success: False
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 9 | Ep: 7 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 9 | Ep: 8 | Success: True
+[Warning]: datasets path /data/shaozhen.liu/code/LIBERO/libero/datasets does not exist!
+Task: 9 | Ep: 9 | Success: False
+[eval] task 9: 5/10
+[eval] 结果: /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/transfer_oft/adv_20261026_221844/evaluation_result.txt
