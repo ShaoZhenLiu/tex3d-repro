@@ -315,13 +315,14 @@ def main():
             msgs = []
             b, cp, pp = paired(cells["AMR"], cells["AN8"], "MR8源端", "N8源端", msgs)
             out_lines.extend(msgs)
-            # 训练任务分组
-            for grp, ids in (("纹理训练任务{0,2,6,8}", (0, 2, 6, 8)),
-                             ("未参与优化{1,3,4,5,7,9}", (1, 3, 4, 5, 7, 9))):
+            # 训练任务分组（{0,2,6,8} 共40回合；其余六任务共60回合）
+            for grp, ids, tot in (("纹理训练任务{0,2,6,8}", (0, 2, 6, 8), 40),
+                                  ("未参与优化{1,3,4,5,7,9}", (1, 3, 4, 5, 7, 9), 60)):
                 sub = {c: sum(v for k, v in cells[c].items() if k[0] in ids)
                        for c, _ in conds}
-                A("  %s: O %d/40 P %d/40 N8 %d/40 MR %d/40"
-                  % (grp, sub["O"], sub["P"], sub["AN8"], sub["AMR"]))
+                A("  %s: O %d/%d P %d/%d N8 %d/%d MR %d/%d"
+                  % (grp, sub["O"], tot, sub["P"], tot,
+                     sub["AN8"], tot, sub["AMR"], tot))
             hdr = None
             e02_tbl_rows.append(["summary", "%.2f" % o, "%.2f" % p,
                                  "%.2f" % sr(cells["AN8"]),

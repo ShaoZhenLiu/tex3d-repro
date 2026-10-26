@@ -1,0 +1,1 @@
+DONE-E01-N8 6/6 2026年 10月 26日 星期一 23:44:19 CST：e01_n8_pi0_spatial=9/100 e01_n8_pi0_goal=21/100 e01_n8_pi0_object=28/100 e01_n8_pi0_long=4/100 e01_n8_pi05_goal=66/100 e01_n8_pi05_long=33/100 
