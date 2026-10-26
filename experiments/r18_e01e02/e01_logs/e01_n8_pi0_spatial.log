@@ -9,3 +9,6 @@ See the migration guide at https://gymnasium.farama.org/introduction/migration_g
 Task: 0 | Ep: 0 | Success: True
 Task: 0 | Ep: 1 | Success: False
 Task: 0 | Ep: 2 | Success: False
+Task: 0 | Ep: 3 | Success: False
+Task: 0 | Ep: 4 | Success: False
+Task: 0 | Ep: 5 | Success: False

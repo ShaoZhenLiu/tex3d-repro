@@ -5,3 +5,44 @@ Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst othe
 Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
 Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
 See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 937, in run_eval
+    policy = load_policy(args.ckpt, model_config=args.model_config,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 420, in load_policy
+    policy = policy_config.create_trained_policy(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/policies/policy_config.py", line 75, in create_trained_policy
+    return _policy.Policy(
+           ^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/policies/policy.py", line 59, in __init__
+    self._model = self._model.to(pytorch_device)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1343, in to
+    return self._apply(convert)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  [Previous line repeated 7 more times]
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1329, in convert
+    return t.to(
+           ^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 5.62 MiB is free. Process 341297 has 31.75 GiB memory in use. Process 381394 has 14.53 GiB memory in use. Including non-PyTorch memory, this process has 1.04 GiB memory in use. Of the allocated memory 679.92 MiB is allocated by PyTorch, and 2.08 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.

@@ -5,3 +5,29 @@ Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst othe
 Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
 Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
 See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 937, in run_eval
+    policy = load_policy(args.ckpt, model_config=args.model_config,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 422, in load_policy
+    policy._model.float()
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in float
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 903, in _apply
+    module._apply(fn)
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 930, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1146, in <lambda>
+    return self._apply(lambda t: t.float() if t.is_floating_point() else t)
+                                 ^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1006.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 425.19 MiB is free. Process 2068 has 4.47 GiB memory in use. Process 10765 has 25.66 GiB memory in use. Including non-PyTorch memory, this process has 13.46 GiB memory in use. Process 533883 has 3.34 GiB memory in use. Of the allocated memory 12.98 GiB is allocated by PyTorch, and 43.41 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
