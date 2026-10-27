@@ -67,6 +67,11 @@ job_done() {
 }
 find_dir() { ls -dt $OFTC/train_*_"$1" 2>/dev/null | head -1; }
 
+wait_dep() {  # $1=依赖标签 $2=末iter：等其训练终点标记（依赖臂先收口）
+  while ! job_done "$1" "$2"; do
+    sleep 300
+  done
+}
 run_job() {  # $1=name $2=末iter 其后为 runner 参数
   local name=$1 last_it=$2; shift 2
   local g mypid=$BASHPID attempt d
@@ -101,6 +106,7 @@ pids=()
     --filter-task 0 --iters 5000 --batch 8 --seed 7 --ckpt-step-suffix
   run_job e07_bs1_native 39999 --ref native --stream fresh --uv on \
     --iters 40000 --batch 1 --seed 7 --checkpoint-every 5000 --ckpt-step-suffix
+  wait_dep e07_bs1_native 39999
   run_job e07_bs1_mr 39999 --ref mr --stream replay \
     --stream-file "$(find_dir e07_bs1_native)/sampling_log.txt" --uv on \
     --iters 40000 --batch 1 --seed 7 --checkpoint-every 5000 --ckpt-step-suffix
@@ -122,6 +128,7 @@ pids=()
   done
   run_job e05_s9_native 04999 --ref native --stream fresh --uv on \
     --iters 5000 --batch 8 --seed 9 --ckpt-step-suffix
+  wait_dep e05_s9_native 04999
   run_job e05_s9_mr 04999 --ref mr --stream replay \
     --stream-file "$(find_dir e05_s9_native)/sampling_log.txt" --uv on \
     --iters 5000 --batch 8 --seed 9 --ckpt-step-suffix
@@ -130,6 +137,7 @@ pids=()
 ( sleep 180
   run_job e05_s8_native 04999 --ref native --stream fresh --uv on \
     --iters 5000 --batch 8 --seed 8 --ckpt-step-suffix
+  wait_dep e05_s8_native 04999
   run_job e05_s8_mr 04999 --ref mr --stream replay \
     --stream-file "$(find_dir e05_s8_native)/sampling_log.txt" --uv on \
     --iters 5000 --batch 8 --seed 8 --ckpt-step-suffix
