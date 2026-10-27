@@ -39,14 +39,14 @@ pick_gpu() {
             [ -e "$f" ] || continue
             read -r pid ned < "$f" 2>/dev/null || { rm -f "$f"; continue; }
             if [ -z "$pid" ] || ! kill -0 "$pid" 2>/dev/null; then rm -f "$f"; continue; fi
-            sum_need=$((sum_need + ${ned:-23000})); cnt=$((cnt + 1))
+            sum_need=$((sum_need + ${ned:-26000})); cnt=$((cnt + 1))
           done
           [ "$cnt" -ge 2 ] && continue
           used=$(gpu_used_mi "$g")
           [ -z "$used" ] && continue
           free=$((49140 - used))
-          if [ $((sum_need + 23000)) -le "$free" ]; then
-            echo "$lane_pid 23000" > "$CLAIMD/${name}.$g"
+          if [ $((sum_need + 26000)) -le "$free" ]; then
+            echo "$lane_pid 26000" > "$CLAIMD/${name}.$g"
             echo "$g"
             exit 0
           fi
