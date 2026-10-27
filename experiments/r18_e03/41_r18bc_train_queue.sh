@@ -83,9 +83,18 @@ run_job() {  # $1=name $2=末iter 其后为 runner 参数
   for attempt in 1 2 3 4 5 6 7 8; do
     release_claim "$name"
     g=$(pick_gpu "$name" "$mypid") || { log "训练 $name 等待 GPU 超时 FAILED"; return 1; }
-    log "训练 $name 尝试 $attempt GPU$g"
+    # 断点续训：旧目录有步数 checkpoint 且未收口 → 自动带 --resume-dir（≤625步损失）
+    local od rargs=()
+    od=$(find_dir "$name")
+    if [ -n "$od" ] && ls "$od"/Ep0_Cloth_Delta_OV_it*.pt >/dev/null 2>&1 \
+       && ! grep -q "ckpt-final" "$od/gradient_log.txt" 2>/dev/null; then
+      rargs=(--resume-dir "$od")
+      log "训练 $name 尝试 $attempt GPU$g（续训自 $od）"
+    else
+      log "训练 $name 尝试 $attempt GPU$g"
+    fi
     ( cd $D/code/tex3d-ws/g7 && env CUDA_VISIBLE_DEVICES=$g MUJOCO_EGL_DEVICE_ID=$g \
-      $ENVV $PY $RUNNER train --tag "$name" "$@" ) \
+      $ENVV $PY $RUNNER train --tag "$name" "$@" ${rargs[@]+"${rargs[@]}"} ) \
       >> "$LOGD/${name}.log" 2>&1
     if job_done "$name" "$last_it"; then
       release_claim "$name"
