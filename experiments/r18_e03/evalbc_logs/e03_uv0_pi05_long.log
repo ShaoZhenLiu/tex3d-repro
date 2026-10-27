@@ -46,3 +46,128 @@ Task: 1 | Ep: 7 | Success: True
 [align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
 Task: 1 | Ep: 8 | Success: True
 [align] 无 table_top site，射线网格：平台 z=0.437 (n=116/125)，布心=(-0.23,0.04)
+Task: 1 | Ep: 9 | Success: True
+[eval] task 1: 10/10 (100.00%)
+Task: 2 | Ep: 0 | Success: True
+Task: 2 | Ep: 1 | Success: True
+Task: 2 | Ep: 2 | Success: True
+Task: 2 | Ep: 3 | Success: True
+Task: 2 | Ep: 4 | Success: True
+Task: 2 | Ep: 5 | Success: True
+Task: 2 | Ep: 6 | Success: True
+Task: 2 | Ep: 7 | Success: True
+Task: 2 | Ep: 8 | Success: True
+Task: 2 | Ep: 9 | Success: True
+[eval] task 2: 10/10 (100.00%)
+Task: 3 | Ep: 0 | Success: False
+Task: 3 | Ep: 1 | Success: True
+Task: 3 | Ep: 2 | Success: False
+Task: 3 | Ep: 3 | Success: False
+Task: 3 | Ep: 4 | Success: False
+Task: 3 | Ep: 5 | Success: False
+Task: 3 | Ep: 6 | Success: False
+Task: 3 | Ep: 7 | Success: False
+Task: 3 | Ep: 8 | Success: False
+Task: 3 | Ep: 9 | Success: False
+[eval] task 3: 1/10 (10.00%)
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=111/125)，布心=(-0.24,0.04)
+Task: 4 | Ep: 0 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=112/125)，布心=(-0.24,0.04)
+Task: 4 | Ep: 1 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=113/125)，布心=(-0.24,0.04)
+Task: 4 | Ep: 2 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 4 | Ep: 3 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=111/125)，布心=(-0.24,0.04)
+Task: 4 | Ep: 4 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=114/125)，布心=(-0.24,0.04)
+Task: 4 | Ep: 5 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=113/125)，布心=(-0.24,0.04)
+Task: 4 | Ep: 6 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 4 | Ep: 7 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=114/125)，布心=(-0.24,0.05)
+Task: 4 | Ep: 8 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 4 | Ep: 9 | Success: True
+[eval] task 4: 9/10 (90.00%)
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=222/247)，布心=(0.00,0.01)
+Task: 5 | Ep: 0 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=222/246)，布心=(0.00,0.01)
+Task: 5 | Ep: 1 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=221/245)，布心=(0.01,0.01)
+Task: 5 | Ep: 2 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=222/246)，布心=(0.00,0.01)
+Task: 5 | Ep: 3 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=223/248)，布心=(0.00,0.01)
+Task: 5 | Ep: 4 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=221/246)，布心=(0.00,0.01)
+Task: 5 | Ep: 5 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=221/246)，布心=(0.00,0.01)
+Task: 5 | Ep: 6 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=222/247)，布心=(0.00,0.01)
+Task: 5 | Ep: 7 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=221/246)，布心=(0.00,0.01)
+Task: 5 | Ep: 8 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.885 (n=222/246)，布心=(0.00,0.01)
+Task: 5 | Ep: 9 | Success: False
+[eval] task 5: 9/10 (90.00%)
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 6 | Ep: 0 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=116/125)，布心=(-0.23,0.04)
+Task: 6 | Ep: 1 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 6 | Ep: 2 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=116/125)，布心=(-0.23,0.04)
+Task: 6 | Ep: 3 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 6 | Ep: 4 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 6 | Ep: 5 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=114/125)，布心=(-0.24,0.04)
+Task: 6 | Ep: 6 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=117/125)，布心=(-0.23,0.04)
+Task: 6 | Ep: 7 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 6 | Ep: 8 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=117/125)，布心=(-0.23,0.04)
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 0 | Ep: 0 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.23,0.04)
+Task: 0 | Ep: 1 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=114/125)，布心=(-0.24,0.04)
+Task: 0 | Ep: 2 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=113/125)，布心=(-0.24,0.04)
+Task: 0 | Ep: 3 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=113/125)，布心=(-0.24,0.04)
+Task: 0 | Ep: 4 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=113/125)，布心=(-0.24,0.04)
+Task: 0 | Ep: 5 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=116/125)，布心=(-0.23,0.04)
+Task: 0 | Ep: 6 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=114/125)，布心=(-0.24,0.04)
+Task: 0 | Ep: 7 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.23,0.04)
+Task: 0 | Ep: 8 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=116/125)，布心=(-0.24,0.04)
+Task: 0 | Ep: 9 | Success: True
+[eval] task 0: 8/10 (80.00%)
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=113/125)，布心=(-0.24,0.04)
+Task: 1 | Ep: 0 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 1 | Ep: 1 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=115/125)，布心=(-0.24,0.04)
+Task: 1 | Ep: 2 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=117/125)，布心=(-0.23,0.04)
+Task: 1 | Ep: 3 | Success: True
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=113/125)，布心=(-0.24,0.04)
+Task: 1 | Ep: 4 | Success: False
+[align] 无 table_top site，射线网格：平台 z=0.437 (n=113/125)，布心=(-0.24,0.04)
