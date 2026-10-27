@@ -70,8 +70,12 @@ find_dir() { ls -dt $OFTC/train_*_"$1" 2>/dev/null | head -1; }
 run_job() {  # $1=name $2=末iter 其后为 runner 参数
   local name=$1 last_it=$2; shift 2
   local g mypid=$BASHPID attempt d
+  # 防双跑门：同标签作业已在跑（旧实例/孤儿）则等待其退出，再按 job_done 判定
+  while ps -u shaozhen.liu -o cmd | grep -- "--tag ${name}\[" >/dev/null 2>&1; do
+    sleep 60
+  done
   if job_done "$name" "$last_it"; then log "训练 $name 已完成，跳过"; return 0; fi
-  for attempt in 1 2 3 4; do
+  for attempt in 1 2 3 4 5 6 7 8; do
     release_claim "$name"
     g=$(pick_gpu "$name" "$mypid") || { log "训练 $name 等待 GPU 超时 FAILED"; return 1; }
     log "训练 $name 尝试 $attempt GPU$g"
@@ -111,7 +115,11 @@ pids=()
     --uv on --iters 625 --batch 8 --seed 7 --checkpoint-every 625 --ckpt-step-suffix
 ) & pids+=($!)
 # L3：E05 seed9 对（native fresh → mr replay）
+# 防双跑门：等已在跑的同标签作业（旧队列实例/孤儿进程）退出后再按 job_done 判定
 ( sleep 120
+  while ps -u shaozhen.liu -o cmd | grep "tag e05_s9_nativ[e]" >/dev/null 2>&1; do
+    sleep 60
+  done
   run_job e05_s9_native 04999 --ref native --stream fresh --uv on \
     --iters 5000 --batch 8 --seed 9 --ckpt-step-suffix
   run_job e05_s9_mr 04999 --ref mr --stream replay \
