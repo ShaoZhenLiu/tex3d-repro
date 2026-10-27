@@ -266,10 +266,16 @@ def train(args):
 
     def save_ckpt(it, final=False):
         suffix = f"_it{it:05d}" if args.ckpt_step_suffix else ""
-        Image.fromarray(renderer.export_texture()).save(
+        png = renderer.export_texture()
+        Image.fromarray(png).save(
             os.path.join(out_dir, "Universal_Cloth_OV%s.png" % suffix))
         torch.save(param.detach().cpu(),
                    os.path.join(out_dir, "Ep0_Cloth_Delta_OV%s.pt" % suffix))
+        if final:  # 终点双写规范名（job_done/tex_ready/评测链固定取规范名）
+            Image.fromarray(png).save(
+                os.path.join(out_dir, "Universal_Cloth_OV.png"))
+            torch.save(param.detach().cpu(),
+                       os.path.join(out_dir, "Ep0_Cloth_Delta_OV.pt"))
         with open(log_path, "a") as f:
             f.write("[ckpt%s] it%05d frames_accessed=%d\n"
                     % ("-final" if final else "", it, (it + 1) * args.batch))
