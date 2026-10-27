@@ -12,3 +12,238 @@ See the migration guide at https://gymnasium.farama.org/introduction/migration_g
 /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/cuda/__init__.py:129: UserWarning: CUDA initialization: CUDA unknown error - this may be due to an incorrectly set up environment, e.g. changing env variable CUDA_VISIBLE_DEVICES after program start. Setting the available devices to be zero. (Triggered internally at /pytorch/c10/cuda/CUDAFunctions.cpp:109.)
   return torch._C._cuda_getDeviceCount() > 0
 [info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1205, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 1201, in main
+    run_eval(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 965, in run_eval
+    ok = evaluate_native(policy, task,
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py", line 897, in evaluate_native
+    result = policy.infer(raw_inputs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/policies/policy.py", line 94, in infer
+    "actions": self._sample_actions(sample_rng_or_pytorch_device, observation, **sample_kwargs),
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/_dynamo/eval_frame.py", line 574, in _fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/_dynamo/external_utils.py", line 45, in inner
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/models_pytorch/pi0_pytorch.py", line 385, in sample_actions
+    prefix_embs, prefix_pad_masks, prefix_att_masks = self.embed_prefix(images, img_masks, lang_tokens, lang_masks)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/models_pytorch/pi0_pytorch.py", line 202, in embed_prefix
+    img_emb = self._apply_checkpoint(image_embed_func, img)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/models_pytorch/pi0_pytorch.py", line 154, in _apply_checkpoint
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/models_pytorch/pi0_pytorch.py", line 200, in image_embed_func
+    return self.paligemma_with_expert.embed_image(img)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/models_pytorch/gemma_pytorch.py", line 86, in embed_image
+    return self.paligemma.model.get_image_features(image)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/transformers/models/paligemma/modeling_paligemma.py", line 242, in get_image_features
+    image_outputs = self.vision_tower(pixel_values)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/transformers/utils/generic.py", line 943, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/transformers/models/siglip/modeling_siglip.py", line 873, in forward
+    return self.vision_model(
+           ^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/transformers/utils/generic.py", line 943, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/transformers/models/siglip/modeling_siglip.py", line 780, in forward
+    encoder_outputs: BaseModelOutput = self.encoder(
+                                       ^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/transformers/utils/generic.py", line 943, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/transformers/models/siglip/modeling_siglip.py", line 608, in forward
+    layer_outputs = encoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/transformers/modeling_layers.py", line 83, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/transformers/models/siglip/modeling_siglip.py", line 463, in forward
+    hidden_states, attn_weights = self.self_attn(
+                                  ^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/transformers/models/siglip/modeling_siglip.py", line 381, in forward
+    queries = self.q_proj(hidden_states)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/torch/nn/modules/linear.py", line 125, in forward
+    return F.linear(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: CUDA error: CUBLAS_STATUS_ALLOC_FAILED when calling `cublasCreate(handle)`
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+Task: 0 | Ep: 0 | Success: False
+Task: 0 | Ep: 1 | Success: True
+Task: 0 | Ep: 2 | Success: True
+Task: 0 | Ep: 3 | Success: False
+Task: 0 | Ep: 4 | Success: False
+Task: 0 | Ep: 5 | Success: False
+Task: 0 | Ep: 6 | Success: False
+Task: 0 | Ep: 7 | Success: False
+Task: 0 | Ep: 8 | Success: False
+Task: 0 | Ep: 9 | Success: True
+[eval] task 0: 3/10 (30.00%)
+Task: 1 | Ep: 0 | Success: True
+Task: 1 | Ep: 1 | Success: True
+Task: 1 | Ep: 2 | Success: True
+Task: 1 | Ep: 3 | Success: False
+Task: 1 | Ep: 4 | Success: True
+Task: 1 | Ep: 5 | Success: True
+Task: 1 | Ep: 6 | Success: True
+Task: 1 | Ep: 7 | Success: True
+Task: 1 | Ep: 8 | Success: False
+Task: 1 | Ep: 9 | Success: True
+[eval] task 1: 8/10 (80.00%)
+Task: 2 | Ep: 0 | Success: False
+Task: 2 | Ep: 1 | Success: True
+Task: 2 | Ep: 2 | Success: True
+Task: 2 | Ep: 3 | Success: False
+Task: 2 | Ep: 4 | Success: False
+Task: 2 | Ep: 5 | Success: True
+Task: 2 | Ep: 6 | Success: True
+Task: 2 | Ep: 7 | Success: True
+Task: 2 | Ep: 8 | Success: True
+Task: 2 | Ep: 9 | Success: True
+[eval] task 2: 7/10 (70.00%)
+Task: 3 | Ep: 0 | Success: False
+Task: 3 | Ep: 1 | Success: False
+Task: 3 | Ep: 2 | Success: False
+Task: 3 | Ep: 3 | Success: False
+Task: 3 | Ep: 4 | Success: False
+Task: 3 | Ep: 5 | Success: False
+Task: 3 | Ep: 6 | Success: False
+Task: 3 | Ep: 7 | Success: False
+Task: 3 | Ep: 8 | Success: False
+Task: 3 | Ep: 9 | Success: False
+[eval] task 3: 0/10 (0.00%)
+Task: 4 | Ep: 0 | Success: True
+Task: 4 | Ep: 1 | Success: True
+Task: 4 | Ep: 2 | Success: True
+Task: 4 | Ep: 3 | Success: True
+Task: 4 | Ep: 4 | Success: True
+Task: 4 | Ep: 5 | Success: True
+Task: 4 | Ep: 6 | Success: True
+Task: 4 | Ep: 7 | Success: True
+Task: 4 | Ep: 8 | Success: True
+Task: 4 | Ep: 9 | Success: True
+[eval] task 4: 10/10 (100.00%)
+Task: 5 | Ep: 0 | Success: True
+Task: 5 | Ep: 1 | Success: False
+Task: 5 | Ep: 2 | Success: False
+Task: 5 | Ep: 3 | Success: False
+Task: 5 | Ep: 4 | Success: False
+Task: 5 | Ep: 5 | Success: False
+Task: 5 | Ep: 6 | Success: False
+Task: 5 | Ep: 7 | Success: False
+Task: 5 | Ep: 8 | Success: False
+Task: 5 | Ep: 9 | Success: False
+[eval] task 5: 1/10 (10.00%)
+Task: 6 | Ep: 0 | Success: True
+Task: 6 | Ep: 1 | Success: False
+Task: 6 | Ep: 2 | Success: False
+Task: 6 | Ep: 3 | Success: False
+Task: 6 | Ep: 4 | Success: False
+Task: 6 | Ep: 5 | Success: False
+Task: 6 | Ep: 6 | Success: False
+Task: 6 | Ep: 7 | Success: False
+Task: 6 | Ep: 8 | Success: False
+Task: 6 | Ep: 9 | Success: False
+[eval] task 6: 1/10 (10.00%)
+Task: 7 | Ep: 0 | Success: False
+Task: 7 | Ep: 1 | Success: False
+Task: 7 | Ep: 2 | Success: False
+Task: 7 | Ep: 3 | Success: False
+Task: 7 | Ep: 4 | Success: False
+Task: 7 | Ep: 5 | Success: False
+Task: 7 | Ep: 6 | Success: True
+Task: 7 | Ep: 7 | Success: True
+Task: 7 | Ep: 8 | Success: True
+Task: 7 | Ep: 9 | Success: False
+[eval] task 7: 3/10 (30.00%)
+Task: 8 | Ep: 0 | Success: True
+Task: 8 | Ep: 1 | Success: True
+Task: 8 | Ep: 2 | Success: True
+Task: 8 | Ep: 3 | Success: True
+Task: 8 | Ep: 4 | Success: False
+Task: 8 | Ep: 5 | Success: False
+Task: 8 | Ep: 6 | Success: False
+Task: 8 | Ep: 7 | Success: False
+Task: 8 | Ep: 8 | Success: True
+Task: 8 | Ep: 9 | Success: False
+[eval] task 8: 5/10 (50.00%)
+Task: 9 | Ep: 0 | Success: False
+Task: 9 | Ep: 1 | Success: True
+Task: 9 | Ep: 2 | Success: False
+Task: 9 | Ep: 3 | Success: False
+Task: 9 | Ep: 4 | Success: False
+Task: 9 | Ep: 5 | Success: False
+Task: 9 | Ep: 6 | Success: False
+Task: 9 | Ep: 7 | Success: True
+Task: 9 | Ep: 8 | Success: False
+Task: 9 | Ep: 9 | Success: False
+[eval] task 9: 2/10 (20.00%)
+[eval] 结果: /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/eval_adv_libero_goal_20261027_191630_392298/evaluation_result.txt

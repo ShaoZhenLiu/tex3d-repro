@@ -648,3 +648,116 @@ Loaded model: <class 'transformers_modules.oft-spatial-ckpt.modeling_prismatic.O
 [train] 5000 iters × bs8，ref=native，stream=fresh，uv=on，开始
 [train] it00000 bs8 attack=-0.3103 feat=-0.0109 ref=0.0000 tv=0.0007 g=4.96e-02 frames_accessed=8
 [train] it00050 bs8 attack=-0.9088 feat=-0.0605 ref=0.0065 tv=0.0172 g=1.16e-01 frames_accessed=408
+[train] it00100 bs8 attack=-1.3378 feat=-0.1420 ref=0.0110 tv=0.0203 g=1.21e-01 frames_accessed=808
+[train] it00150 bs8 attack=-1.6726 feat=-0.0882 ref=0.0147 tv=0.0228 g=1.37e-01 frames_accessed=1208
+[train] it00200 bs8 attack=-1.0964 feat=-0.0778 ref=0.0170 tv=0.0242 g=7.65e-02 frames_accessed=1608
+[train] it00250 bs8 attack=-1.2341 feat=-0.1032 ref=0.0184 tv=0.0244 g=7.65e-02 frames_accessed=2008
+[train] it00300 bs8 attack=-1.2391 feat=-0.1393 ref=0.0194 tv=0.0254 g=6.54e-02 frames_accessed=2408
+[train] it00350 bs8 attack=-1.0673 feat=-0.0872 ref=0.0201 tv=0.0254 g=5.38e-02 frames_accessed=2808
+[train] it00400 bs8 attack=-1.3238 feat=-0.0842 ref=0.0204 tv=0.0257 g=1.12e-01 frames_accessed=3208
+[train] it00450 bs8 attack=-1.3653 feat=-0.1736 ref=0.0205 tv=0.0256 g=1.13e-01 frames_accessed=3608
+[train] it00500 bs8 attack=-1.6799 feat=-0.0919 ref=0.0207 tv=0.0256 g=1.20e-01 frames_accessed=4008
+[train] it00550 bs8 attack=-1.3940 feat=-0.0530 ref=0.0208 tv=0.0259 g=8.91e-02 frames_accessed=4408
+[train] it00600 bs8 attack=-1.3548 feat=-0.0697 ref=0.0209 tv=0.0260 g=1.18e-01 frames_accessed=4808
+[train] it00650 bs8 attack=-1.8466 feat=-0.4143 ref=0.0208 tv=0.0258 g=1.40e-01 frames_accessed=5208
+[train] it00700 bs8 attack=-1.4065 feat=-0.1155 ref=0.0210 tv=0.0255 g=7.97e-02 frames_accessed=5608
+[train] it00750 bs8 attack=-1.1751 feat=-0.1733 ref=0.0212 tv=0.0259 g=9.96e-02 frames_accessed=6008
+[train] it00800 bs8 attack=-2.1565 feat=-0.1656 ref=0.0211 tv=0.0258 g=8.22e-02 frames_accessed=6408
+[train] it00850 bs8 attack=-1.2523 feat=-0.2210 ref=0.0210 tv=0.0258 g=8.28e-02 frames_accessed=6808
+[train] it00900 bs8 attack=-1.3360 feat=-0.1651 ref=0.0213 tv=0.0260 g=8.58e-02 frames_accessed=7208
+[train] it00950 bs8 attack=-1.6587 feat=-0.1119 ref=0.0213 tv=0.0262 g=8.59e-02 frames_accessed=7608
+[train] it01000 bs8 attack=-1.5397 feat=-0.1349 ref=0.0214 tv=0.0261 g=1.03e-01 frames_accessed=8008
+[train] it01050 bs8 attack=-1.4778 feat=-0.1002 ref=0.0213 tv=0.0265 g=7.96e-02 frames_accessed=8408
+[train] it01100 bs8 attack=-1.1092 feat=-0.0685 ref=0.0214 tv=0.0264 g=1.34e-01 frames_accessed=8808
+[train] it01150 bs8 attack=-1.5147 feat=-0.2542 ref=0.0214 tv=0.0267 g=8.08e-02 frames_accessed=9208
+[train] it01200 bs8 attack=-1.2765 feat=-0.1296 ref=0.0213 tv=0.0261 g=9.72e-02 frames_accessed=9608
+[train] it01250 bs8 attack=-1.5067 feat=-0.1534 ref=0.0216 tv=0.0268 g=1.22e-01 frames_accessed=10008
+[train] it01300 bs8 attack=-1.5223 feat=-0.2298 ref=0.0215 tv=0.0265 g=9.75e-02 frames_accessed=10408
+[train] it01350 bs8 attack=-1.4315 feat=-0.0952 ref=0.0216 tv=0.0269 g=7.44e-02 frames_accessed=10808
+[train] it01400 bs8 attack=-1.2438 feat=-0.1076 ref=0.0213 tv=0.0266 g=1.20e-01 frames_accessed=11208
+[train] it01450 bs8 attack=-2.2632 feat=-0.1211 ref=0.0215 tv=0.0263 g=7.45e-02 frames_accessed=11608
+[train] it01500 bs8 attack=-1.2470 feat=-0.1530 ref=0.0214 tv=0.0265 g=1.03e-01 frames_accessed=12008
+[train] it01550 bs8 attack=-2.1288 feat=-0.3030 ref=0.0215 tv=0.0262 g=1.45e-01 frames_accessed=12408
+[train] it01600 bs8 attack=-1.7771 feat=-0.1819 ref=0.0215 tv=0.0264 g=1.18e-01 frames_accessed=12808
+2026-10-27 19:39:46.184871: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-27 19:39:46.184974: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-27 19:39:46.186799: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-27 19:39:46.199802: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+2026-10-27 19:39:48.796016: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Using LIBERO constants:
+  NUM_ACTIONS_CHUNK = 8
+  ACTION_DIM = 7
+  PROPRIO_DIM = 8
+  ACTION_PROPRIO_NORMALIZATION_TYPE = bounds_q99
+If needed, manually set the correct constants in `prismatic/vla/constants.py`!
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Instantiating pretrained VLA policy...
+Created backup of original config at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json.back.20261027_194031
+Updated config.json at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json
+Changes made:
+  - Set AutoConfig to "configuration_prismatic.OpenVLAConfig"
+  - Set AutoModelForVision2Seq to "modeling_prismatic.OpenVLAForActionPrediction"
+WARNING: `modeling_prismatic.py` is not found anywhere in the current directory.
+WARNING: `configuration_prismatic.py` is not found anywhere in the current directory.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  2.76it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:00<00:00,  2.89it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:00<00:00,  3.16it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.41it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.23it/s]
+Loaded model: <class 'transformers_modules.oft-spatial-ckpt.modeling_prismatic.OpenVLAForActionPrediction'>
+[pool] 活动帧 296（全池）
+[train] 5000 iters × bs8，ref=native，stream=fresh，uv=on，开始
+[train] it00000 bs8 attack=-0.3103 feat=-0.0109 ref=0.0000 tv=0.0007 g=4.95e-02 frames_accessed=8
+[train] it01650 bs8 attack=-1.8357 feat=-0.4547 ref=0.0217 tv=0.0268 g=1.26e-01 frames_accessed=13208
+[train] it01700 bs8 attack=-1.5375 feat=-0.0613 ref=0.0216 tv=0.0266 g=6.39e-02 frames_accessed=13608
+[train] it00050 bs8 attack=-0.9437 feat=-0.0567 ref=0.0066 tv=0.0177 g=1.28e-01 frames_accessed=408
+[train] it01750 bs8 attack=-1.6757 feat=-0.1249 ref=0.0216 tv=0.0264 g=7.32e-02 frames_accessed=14008
+[train] it00100 bs8 attack=-1.3778 feat=-0.1363 ref=0.0113 tv=0.0214 g=1.22e-01 frames_accessed=808
+[train] it01800 bs8 attack=-1.4786 feat=-0.0849 ref=0.0214 tv=0.0265 g=1.55e-01 frames_accessed=14408
+[train] it00150 bs8 attack=-1.6956 feat=-0.1101 ref=0.0147 tv=0.0236 g=1.09e-01 frames_accessed=1208
+[train] it01850 bs8 attack=-1.4442 feat=-0.0607 ref=0.0213 tv=0.0269 g=7.07e-02 frames_accessed=14808
+[train] it00200 bs8 attack=-1.1920 feat=-0.0834 ref=0.0170 tv=0.0252 g=7.00e-02 frames_accessed=1608
+[train] it01900 bs8 attack=-1.2288 feat=-0.1053 ref=0.0214 tv=0.0267 g=9.03e-02 frames_accessed=15208
+[train] it00250 bs8 attack=-1.2083 feat=-0.1051 ref=0.0184 tv=0.0258 g=6.23e-02 frames_accessed=2008
+[train] it01950 bs8 attack=-1.6175 feat=-0.0766 ref=0.0217 tv=0.0269 g=8.22e-02 frames_accessed=15608
+[train] it00300 bs8 attack=-1.3140 feat=-0.1490 ref=0.0194 tv=0.0268 g=9.01e-02 frames_accessed=2408
+[train] it02000 bs8 attack=-1.3787 feat=-0.1280 ref=0.0215 tv=0.0268 g=8.31e-02 frames_accessed=16008
+[train] it00350 bs8 attack=-1.1003 feat=-0.0887 ref=0.0199 tv=0.0270 g=4.93e-02 frames_accessed=2808
+[train] it02050 bs8 attack=-1.4784 feat=-0.2102 ref=0.0216 tv=0.0268 g=8.82e-02 frames_accessed=16408
+[train] it00400 bs8 attack=-1.3475 feat=-0.0906 ref=0.0206 tv=0.0274 g=1.07e-01 frames_accessed=3208
+[train] it02100 bs8 attack=-1.4776 feat=-0.1322 ref=0.0215 tv=0.0269 g=8.15e-02 frames_accessed=16808
+[train] it00450 bs8 attack=-1.2042 feat=-0.1787 ref=0.0209 tv=0.0273 g=9.06e-02 frames_accessed=3608
+[train] it02150 bs8 attack=-1.7534 feat=-0.1265 ref=0.0218 tv=0.0271 g=1.42e-01 frames_accessed=17208
+[train] it00500 bs8 attack=-1.5369 feat=-0.0912 ref=0.0212 tv=0.0273 g=6.37e-02 frames_accessed=4008
+[train] it02200 bs8 attack=-1.4189 feat=-0.1857 ref=0.0217 tv=0.0270 g=8.14e-02 frames_accessed=17608
+Terminated
+[train] it02250 bs8 attack=-1.0957 feat=-0.0909 ref=0.0218 tv=0.0270 g=7.90e-02 frames_accessed=18008
+[train] it02300 bs8 attack=-1.4326 feat=-0.1061 ref=0.0218 tv=0.0271 g=7.34e-02 frames_accessed=18408
+[train] it02350 bs8 attack=-1.8683 feat=-0.0554 ref=0.0216 tv=0.0270 g=1.19e-01 frames_accessed=18808
+[train] it02400 bs8 attack=-1.5750 feat=-0.2763 ref=0.0218 tv=0.0269 g=7.72e-02 frames_accessed=19208
+[train] it02450 bs8 attack=-1.0189 feat=-0.0978 ref=0.0218 tv=0.0270 g=8.23e-02 frames_accessed=19608
+[train] it02500 bs8 attack=-1.2399 feat=-0.0670 ref=0.0219 tv=0.0272 g=1.18e-01 frames_accessed=20008
+[train] it02550 bs8 attack=-1.2711 feat=-0.0751 ref=0.0218 tv=0.0275 g=7.76e-02 frames_accessed=20408
+[train] it02600 bs8 attack=-1.1701 feat=-0.1414 ref=0.0218 tv=0.0270 g=7.75e-02 frames_accessed=20808
+[train] it02650 bs8 attack=-1.5112 feat=-0.1443 ref=0.0217 tv=0.0274 g=1.43e-01 frames_accessed=21208
+[train] it02700 bs8 attack=-1.1945 feat=-0.1258 ref=0.0219 tv=0.0274 g=1.03e-01 frames_accessed=21608
+[train] it02750 bs8 attack=-1.4154 feat=-0.1073 ref=0.0219 tv=0.0279 g=1.13e-01 frames_accessed=22008
+[train] it02800 bs8 attack=-1.1856 feat=-0.0708 ref=0.0218 tv=0.0275 g=9.43e-02 frames_accessed=22408
+[train] it02850 bs8 attack=-1.3775 feat=-0.1117 ref=0.0220 tv=0.0278 g=6.59e-02 frames_accessed=22808
+[train] it02900 bs8 attack=-1.5853 feat=-0.1305 ref=0.0219 tv=0.0279 g=7.37e-02 frames_accessed=23208
+[train] it02950 bs8 attack=-1.2576 feat=-0.1954 ref=0.0219 tv=0.0279 g=8.15e-02 frames_accessed=23608
+[train] it03000 bs8 attack=-1.3596 feat=-0.1858 ref=0.0219 tv=0.0278 g=8.10e-02 frames_accessed=24008
+[train] it03050 bs8 attack=-1.8591 feat=-0.2467 ref=0.0218 tv=0.0279 g=8.71e-02 frames_accessed=24408
+[train] it03100 bs8 attack=-1.0483 feat=-0.1011 ref=0.0219 tv=0.0284 g=8.42e-02 frames_accessed=24808
