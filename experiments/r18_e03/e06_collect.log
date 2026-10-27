@@ -1,0 +1,17 @@
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+[e06-collect] task0 ep0: 8 帧（累计 8）
+[e06-collect] task0 ep1: 8 帧（累计 16）
+[e06-collect] task2 ep0: 10 帧（累计 26）
+[e06-collect] task2 ep1: 11 帧（累计 37）
+[e06-collect] task6 ep0: 12 帧（累计 49）
+[e06-collect] task6 ep1: 12 帧（累计 61）
+[e06-collect] task8 ep0: 10 帧（累计 71）
+[e06-collect] task8 ep1: 9 帧（累计 80）
+[e06-collect] 完成 80 帧 -> /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/e06_pi0src/e06_pool.pt（用时 202s，num_denoise=10，独立查询噪声：未设置 CLOTH_QUERY_SEED）
