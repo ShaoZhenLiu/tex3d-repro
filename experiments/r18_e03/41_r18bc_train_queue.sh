@@ -81,6 +81,11 @@ run_job() {  # $1=name $2=末iter 其后为 runner 参数
   done
   if job_done "$name" "$last_it"; then log "训练 $name 已完成，跳过"; return 0; fi
   for attempt in 1 2 3 4 5 6 7 8; do
+    # 防双跑门（循环内复查）：同标签作业已在跑则回等待（手动发射/孤儿竞态窗口）
+    while ps -u shaozhen.liu -o cmd | grep -- "--tag ${name}[- ]" >/dev/null 2>&1; do
+      sleep 60
+    done
+    if job_done "$name" "$last_it"; then log "训练 $name 已完成（循环内复查），跳过"; return 0; fi
     release_claim "$name"
     g=$(pick_gpu "$name" "$mypid") || { log "训练 $name 等待 GPU 超时 FAILED"; return 1; }
     # 断点续训：旧目录有步数 checkpoint 且未收口 → 自动带 --resume-dir（≤625步损失）
