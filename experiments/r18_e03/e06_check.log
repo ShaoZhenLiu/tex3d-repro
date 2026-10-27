@@ -1,0 +1,19 @@
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[e06-check] 池 80 帧
+[cloth] 已加载逐像素增益图 /data/shaozhen.liu/code/tex3d-deps/libero-pi/libero/libero/assets/tablecloth/cloth_gain_map.npy (256, 256, 3)
+[e06-check] 真TV=0.0667（旧切片L_abs=0.9688；行常数时真TV=列差均值×2）
+Traceback (most recent call last):
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth_e06.py", line 518, in <module>
+    main()
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth_e06.py", line 510, in main
+    cmd_check(args)
+  File "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth_e06.py", line 243, in cmd_check
+    assert abs(tv_real - 2.0 * (15.0 / 16.0)) < 1e-4
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

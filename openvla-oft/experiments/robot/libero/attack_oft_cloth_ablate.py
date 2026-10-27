@@ -57,6 +57,21 @@ def sha256(path):
     return h.hexdigest()
 
 
+def frame_to_dev(fr, device):
+    """池驻 CPU，逐次访问搬运 GPU（降峰值显存：池≈6-8G 不再常驻）。"""
+    out = {}
+    for k, v in fr.items():
+        if torch.is_tensor(v):
+            out[k] = v.to(device, non_blocking=True)
+        elif isinstance(v, dict):
+            out[k] = {kk: (vv.to(device, non_blocking=True)
+                           if torch.is_tensor(vv) else vv)
+                      for kk, vv in v.items()}
+        else:
+            out[k] = v
+    return out
+
+
 def active_frames(pool, filter_task):
     """返回 (active_list[(task,fr)], global_ids)。global_ids=未过滤池的全局下标。"""
     task_ids = list(pool.keys())
@@ -150,7 +165,7 @@ def train(args):
         M._build_action_modules(cfg, model)
     sm, ss, dm, ds = M._norm_consts(device)
 
-    pool = torch.load(POOL, map_location=device, weights_only=False)
+    pool = torch.load(POOL, map_location="cpu", weights_only=False)
     act, gids = active_frames(pool, args.filter_task)
     n_active = len(act)
     print(f"[pool] 活动帧 {n_active}"
@@ -252,7 +267,8 @@ def train(args):
         attack_sum = 0.0
         feat_val = float("nan")
         for fi in batch_idx:
-            tid, fr = act[fi]
+            tid = act[fi][0]
+            fr = frame_to_dev(act[fi][1], device)
             adv_rgba, _ = renderer.render(fr["mvp"], (256, 256),
                                           model_rot=fr["rot"], uv_xform=uv_a)
             adv_chw = adv_rgba.permute(0, 3, 1, 2)
