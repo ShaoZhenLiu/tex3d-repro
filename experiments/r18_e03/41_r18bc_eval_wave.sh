@@ -59,11 +59,14 @@ cell_done() {
   n=$(grep -ac '^Task:' "$res" 2>/dev/null)
   [ -n "$res" ] && [ -f "$res" ] && [ "${n:-0}" -ge 100 ]
 }
-tex_ready() {  # $1=train tag $2=last marker (it04999/it00624/it39999)
+tex_ready() {  # $1=train tag $2=last marker：扫描全部同名目录，返回首个含标记者
   local d
-  d=$(ls -dt $OFTC/train_*_"$1" 2>/dev/null | grep -v smoke | head -1)
-  [ -n "$d" ] && [ -f "$d/Universal_Cloth_OV.png" ] && \
-    grep -q "$2" "$d/gradient_log.txt" 2>/dev/null && echo "$d"
+  for d in $(ls -dt $OFTC/train_*_"$1" 2>/dev/null | grep -v smoke); do
+    if [ -f "$d/Universal_Cloth_OV.png" ] && \
+       grep -q "$2" "$d/gradient_log.txt" 2>/dev/null; then
+      echo "$d"; return 0
+    fi
+  done
 }
 run_cell() {  # $1=name $2=tag $3=lastmark $4=suite $5=ckpt $6=modelcfg
   local name=$1 tag=$2 lastmark=$3 suite=$4 ckpt=$5 mcfg=${6:-}

@@ -29,3 +29,91 @@ Task: 1 | Ep: 8 | Success: True
 Task: 1 | Ep: 9 | Success: True
 [eval] task 1: 7/10 (70.00%)
 Task: 2 | Ep: 0 | Success: True
+Task: 2 | Ep: 1 | Success: False
+Task: 2 | Ep: 2 | Success: True
+Task: 2 | Ep: 3 | Success: True
+Task: 2 | Ep: 4 | Success: True
+Task: 2 | Ep: 5 | Success: False
+Task: 2 | Ep: 6 | Success: False
+Task: 2 | Ep: 7 | Success: False
+Task: 2 | Ep: 8 | Success: True
+Task: 2 | Ep: 9 | Success: True
+[eval] task 2: 6/10 (60.00%)
+Task: 3 | Ep: 0 | Success: False
+Task: 3 | Ep: 1 | Success: False
+Task: 3 | Ep: 2 | Success: True
+Task: 3 | Ep: 3 | Success: False
+Task: 3 | Ep: 4 | Success: True
+Task: 3 | Ep: 5 | Success: False
+Task: 3 | Ep: 6 | Success: False
+Task: 3 | Ep: 7 | Success: False
+Task: 3 | Ep: 8 | Success: False
+Task: 3 | Ep: 9 | Success: False
+[eval] task 3: 2/10 (20.00%)
+Task: 4 | Ep: 0 | Success: True
+Task: 4 | Ep: 1 | Success: True
+Task: 4 | Ep: 2 | Success: False
+Task: 4 | Ep: 3 | Success: True
+Task: 4 | Ep: 4 | Success: True
+Task: 4 | Ep: 5 | Success: True
+Task: 4 | Ep: 6 | Success: False
+Task: 4 | Ep: 7 | Success: True
+Task: 4 | Ep: 8 | Success: True
+Task: 4 | Ep: 9 | Success: True
+[eval] task 4: 8/10 (80.00%)
+Task: 5 | Ep: 0 | Success: False
+Task: 5 | Ep: 1 | Success: True
+Task: 5 | Ep: 2 | Success: True
+Task: 5 | Ep: 3 | Success: True
+Task: 5 | Ep: 4 | Success: False
+Task: 5 | Ep: 5 | Success: False
+Task: 5 | Ep: 6 | Success: True
+Task: 5 | Ep: 7 | Success: False
+Task: 5 | Ep: 8 | Success: False
+Task: 5 | Ep: 9 | Success: False
+[eval] task 5: 4/10 (40.00%)
+Task: 6 | Ep: 0 | Success: True
+Task: 6 | Ep: 1 | Success: True
+Task: 6 | Ep: 2 | Success: True
+Task: 6 | Ep: 3 | Success: True
+Task: 6 | Ep: 4 | Success: True
+Task: 6 | Ep: 5 | Success: True
+Task: 6 | Ep: 6 | Success: False
+Task: 6 | Ep: 7 | Success: True
+Task: 6 | Ep: 8 | Success: True
+Task: 6 | Ep: 9 | Success: True
+[eval] task 6: 9/10 (90.00%)
+Task: 7 | Ep: 0 | Success: False
+Task: 7 | Ep: 1 | Success: False
+Task: 7 | Ep: 2 | Success: True
+Task: 7 | Ep: 3 | Success: False
+Task: 7 | Ep: 4 | Success: True
+Task: 7 | Ep: 5 | Success: False
+Task: 7 | Ep: 6 | Success: False
+Task: 7 | Ep: 7 | Success: True
+Task: 7 | Ep: 8 | Success: True
+Task: 7 | Ep: 9 | Success: True
+[eval] task 7: 5/10 (50.00%)
+Task: 8 | Ep: 0 | Success: False
+Task: 8 | Ep: 1 | Success: True
+Task: 8 | Ep: 2 | Success: True
+Task: 8 | Ep: 3 | Success: True
+Task: 8 | Ep: 4 | Success: True
+Task: 8 | Ep: 5 | Success: True
+Task: 8 | Ep: 6 | Success: True
+Task: 8 | Ep: 7 | Success: True
+Task: 8 | Ep: 8 | Success: True
+Task: 8 | Ep: 9 | Success: True
+[eval] task 8: 9/10 (90.00%)
+Task: 9 | Ep: 0 | Success: False
+Task: 9 | Ep: 1 | Success: False
+Task: 9 | Ep: 2 | Success: True
+Task: 9 | Ep: 3 | Success: True
+Task: 9 | Ep: 4 | Success: True
+Task: 9 | Ep: 5 | Success: False
+Task: 9 | Ep: 6 | Success: False
+Task: 9 | Ep: 7 | Success: False
+Task: 9 | Ep: 8 | Success: True
+Task: 9 | Ep: 9 | Success: True
+[eval] task 9: 5/10 (50.00%)
+[eval] 结果: /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/eval_adv_libero_object_20261027_174738_8227/evaluation_result.txt

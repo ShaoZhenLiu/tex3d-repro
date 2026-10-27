@@ -11,3 +11,14 @@
 2026-10-27 17:42:47 [evalbc] 评测 e03_uv0_pi05_long 尝试 1 GPU5 tex=9c8ac88a
 2026-10-27 17:42:47 [evalbc] 评测 e03_uv0_pi0_long 尝试 1 GPU0 tex=9c8ac88a
 2026-10-27 17:49:45 [evalbc] 评测 e03_uv0_pi0_long 尝试 2 GPU0 tex=9c8ac88a
+2026-10-27 18:26:45 [evalbc] 评测 e03_uv0_pi05_spatial 完成 -> overall robot success: 96/100 (0.9600)
+2026-10-27 18:26:48 [evalbc] 评测 e03_uv0_pi0_goal 尝试 1 GPU6 tex=9c8ac88a
+2026-10-27 18:49:08 [evalbc] 评测 e03_uv0_pi05_goal 尝试 1 GPU6 tex=9c8ac88a
+2026-10-27 18:52:14 [evalbc] 评测 e03_uv0_pi0_object 完成 -> overall robot success: 61/100 (0.6100)
+2026-10-27 19:04:36 [evalbc] 评测 e03_uv0_pi0_spatial 完成 -> overall robot success: 45/100 (0.4500)
+2026-10-27 19:14:32 [evalbc] 评测 e03_uv0_pi05_long 完成 -> overall robot success: 54/100 (0.5400)
+2026-10-27 19:14:41 [evalbc] 评测 e03_uv0_pi0_goal 尝试 2 GPU5 tex=9c8ac88a
+2026-10-27 19:14:41 [evalbc] 评测 e03_uv0_pi0_long 尝试 3 GPU5 tex=9c8ac88a
+2026-10-27 19:39:29 [evalbc] 评测 e03_uv0_pi05_goal 完成 -> overall robot success: 84/100 (0.8400)
+2026-10-27 20:24:32 [evalbc] 评测 e03_uv0_pi0_goal 完成 -> overall robot success: 40/100 (0.4000)
+2026-10-27 20:47:08 [evalbc] 评测 e03_uv0_pi0_long 完成 -> overall robot success: 13/100 (0.1300)

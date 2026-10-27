@@ -264,3 +264,54 @@ Loaded model: <class 'transformers_modules.oft-spatial-ckpt.modeling_prismatic.O
 [train] it04999 bs8 attack=-1.2118 feat=-0.1023 ref=0.0228 tv=0.0279 g=4.78e-02 frames_accessed=40000
 [train] [final] delta RMS=46.5303 Linf=64.0 TV(0-1)=0.0278 clip后像素域 RMS=38.4304 Linf=64.0 用时=4831s
 [train] 完成，产物在 /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261027_145929_e05_s9_native
+2026-10-27 20:37:43.795092: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-27 20:37:43.822373: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-27 20:37:43.975146: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-27 20:37:44.275545: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+2026-10-27 20:37:46.821521: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Using LIBERO constants:
+  NUM_ACTIONS_CHUNK = 8
+  ACTION_DIM = 7
+  PROPRIO_DIM = 8
+  ACTION_PROPRIO_NORMALIZATION_TYPE = bounds_q99
+If needed, manually set the correct constants in `prismatic/vla/constants.py`!
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Instantiating pretrained VLA policy...
+Created backup of original config at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json.back.20261027_203827
+Updated config.json at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json
+Changes made:
+  - Set AutoConfig to "configuration_prismatic.OpenVLAConfig"
+  - Set AutoModelForVision2Seq to "modeling_prismatic.OpenVLAForActionPrediction"
+WARNING: `modeling_prismatic.py` is not found anywhere in the current directory.
+WARNING: `configuration_prismatic.py` is not found anywhere in the current directory.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:06,  2.24s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.37s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:03<00:00,  1.10it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.50it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.10it/s]
+Loaded model: <class 'transformers_modules.oft-spatial-ckpt.modeling_prismatic.OpenVLAForActionPrediction'>
+[pool] 活动帧 296（全池）
+[train] 5000 iters × bs8，ref=native，stream=fresh，uv=on，开始
+[train] it00000 bs8 attack=-0.2922 feat=-0.0185 ref=0.0000 tv=0.0007 g=6.45e-02 frames_accessed=8
+[train] it00050 bs8 attack=-0.6573 feat=-0.0589 ref=0.0064 tv=0.0195 g=9.35e-02 frames_accessed=408
+[train] it00100 bs8 attack=-1.1850 feat=-0.4054 ref=0.0118 tv=0.0235 g=1.30e-01 frames_accessed=808
+[train] it00150 bs8 attack=-1.0584 feat=-0.0972 ref=0.0159 tv=0.0250 g=7.42e-02 frames_accessed=1208
+[train] it00200 bs8 attack=-1.6224 feat=-0.0829 ref=0.0178 tv=0.0259 g=9.60e-02 frames_accessed=1608
+[train] it00250 bs8 attack=-1.0133 feat=-0.1946 ref=0.0192 tv=0.0263 g=6.89e-02 frames_accessed=2008
+[train] it00300 bs8 attack=-2.0671 feat=-0.2576 ref=0.0202 tv=0.0270 g=9.29e-02 frames_accessed=2408
+[train] it00350 bs8 attack=-1.3087 feat=-0.0665 ref=0.0205 tv=0.0268 g=1.30e-01 frames_accessed=2808
+[train] it00400 bs8 attack=-0.9478 feat=-0.1036 ref=0.0207 tv=0.0273 g=5.98e-02 frames_accessed=3208
+[train] it00450 bs8 attack=-0.9744 feat=-0.0464 ref=0.0210 tv=0.0275 g=5.84e-02 frames_accessed=3608
+[train] it00500 bs8 attack=-1.5148 feat=-0.2865 ref=0.0212 tv=0.0275 g=8.37e-02 frames_accessed=4008

@@ -60,12 +60,27 @@ pick_gpu() {
 }
 # 训练完成判据：gradient_log 末次 [ckpt-final] itXXXXX（$2=末iter）+ 规范名 PNG 存在
 job_done() {
+  # 扫描全部同名目录（防未收口新目录遮蔽已完成旧目录导致无限重跑）
   local tag=$1 last_it=$2 d
-  d=$(ls -dt $OFTC/train_*_"$tag" 2>/dev/null | head -1)
-  [ -n "$d" ] && [ -f "$d/Universal_Cloth_OV.png" ] && \
-    grep -q "\[ckpt-final\] it${last_it}" "$d/gradient_log.txt" 2>/dev/null
+  for d in $(ls -dt $OFTC/train_*_"$tag" 2>/dev/null); do
+    if [ -f "$d/Universal_Cloth_OV.png" ] && \
+       grep -q "\[ckpt-final\] it${last_it}" "$d/gradient_log.txt" 2>/dev/null; then
+      return 0
+    fi
+  done
+  return 1
 }
-find_dir() { ls -dt $OFTC/train_*_"$1" 2>/dev/null | head -1; }
+find_dir() {
+  # 优先返回已收口目录（stream 依赖用），否则最新目录
+  local d
+  for d in $(ls -dt $OFTC/train_*_"$1" 2>/dev/null); do
+    if [ -f "$d/Universal_Cloth_OV.png" ] && \
+       grep -q "ckpt-final" "$d/gradient_log.txt" 2>/dev/null; then
+      echo "$d"; return 0
+    fi
+  done
+  ls -dt $OFTC/train_*_"$1" 2>/dev/null | head -1
+}
 
 wait_dep() {  # $1=依赖标签 $2=末iter：等其训练终点标记（依赖臂先收口）
   while ! job_done "$1" "$2"; do
