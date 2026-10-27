@@ -136,8 +136,7 @@ pids=()
   run_job e07_bs1_native 39999 --ref native --stream fresh --uv on \
     --iters 40000 --batch 1 --seed 7 --checkpoint-every 5000 --ckpt-step-suffix
   wait_dep e07_bs1_native 39999
-  run_job e07_bs1_mr 39999 --ref mr --stream replay \
-    --stream-file "$(find_dir e07_bs1_native)/sampling_log.txt" --uv on \
+  run_job e07_bs1_mr 39999 --ref mr --stream fresh --uv on \
     --iters 40000 --batch 1 --seed 7 --checkpoint-every 5000 --ckpt-step-suffix
 ) & pids+=($!)
 # L2：E04-b（UV-off，同流） → E07-625 双臂
@@ -158,8 +157,7 @@ pids=()
   run_job e05_s9_native 04999 --ref native --stream fresh --uv on \
     --iters 5000 --batch 8 --seed 9 --ckpt-step-suffix
   wait_dep e05_s9_native 04999
-  run_job e05_s9_mr 04999 --ref mr --stream replay \
-    --stream-file "$(find_dir e05_s9_native)/sampling_log.txt" --uv on \
+  run_job e05_s9_mr 04999 --ref mr --stream fresh --uv on \
     --iters 5000 --batch 8 --seed 9 --ckpt-step-suffix
 ) & pids+=($!)
 # L4：E05 seed8 对
@@ -167,8 +165,7 @@ pids=()
   run_job e05_s8_native 04999 --ref native --stream fresh --uv on \
     --iters 5000 --batch 8 --seed 8 --ckpt-step-suffix
   wait_dep e05_s8_native 04999
-  run_job e05_s8_mr 04999 --ref mr --stream replay \
-    --stream-file "$(find_dir e05_s8_native)/sampling_log.txt" --uv on \
+  run_job e05_s8_mr 04999 --ref mr --stream fresh --uv on \
     --iters 5000 --batch 8 --seed 8 --ckpt-step-suffix
 ) & pids+=($!)
 
