@@ -248,7 +248,7 @@ def train(args):
             f.write("[ckpt%s] it%05d frames_accessed=%d\n"
                     % ("-final" if final else "", it, (it + 1) * args.batch))
 
-    for it in range(args.iters):
+    for it in range(resume_from, args.iters):
         if stream is not None:
             batch_idx = stream[it]["frames"]
             if args.uv == "on":
@@ -261,9 +261,8 @@ def train(args):
             else:
                 uv_a = None
         else:
-            batch_idx = [random.randrange(n_active)
-                         for _ in range(args.batch)]
-            uv_a = M.sample_uv_xform(args.uv == "on", device)
+            batch_idx, uv_a = fresh_stream[it]
+            uv_a = uv_a.to(device) if uv_a is not None else None
         uvl = [float(x) for x in uv_a.cpu().numpy().reshape(-1)] \
             if uv_a is not None else [0.0] * 6
         param.grad = None
@@ -338,6 +337,9 @@ def train(args):
             save_ckpt(it, final=(it == args.iters - 1))
     samp_log.close()
     if stream is None:
+        fresh_uv_full = [((u.numpy() if hasattr(u, "numpy") else u)
+                          if u is not None else None)
+                         for _, u in fresh_stream]
         torch.save({"uv": fresh_uv_full, "filter_task": args.filter_task,
                     "seed": args.seed, "n_active": n_active},
                    os.path.join(out_dir, "stream_full.pt"))

@@ -21,6 +21,7 @@ import argparse
 import hashlib
 import os
 import random
+import re
 import sys
 import time
 
@@ -157,12 +158,27 @@ def train_replay(args):
             loc[tid] += 1
 
     param = renderer.adv_noise
+    resume_from = 0
+    if getattr(args, "resume_dir", ""):
+        import glob as _glob
+        cands = sorted(_glob.glob(os.path.join(args.resume_dir,
+                                               "Ep0_Cloth_Delta_OV_it*.pt")),
+                       key=lambda x: int(re.search(r"_it(\d+)\.pt$",
+                                                   x).group(1)))
+        assert cands, "resume-dir 无步数 checkpoint"
+        last = cands[-1]
+        it_saved = int(re.search(r"_it(\d+)\.pt$", last).group(1))
+        with torch.no_grad():
+            param.copy_(torch.load(last, map_location=device,
+                                   weights_only=False).to(device))
+        resume_from = it_saved + 1
+        print(f"[resume] 从 {os.path.basename(last)} 恢复 θ，自 it{resume_from:05d} 续跑")
     samp_log = open(os.path.join(out_dir, "sampling_log.txt"), "w")
     samp_log.write("# it slot frame_idx task uv00 uv01 uv02 uv10 uv11 uv12"
                    "  (uv 六零=恒等哨兵：本臂 uv_xform=None，不施加仿射)\n")
     print(f"[train-e03] 重放 MR8 帧流 × {args.iters} iters，UV=恒等，开始")
     t_start = time.time()
-    for it in range(args.iters):
+    for it in range(resume_from, args.iters):
         batch_idx = replay[it]
         param.grad = None
         uvl = [0.0] * 6
@@ -279,6 +295,8 @@ def main():
     p.add_argument("--checkpoint-every", type=int, default=625)
     p.add_argument("--batch", type=int, default=8)
     p.add_argument("--tag", default="e03-uvoff")
+    p.add_argument("--resume-dir", default="",
+                   help="断点续训：从该目录最近 it*.pt 恢复 θ（重放流按 iter 续）")
     args = ap.parse_args()
     if args.cmd == "train":
         if args.uv_check:
