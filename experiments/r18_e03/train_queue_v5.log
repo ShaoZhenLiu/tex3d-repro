@@ -1,0 +1,72 @@
+2026-10-27 10:44:28 [trainq] 训练 e04a 尝试 1 GPU5
+2026-10-27 10:45:29 [trainq] 训练 e04b 尝试 1 GPU6
+2026-10-27 10:47:40 [trainq] 训练 e04a 尝试 2 GPU5
+2026-10-27 10:48:42 [trainq] 训练 e04b 尝试 2 GPU6
+2026-10-27 10:50:52 [trainq] 训练 e04a 尝试 3 GPU5
+2026-10-27 10:51:57 [trainq] 训练 e04b 尝试 3 GPU6
+2026-10-27 10:54:06 [trainq] 训练 e04a 尝试 4 GPU5
+2026-10-27 10:55:10 [trainq] 训练 e04b 尝试 4 GPU6
+2026-10-27 10:57:20 [trainq] 训练 e04a 尝试 5 GPU5
+2026-10-27 10:58:24 [trainq] 训练 e04b 尝试 5 GPU6
+2026-10-27 11:00:35 [trainq] 训练 e04a 尝试 6 GPU5
+2026-10-27 11:01:39 [trainq] 训练 e04b 尝试 6 GPU6
+2026-10-27 11:03:48 [trainq] 训练 e04a 尝试 7 GPU5
+2026-10-27 11:04:52 [trainq] 训练 e04b 尝试 7 GPU6
+2026-10-27 11:07:01 [trainq] 训练 e04a 尝试 8 GPU5
+2026-10-27 11:08:05 [trainq] 训练 e04b 尝试 8 GPU6
+2026-10-27 11:10:15 [trainq] 训练 e04a 四次失败 FAILED
+2026-10-27 11:10:15 [trainq] 训练 e07_bs1_native 尝试 1 GPU5
+2026-10-27 11:11:18 [trainq] 训练 e04b 四次失败 FAILED
+2026-10-27 11:11:18 [trainq] 训练 e07_625_native 尝试 1 GPU6
+2026-10-27 11:13:29 [trainq] 训练 e07_bs1_native 尝试 2 GPU5
+2026-10-27 11:14:49 [trainq] 训练 e07_625_native 尝试 2 GPU6
+2026-10-27 11:17:02 [trainq] 训练 e07_bs1_native 尝试 3 GPU5
+2026-10-27 11:18:01 [trainq] 训练 e07_625_native 尝试 3 GPU6
+2026-10-27 11:20:20 [trainq] 训练 e07_bs1_native 尝试 4 GPU5
+2026-10-27 11:21:15 [trainq] 训练 e07_625_native 尝试 4 GPU6
+2026-10-27 11:23:36 [trainq] 训练 e07_bs1_native 尝试 5 GPU5
+2026-10-27 11:24:38 [trainq] 训练 e07_625_native 尝试 5 GPU6
+2026-10-27 11:26:52 [trainq] 训练 e07_bs1_native 尝试 6 GPU5
+2026-10-27 11:27:50 [trainq] 训练 e07_625_native 尝试 6 GPU6
+2026-10-27 11:30:04 [trainq] 训练 e07_bs1_native 尝试 7 GPU5
+2026-10-27 11:31:02 [trainq] 训练 e07_625_native 尝试 7 GPU6
+2026-10-27 11:33:14 [trainq] 训练 e07_bs1_native 尝试 8 GPU5
+2026-10-27 11:34:13 [trainq] 训练 e07_625_native 尝试 8 GPU6
+2026-10-27 11:36:26 [trainq] 训练 e07_bs1_native 四次失败 FAILED
+2026-10-27 11:36:26 [trainq] 训练 e07_bs1_mr 尝试 1 GPU5
+2026-10-27 11:37:23 [trainq] 训练 e07_625_native 四次失败 FAILED
+2026-10-27 11:37:24 [trainq] 训练 e07_625_mr 尝试 1 GPU6
+2026-10-27 11:39:37 [trainq] 训练 e07_bs1_mr 尝试 2 GPU5
+2026-10-27 11:40:36 [trainq] 训练 e07_625_mr 尝试 2 GPU6
+2026-10-27 11:42:49 [trainq] 训练 e07_bs1_mr 尝试 3 GPU5
+2026-10-27 11:43:50 [trainq] 训练 e07_625_mr 尝试 3 GPU6
+2026-10-27 11:45:58 [trainq] 训练 e07_bs1_mr 尝试 4 GPU5
+2026-10-27 11:47:03 [trainq] 训练 e07_625_mr 尝试 4 GPU6
+2026-10-27 11:49:07 [trainq] 训练 e07_bs1_mr 尝试 5 GPU5
+2026-10-27 11:50:15 [trainq] 训练 e07_625_mr 尝试 5 GPU6
+2026-10-27 11:52:17 [trainq] 训练 e07_bs1_mr 尝试 6 GPU5
+2026-10-27 11:53:25 [trainq] 训练 e07_625_mr 尝试 6 GPU6
+2026-10-27 11:55:27 [trainq] 训练 e07_bs1_mr 尝试 7 GPU5
+2026-10-27 11:56:39 [trainq] 训练 e07_625_mr 尝试 7 GPU6
+2026-10-27 11:58:36 [trainq] 训练 e07_bs1_mr 尝试 8 GPU5
+2026-10-27 11:59:54 [trainq] 训练 e07_625_mr 尝试 8 GPU6
+2026-10-27 12:01:49 [trainq] 训练 e07_bs1_mr 四次失败 FAILED
+2026-10-27 12:01:57 [trainq] 训练 e05_s8_native 尝试 1 GPU5
+2026-10-27 12:03:09 [trainq] 训练 e07_625_mr 四次失败 FAILED
+2026-10-27 12:05:18 [trainq] 训练 e05_s8_native 尝试 2 GPU5
+2026-10-27 12:09:08 [trainq] 训练 e05_s8_native 尝试 3 GPU5
+2026-10-27 12:12:50 [trainq] 训练 e05_s8_native 尝试 4 GPU5
+2026-10-27 12:16:01 [trainq] 训练 e05_s8_native 尝试 5 GPU5
+2026-10-27 12:19:12 [trainq] 训练 e05_s8_native 尝试 6 GPU5
+2026-10-27 12:22:21 [trainq] 训练 e05_s8_native 尝试 7 GPU5
+2026-10-27 12:25:31 [trainq] 训练 e05_s8_native 尝试 8 GPU5
+2026-10-27 12:28:43 [trainq] 训练 e05_s8_native 四次失败 FAILED
+2026-10-27 12:28:43 [trainq] 训练 e05_s8_mr 尝试 1 GPU5
+2026-10-27 12:31:53 [trainq] 训练 e05_s8_mr 尝试 2 GPU5
+2026-10-27 12:35:04 [trainq] 训练 e05_s8_mr 尝试 3 GPU5
+2026-10-27 12:38:13 [trainq] 训练 e05_s8_mr 尝试 4 GPU5
+2026-10-27 12:41:24 [trainq] 训练 e05_s8_mr 尝试 5 GPU5
+2026-10-27 12:44:37 [trainq] 训练 e05_s8_mr 尝试 6 GPU5
+2026-10-27 12:48:25 [trainq] 训练 e05_s8_mr 尝试 7 GPU5
+2026-10-27 12:52:00 [trainq] 训练 e05_s8_mr 尝试 8 GPU5
+2026-10-27 12:55:36 [trainq] 训练 e05_s8_mr 四次失败 FAILED
