@@ -29,6 +29,7 @@ import argparse
 import hashlib
 import os
 import random
+import re
 import sys
 import time
 
@@ -191,6 +192,15 @@ def train(args):
 
     stream = None
     full_uv = None
+    fresh_stream = None
+    if args.stream == "fresh":
+        # 全量预生成流（random 消耗顺序与逐 iter 生成逐位相同）：
+        # 支持断点续训跳过前 N iter 而不改变后续采样
+        fresh_stream = []
+        for _it in range(args.iters):
+            _b = [random.randrange(n_active) for _ in range(args.batch)]
+            _u = M.sample_uv_xform(args.uv == "on", "cpu")                 if args.uv == "on" else None
+            fresh_stream.append((_b, _u))
     if args.stream == "replay":
         stream = parse_stream(args.stream_file, args.iters, args.batch)
         pt = os.path.splitext(args.stream_file)[0] + "_full.pt"
@@ -230,6 +240,22 @@ def train(args):
             loc[tid] += 1
 
     param = renderer.adv_noise
+    resume_from = 0
+    if getattr(args, "resume_dir", ""):
+        import glob as _glob
+        cands = sorted(_glob.glob(os.path.join(args.resume_dir,
+                                               "Ep0_Cloth_Delta_OV_it*.pt")),
+                       key=lambda x: int(re.search(r"_it(\d+)\.pt$",
+                                                   x).group(1)))
+        assert cands, "resume-dir 无步数 checkpoint"
+        last = cands[-1]
+        it_saved = int(re.search(r"_it(\d+)\.pt$", last).group(1))
+        with torch.no_grad():
+            param.copy_(torch.load(last, map_location=device,
+                                   weights_only=False).to(device))
+        resume_from = it_saved + 1
+        print(f"[resume] 从 {os.path.basename(last)} 恢复 θ，"
+              f"自 it{resume_from:05d} 续跑（原计划 {args.iters} iters）")
     fresh_uv_full = []   # fresh 模式：全精度 UV 流（供成对臂 replay）
     samp_log = open(os.path.join(out_dir, "sampling_log.txt"), "w")
     samp_log.write("# it slot frame_idx(active) task uv00..uv12"
@@ -390,6 +416,8 @@ def main():
     p.add_argument("--seed", type=int, default=7)
     p.add_argument("--checkpoint-every", type=int, default=625)
     p.add_argument("--ckpt-step-suffix", action="store_true")
+    p.add_argument("--resume-dir", default="",
+                   help="断点续训：从该目录最近 it*.pt 恢复 θ 并续跑（重启容错）")
     args = ap.parse_args()
     if args.cmd == "genstream":
         cmd_genstream(args)

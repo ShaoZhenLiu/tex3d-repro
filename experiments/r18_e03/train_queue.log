@@ -32,3 +32,11 @@
 2026-10-27 10:16:12 [trainq] 训练 e07_625_native 尝试 1 GPU6
 2026-10-27 10:19:23 [trainq] 训练 e07_625_native 尝试 2 GPU6
 2026-10-27 10:22:32 [trainq] 训练 e07_625_native 尝试 3 GPU6
+2026-10-27 10:25:53 [trainq] 训练 e07_625_native 尝试 4 GPU6
+2026-10-27 10:29:03 [trainq] 训练 e07_625_native 四次失败 FAILED
+2026-10-27 10:29:04 [trainq] 训练 e07_625_mr 尝试 1 GPU6
+2026-10-27 10:32:26 [trainq] 训练 e07_625_mr 尝试 2 GPU6
+2026-10-27 10:35:50 [trainq] 训练 e07_625_mr 尝试 3 GPU6
+2026-10-27 10:39:04 [trainq] 训练 e07_625_mr 尝试 4 GPU6
+Terminated
+2026-10-27 10:41:33 [trainq] 训练 e07_625_mr 四次失败 FAILED

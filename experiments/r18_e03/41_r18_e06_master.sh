@@ -32,7 +32,7 @@ log "E06 双臂训练 2/2 完成"
 gpu_used_mi() { nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits -i "$1" 2>/dev/null | tr -d ' '; }
 pick1() {  # 找一块空闲≥20000 的卡（GPU4 永不）
   local g used
-  for g in 5 7 6 2 0 1 3; do
+  for g in 6 5 0; do
     used=$(gpu_used_mi "$g")
     [ -n "$used" ] && [ $((49140 - used)) -ge 20000 ] && { echo "$g"; return 0; }
   done
