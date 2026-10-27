@@ -71,7 +71,7 @@ run_job() {  # $1=name $2=末iter 其后为 runner 参数
   local name=$1 last_it=$2; shift 2
   local g mypid=$BASHPID attempt d
   # 防双跑门：同标签作业已在跑（旧实例/孤儿）则等待其退出，再按 job_done 判定
-  while ps -u shaozhen.liu -o cmd | grep -- "--tag ${name}\[" >/dev/null 2>&1; do
+  while ps -u shaozhen.liu -o cmd | grep -- "--tag ${name}[- ]" >/dev/null 2>&1; do
     sleep 60
   done
   if job_done "$name" "$last_it"; then log "训练 $name 已完成，跳过"; return 0; fi
