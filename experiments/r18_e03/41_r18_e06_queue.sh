@@ -26,7 +26,7 @@ pick_gpu() {
     out=$(
       (
         flock 9
-        for g in 6 5 0; do
+        for g in 6 5 1 2 0; do
           sum_need=0; cnt=0
           for f in "$CLAIMD"/*."$g"; do
             [ -e "$f" ] || continue

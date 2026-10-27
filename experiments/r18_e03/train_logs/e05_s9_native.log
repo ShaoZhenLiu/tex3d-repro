@@ -252,3 +252,15 @@ Loaded model: <class 'transformers_modules.oft-spatial-ckpt.modeling_prismatic.O
 [train] it04400 bs8 attack=-1.7790 feat=-0.0839 ref=0.0224 tv=0.0279 g=1.11e-01 frames_accessed=35208
 [train] it04450 bs8 attack=-0.9098 feat=-0.0718 ref=0.0226 tv=0.0279 g=2.88e-02 frames_accessed=35608
 [train] it04500 bs8 attack=-2.0165 feat=-0.0668 ref=0.0224 tv=0.0278 g=1.33e-01 frames_accessed=36008
+[train] it04550 bs8 attack=-1.2865 feat=-0.1251 ref=0.0225 tv=0.0279 g=5.49e-02 frames_accessed=36408
+[train] it04600 bs8 attack=-1.6126 feat=-0.1319 ref=0.0227 tv=0.0282 g=8.64e-02 frames_accessed=36808
+[train] it04650 bs8 attack=-1.3018 feat=-0.1004 ref=0.0225 tv=0.0280 g=1.05e-01 frames_accessed=37208
+[train] it04700 bs8 attack=-1.2938 feat=-0.0486 ref=0.0227 tv=0.0280 g=6.90e-02 frames_accessed=37608
+[train] it04750 bs8 attack=-1.1764 feat=-0.0757 ref=0.0226 tv=0.0281 g=4.71e-02 frames_accessed=38008
+[train] it04800 bs8 attack=-1.4427 feat=-0.0722 ref=0.0227 tv=0.0282 g=1.04e-01 frames_accessed=38408
+[train] it04850 bs8 attack=-1.1073 feat=-0.1686 ref=0.0227 tv=0.0280 g=5.76e-02 frames_accessed=38808
+[train] it04900 bs8 attack=-1.1288 feat=-0.0846 ref=0.0225 tv=0.0280 g=5.98e-02 frames_accessed=39208
+[train] it04950 bs8 attack=-2.1017 feat=-0.2819 ref=0.0227 tv=0.0282 g=8.41e-02 frames_accessed=39608
+[train] it04999 bs8 attack=-1.2118 feat=-0.1023 ref=0.0228 tv=0.0279 g=4.78e-02 frames_accessed=40000
+[train] [final] delta RMS=46.5303 Linf=64.0 TV(0-1)=0.0278 clip后像素域 RMS=38.4304 Linf=64.0 用时=4831s
+[train] 完成，产物在 /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261027_145929_e05_s9_native
