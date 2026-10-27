@@ -148,14 +148,12 @@ pids=()
   run_job e07_625_mr 00624 --ref mr --stream replay --stream-file "$MR8LOG" \
     --uv on --iters 625 --batch 8 --seed 7 --checkpoint-every 625 --ckpt-step-suffix
 ) & pids+=($!)
-# L3：E05 seed9 对（native fresh → mr replay）
-# 防双跑门：等已在跑的同标签作业（旧队列实例/孤儿进程）退出后再按 job_done 判定
+# L3：E05 seed9 对 —— native 臂已由 train_20261027_145929_e05_s9_native 完成
+# （[ckpt-final] it04999），此处移除其 run_job 防止任何形式的重复执行；直接等依赖→s9_mr
 ( sleep 120
   while ps -u shaozhen.liu -o cmd | grep "tag e05_s9_nativ[e]" >/dev/null 2>&1; do
     sleep 60
   done
-  run_job e05_s9_native 04999 --ref native --stream fresh --uv on \
-    --iters 5000 --batch 8 --seed 9 --ckpt-step-suffix
   wait_dep e05_s9_native 04999
   run_job e05_s9_mr 04999 --ref mr --stream fresh --uv on \
     --iters 5000 --batch 8 --seed 9 --ckpt-step-suffix
