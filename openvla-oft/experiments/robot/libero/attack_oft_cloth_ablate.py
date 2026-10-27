@@ -58,7 +58,9 @@ def sha256(path):
 
 
 def frame_to_dev(fr, device):
-    """池驻 CPU，逐次访问搬运 GPU（降峰值显存：池≈6-8G 不再常驻）。"""
+    """池驻 CPU，逐次访问搬运 GPU（降峰值显存：池≈6-8G 不再常驻）。
+    text_inputs 等可能是 HF 容器（BatchEncoding 等）：优先用其自身 .to()；
+    纯 dict 递归一层；其余原样。"""
     out = {}
     for k, v in fr.items():
         if torch.is_tensor(v):
@@ -67,6 +69,11 @@ def frame_to_dev(fr, device):
             out[k] = {kk: (vv.to(device, non_blocking=True)
                            if torch.is_tensor(vv) else vv)
                       for kk, vv in v.items()}
+        elif hasattr(v, "to") and callable(v.to):
+            try:
+                out[k] = v.to(device)
+            except Exception:
+                out[k] = v
         else:
             out[k] = v
     return out
