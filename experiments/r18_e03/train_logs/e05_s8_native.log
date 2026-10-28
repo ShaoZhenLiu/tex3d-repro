@@ -784,3 +784,20 @@ Terminated
 [train] it04150 bs8 attack=-1.8195 feat=-0.4882 ref=0.0214 tv=0.0282 g=1.02e-01 frames_accessed=33208
 [train] it04200 bs8 attack=-1.6220 feat=-0.1374 ref=0.0215 tv=0.0281 g=8.14e-02 frames_accessed=33608
 [train] it04250 bs8 attack=-2.0985 feat=-0.1436 ref=0.0214 tv=0.0286 g=1.21e-01 frames_accessed=34008
+[train] it04300 bs8 attack=-1.9466 feat=-0.0948 ref=0.0214 tv=0.0282 g=1.11e-01 frames_accessed=34408
+[train] it04350 bs8 attack=-1.5004 feat=-0.1544 ref=0.0214 tv=0.0281 g=7.85e-02 frames_accessed=34808
+[train] it04400 bs8 attack=-1.5531 feat=-0.0960 ref=0.0216 tv=0.0283 g=6.42e-02 frames_accessed=35208
+[train] it04450 bs8 attack=-1.5592 feat=-0.3156 ref=0.0215 tv=0.0280 g=8.25e-02 frames_accessed=35608
+[train] it04500 bs8 attack=-1.7232 feat=-0.2388 ref=0.0216 tv=0.0280 g=7.18e-02 frames_accessed=36008
+[train] it04550 bs8 attack=-1.0781 feat=-0.0740 ref=0.0213 tv=0.0282 g=1.03e-01 frames_accessed=36408
+[train] it04600 bs8 attack=-1.6546 feat=-0.1072 ref=0.0215 tv=0.0280 g=1.24e-01 frames_accessed=36808
+[train] it04650 bs8 attack=-1.2324 feat=-0.1483 ref=0.0214 tv=0.0282 g=1.09e-01 frames_accessed=37208
+[train] it04700 bs8 attack=-1.1453 feat=-0.0994 ref=0.0213 tv=0.0283 g=8.56e-02 frames_accessed=37608
+[train] it04750 bs8 attack=-1.2363 feat=-0.1204 ref=0.0215 tv=0.0279 g=7.44e-02 frames_accessed=38008
+[train] it04800 bs8 attack=-1.6650 feat=-0.2298 ref=0.0213 tv=0.0280 g=8.81e-02 frames_accessed=38408
+[train] it04850 bs8 attack=-1.2413 feat=-0.0828 ref=0.0212 tv=0.0280 g=9.89e-02 frames_accessed=38808
+[train] it04900 bs8 attack=-2.0136 feat=-0.1352 ref=0.0213 tv=0.0282 g=9.84e-02 frames_accessed=39208
+[train] it04950 bs8 attack=-1.2438 feat=-0.1187 ref=0.0213 tv=0.0279 g=8.07e-02 frames_accessed=39608
+[train] it04999 bs8 attack=-1.7593 feat=-0.1539 ref=0.0212 tv=0.0281 g=9.56e-02 frames_accessed=40000
+[train] [final] delta RMS=45.4578 Linf=64.0 TV(0-1)=0.0281 clip后像素域 RMS=37.1025 Linf=64.0 用时=20013s
+[train] 完成，产物在 /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261027_175626_e05_s8_native

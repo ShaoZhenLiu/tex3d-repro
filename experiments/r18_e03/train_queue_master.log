@@ -6,3 +6,24 @@
 2026-10-27 20:37:38 [trainq] 训练 e05_s9_native 尝试 1 GPU6
 2026-10-27 21:34:54 [trainq] 训练 e05_s9_native 尝试 1 GPU6
 2026-10-27 21:44:54 [trainq] 训练 e05_s9_native 尝试 1 GPU6
+2026-10-27 23:26:57 [trainq] 训练 e04a 尝试 1 GPU5
+2026-10-27 23:34:31 [trainq] 训练 e04a 尝试 2 GPU5
+2026-10-27 23:42:55 [trainq] 训练 e04a 尝试 1 GPU5
+2026-10-27 23:52:29 [trainq] 训练 e04a 完成 -> /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261027_175029_e04a sha=a51dfcc81606a408
+2026-10-27 23:52:30 [trainq] 训练 e07_bs1_native 尝试 1 GPU5
+2026-10-27 23:52:55 [trainq] 训练 e05_s8_native 已完成，跳过
+2026-10-27 23:52:56 [trainq] 训练 e05_s8_mr 尝试 1 GPU1
+2026-10-27 23:52:56 [trainq] 训练 e04b 尝试 1 GPU2
+2026-10-28 00:04:13 [trainq] 训练 e04b 完成 -> /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261027_175627_e04b sha=a7d1fe44b6defa94
+2026-10-28 00:04:13 [trainq] 训练 e07_625_native 尝试 1 GPU2
+2026-10-28 00:16:12 [trainq] 训练 e05_s9_mr 尝试 1 GPU2
+2026-10-28 00:20:52 [trainq] 训练 e07_625_native 尝试 2 GPU2
+2026-10-28 00:20:52 [trainq] 训练 e05_s9_mr 尝试 2 GPU0
+2026-10-28 00:58:34 [trainq] 训练 e07_625_native 完成 -> /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261028_002137_e07_625_native sha=ed90679a7390f536
+2026-10-28 00:58:34 [trainq] 训练 e07_625_mr 尝试 1 GPU2
+2026-10-28 01:05:33 [trainq] 训练 e07_625_mr 尝试 2 GPU2
+2026-10-28 07:49:31 [trainq] 训练 e04a 已完成，跳过
+2026-10-28 07:50:39 [trainq] 训练 e04b 已完成，跳过
+2026-10-28 07:50:46 [trainq] 训练 e07_625_native 已完成，跳过
+2026-10-28 07:52:38 [trainq] 训练 e05_s8_native 已完成，跳过
+2026-10-28 09:40:06 [trainq] 训练 e04a 已完成，跳过
