@@ -622,3 +622,394 @@ Traceback (most recent call last):
   File "/data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/torch/autograd/__init__.py", line 266, in backward
     Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
 torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 32.00 MiB. GPU 0 has a total capacity of 47.37 GiB of which 42.56 MiB is free. Process 98995 has 20.07 GiB memory in use. Process 3270315 has 3.00 GiB memory in use. Including non-PyTorch memory, this process has 24.22 GiB memory in use. Of the allocated memory 23.35 GiB is allocated by PyTorch, and 401.89 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+2026-10-27 23:52:34.951420: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-27 23:52:34.978677: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-27 23:52:34.980933: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-27 23:52:34.993084: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+2026-10-27 23:52:36.372941: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Using LIBERO constants:
+  NUM_ACTIONS_CHUNK = 8
+  ACTION_DIM = 7
+  PROPRIO_DIM = 8
+  ACTION_PROPRIO_NORMALIZATION_TYPE = bounds_q99
+If needed, manually set the correct constants in `prismatic/vla/constants.py`!
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Instantiating pretrained VLA policy...
+Created backup of original config at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json.back.20261027_235320
+Updated config.json at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json
+Changes made:
+  - Set AutoConfig to "configuration_prismatic.OpenVLAConfig"
+  - Set AutoModelForVision2Seq to "modeling_prismatic.OpenVLAForActionPrediction"
+WARNING: `modeling_prismatic.py` is not found anywhere in the current directory.
+WARNING: `configuration_prismatic.py` is not found anywhere in the current directory.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  2.01it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:00<00:00,  2.50it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  2.70it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  2.89it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  2.71it/s]
+Loaded model: <class 'transformers_modules.oft-spatial-ckpt.modeling_prismatic.OpenVLAForActionPrediction'>
+[pool] 活动帧 296（全池）
+[train] 40000 iters × bs1，ref=native，stream=fresh，uv=on，开始
+[train] it00000 bs1 attack=-0.5262 feat=-0.0526 ref=0.0000 tv=0.0007 g=2.20e-01 frames_accessed=1
+[train] it00050 bs1 attack=-0.3277 feat=-0.0328 ref=0.0039 tv=0.0129 g=1.13e-01 frames_accessed=51
+[train] it00100 bs1 attack=-1.5957 feat=-0.1596 ref=0.0061 tv=0.0150 g=5.05e-01 frames_accessed=101
+[train] it00150 bs1 attack=-0.4972 feat=-0.0497 ref=0.0076 tv=0.0162 g=1.19e-01 frames_accessed=151
+[train] it00200 bs1 attack=-1.2303 feat=-0.1230 ref=0.0093 tv=0.0175 g=2.07e-01 frames_accessed=201
+[train] it00250 bs1 attack=-0.9836 feat=-0.0984 ref=0.0101 tv=0.0182 g=2.30e-01 frames_accessed=251
+[train] it00300 bs1 attack=-2.0669 feat=-0.2067 ref=0.0107 tv=0.0183 g=3.81e-01 frames_accessed=301
+[train] it00350 bs1 attack=-1.0417 feat=-0.1042 ref=0.0117 tv=0.0191 g=1.26e-01 frames_accessed=351
+[train] it00400 bs1 attack=-0.6891 feat=-0.0689 ref=0.0117 tv=0.0187 g=1.51e-01 frames_accessed=401
+[train] it00450 bs1 attack=-4.7683 feat=-0.4768 ref=0.0123 tv=0.0194 g=5.72e-01 frames_accessed=451
+[train] it00500 bs1 attack=-0.7397 feat=-0.0740 ref=0.0121 tv=0.0197 g=1.51e-01 frames_accessed=501
+[train] it00550 bs1 attack=-0.7835 feat=-0.0783 ref=0.0125 tv=0.0196 g=1.24e-01 frames_accessed=551
+[train] it00600 bs1 attack=-0.8967 feat=-0.0897 ref=0.0128 tv=0.0198 g=2.02e-01 frames_accessed=601
+[train] it00650 bs1 attack=-1.4696 feat=-0.1470 ref=0.0129 tv=0.0197 g=1.88e-01 frames_accessed=651
+[train] it00700 bs1 attack=-1.6263 feat=-0.1626 ref=0.0128 tv=0.0197 g=3.29e-01 frames_accessed=701
+[train] it00750 bs1 attack=-3.2439 feat=-0.3244 ref=0.0132 tv=0.0196 g=4.91e-01 frames_accessed=751
+[train] it00800 bs1 attack=-0.8586 feat=-0.0859 ref=0.0133 tv=0.0192 g=1.60e-01 frames_accessed=801
+[train] it00850 bs1 attack=-2.1057 feat=-0.2106 ref=0.0129 tv=0.0196 g=1.93e-01 frames_accessed=851
+[train] it00900 bs1 attack=-0.6362 feat=-0.0636 ref=0.0131 tv=0.0200 g=1.65e-01 frames_accessed=901
+[train] it00950 bs1 attack=-1.6389 feat=-0.1639 ref=0.0131 tv=0.0197 g=2.81e-01 frames_accessed=951
+[train] it01000 bs1 attack=-1.7654 feat=-0.1765 ref=0.0134 tv=0.0196 g=2.96e-01 frames_accessed=1001
+[train] it01050 bs1 attack=-0.5001 feat=-0.0500 ref=0.0134 tv=0.0200 g=1.72e-01 frames_accessed=1051
+[train] it01100 bs1 attack=-1.1217 feat=-0.1122 ref=0.0132 tv=0.0198 g=2.12e-01 frames_accessed=1101
+[train] it01150 bs1 attack=-1.4246 feat=-0.1425 ref=0.0134 tv=0.0198 g=1.73e-01 frames_accessed=1151
+[train] it01200 bs1 attack=-2.0154 feat=-0.2015 ref=0.0137 tv=0.0197 g=3.06e-01 frames_accessed=1201
+[train] it01250 bs1 attack=-1.7625 feat=-0.1763 ref=0.0133 tv=0.0198 g=2.57e-01 frames_accessed=1251
+[train] it01300 bs1 attack=-0.6971 feat=-0.0697 ref=0.0134 tv=0.0196 g=2.17e-01 frames_accessed=1301
+[train] it01350 bs1 attack=-1.6050 feat=-0.1605 ref=0.0135 tv=0.0197 g=3.57e-01 frames_accessed=1351
+[train] it01400 bs1 attack=-0.5916 feat=-0.0592 ref=0.0134 tv=0.0197 g=1.33e-01 frames_accessed=1401
+[train] it01450 bs1 attack=-0.7545 feat=-0.0754 ref=0.0134 tv=0.0196 g=1.07e-01 frames_accessed=1451
+[train] it01500 bs1 attack=-1.1453 feat=-0.1145 ref=0.0136 tv=0.0203 g=2.57e-01 frames_accessed=1501
+[train] it01550 bs1 attack=-1.1320 feat=-0.1132 ref=0.0133 tv=0.0203 g=1.34e-01 frames_accessed=1551
+[train] it01600 bs1 attack=-1.0401 feat=-0.1040 ref=0.0133 tv=0.0200 g=1.73e-01 frames_accessed=1601
+[train] it01650 bs1 attack=-0.7742 feat=-0.0774 ref=0.0137 tv=0.0199 g=1.42e-01 frames_accessed=1651
+[train] it01700 bs1 attack=-1.0300 feat=-0.1030 ref=0.0138 tv=0.0198 g=1.75e-01 frames_accessed=1701
+[train] it01750 bs1 attack=-1.1527 feat=-0.1153 ref=0.0139 tv=0.0198 g=3.80e-01 frames_accessed=1751
+[train] it01800 bs1 attack=-0.5016 feat=-0.0502 ref=0.0135 tv=0.0196 g=1.65e-01 frames_accessed=1801
+[train] it01850 bs1 attack=-1.9980 feat=-0.1998 ref=0.0136 tv=0.0196 g=3.43e-01 frames_accessed=1851
+[train] it01900 bs1 attack=-1.6742 feat=-0.1674 ref=0.0139 tv=0.0202 g=1.85e-01 frames_accessed=1901
+[train] it01950 bs1 attack=-0.6890 feat=-0.0689 ref=0.0137 tv=0.0199 g=1.15e-01 frames_accessed=1951
+[train] it02000 bs1 attack=-0.7979 feat=-0.0798 ref=0.0138 tv=0.0202 g=1.36e-01 frames_accessed=2001
+[train] it02050 bs1 attack=-1.7657 feat=-0.1766 ref=0.0137 tv=0.0197 g=3.05e-01 frames_accessed=2051
+[train] it02100 bs1 attack=-0.6816 feat=-0.0682 ref=0.0135 tv=0.0198 g=9.59e-02 frames_accessed=2101
+[train] it02150 bs1 attack=-0.7323 feat=-0.0732 ref=0.0137 tv=0.0196 g=1.40e-01 frames_accessed=2151
+[train] it02200 bs1 attack=-0.5600 feat=-0.0560 ref=0.0137 tv=0.0198 g=8.13e-02 frames_accessed=2201
+[train] it02250 bs1 attack=-0.6865 feat=-0.0686 ref=0.0136 tv=0.0199 g=1.01e-01 frames_accessed=2251
+[train] it02300 bs1 attack=-0.9929 feat=-0.0993 ref=0.0139 tv=0.0200 g=2.41e-01 frames_accessed=2301
+[train] it02350 bs1 attack=-0.4696 feat=-0.0470 ref=0.0137 tv=0.0196 g=9.60e-02 frames_accessed=2351
+[train] it02400 bs1 attack=-0.8900 feat=-0.0890 ref=0.0134 tv=0.0193 g=1.42e-01 frames_accessed=2401
+[train] it02450 bs1 attack=-0.7341 feat=-0.0734 ref=0.0136 tv=0.0193 g=1.57e-01 frames_accessed=2451
+[train] it02500 bs1 attack=-1.3853 feat=-0.1385 ref=0.0134 tv=0.0195 g=1.86e-01 frames_accessed=2501
+[train] it02550 bs1 attack=-0.7814 feat=-0.0781 ref=0.0133 tv=0.0197 g=1.26e-01 frames_accessed=2551
+[train] it02600 bs1 attack=-1.3972 feat=-0.1397 ref=0.0135 tv=0.0195 g=2.09e-01 frames_accessed=2601
+[train] it02650 bs1 attack=-1.3942 feat=-0.1394 ref=0.0134 tv=0.0199 g=1.99e-01 frames_accessed=2651
+[train] it02700 bs1 attack=-3.5283 feat=-0.3528 ref=0.0139 tv=0.0200 g=9.80e-01 frames_accessed=2701
+[train] it02750 bs1 attack=-0.4998 feat=-0.0500 ref=0.0137 tv=0.0196 g=1.04e-01 frames_accessed=2751
+[train] it02800 bs1 attack=-2.1338 feat=-0.2134 ref=0.0135 tv=0.0197 g=3.08e-01 frames_accessed=2801
+[train] it02850 bs1 attack=-1.9417 feat=-0.1942 ref=0.0137 tv=0.0200 g=4.08e-01 frames_accessed=2851
+[train] it02900 bs1 attack=-1.2766 feat=-0.1277 ref=0.0138 tv=0.0199 g=1.56e-01 frames_accessed=2901
+[train] it02950 bs1 attack=-0.9270 feat=-0.0927 ref=0.0142 tv=0.0202 g=9.66e-02 frames_accessed=2951
+[train] it03000 bs1 attack=-0.4752 feat=-0.0475 ref=0.0143 tv=0.0204 g=1.13e-01 frames_accessed=3001
+[train] it03050 bs1 attack=-1.3811 feat=-0.1381 ref=0.0138 tv=0.0198 g=1.65e-01 frames_accessed=3051
+[train] it03100 bs1 attack=-1.6557 feat=-0.1656 ref=0.0138 tv=0.0197 g=3.22e-01 frames_accessed=3101
+[train] it03150 bs1 attack=-0.8846 feat=-0.0885 ref=0.0139 tv=0.0197 g=1.21e-01 frames_accessed=3151
+[train] it03200 bs1 attack=-0.5868 feat=-0.0587 ref=0.0137 tv=0.0198 g=1.97e-01 frames_accessed=3201
+[train] it03250 bs1 attack=-1.2016 feat=-0.1202 ref=0.0135 tv=0.0200 g=2.17e-01 frames_accessed=3251
+[train] it03300 bs1 attack=-1.8038 feat=-0.1804 ref=0.0136 tv=0.0202 g=3.12e-01 frames_accessed=3301
+[train] it03350 bs1 attack=-2.9215 feat=-0.2921 ref=0.0133 tv=0.0195 g=8.16e-01 frames_accessed=3351
+[train] it03400 bs1 attack=-0.8586 feat=-0.0859 ref=0.0134 tv=0.0198 g=1.37e-01 frames_accessed=3401
+[train] it03450 bs1 attack=-1.9970 feat=-0.1997 ref=0.0135 tv=0.0194 g=2.47e-01 frames_accessed=3451
+[train] it03500 bs1 attack=-0.8509 feat=-0.0851 ref=0.0132 tv=0.0198 g=2.19e-01 frames_accessed=3501
+[train] it03550 bs1 attack=-0.6714 feat=-0.0671 ref=0.0133 tv=0.0196 g=1.30e-01 frames_accessed=3551
+[train] it03600 bs1 attack=-0.5653 feat=-0.0565 ref=0.0134 tv=0.0201 g=1.18e-01 frames_accessed=3601
+[train] it03650 bs1 attack=-1.8101 feat=-0.1810 ref=0.0131 tv=0.0201 g=2.64e-01 frames_accessed=3651
+[train] it03700 bs1 attack=-3.1336 feat=-0.3134 ref=0.0132 tv=0.0200 g=7.91e-01 frames_accessed=3701
+[train] it03750 bs1 attack=-0.5835 feat=-0.0583 ref=0.0130 tv=0.0201 g=1.65e-01 frames_accessed=3751
+[train] it03800 bs1 attack=-1.9204 feat=-0.1920 ref=0.0132 tv=0.0196 g=3.45e-01 frames_accessed=3801
+[train] it03850 bs1 attack=-1.1921 feat=-0.1192 ref=0.0130 tv=0.0196 g=1.62e-01 frames_accessed=3851
+[train] it03900 bs1 attack=-0.6559 feat=-0.0656 ref=0.0129 tv=0.0197 g=1.18e-01 frames_accessed=3901
+[train] it03950 bs1 attack=-1.1413 feat=-0.1141 ref=0.0133 tv=0.0197 g=1.77e-01 frames_accessed=3951
+[train] it04000 bs1 attack=-1.3192 feat=-0.1319 ref=0.0133 tv=0.0198 g=2.24e-01 frames_accessed=4001
+[train] it04050 bs1 attack=-0.6788 feat=-0.0679 ref=0.0134 tv=0.0200 g=2.57e-01 frames_accessed=4051
+[train] it04100 bs1 attack=-1.2096 feat=-0.1210 ref=0.0130 tv=0.0194 g=1.75e-01 frames_accessed=4101
+[train] it04150 bs1 attack=-0.6915 feat=-0.0691 ref=0.0130 tv=0.0194 g=2.03e-01 frames_accessed=4151
+[train] it04200 bs1 attack=-0.5051 feat=-0.0505 ref=0.0132 tv=0.0195 g=1.45e-01 frames_accessed=4201
+[train] it04250 bs1 attack=-1.3823 feat=-0.1382 ref=0.0129 tv=0.0192 g=2.24e-01 frames_accessed=4251
+[train] it04300 bs1 attack=-1.5863 feat=-0.1586 ref=0.0132 tv=0.0198 g=4.52e-01 frames_accessed=4301
+[train] it04350 bs1 attack=-0.6388 feat=-0.0639 ref=0.0130 tv=0.0196 g=1.35e-01 frames_accessed=4351
+[train] it04400 bs1 attack=-2.1265 feat=-0.2126 ref=0.0131 tv=0.0198 g=5.15e-01 frames_accessed=4401
+[train] it04450 bs1 attack=-0.9958 feat=-0.0996 ref=0.0128 tv=0.0192 g=2.06e-01 frames_accessed=4451
+[train] it04500 bs1 attack=-2.5109 feat=-0.2511 ref=0.0127 tv=0.0195 g=2.79e-01 frames_accessed=4501
+[train] it04550 bs1 attack=-1.9850 feat=-0.1985 ref=0.0127 tv=0.0193 g=3.53e-01 frames_accessed=4551
+[train] it04600 bs1 attack=-1.4049 feat=-0.1405 ref=0.0132 tv=0.0193 g=1.52e-01 frames_accessed=4601
+[train] it04650 bs1 attack=-0.8366 feat=-0.0837 ref=0.0134 tv=0.0192 g=1.46e-01 frames_accessed=4651
+[train] it04700 bs1 attack=-1.3114 feat=-0.1311 ref=0.0130 tv=0.0198 g=2.45e-01 frames_accessed=4701
+[train] it04750 bs1 attack=-1.0463 feat=-0.1046 ref=0.0129 tv=0.0196 g=5.31e-01 frames_accessed=4751
+[train] it04800 bs1 attack=-2.1896 feat=-0.2190 ref=0.0127 tv=0.0194 g=1.76e+00 frames_accessed=4801
+[train] it04850 bs1 attack=-0.7062 feat=-0.0706 ref=0.0131 tv=0.0195 g=4.22e-01 frames_accessed=4851
+[train] it04900 bs1 attack=-2.3800 feat=-0.2380 ref=0.0132 tv=0.0194 g=2.97e-01 frames_accessed=4901
+[train] it04950 bs1 attack=-1.3941 feat=-0.1394 ref=0.0130 tv=0.0196 g=1.37e-01 frames_accessed=4951
+[train] it05000 bs1 attack=-0.8219 feat=-0.0822 ref=0.0127 tv=0.0192 g=2.60e-01 frames_accessed=5001
+[train] it05050 bs1 attack=-0.6027 feat=-0.0603 ref=0.0130 tv=0.0196 g=1.05e-01 frames_accessed=5051
+[train] it05100 bs1 attack=-0.8100 feat=-0.0810 ref=0.0129 tv=0.0196 g=2.44e-01 frames_accessed=5101
+[train] it05150 bs1 attack=-0.7842 feat=-0.0784 ref=0.0129 tv=0.0197 g=1.28e-01 frames_accessed=5151
+[train] it05200 bs1 attack=-0.8213 feat=-0.0821 ref=0.0128 tv=0.0195 g=1.31e-01 frames_accessed=5201
+[train] it05250 bs1 attack=-0.7692 feat=-0.0769 ref=0.0129 tv=0.0193 g=1.83e-01 frames_accessed=5251
+[train] it05300 bs1 attack=-0.3954 feat=-0.0395 ref=0.0129 tv=0.0192 g=9.92e-02 frames_accessed=5301
+[train] it05350 bs1 attack=-1.0618 feat=-0.1062 ref=0.0127 tv=0.0196 g=2.00e-01 frames_accessed=5351
+[train] it05400 bs1 attack=-0.8110 feat=-0.0811 ref=0.0130 tv=0.0195 g=1.11e-01 frames_accessed=5401
+[train] it05450 bs1 attack=-1.2251 feat=-0.1225 ref=0.0128 tv=0.0195 g=2.33e-01 frames_accessed=5451
+[train] it05500 bs1 attack=-0.7225 feat=-0.0722 ref=0.0127 tv=0.0198 g=9.37e-02 frames_accessed=5501
+[train] it05550 bs1 attack=-0.5383 feat=-0.0538 ref=0.0125 tv=0.0197 g=1.46e-01 frames_accessed=5551
+[train] it05600 bs1 attack=-0.6489 feat=-0.0649 ref=0.0127 tv=0.0198 g=2.02e-01 frames_accessed=5601
+[train] it05650 bs1 attack=-3.1486 feat=-0.3149 ref=0.0127 tv=0.0196 g=4.88e-01 frames_accessed=5651
+[train] it05700 bs1 attack=-1.8584 feat=-0.1858 ref=0.0131 tv=0.0198 g=2.17e-01 frames_accessed=5701
+[train] it05750 bs1 attack=-0.5107 feat=-0.0511 ref=0.0129 tv=0.0194 g=1.02e-01 frames_accessed=5751
+[train] it05800 bs1 attack=-2.3216 feat=-0.2322 ref=0.0126 tv=0.0195 g=4.90e-01 frames_accessed=5801
+[train] it05850 bs1 attack=-2.6847 feat=-0.2685 ref=0.0131 tv=0.0197 g=2.33e-01 frames_accessed=5851
+[train] it05900 bs1 attack=-1.0930 feat=-0.1093 ref=0.0132 tv=0.0199 g=1.93e-01 frames_accessed=5901
+[train] it05950 bs1 attack=-1.8135 feat=-0.1814 ref=0.0129 tv=0.0200 g=1.78e-01 frames_accessed=5951
+[train] it06000 bs1 attack=-0.5802 feat=-0.0580 ref=0.0129 tv=0.0201 g=1.41e-01 frames_accessed=6001
+[train] it06050 bs1 attack=-0.8904 feat=-0.0890 ref=0.0127 tv=0.0200 g=2.15e-01 frames_accessed=6051
+[train] it06100 bs1 attack=-0.7174 feat=-0.0717 ref=0.0130 tv=0.0198 g=1.83e-01 frames_accessed=6101
+[train] it06150 bs1 attack=-1.5657 feat=-0.1566 ref=0.0129 tv=0.0195 g=3.08e-01 frames_accessed=6151
+[train] it06200 bs1 attack=-1.2537 feat=-0.1254 ref=0.0131 tv=0.0200 g=8.05e-01 frames_accessed=6201
+[train] it06250 bs1 attack=-1.5116 feat=-0.1512 ref=0.0131 tv=0.0199 g=1.99e-01 frames_accessed=6251
+[train] it06300 bs1 attack=-2.1337 feat=-0.2134 ref=0.0130 tv=0.0199 g=2.44e-01 frames_accessed=6301
+[train] it06350 bs1 attack=-0.6826 feat=-0.0683 ref=0.0131 tv=0.0201 g=1.28e-01 frames_accessed=6351
+[train] it06400 bs1 attack=-2.0407 feat=-0.2041 ref=0.0129 tv=0.0198 g=3.28e-01 frames_accessed=6401
+[train] it06450 bs1 attack=-2.5159 feat=-0.2516 ref=0.0129 tv=0.0198 g=1.98e-01 frames_accessed=6451
+[train] it06500 bs1 attack=-1.3855 feat=-0.1385 ref=0.0128 tv=0.0199 g=2.76e-01 frames_accessed=6501
+[train] it06550 bs1 attack=-1.7780 feat=-0.1778 ref=0.0130 tv=0.0199 g=3.77e-01 frames_accessed=6551
+[train] it06600 bs1 attack=-2.0297 feat=-0.2030 ref=0.0130 tv=0.0201 g=3.81e-01 frames_accessed=6601
+[train] it06650 bs1 attack=-1.0140 feat=-0.1014 ref=0.0127 tv=0.0200 g=2.29e-01 frames_accessed=6651
+[train] it06700 bs1 attack=-1.5454 feat=-0.1545 ref=0.0133 tv=0.0200 g=1.41e-01 frames_accessed=6701
+[train] it06750 bs1 attack=-0.4326 feat=-0.0433 ref=0.0131 tv=0.0201 g=9.82e-02 frames_accessed=6751
+[train] it06800 bs1 attack=-1.4575 feat=-0.1457 ref=0.0130 tv=0.0199 g=2.39e-01 frames_accessed=6801
+[train] it06850 bs1 attack=-0.7844 feat=-0.0784 ref=0.0130 tv=0.0200 g=1.12e-01 frames_accessed=6851
+[train] it06900 bs1 attack=-1.5432 feat=-0.1543 ref=0.0131 tv=0.0197 g=2.14e-01 frames_accessed=6901
+[train] it06950 bs1 attack=-1.9630 feat=-0.1963 ref=0.0132 tv=0.0203 g=2.02e-01 frames_accessed=6951
+2026-10-28 08:37:12.203564: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-28 08:37:12.208602: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-28 08:37:12.216827: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-28 08:37:12.314964: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+2026-10-28 08:37:14.448465: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Using LIBERO constants:
+  NUM_ACTIONS_CHUNK = 8
+  ACTION_DIM = 7
+  PROPRIO_DIM = 8
+  ACTION_PROPRIO_NORMALIZATION_TYPE = bounds_q99
+If needed, manually set the correct constants in `prismatic/vla/constants.py`!
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Instantiating pretrained VLA policy...
+Created backup of original config at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json.back.20261028_083752
+Updated config.json at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json
+Changes made:
+  - Set AutoConfig to "configuration_prismatic.OpenVLAConfig"
+  - Set AutoModelForVision2Seq to "modeling_prismatic.OpenVLAForActionPrediction"
+WARNING: `modeling_prismatic.py` is not found anywhere in the current directory.
+WARNING: `configuration_prismatic.py` is not found anywhere in the current directory.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  2.74it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:00<00:00,  3.35it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:00<00:00,  3.51it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.42it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.36it/s]
+Loaded model: <class 'transformers_modules.oft-spatial-ckpt.modeling_prismatic.OpenVLAForActionPrediction'>
+[pool] 活动帧 296（全池）
+[resume] 从 Ep0_Cloth_Delta_OV_it04999.pt 恢复 θ，自 it05000 续跑（原计划 40000 iters）
+[train] 40000 iters × bs1，ref=native，stream=fresh，uv=on，开始
+[train] it05000 bs1 attack=-0.8219 feat=-0.0822 ref=0.0127 tv=0.0192 g=2.60e-01 frames_accessed=5001
+[train] it05050 bs1 attack=-0.6131 feat=-0.0613 ref=0.0130 tv=0.0196 g=1.22e-01 frames_accessed=5051
+[train] it05100 bs1 attack=-0.7468 feat=-0.0747 ref=0.0130 tv=0.0193 g=2.23e-01 frames_accessed=5101
+[train] it05150 bs1 attack=-0.7676 feat=-0.0768 ref=0.0130 tv=0.0197 g=1.44e-01 frames_accessed=5151
+[train] it05200 bs1 attack=-0.8400 feat=-0.0840 ref=0.0129 tv=0.0196 g=1.50e-01 frames_accessed=5201
+[train] it05250 bs1 attack=-0.7728 feat=-0.0773 ref=0.0129 tv=0.0195 g=1.86e-01 frames_accessed=5251
+[train] it05300 bs1 attack=-0.3959 feat=-0.0396 ref=0.0129 tv=0.0194 g=9.11e-02 frames_accessed=5301
+[train] it05350 bs1 attack=-1.0228 feat=-0.1023 ref=0.0128 tv=0.0196 g=2.23e-01 frames_accessed=5351
+[train] it05400 bs1 attack=-0.8121 feat=-0.0812 ref=0.0129 tv=0.0195 g=1.16e-01 frames_accessed=5401
+[train] it05450 bs1 attack=-1.2107 feat=-0.1211 ref=0.0128 tv=0.0195 g=2.36e-01 frames_accessed=5451
+[train] it05500 bs1 attack=-0.7277 feat=-0.0728 ref=0.0128 tv=0.0197 g=8.96e-02 frames_accessed=5501
+[train] it05550 bs1 attack=-0.5358 feat=-0.0536 ref=0.0128 tv=0.0197 g=1.52e-01 frames_accessed=5551
+[train] it05600 bs1 attack=-0.6550 feat=-0.0655 ref=0.0128 tv=0.0197 g=1.68e-01 frames_accessed=5601
+[train] it05650 bs1 attack=-3.1504 feat=-0.3150 ref=0.0129 tv=0.0196 g=4.96e-01 frames_accessed=5651
+[train] it05700 bs1 attack=-1.9344 feat=-0.1934 ref=0.0132 tv=0.0200 g=2.35e-01 frames_accessed=5701
+[train] it05750 bs1 attack=-0.5111 feat=-0.0511 ref=0.0130 tv=0.0194 g=1.16e-01 frames_accessed=5751
+[train] it05800 bs1 attack=-2.3014 feat=-0.2301 ref=0.0128 tv=0.0197 g=2.13e-01 frames_accessed=5801
+[train] it05850 bs1 attack=-2.7154 feat=-0.2715 ref=0.0131 tv=0.0198 g=2.33e-01 frames_accessed=5851
+[train] it05900 bs1 attack=-1.0726 feat=-0.1073 ref=0.0133 tv=0.0201 g=1.78e-01 frames_accessed=5901
+[train] it05950 bs1 attack=-1.7940 feat=-0.1794 ref=0.0130 tv=0.0203 g=1.76e-01 frames_accessed=5951
+[train] it06000 bs1 attack=-0.5994 feat=-0.0599 ref=0.0131 tv=0.0200 g=1.72e-01 frames_accessed=6001
+[train] it06050 bs1 attack=-0.8499 feat=-0.0850 ref=0.0128 tv=0.0200 g=2.10e-01 frames_accessed=6051
+[train] it06100 bs1 attack=-0.7797 feat=-0.0780 ref=0.0129 tv=0.0197 g=1.90e-01 frames_accessed=6101
+[train] it06150 bs1 attack=-1.5232 feat=-0.1523 ref=0.0129 tv=0.0196 g=2.91e-01 frames_accessed=6151
+[train] it06200 bs1 attack=-1.2064 feat=-0.1206 ref=0.0130 tv=0.0201 g=9.39e-01 frames_accessed=6201
+[train] it06250 bs1 attack=-1.4784 feat=-0.1478 ref=0.0131 tv=0.0198 g=1.99e-01 frames_accessed=6251
+[train] it06300 bs1 attack=-2.0921 feat=-0.2092 ref=0.0130 tv=0.0199 g=2.72e-01 frames_accessed=6301
+[train] it06350 bs1 attack=-0.7441 feat=-0.0744 ref=0.0130 tv=0.0200 g=1.47e-01 frames_accessed=6351
+[train] it06400 bs1 attack=-2.1156 feat=-0.2116 ref=0.0128 tv=0.0198 g=3.37e-01 frames_accessed=6401
+[train] it06450 bs1 attack=-2.4968 feat=-0.2497 ref=0.0129 tv=0.0199 g=2.00e-01 frames_accessed=6451
+[train] it06500 bs1 attack=-1.4032 feat=-0.1403 ref=0.0129 tv=0.0199 g=2.79e-01 frames_accessed=6501
+[train] it06550 bs1 attack=-1.8615 feat=-0.1862 ref=0.0128 tv=0.0200 g=3.76e-01 frames_accessed=6551
+[train] it06600 bs1 attack=-2.0206 feat=-0.2021 ref=0.0129 tv=0.0201 g=3.91e-01 frames_accessed=6601
+[train] it06650 bs1 attack=-1.0122 feat=-0.1012 ref=0.0126 tv=0.0200 g=2.17e-01 frames_accessed=6651
+[train] it06700 bs1 attack=-1.5329 feat=-0.1533 ref=0.0132 tv=0.0198 g=1.38e-01 frames_accessed=6701
+[train] it06750 bs1 attack=-0.4598 feat=-0.0460 ref=0.0132 tv=0.0199 g=9.42e-02 frames_accessed=6751
+[train] it06800 bs1 attack=-1.4668 feat=-0.1467 ref=0.0130 tv=0.0198 g=2.36e-01 frames_accessed=6801
+[train] it06850 bs1 attack=-0.7463 feat=-0.0746 ref=0.0130 tv=0.0198 g=1.01e-01 frames_accessed=6851
+[train] it06900 bs1 attack=-1.5492 feat=-0.1549 ref=0.0129 tv=0.0196 g=2.12e-01 frames_accessed=6901
+[train] it06950 bs1 attack=-2.0164 feat=-0.2016 ref=0.0130 tv=0.0201 g=1.98e-01 frames_accessed=6951
+[train] it07000 bs1 attack=-1.2949 feat=-0.1295 ref=0.0127 tv=0.0194 g=1.49e-01 frames_accessed=7001
+[train] it07050 bs1 attack=-0.6848 feat=-0.0685 ref=0.0127 tv=0.0194 g=1.15e-01 frames_accessed=7051
+[train] it07100 bs1 attack=-0.9671 feat=-0.0967 ref=0.0125 tv=0.0195 g=2.53e-01 frames_accessed=7101
+[train] it07150 bs1 attack=-0.5799 feat=-0.0580 ref=0.0130 tv=0.0196 g=7.91e-02 frames_accessed=7151
+[train] it07200 bs1 attack=-0.7482 feat=-0.0748 ref=0.0124 tv=0.0196 g=2.16e-01 frames_accessed=7201
+[train] it07250 bs1 attack=-1.9142 feat=-0.1914 ref=0.0125 tv=0.0195 g=2.04e-01 frames_accessed=7251
+[train] it07300 bs1 attack=-0.7660 feat=-0.0766 ref=0.0125 tv=0.0196 g=2.15e-01 frames_accessed=7301
+[train] it07350 bs1 attack=-0.7485 feat=-0.0749 ref=0.0128 tv=0.0200 g=1.31e-01 frames_accessed=7351
+[train] it07400 bs1 attack=-0.8904 feat=-0.0890 ref=0.0129 tv=0.0199 g=1.52e-01 frames_accessed=7401
+[train] it07450 bs1 attack=-0.8889 feat=-0.0889 ref=0.0127 tv=0.0197 g=2.54e-01 frames_accessed=7451
+[train] it07500 bs1 attack=-0.5645 feat=-0.0564 ref=0.0127 tv=0.0194 g=8.97e-02 frames_accessed=7501
+[train] it07550 bs1 attack=-0.3955 feat=-0.0396 ref=0.0127 tv=0.0195 g=7.63e-02 frames_accessed=7551
+[train] it07600 bs1 attack=-0.7017 feat=-0.0702 ref=0.0127 tv=0.0197 g=8.37e-02 frames_accessed=7601
+[train] it07650 bs1 attack=-2.7165 feat=-0.2716 ref=0.0129 tv=0.0197 g=3.88e-01 frames_accessed=7651
+[train] it07700 bs1 attack=-2.4488 feat=-0.2449 ref=0.0130 tv=0.0198 g=3.61e-01 frames_accessed=7701
+[train] it07750 bs1 attack=-0.4233 feat=-0.0423 ref=0.0128 tv=0.0196 g=7.55e-02 frames_accessed=7751
+[train] it07800 bs1 attack=-0.6508 feat=-0.0651 ref=0.0126 tv=0.0198 g=2.04e-01 frames_accessed=7801
+[train] it07850 bs1 attack=-1.2271 feat=-0.1227 ref=0.0127 tv=0.0195 g=2.47e-01 frames_accessed=7851
+[train] it07900 bs1 attack=-1.8036 feat=-0.1804 ref=0.0127 tv=0.0197 g=2.26e-01 frames_accessed=7901
+[train] it07950 bs1 attack=-2.4602 feat=-0.2460 ref=0.0128 tv=0.0200 g=3.24e-01 frames_accessed=7951
+[train] it08000 bs1 attack=-2.5059 feat=-0.2506 ref=0.0127 tv=0.0199 g=3.94e-01 frames_accessed=8001
+[train] it08050 bs1 attack=-0.4851 feat=-0.0485 ref=0.0128 tv=0.0199 g=1.14e-01 frames_accessed=8051
+[train] it08100 bs1 attack=-1.2401 feat=-0.1240 ref=0.0129 tv=0.0196 g=2.83e-01 frames_accessed=8101
+[train] it08150 bs1 attack=-0.4357 feat=-0.0436 ref=0.0129 tv=0.0199 g=1.39e-01 frames_accessed=8151
+[train] it08200 bs1 attack=-1.5986 feat=-0.1599 ref=0.0130 tv=0.0199 g=3.45e-01 frames_accessed=8201
+[train] it08250 bs1 attack=-1.6744 feat=-0.1674 ref=0.0131 tv=0.0199 g=3.00e-01 frames_accessed=8251
+[train] it08300 bs1 attack=-1.0219 feat=-0.1022 ref=0.0129 tv=0.0197 g=2.10e-01 frames_accessed=8301
+[train] it08350 bs1 attack=-1.5233 feat=-0.1523 ref=0.0128 tv=0.0196 g=5.96e-01 frames_accessed=8351
+[train] it08400 bs1 attack=-1.1128 feat=-0.1113 ref=0.0133 tv=0.0203 g=1.72e-01 frames_accessed=8401
+[train] it08450 bs1 attack=-0.9009 feat=-0.0901 ref=0.0132 tv=0.0197 g=2.69e-01 frames_accessed=8451
+[train] it08500 bs1 attack=-0.8720 feat=-0.0872 ref=0.0129 tv=0.0196 g=1.79e-01 frames_accessed=8501
+[train] it08550 bs1 attack=-3.1975 feat=-0.3197 ref=0.0131 tv=0.0195 g=2.98e-01 frames_accessed=8551
+[train] it08600 bs1 attack=-0.5492 feat=-0.0549 ref=0.0131 tv=0.0200 g=1.08e-01 frames_accessed=8601
+[train] it08650 bs1 attack=-2.0347 feat=-0.2035 ref=0.0128 tv=0.0198 g=2.83e-01 frames_accessed=8651
+[train] it08700 bs1 attack=-1.4161 feat=-0.1416 ref=0.0130 tv=0.0198 g=3.15e-01 frames_accessed=8701
+[train] it08750 bs1 attack=-1.6850 feat=-0.1685 ref=0.0128 tv=0.0197 g=1.59e-01 frames_accessed=8751
+[train] it08800 bs1 attack=-0.5179 feat=-0.0518 ref=0.0127 tv=0.0197 g=1.30e-01 frames_accessed=8801
+[train] it08850 bs1 attack=-0.6145 feat=-0.0614 ref=0.0128 tv=0.0198 g=1.76e-01 frames_accessed=8851
+[train] it08900 bs1 attack=-0.6531 feat=-0.0653 ref=0.0129 tv=0.0197 g=1.35e-01 frames_accessed=8901
+[train] it08950 bs1 attack=-0.8308 feat=-0.0831 ref=0.0127 tv=0.0195 g=2.66e-01 frames_accessed=8951
+[train] it09000 bs1 attack=-1.1524 feat=-0.1152 ref=0.0130 tv=0.0199 g=1.55e-01 frames_accessed=9001
+[train] it09050 bs1 attack=-0.9456 feat=-0.0946 ref=0.0132 tv=0.0197 g=1.05e-01 frames_accessed=9051
+[train] it09100 bs1 attack=-1.2858 feat=-0.1286 ref=0.0132 tv=0.0201 g=1.43e-01 frames_accessed=9101
+[train] it09150 bs1 attack=-1.9308 feat=-0.1931 ref=0.0130 tv=0.0199 g=1.69e-01 frames_accessed=9151
+[train] it09200 bs1 attack=-1.0154 feat=-0.1015 ref=0.0131 tv=0.0197 g=2.16e-01 frames_accessed=9201
+[train] it09250 bs1 attack=-0.5340 feat=-0.0534 ref=0.0133 tv=0.0197 g=1.08e-01 frames_accessed=9251
+[train] it09300 bs1 attack=-1.5540 feat=-0.1554 ref=0.0133 tv=0.0199 g=4.23e-01 frames_accessed=9301
+[train] it09350 bs1 attack=-0.7829 feat=-0.0783 ref=0.0131 tv=0.0200 g=1.35e-01 frames_accessed=9351
+[train] it09400 bs1 attack=-0.8480 feat=-0.0848 ref=0.0132 tv=0.0202 g=1.61e-01 frames_accessed=9401
+[train] it09450 bs1 attack=-1.2577 feat=-0.1258 ref=0.0129 tv=0.0200 g=3.79e-01 frames_accessed=9451
+[train] it09500 bs1 attack=-0.6068 feat=-0.0607 ref=0.0130 tv=0.0201 g=1.27e-01 frames_accessed=9501
+[train] it09550 bs1 attack=-1.0916 feat=-0.1092 ref=0.0128 tv=0.0201 g=1.45e-01 frames_accessed=9551
+[train] it09600 bs1 attack=-1.3670 feat=-0.1367 ref=0.0126 tv=0.0199 g=2.23e-01 frames_accessed=9601
+[train] it09650 bs1 attack=-0.5237 feat=-0.0524 ref=0.0127 tv=0.0199 g=1.52e-01 frames_accessed=9651
+[train] it09700 bs1 attack=-1.4040 feat=-0.1404 ref=0.0131 tv=0.0203 g=1.74e-01 frames_accessed=9701
+[train] it09750 bs1 attack=-0.7330 feat=-0.0733 ref=0.0135 tv=0.0204 g=1.76e-01 frames_accessed=9751
+[train] it09800 bs1 attack=-0.7532 feat=-0.0753 ref=0.0130 tv=0.0199 g=1.12e-01 frames_accessed=9801
+[train] it09850 bs1 attack=-1.3874 feat=-0.1387 ref=0.0131 tv=0.0203 g=3.22e-01 frames_accessed=9851
+[train] it09900 bs1 attack=-1.0720 feat=-0.1072 ref=0.0128 tv=0.0200 g=1.40e-01 frames_accessed=9901
+[train] it09950 bs1 attack=-0.6033 feat=-0.0603 ref=0.0128 tv=0.0203 g=1.31e-01 frames_accessed=9951
+[train] it10000 bs1 attack=-1.6323 feat=-0.1632 ref=0.0128 tv=0.0198 g=2.47e-01 frames_accessed=10001
+[train] it10050 bs1 attack=-0.7310 feat=-0.0731 ref=0.0126 tv=0.0202 g=1.25e-01 frames_accessed=10051
+[train] it10100 bs1 attack=-0.8679 feat=-0.0868 ref=0.0126 tv=0.0200 g=2.51e-01 frames_accessed=10101
+[train] it10150 bs1 attack=-0.7158 feat=-0.0716 ref=0.0128 tv=0.0200 g=1.32e-01 frames_accessed=10151
+[train] it10200 bs1 attack=-0.8097 feat=-0.0810 ref=0.0126 tv=0.0200 g=9.59e-02 frames_accessed=10201
+[train] it10250 bs1 attack=-1.1547 feat=-0.1155 ref=0.0127 tv=0.0201 g=2.43e-01 frames_accessed=10251
+[train] it10300 bs1 attack=-0.4243 feat=-0.0424 ref=0.0126 tv=0.0202 g=1.06e-01 frames_accessed=10301
+[train] it10350 bs1 attack=-1.3592 feat=-0.1359 ref=0.0126 tv=0.0200 g=1.64e-01 frames_accessed=10351
+[train] it10400 bs1 attack=-0.6361 feat=-0.0636 ref=0.0126 tv=0.0200 g=2.25e-01 frames_accessed=10401
+[train] it10450 bs1 attack=-1.0395 feat=-0.1039 ref=0.0126 tv=0.0201 g=3.08e-01 frames_accessed=10451
+[train] it10500 bs1 attack=-4.8885 feat=-0.4888 ref=0.0129 tv=0.0201 g=4.82e-01 frames_accessed=10501
+[train] it10550 bs1 attack=-0.5134 feat=-0.0513 ref=0.0127 tv=0.0200 g=1.20e-01 frames_accessed=10551
+[train] it10600 bs1 attack=-0.9550 feat=-0.0955 ref=0.0129 tv=0.0200 g=1.71e-01 frames_accessed=10601
+[train] it10650 bs1 attack=-1.4227 feat=-0.1423 ref=0.0129 tv=0.0203 g=1.44e-01 frames_accessed=10651
+[train] it10700 bs1 attack=-0.5789 feat=-0.0579 ref=0.0130 tv=0.0202 g=9.17e-02 frames_accessed=10701
+[train] it10750 bs1 attack=-1.0214 feat=-0.1021 ref=0.0130 tv=0.0202 g=1.08e-01 frames_accessed=10751
+[train] it10800 bs1 attack=-1.1471 feat=-0.1147 ref=0.0129 tv=0.0205 g=2.18e-01 frames_accessed=10801
+[train] it10850 bs1 attack=-1.0813 feat=-0.1081 ref=0.0129 tv=0.0201 g=2.10e-01 frames_accessed=10851
+[train] it10900 bs1 attack=-1.1194 feat=-0.1119 ref=0.0130 tv=0.0199 g=2.06e-01 frames_accessed=10901
+[train] it10950 bs1 attack=-1.2962 feat=-0.1296 ref=0.0128 tv=0.0197 g=1.88e-01 frames_accessed=10951
+[train] it11000 bs1 attack=-1.6691 feat=-0.1669 ref=0.0129 tv=0.0196 g=3.11e-01 frames_accessed=11001
+[train] it11050 bs1 attack=-1.7333 feat=-0.1733 ref=0.0130 tv=0.0202 g=2.20e-01 frames_accessed=11051
+[train] it11100 bs1 attack=-0.7520 feat=-0.0752 ref=0.0127 tv=0.0199 g=1.67e-01 frames_accessed=11101
+[train] it11150 bs1 attack=-2.5665 feat=-0.2566 ref=0.0128 tv=0.0195 g=4.21e-01 frames_accessed=11151
+[train] it11200 bs1 attack=-1.4936 feat=-0.1494 ref=0.0126 tv=0.0195 g=1.98e-01 frames_accessed=11201
+[train] it11250 bs1 attack=-0.6925 feat=-0.0692 ref=0.0128 tv=0.0195 g=2.20e-01 frames_accessed=11251
+[train] it11300 bs1 attack=-2.7234 feat=-0.2723 ref=0.0130 tv=0.0201 g=3.42e-01 frames_accessed=11301
+[train] it11350 bs1 attack=-0.3514 feat=-0.0351 ref=0.0131 tv=0.0201 g=5.37e-02 frames_accessed=11351
+[train] it11400 bs1 attack=-0.6563 feat=-0.0656 ref=0.0131 tv=0.0199 g=1.76e-01 frames_accessed=11401
+[train] it11450 bs1 attack=-1.6592 feat=-0.1659 ref=0.0128 tv=0.0198 g=2.05e-01 frames_accessed=11451
+[train] it11500 bs1 attack=-1.0891 feat=-0.1089 ref=0.0126 tv=0.0199 g=1.70e-01 frames_accessed=11501
+[train] it11550 bs1 attack=-1.2455 feat=-0.1245 ref=0.0131 tv=0.0202 g=2.28e-01 frames_accessed=11551
+[train] it11600 bs1 attack=-0.8481 feat=-0.0848 ref=0.0130 tv=0.0202 g=1.59e-01 frames_accessed=11601
+[train] it11650 bs1 attack=-1.3304 feat=-0.1330 ref=0.0127 tv=0.0197 g=5.12e-01 frames_accessed=11651
+[train] it11700 bs1 attack=-1.4711 feat=-0.1471 ref=0.0129 tv=0.0197 g=1.42e-01 frames_accessed=11701
+[train] it11750 bs1 attack=-1.1915 feat=-0.1192 ref=0.0128 tv=0.0196 g=2.45e-01 frames_accessed=11751
+[train] it11800 bs1 attack=-2.3715 feat=-0.2372 ref=0.0126 tv=0.0193 g=2.24e-01 frames_accessed=11801
+[train] it11850 bs1 attack=-1.5010 feat=-0.1501 ref=0.0127 tv=0.0200 g=1.87e-01 frames_accessed=11851
+[train] it11900 bs1 attack=-1.2853 feat=-0.1285 ref=0.0125 tv=0.0198 g=2.67e-01 frames_accessed=11901
+[train] it11950 bs1 attack=-1.6171 feat=-0.1617 ref=0.0126 tv=0.0198 g=1.75e-01 frames_accessed=11951
+[train] it12000 bs1 attack=-1.5101 feat=-0.1510 ref=0.0128 tv=0.0199 g=3.10e-01 frames_accessed=12001
+[train] it12050 bs1 attack=-2.3263 feat=-0.2326 ref=0.0126 tv=0.0197 g=4.21e-01 frames_accessed=12051
+[train] it12100 bs1 attack=-0.9483 feat=-0.0948 ref=0.0126 tv=0.0196 g=1.41e-01 frames_accessed=12101
+[train] it12150 bs1 attack=-1.4867 feat=-0.1487 ref=0.0125 tv=0.0196 g=2.22e-01 frames_accessed=12151
+[train] it12200 bs1 attack=-0.5867 feat=-0.0587 ref=0.0125 tv=0.0200 g=1.09e-01 frames_accessed=12201
+[train] it12250 bs1 attack=-0.5984 feat=-0.0598 ref=0.0126 tv=0.0199 g=1.04e-01 frames_accessed=12251
+[train] it12300 bs1 attack=-0.9167 feat=-0.0917 ref=0.0127 tv=0.0199 g=1.76e-01 frames_accessed=12301
+[train] it12350 bs1 attack=-1.9585 feat=-0.1959 ref=0.0126 tv=0.0197 g=3.40e-01 frames_accessed=12351
+[train] it12400 bs1 attack=-2.2652 feat=-0.2265 ref=0.0126 tv=0.0195 g=2.35e-01 frames_accessed=12401
+[train] it12450 bs1 attack=-0.9993 feat=-0.0999 ref=0.0126 tv=0.0200 g=8.51e-02 frames_accessed=12451
+[train] it12500 bs1 attack=-1.0532 feat=-0.1053 ref=0.0125 tv=0.0196 g=1.85e-01 frames_accessed=12501
+[train] it12550 bs1 attack=-1.6213 feat=-0.1621 ref=0.0122 tv=0.0194 g=2.28e-01 frames_accessed=12551
+[train] it12600 bs1 attack=-2.0094 feat=-0.2009 ref=0.0123 tv=0.0195 g=2.36e-01 frames_accessed=12601
+[train] it12650 bs1 attack=-1.1852 feat=-0.1185 ref=0.0122 tv=0.0197 g=1.59e-01 frames_accessed=12651
+[train] it12700 bs1 attack=-1.4833 feat=-0.1483 ref=0.0123 tv=0.0197 g=3.22e-01 frames_accessed=12701
+[train] it12750 bs1 attack=-2.0072 feat=-0.2007 ref=0.0127 tv=0.0203 g=3.36e-01 frames_accessed=12751
+[train] it12800 bs1 attack=-2.6661 feat=-0.2666 ref=0.0129 tv=0.0201 g=3.05e-01 frames_accessed=12801
+[train] it12850 bs1 attack=-0.8064 feat=-0.0806 ref=0.0128 tv=0.0198 g=3.06e-01 frames_accessed=12851
+[train] it12900 bs1 attack=-1.4684 feat=-0.1468 ref=0.0128 tv=0.0198 g=2.00e-01 frames_accessed=12901
+[train] it12950 bs1 attack=-0.7673 feat=-0.0767 ref=0.0126 tv=0.0195 g=1.07e-01 frames_accessed=12951
+[train] it13000 bs1 attack=-1.3423 feat=-0.1342 ref=0.0126 tv=0.0199 g=1.98e-01 frames_accessed=13001
+[train] it13050 bs1 attack=-1.9995 feat=-0.1999 ref=0.0126 tv=0.0199 g=4.34e-01 frames_accessed=13051
+[train] it13100 bs1 attack=-1.8535 feat=-0.1854 ref=0.0125 tv=0.0197 g=2.01e-01 frames_accessed=13101
+[train] it13150 bs1 attack=-1.4796 feat=-0.1480 ref=0.0125 tv=0.0195 g=2.24e-01 frames_accessed=13151
+[train] it13200 bs1 attack=-0.7529 feat=-0.0753 ref=0.0127 tv=0.0196 g=1.52e-01 frames_accessed=13201
+[train] it13250 bs1 attack=-0.7765 feat=-0.0776 ref=0.0128 tv=0.0199 g=1.50e-01 frames_accessed=13251
+[train] it13300 bs1 attack=-1.0253 feat=-0.1025 ref=0.0127 tv=0.0196 g=2.13e-01 frames_accessed=13301
+[train] it13350 bs1 attack=-0.8605 feat=-0.0861 ref=0.0128 tv=0.0200 g=2.75e-01 frames_accessed=13351
+[train] it13400 bs1 attack=-1.9345 feat=-0.1935 ref=0.0125 tv=0.0200 g=2.89e-01 frames_accessed=13401
+[train] it13450 bs1 attack=-0.3965 feat=-0.0397 ref=0.0125 tv=0.0196 g=9.31e-02 frames_accessed=13451

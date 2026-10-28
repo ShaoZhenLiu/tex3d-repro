@@ -1,0 +1,115 @@
+2026-10-28 07:56:05 [stag] === 错峰启动开始 ===
+2026-10-28 07:56:05 [stag] e07_625_native 已完成跳过
+2026-10-28 07:56:06 [stag] e07_625_mr 启动 GPU5 
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+41_r18_staggered_start.sh: line 36: [: 0
+0: integer expression expected
+2026-10-28 08:09:21 [stag] e07_625_mr 进程退出(可能已完成或失败)
+2026-10-28 08:09:21 [stag] e05_s8_mr 启动 GPU1 续训
+2026-10-28 08:10:21 [stag] e05_s8_mr 进程退出(可能已完成或失败)
+2026-10-28 08:10:21 [stag] e05_s9_mr 启动 GPU1 续训
+2026-10-28 08:12:52 [stag] e05_s9_mr 已进入迭代(等60s缓冲)
+2026-10-28 08:13:52 [stag] 短程与配对臂已发射；bs1_native(长程)在下一批错峰启动

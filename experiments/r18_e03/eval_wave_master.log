@@ -22,3 +22,42 @@
 2026-10-27 19:39:29 [evalbc] 评测 e03_uv0_pi05_goal 完成 -> overall robot success: 84/100 (0.8400)
 2026-10-27 20:24:32 [evalbc] 评测 e03_uv0_pi0_goal 完成 -> overall robot success: 40/100 (0.4000)
 2026-10-27 20:47:08 [evalbc] 评测 e03_uv0_pi0_long 完成 -> overall robot success: 13/100 (0.1300)
+2026-10-27 22:42:58 [evalbc] 评测 e03_uv0_pi0_goal 已完成，跳过
+2026-10-27 22:42:58 [evalbc] 评测 e03_uv0_pi05_spatial 已完成，跳过
+2026-10-27 22:42:58 [evalbc] 评测 e03_uv0_pi0_object 已完成，跳过
+2026-10-27 22:42:58 [evalbc] 评测 e03_uv0_pi05_object 已完成，跳过
+2026-10-27 22:42:58 [evalbc] 评测 e03_uv0_pi05_goal 已完成，跳过
+2026-10-27 22:42:58 [evalbc] 评测 e03_uv0_pi0_long 已完成，跳过
+2026-10-27 22:42:58 [evalbc] 评测 e03_uv0_pi05_long 已完成，跳过
+2026-10-27 22:42:58 [evalbc] 评测 e03_uv0_pi0_spatial 已完成，跳过
+2026-10-27 23:52:59 [evalbc] 评测 e04a_pi05_long 尝试 1 GPU5 tex=a51dfcc8
+2026-10-27 23:52:59 [evalbc] 评测 e04a_pi05_goal 尝试 1 GPU1 tex=a51dfcc8
+2026-10-27 23:52:59 [evalbc] 评测 e04a_pi05_object 尝试 1 GPU2 tex=a51dfcc8
+2026-10-27 23:52:59 [evalbc] 评测 e04a_pi0_long 尝试 1 GPU0 tex=a51dfcc8
+2026-10-27 23:52:59 [evalbc] 评测 e04a_pi05_spatial 尝试 1 GPU0 tex=a51dfcc8
+2026-10-28 00:30:50 [evalbc] 评测 e03_uv0_pi05_spatial 已完成，跳过
+2026-10-28 00:30:50 [evalbc] 评测 e03_uv0_pi0_object 已完成，跳过
+2026-10-28 00:30:50 [evalbc] 评测 e03_uv0_pi0_spatial 已完成，跳过
+2026-10-28 00:30:50 [evalbc] 评测 e03_uv0_pi0_long 已完成，跳过
+2026-10-28 00:30:50 [evalbc] 评测 e03_uv0_pi05_goal 已完成，跳过
+2026-10-28 00:30:50 [evalbc] 评测 e03_uv0_pi05_object 已完成，跳过
+2026-10-28 00:30:50 [evalbc] 评测 e03_uv0_pi0_goal 已完成，跳过
+2026-10-28 00:30:50 [evalbc] 评测 e03_uv0_pi05_long 已完成，跳过
+2026-10-28 00:58:34 [evalbc] 评测 e04a_pi05_object 尝试 1 GPU2 tex=a51dfcc8
+2026-10-28 01:05:38 [evalbc] 评测 e04a_pi05_object 尝试 2 GPU2 tex=a51dfcc8
+2026-10-28 07:49:31 [evalbc] 评测 e03_uv0_pi05_object 已完成，跳过
+2026-10-28 07:49:31 [evalbc] 评测 e03_uv0_pi0_goal 已完成，跳过
+2026-10-28 07:49:31 [evalbc] 评测 e03_uv0_pi05_spatial 已完成，跳过
+2026-10-28 07:49:31 [evalbc] 评测 e03_uv0_pi0_spatial 已完成，跳过
+2026-10-28 07:49:31 [evalbc] 评测 e03_uv0_pi0_object 已完成，跳过
+2026-10-28 07:49:31 [evalbc] 评测 e03_uv0_pi05_long 已完成，跳过
+2026-10-28 07:49:31 [evalbc] 评测 e03_uv0_pi0_long 已完成，跳过
+2026-10-28 07:49:31 [evalbc] 评测 e03_uv0_pi05_goal 已完成，跳过
+2026-10-28 07:49:31 [evalbc] 评测 e04a_pi0_object 尝试 1 GPU5 tex=a51dfcc8
+2026-10-28 07:49:31 [evalbc] 评测 e04a_pi0_goal 尝试 1 GPU5 tex=a51dfcc8
+2026-10-28 07:49:32 [evalbc] 评测 e04a_pi0_spatial 尝试 1 GPU1 tex=a51dfcc8
+2026-10-28 07:49:32 [evalbc] 评测 e04a_pi05_long 尝试 1 GPU1 tex=a51dfcc8
+2026-10-28 07:49:32 [evalbc] 评测 e04a_pi05_goal 尝试 1 GPU2 tex=a51dfcc8
+2026-10-28 07:49:32 [evalbc] 评测 e04a_pi0_long 尝试 1 GPU2 tex=a51dfcc8
+2026-10-28 07:49:32 [evalbc] 评测 e04a_pi05_spatial 尝试 1 GPU0 tex=a51dfcc8
+2026-10-28 07:49:32 [evalbc] 评测 e04a_pi05_object 尝试 1 GPU0 tex=a51dfcc8
