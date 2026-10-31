@@ -75,10 +75,10 @@ while [ -z "$gA" ] || [ -z "$gB" ] || [ "$gA" = "$gB" ]; do
   [ -n "$gA" ] && [ -n "$gB" ] && [ "$gA" = "$gB" ] && sleep 300
   [ -z "$gA" ] && sleep 300
 done
-log "E06 OFT 评测双臂并行 GPU$gA/GPU$gB"
+log "E06 OFT 评测双臂并行 GPU$gA/GPU$gB（B臂错峰600s）"
 run_e06_eval e06_rn "$gA" &
 PA=$!
-run_e06_eval e06_rm "$gB" &
+( sleep 600; run_e06_eval e06_rm "$gB" ) &
 PB=$!
 wait $PA $PB
 echo "E06R18-DONE $(date)" >> "$EX/train_logs/summary.txt"

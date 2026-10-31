@@ -20,6 +20,28 @@ CKPT5=$D/model/RLinf-Pi05-LIBERO-130-fullshot-SFT
 mkdir -p "$LOGD" "$CLAIMD"
 log() { echo "$(date '+%F %T') [evalbc] $*" | tee -a "$WD"; }
 
+# 错峰发射门（IO风暴教训：07:49 五评测同秒连发打满共享存储→3小时缺页风暴）：
+# 全局 flock 串行，距上次评测发射≥300秒 且 IO 红线内（bi≤500000 且 wa≤10）才放行
+io_busy() {
+  local s bi wa
+  s=$(vmstat 1 2 2>/dev/null | tail -1)
+  [ -z "$s" ] && return 1
+  bi=$(echo "$s" | awk '{print $9}'); wa=$(echo "$s" | awk '{print $16}')
+  [ -n "$bi" ] && [ -n "$wa" ] && { [ "$bi" -gt 500000 ] || [ "$wa" -gt 10 ]; }
+}
+gate_launch() {  # $1=train/eval $2=最小间隔秒
+  local ts_f="$EX/.gate_$1.ts" lk_f="$EX/.gate_$1.lock" now last
+  while :; do
+    if (
+      flock 9
+      now=$(date +%s); last=$(cat "$ts_f" 2>/dev/null || echo 0)
+      if [ $((now - last)) -ge $2 ] && ! io_busy; then echo "$now" > "$ts_f"; exit 0; fi
+      exit 1
+    ) 9>"$lk_f"; then return 0; fi
+    sleep 30
+  done
+}
+
 gpu_used_mi() { nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits -i "$1" 2>/dev/null | tr -d ' '; }
 release_claim() { rm -f "$CLAIMD/$1".* 2>/dev/null; }
 pick_gpu() {
@@ -82,6 +104,7 @@ run_cell() {  # $1=name $2=tag $3=lastmark $4=suite $5=ckpt $6=modelcfg
   if [ -z "$d" ]; then log "评测 $name 等待纹理 $tag 超时 FAILED"; return 1; fi
   local TEX="$d/Universal_Cloth_OV.png" log_f="$LOGD/${name}.log"
   for attempt in 1 2 3 4 5 6 7 8 9 10 11 12; do
+    gate_launch eval 300
     release_claim "$name"
     g=$(pick_gpu "$name" "$mypid") || { log "评测 $name 等待 GPU 超时 FAILED"; return 1; }
     log "评测 $name 尝试 $attempt GPU$g tex=$(sha256sum "$TEX" | cut -c1-8)"

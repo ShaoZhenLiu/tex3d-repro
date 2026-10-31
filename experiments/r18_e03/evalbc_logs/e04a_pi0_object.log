@@ -5,3 +5,115 @@ Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst othe
 Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
 Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
 See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+Task: 0 | Ep: 0 | Success: False
+Task: 0 | Ep: 1 | Success: False
+Task: 0 | Ep: 2 | Success: False
+Task: 0 | Ep: 3 | Success: False
+Task: 0 | Ep: 4 | Success: False
+Task: 0 | Ep: 5 | Success: False
+Task: 0 | Ep: 6 | Success: False
+Task: 0 | Ep: 7 | Success: False
+Task: 0 | Ep: 8 | Success: False
+Task: 0 | Ep: 9 | Success: False
+[eval] task 0: 0/10 (0.00%)
+Task: 1 | Ep: 0 | Success: False
+Task: 1 | Ep: 1 | Success: False
+Task: 1 | Ep: 2 | Success: False
+Task: 1 | Ep: 3 | Success: False
+Task: 1 | Ep: 4 | Success: False
+Task: 1 | Ep: 5 | Success: False
+Task: 1 | Ep: 6 | Success: False
+Task: 1 | Ep: 7 | Success: False
+Task: 1 | Ep: 8 | Success: False
+Task: 1 | Ep: 9 | Success: False
+[eval] task 1: 0/10 (0.00%)
+Task: 2 | Ep: 0 | Success: False
+Task: 2 | Ep: 1 | Success: False
+Task: 2 | Ep: 2 | Success: False
+Task: 2 | Ep: 3 | Success: False
+Task: 2 | Ep: 4 | Success: False
+Task: 2 | Ep: 5 | Success: False
+Task: 2 | Ep: 6 | Success: False
+Task: 2 | Ep: 7 | Success: False
+Task: 2 | Ep: 8 | Success: False
+Task: 2 | Ep: 9 | Success: False
+[eval] task 2: 0/10 (0.00%)
+Task: 3 | Ep: 0 | Success: False
+Task: 3 | Ep: 1 | Success: False
+Task: 3 | Ep: 2 | Success: False
+Task: 3 | Ep: 3 | Success: False
+Task: 3 | Ep: 4 | Success: False
+Task: 3 | Ep: 5 | Success: False
+Task: 3 | Ep: 6 | Success: False
+Task: 3 | Ep: 7 | Success: False
+Task: 3 | Ep: 8 | Success: False
+Task: 3 | Ep: 9 | Success: False
+[eval] task 3: 0/10 (0.00%)
+Task: 4 | Ep: 0 | Success: False
+Task: 4 | Ep: 1 | Success: False
+Task: 4 | Ep: 2 | Success: False
+Task: 4 | Ep: 3 | Success: False
+Task: 4 | Ep: 4 | Success: False
+Task: 4 | Ep: 5 | Success: False
+Task: 4 | Ep: 6 | Success: False
+Task: 4 | Ep: 7 | Success: False
+Task: 4 | Ep: 8 | Success: False
+Task: 4 | Ep: 9 | Success: False
+[eval] task 4: 0/10 (0.00%)
+Task: 5 | Ep: 0 | Success: False
+Task: 5 | Ep: 1 | Success: False
+Task: 5 | Ep: 2 | Success: False
+Task: 5 | Ep: 3 | Success: False
+Task: 5 | Ep: 4 | Success: False
+Task: 5 | Ep: 5 | Success: False
+Task: 5 | Ep: 6 | Success: False
+Task: 5 | Ep: 7 | Success: False
+Task: 5 | Ep: 8 | Success: False
+Task: 5 | Ep: 9 | Success: False
+[eval] task 5: 0/10 (0.00%)
+Task: 6 | Ep: 0 | Success: False
+Task: 6 | Ep: 1 | Success: True
+Task: 6 | Ep: 2 | Success: False
+Task: 6 | Ep: 3 | Success: False
+Task: 6 | Ep: 4 | Success: True
+Task: 6 | Ep: 5 | Success: False
+Task: 6 | Ep: 6 | Success: False
+Task: 6 | Ep: 7 | Success: False
+Task: 6 | Ep: 8 | Success: False
+Task: 6 | Ep: 9 | Success: False
+[eval] task 6: 2/10 (20.00%)
+Task: 7 | Ep: 0 | Success: False
+Task: 7 | Ep: 1 | Success: False
+Task: 7 | Ep: 2 | Success: False
+Task: 7 | Ep: 3 | Success: False
+Task: 7 | Ep: 4 | Success: False
+Task: 7 | Ep: 5 | Success: False
+Task: 7 | Ep: 6 | Success: False
+Task: 7 | Ep: 7 | Success: False
+Task: 7 | Ep: 8 | Success: False
+Task: 7 | Ep: 9 | Success: False
+[eval] task 7: 0/10 (0.00%)
+Task: 8 | Ep: 0 | Success: False
+Task: 8 | Ep: 1 | Success: False
+Task: 8 | Ep: 2 | Success: False
+Task: 8 | Ep: 3 | Success: False
+Task: 8 | Ep: 4 | Success: True
+Task: 8 | Ep: 5 | Success: True
+Task: 8 | Ep: 6 | Success: False
+Task: 8 | Ep: 7 | Success: False
+Task: 8 | Ep: 8 | Success: True
+Task: 8 | Ep: 9 | Success: False
+[eval] task 8: 3/10 (30.00%)
+Task: 9 | Ep: 0 | Success: False
+Task: 9 | Ep: 1 | Success: False
+Task: 9 | Ep: 2 | Success: False
+Task: 9 | Ep: 3 | Success: False
+Task: 9 | Ep: 4 | Success: True
+Task: 9 | Ep: 5 | Success: False
+Task: 9 | Ep: 6 | Success: False
+Task: 9 | Ep: 7 | Success: False
+Task: 9 | Ep: 8 | Success: False
+Task: 9 | Ep: 9 | Success: False
+[eval] task 9: 1/10 (10.00%)
+[eval] 结果: /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/eval_adv_libero_object_20261028_113728_4611/evaluation_result.txt

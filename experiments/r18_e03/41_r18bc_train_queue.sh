@@ -25,6 +25,28 @@ ENVV="MUJOCO_GL=egl PYOPENGL_PLATFORM=egl HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELIS
 mkdir -p "$LOGD" "$CLAIMD"
 log() { echo "$(date '+%F %T') [trainq] $*" | tee -a "$WD"; }
 
+# 错峰发射门（IO风暴教训：多进程同时加载10-14GB模型会打满共享存储）：
+# 全局 flock 串行，距上次同类发射≥$2秒 且 IO 红线内（bi≤500000 且 wa≤10）才放行
+io_busy() {
+  local s bi wa
+  s=$(vmstat 1 2 2>/dev/null | tail -1)
+  [ -z "$s" ] && return 1
+  bi=$(echo "$s" | awk '{print $9}'); wa=$(echo "$s" | awk '{print $16}')
+  [ -n "$bi" ] && [ -n "$wa" ] && { [ "$bi" -gt 500000 ] || [ "$wa" -gt 10 ]; }
+}
+gate_launch() {  # $1=train/eval $2=最小间隔秒
+  local ts_f="$EX/.gate_$1.ts" lk_f="$EX/.gate_$1.lock" now last
+  while :; do
+    if (
+      flock 9
+      now=$(date +%s); last=$(cat "$ts_f" 2>/dev/null || echo 0)
+      if [ $((now - last)) -ge $2 ] && ! io_busy; then echo "$now" > "$ts_f"; exit 0; fi
+      exit 1
+    ) 9>"$lk_f"; then return 0; fi
+    sleep 30
+  done
+}
+
 gpu_used_mi() { nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits -i "$1" 2>/dev/null | tr -d ' '; }
 release_claim() { rm -f "$CLAIMD/$1".* 2>/dev/null; }
 pick_gpu() {
@@ -113,6 +135,7 @@ run_job() {  # $1=name $2=末iter 其后为 runner 参数
     else
       log "训练 $name 尝试 $attempt GPU$g"
     fi
+    gate_launch train 600
     ( cd $D/code/tex3d-ws/g7 && env CUDA_VISIBLE_DEVICES=$g MUJOCO_EGL_DEVICE_ID=$g \
       $ENVV $PY $RUNNER train --tag "$name" "$@" ${rargs[@]+"${rargs[@]}"} ) \
       >> "$LOGD/${name}.log" 2>&1

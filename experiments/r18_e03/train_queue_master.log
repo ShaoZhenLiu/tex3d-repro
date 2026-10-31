@@ -27,3 +27,16 @@
 2026-10-28 07:50:46 [trainq] 训练 e07_625_native 已完成，跳过
 2026-10-28 07:52:38 [trainq] 训练 e05_s8_native 已完成，跳过
 2026-10-28 09:40:06 [trainq] 训练 e04a 已完成，跳过
+2026-10-28 09:41:06 [trainq] 训练 e04b 已完成，跳过
+2026-10-28 09:41:06 [trainq] 训练 e07_625_native 已完成，跳过
+2026-10-28 09:41:06 [trainq] 训练 e07_625_mr 已完成，跳过
+2026-10-28 09:43:06 [trainq] 训练 e05_s8_native 已完成，跳过
+2026-10-28 10:53:07 [trainq] 训练 e04a 已完成，跳过
+2026-10-28 10:54:07 [trainq] 训练 e04b 已完成，跳过
+2026-10-28 10:54:07 [trainq] 训练 e07_625_native 已完成，跳过
+2026-10-28 10:54:07 [trainq] 训练 e07_625_mr 已完成，跳过
+2026-10-28 10:56:07 [trainq] 训练 e05_s8_native 已完成，跳过
+2026-10-28 10:58:52 [trainq] 训练 e05_s8_mr 尝试 1 GPU5（续训自 /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261028_081908_e05_s8_mr）
+2026-10-28 10:58:53 [trainq] 训练 e05_s9_mr 尝试 1 GPU1（续训自 /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261028_081102_e05_s9_mr）
+2026-10-28 10:58:53 [trainq] 训练 e07_bs1_native 尝试 1 GPU2（续训自 /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261028_083851_e07_bs1_native）
+2026-10-28 11:03:20 [trainq] 训练 e05_s8_mr 尝试 2 GPU0

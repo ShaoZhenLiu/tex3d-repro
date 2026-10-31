@@ -226,3 +226,150 @@ Loaded model: <class 'transformers_modules.oft-spatial-ckpt.modeling_prismatic.O
 [train] it02050 bs8 attack=-0.9905 feat=-0.0510 ref=0.0209 tv=0.0301 g=6.67e-02 frames_accessed=16408
 [train] it02100 bs8 attack=-1.3458 feat=-0.1050 ref=0.0208 tv=0.0303 g=8.87e-02 frames_accessed=16808
 [train] it02150 bs8 attack=-1.2209 feat=-0.0848 ref=0.0210 tv=0.0301 g=7.96e-02 frames_accessed=17208
+[train] it02200 bs8 attack=-1.2892 feat=-0.1373 ref=0.0211 tv=0.0302 g=6.30e-02 frames_accessed=17608
+[train] it02250 bs8 attack=-1.3374 feat=-0.0472 ref=0.0209 tv=0.0302 g=7.42e-02 frames_accessed=18008
+[train] it02300 bs8 attack=-1.2226 feat=-0.0950 ref=0.0210 tv=0.0299 g=8.53e-02 frames_accessed=18408
+2026-10-28 11:09:09.684757: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-28 11:09:09.707130: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-28 11:09:09.839613: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-28 11:09:10.229110: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+2026-10-28 11:09:13.104978: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Using LIBERO constants:
+  NUM_ACTIONS_CHUNK = 8
+  ACTION_DIM = 7
+  PROPRIO_DIM = 8
+  ACTION_PROPRIO_NORMALIZATION_TYPE = bounds_q99
+If needed, manually set the correct constants in `prismatic/vla/constants.py`!
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Instantiating pretrained VLA policy...
+Created backup of original config at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json.back.20261028_110957
+Updated config.json at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json
+Changes made:
+  - Set AutoConfig to "configuration_prismatic.OpenVLAConfig"
+  - Set AutoModelForVision2Seq to "modeling_prismatic.OpenVLAForActionPrediction"
+WARNING: `modeling_prismatic.py` is not found anywhere in the current directory.
+WARNING: `configuration_prismatic.py` is not found anywhere in the current directory.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:07,  2.39s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:03<00:02,  1.50s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:04<00:01,  1.21s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.18it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.11s/it]
+2026-10-28 11:53:05.314523: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-28 11:53:05.345987: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-28 11:53:05.347582: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-28 11:53:05.355261: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+2026-10-28 11:53:07.691328: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /data/shaozhen.liu/envs/tex3d-oft-mj330/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Using LIBERO constants:
+  NUM_ACTIONS_CHUNK = 8
+  ACTION_DIM = 7
+  PROPRIO_DIM = 8
+  ACTION_PROPRIO_NORMALIZATION_TYPE = bounds_q99
+If needed, manually set the correct constants in `prismatic/vla/constants.py`!
+[INFO] Using preconfigured MUJOCO_GL=egl
+[WARNING] Failed to load libOSMesa.so: libOSMesa.so: cannot open shared object file: No such file or directory
+Instantiating pretrained VLA policy...
+Created backup of original config at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json.back.20261028_115344
+Updated config.json at: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/config.json
+Changes made:
+  - Set AutoConfig to "configuration_prismatic.OpenVLAConfig"
+  - Set AutoModelForVision2Seq to "modeling_prismatic.OpenVLAForActionPrediction"
+WARNING: `modeling_prismatic.py` is not found anywhere in the current directory.
+WARNING: `configuration_prismatic.py` is not found anywhere in the current directory.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  2.60it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:00<00:00,  2.65it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  2.90it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  3.10it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  2.95it/s]
+Loaded model: <class 'transformers_modules.oft-spatial-ckpt.modeling_prismatic.OpenVLAForActionPrediction'>
+[pool] 活动帧 296（全池）
+[train-mr] MR 参考缓存子集 296 帧（全局ID 0..295，按 frame_map 对齐）
+[resume] 从 Ep0_Cloth_Delta_OV_it01874.pt 恢复 θ，自 it01875 续跑（原计划 5000 iters）
+[train] 5000 iters × bs8，ref=mr，stream=fresh，uv=on，开始
+[train] it01900 bs8 attack=-1.5667 feat=-0.3561 ref=0.0208 tv=0.0300 g=9.90e-02 frames_accessed=15208
+[train] it01950 bs8 attack=-1.0716 feat=-0.0762 ref=0.0208 tv=0.0301 g=7.79e-02 frames_accessed=15608
+[train] it02000 bs8 attack=-0.9024 feat=-0.1447 ref=0.0208 tv=0.0303 g=7.81e-02 frames_accessed=16008
+[train] it02050 bs8 attack=-0.9893 feat=-0.0513 ref=0.0209 tv=0.0302 g=6.73e-02 frames_accessed=16408
+[train] it02100 bs8 attack=-1.3197 feat=-0.1017 ref=0.0208 tv=0.0304 g=8.81e-02 frames_accessed=16808
+[train] it02150 bs8 attack=-1.2204 feat=-0.0862 ref=0.0210 tv=0.0301 g=7.93e-02 frames_accessed=17208
+[train] it02200 bs8 attack=-1.2828 feat=-0.1364 ref=0.0211 tv=0.0302 g=6.49e-02 frames_accessed=17608
+[train] it02250 bs8 attack=-1.3262 feat=-0.0496 ref=0.0209 tv=0.0302 g=7.63e-02 frames_accessed=18008
+[train] it02300 bs8 attack=-1.2201 feat=-0.0945 ref=0.0209 tv=0.0299 g=8.76e-02 frames_accessed=18408
+[train] it02350 bs8 attack=-1.2999 feat=-0.0844 ref=0.0210 tv=0.0300 g=9.12e-02 frames_accessed=18808
+[train] it02400 bs8 attack=-1.3150 feat=-0.0801 ref=0.0209 tv=0.0301 g=1.12e-01 frames_accessed=19208
+[train] it02450 bs8 attack=-1.4627 feat=-0.1608 ref=0.0209 tv=0.0301 g=1.11e-01 frames_accessed=19608
+[train] it02500 bs8 attack=-1.3843 feat=-0.0803 ref=0.0208 tv=0.0301 g=7.81e-02 frames_accessed=20008
+[train] it02550 bs8 attack=-1.1689 feat=-0.0562 ref=0.0209 tv=0.0301 g=7.63e-02 frames_accessed=20408
+[train] it02600 bs8 attack=-1.2938 feat=-0.1939 ref=0.0212 tv=0.0300 g=8.30e-02 frames_accessed=20808
+[train] it02650 bs8 attack=-1.6014 feat=-0.2825 ref=0.0208 tv=0.0300 g=1.40e-01 frames_accessed=21208
+[train] it02700 bs8 attack=-1.4747 feat=-0.1284 ref=0.0210 tv=0.0298 g=1.09e-01 frames_accessed=21608
+[train] it02750 bs8 attack=-1.2940 feat=-0.0710 ref=0.0212 tv=0.0301 g=6.78e-02 frames_accessed=22008
+[train] it02800 bs8 attack=-1.4307 feat=-0.1218 ref=0.0208 tv=0.0298 g=1.03e-01 frames_accessed=22408
+[train] it02850 bs8 attack=-1.5839 feat=-0.1700 ref=0.0208 tv=0.0301 g=9.46e-02 frames_accessed=22808
+[train] it02900 bs8 attack=-1.3800 feat=-0.0671 ref=0.0209 tv=0.0301 g=1.28e-01 frames_accessed=23208
+[train] it02950 bs8 attack=-0.8279 feat=-0.0863 ref=0.0212 tv=0.0302 g=1.47e-01 frames_accessed=23608
+[train] it03000 bs8 attack=-1.1841 feat=-0.0783 ref=0.0209 tv=0.0302 g=7.49e-02 frames_accessed=24008
+[train] it03050 bs8 attack=-1.1038 feat=-0.0369 ref=0.0213 tv=0.0306 g=7.40e-02 frames_accessed=24408
+[train] it03100 bs8 attack=-1.6646 feat=-0.1594 ref=0.0215 tv=0.0304 g=1.08e-01 frames_accessed=24808
+[train] it03150 bs8 attack=-1.7170 feat=-0.3200 ref=0.0212 tv=0.0302 g=8.23e-02 frames_accessed=25208
+[train] it03200 bs8 attack=-1.8168 feat=-0.1813 ref=0.0213 tv=0.0302 g=6.59e-02 frames_accessed=25608
+[train] it03250 bs8 attack=-1.8679 feat=-0.1928 ref=0.0215 tv=0.0303 g=2.08e-01 frames_accessed=26008
+[train] it03300 bs8 attack=-1.0372 feat=-0.1346 ref=0.0214 tv=0.0303 g=5.74e-02 frames_accessed=26408
+[train] it03350 bs8 attack=-0.9607 feat=-0.0829 ref=0.0216 tv=0.0303 g=4.63e-02 frames_accessed=26808
+[train] it03400 bs8 attack=-1.6292 feat=-0.2192 ref=0.0213 tv=0.0301 g=1.13e-01 frames_accessed=27208
+[train] it03450 bs8 attack=-1.1981 feat=-0.0770 ref=0.0213 tv=0.0302 g=9.32e-02 frames_accessed=27608
+[train] it03500 bs8 attack=-1.1142 feat=-0.0710 ref=0.0210 tv=0.0304 g=6.39e-02 frames_accessed=28008
+[train] it03550 bs8 attack=-1.1581 feat=-0.0990 ref=0.0209 tv=0.0305 g=9.08e-02 frames_accessed=28408
+[train] it03600 bs8 attack=-1.2722 feat=-0.0834 ref=0.0211 tv=0.0302 g=8.37e-02 frames_accessed=28808
+[train] it03650 bs8 attack=-1.1519 feat=-0.0847 ref=0.0210 tv=0.0299 g=7.06e-02 frames_accessed=29208
+[train] it03700 bs8 attack=-1.5926 feat=-0.1377 ref=0.0209 tv=0.0300 g=6.90e-02 frames_accessed=29608
+[train] it03750 bs8 attack=-1.6692 feat=-0.1867 ref=0.0207 tv=0.0300 g=1.64e-01 frames_accessed=30008
+[train] it03800 bs8 attack=-1.4305 feat=-0.1379 ref=0.0208 tv=0.0300 g=8.19e-02 frames_accessed=30408
+[train] it03850 bs8 attack=-1.6822 feat=-0.2759 ref=0.0207 tv=0.0303 g=1.08e-01 frames_accessed=30808
+[train] it03900 bs8 attack=-1.6913 feat=-0.0940 ref=0.0207 tv=0.0300 g=1.32e-01 frames_accessed=31208
+[train] it03950 bs8 attack=-1.4595 feat=-0.0705 ref=0.0207 tv=0.0300 g=8.15e-02 frames_accessed=31608
+[train] it04000 bs8 attack=-1.3388 feat=-0.0746 ref=0.0207 tv=0.0302 g=9.94e-02 frames_accessed=32008
+[train] it04050 bs8 attack=-1.8257 feat=-0.0899 ref=0.0209 tv=0.0300 g=7.78e-02 frames_accessed=32408
+[train] it04100 bs8 attack=-1.2625 feat=-0.1879 ref=0.0211 tv=0.0301 g=1.37e-01 frames_accessed=32808
+[train] it04150 bs8 attack=-1.3823 feat=-0.2024 ref=0.0210 tv=0.0304 g=9.24e-02 frames_accessed=33208
+[train] it04200 bs8 attack=-1.1320 feat=-0.1075 ref=0.0210 tv=0.0300 g=1.01e-01 frames_accessed=33608
+[train] it04250 bs8 attack=-1.4350 feat=-0.1145 ref=0.0210 tv=0.0301 g=7.85e-02 frames_accessed=34008
+[train] it04300 bs8 attack=-1.4464 feat=-0.1408 ref=0.0208 tv=0.0300 g=8.24e-02 frames_accessed=34408
+[train] it04350 bs8 attack=-1.3981 feat=-0.0939 ref=0.0209 tv=0.0299 g=8.53e-02 frames_accessed=34808
+[train] it04400 bs8 attack=-1.9927 feat=-0.0845 ref=0.0210 tv=0.0304 g=1.84e-01 frames_accessed=35208
+[train] it04450 bs8 attack=-1.0166 feat=-0.1017 ref=0.0210 tv=0.0301 g=6.48e-02 frames_accessed=35608
+[train] it04500 bs8 attack=-1.7564 feat=-0.1162 ref=0.0208 tv=0.0301 g=1.24e-01 frames_accessed=36008
+[train] it04550 bs8 attack=-1.5241 feat=-0.1815 ref=0.0208 tv=0.0298 g=1.26e-01 frames_accessed=36408
+[train] it04600 bs8 attack=-1.1436 feat=-0.1450 ref=0.0210 tv=0.0305 g=7.84e-02 frames_accessed=36808
+[train] it04650 bs8 attack=-1.2522 feat=-0.1280 ref=0.0209 tv=0.0304 g=1.23e-01 frames_accessed=37208
+[train] it04700 bs8 attack=-1.3739 feat=-0.0964 ref=0.0210 tv=0.0303 g=1.21e-01 frames_accessed=37608
+[train] it04750 bs8 attack=-1.0399 feat=-0.0649 ref=0.0212 tv=0.0306 g=6.46e-02 frames_accessed=38008
+[train] it04800 bs8 attack=-1.0347 feat=-0.0815 ref=0.0210 tv=0.0305 g=7.31e-02 frames_accessed=38408
+[train] it04850 bs8 attack=-0.7896 feat=-0.0977 ref=0.0210 tv=0.0304 g=7.12e-02 frames_accessed=38808
+[train] it04900 bs8 attack=-0.8048 feat=-0.0666 ref=0.0211 tv=0.0302 g=6.03e-02 frames_accessed=39208
+[train] it04950 bs8 attack=-2.1474 feat=-0.2624 ref=0.0210 tv=0.0303 g=1.26e-01 frames_accessed=39608
+[train] it04999 bs8 attack=-1.2112 feat=-0.1216 ref=0.0210 tv=0.0301 g=8.11e-02 frames_accessed=40000
+[train] [final] delta RMS=45.9712 Linf=64.0 TV(0-1)=0.0302 clip后像素域 RMS=36.9725 Linf=64.0 用时=11331s
+[train] 完成，产物在 /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261028_115356_e05_s9_mr
