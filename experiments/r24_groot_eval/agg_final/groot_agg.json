@@ -1,0 +1,131 @@
+{
+  "problems": [],
+  "cells": {
+    "Original": {
+      "spatial": 54,
+      "object": 50,
+      "goal": 6,
+      "long10": 41
+    },
+    "Plain": {
+      "spatial": 53,
+      "object": 47,
+      "goal": 8,
+      "long10": 37
+    },
+    "NativeRef": {
+      "spatial": 44,
+      "object": 40,
+      "goal": 9,
+      "long10": 28
+    },
+    "RefCloth": {
+      "spatial": 44,
+      "object": 42,
+      "goal": 9,
+      "long10": 26
+    }
+  },
+  "macros": {
+    "Original": 37.75,
+    "Plain": 36.25,
+    "NativeRef": 30.25,
+    "RefCloth": 30.25
+  },
+  "pairwise": {
+    "spatial": {
+      "P_vs_MR": {
+        "a_only": 14,
+        "b_only": 5,
+        "p_exact": 0.063568115234375
+      },
+      "NAT_vs_MR": {
+        "a_only": 6,
+        "b_only": 6,
+        "p_exact": 1.0
+      },
+      "O_vs_P": {
+        "a_only": 6,
+        "b_only": 5,
+        "p_exact": 1.0
+      }
+    },
+    "object": {
+      "P_vs_MR": {
+        "a_only": 13,
+        "b_only": 8,
+        "p_exact": 0.38331031799316406
+      },
+      "NAT_vs_MR": {
+        "a_only": 6,
+        "b_only": 8,
+        "p_exact": 0.79052734375
+      },
+      "O_vs_P": {
+        "a_only": 5,
+        "b_only": 2,
+        "p_exact": 0.453125
+      }
+    },
+    "goal": {
+      "P_vs_MR": {
+        "a_only": 4,
+        "b_only": 5,
+        "p_exact": 1.0
+      },
+      "NAT_vs_MR": {
+        "a_only": 4,
+        "b_only": 4,
+        "p_exact": 1.0
+      },
+      "O_vs_P": {
+        "a_only": 1,
+        "b_only": 3,
+        "p_exact": 0.625
+      }
+    },
+    "long10": {
+      "P_vs_MR": {
+        "a_only": 17,
+        "b_only": 6,
+        "p_exact": 0.03468966484069824
+      },
+      "NAT_vs_MR": {
+        "a_only": 6,
+        "b_only": 4,
+        "p_exact": 0.75390625
+      },
+      "O_vs_P": {
+        "a_only": 12,
+        "b_only": 8,
+        "p_exact": 0.5034446716308594
+      }
+    }
+  },
+  "effects": {
+    "spatial": {
+      "clean": 54,
+      "carrier_drop_O-P": 1,
+      "refcloth_drop_P-MR": 9,
+      "optim_increment_NAT-MR": 0
+    },
+    "object": {
+      "clean": 50,
+      "carrier_drop_O-P": 3,
+      "refcloth_drop_P-MR": 5,
+      "optim_increment_NAT-MR": -2
+    },
+    "goal": {
+      "clean": 6,
+      "carrier_drop_O-P": -2,
+      "refcloth_drop_P-MR": -1,
+      "optim_increment_NAT-MR": 0
+    },
+    "long10": {
+      "clean": 41,
+      "carrier_drop_O-P": 4,
+      "refcloth_drop_P-MR": 11,
+      "optim_increment_NAT-MR": 2
+    }
+  }
+}
