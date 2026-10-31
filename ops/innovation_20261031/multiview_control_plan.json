@@ -1,0 +1,23 @@
+{
+  "purpose": "Confirm or reject a preliminary joint-view amplification observation; no optimization",
+  "keys": [[0,10],[0,11],[4,10],[4,11],[8,10],[8,11]],
+  "policy": "pi05_libero frozen checkpoint, 10 denoising steps",
+  "textures": ["frozen MR", "existing matched random seed101", "existing matched random seed102"],
+  "noise_ids": [0,1,2],
+  "noise_seed": "61000 + task*100 + initial + noise_id*100000; explicit shared noise across all conditions/textures per key",
+  "conditions": ["PP", "AP", "PA", "AA"],
+  "primary_action_subset": "first five execution actions, three translation coordinates",
+  "metrics": {
+    "interaction": "RMS(a_AA - a_AP - a_PA + a_PP)",
+    "amplification": "RMS(a_AA-a_PP)/(RMS(a_AP-a_PP)+RMS(a_PA-a_PP))"
+  },
+  "exploratory_broad_mechanism_gate": {
+    "amplification": "MR amplification >1.1 in at least 2/3 noises for at least 5/6 states",
+    "specificity": "median MR interaction RMS at least 1.25 times each matched random control",
+    "limitations": "Heuristic screening, not statistical significance or a novelty claim; no case selection"
+  },
+  "checks": ["exact original Plain pixels", "original MR/noise0 actions within 1e-5", "A-B-A exact pixels", "A/A actions within 1e-6", "all actions finite"],
+  "target_data_policy": "These six target states are exploratory and cannot be reused as untouched test states for a future selected method. No texture is trained or selected from these results.",
+  "gpu": 0,
+  "forbidden_gpu": [4]
+}
