@@ -1,0 +1,96 @@
+{
+ "paths": {
+  "repo_root": "/data/shaozhen.liu/code/tex3d",
+  "source_checkpoint": "/data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt",
+  "source_pool": "/data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/r0f_pool.pt",
+  "matched_reference_cache": "/data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/mr_plain_cache.pt",
+  "cloth_mesh": "/data/shaozhen.liu/code/tex3d-deps/libero/libero/libero/assets/tablecloth/tablecloth.obj",
+  "base_texture": "/data/shaozhen.liu/code/tex3d-deps/libero/libero/libero/assets/tablecloth/cloth_base.png",
+  "gain_map": "/data/shaozhen.liu/code/tex3d-deps/libero/libero/libero/assets/tablecloth/cloth_gain_map.npy",
+  "stream_file": "/data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/fixed_streams_seed7.pt",
+  "mr8_png": "/data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261021_224922_tvfix-mr/Universal_Cloth_OV.png",
+  "mr8_theta": "/data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261021_224922_tvfix-mr/Ep0_Cloth_Delta_OV.pt",
+  "native8_png": "/data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261021_153634_tvfix-bs8/Universal_Cloth_OV.png",
+  "native8_theta": "/data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261021_153634_tvfix-bs8/Ep0_Cloth_Delta_OV.pt",
+  "bs8_png": "/data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261021_153634_tvfix-bs8/Universal_Cloth_OV.png",
+  "bs8_theta": "/data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261021_153634_tvfix-bs8/Ep0_Cloth_Delta_OV.pt",
+  "output_root": "/data/shaozhen.liu/code/tex3d/experiments/refcloth_residual/20261031_run1"
+ },
+ "source_pool_sha256": "d03d68591b9b820385d14be44758aefd95c2a63b8d68fc0926413a2eb1b04a93",
+ "matched_reference_cache_sha256": "7ab459156068e23cd338bc33e100fb1113a3a367d8b020a80cdaf7cdb7249856",
+ "base_texture_sha256": "9829a9529b74f02e61a87ee27c9acceddef9fed98a45c8bc829b8c233bda43c3",
+ "cloth_mesh_sha256": "3a92eafbbe7f1801ea8dbdec42f4703406e42f295a1d0b5b19d00ad5038e1741",
+ "camera_order": [
+  "agentview",
+  "robot0_eye_in_hand"
+ ],
+ "feature_layout": {
+  "shape": [
+   1,
+   56,
+   4096
+  ],
+  "dtype_out": "float32",
+  "m": 229376,
+  "semantics": "action_token_hidden",
+  "prompt_independent": true
+ },
+ "training_recipe": {
+  "seed_pilot": 7,
+  "seeds_confirmatory": [
+   7,
+   8,
+   9
+  ],
+  "methods": [
+   "matched",
+   "residual",
+   "random"
+  ],
+  "conditional_scalar_control_if_gamma_below": 0.9,
+  "updates": 5000,
+  "batch_size": 8,
+  "learning_rate": 0.05,
+  "epsilon": 0.25098039215686274,
+  "init_std": 0.01,
+  "parameter_bounds": [
+   -5.0,
+   5.0
+  ],
+  "alpha_feature": 10.0,
+  "alpha_action": 0.0,
+  "lambda_amplitude": 0.1,
+  "lambda_tv": 0.1,
+  "uv_sampling": "shared_per_batch_and_cameras",
+  "sampling_stream": "full_precision_paired_replay",
+  "checkpoint_updates_completed": [
+   0,
+   100,
+   250,
+   499,
+   500,
+   501,
+   1000,
+   2000,
+   3500,
+   5000
+  ],
+  "final_selection": "final_update_not_target_best",
+  "allow_full_multiseed_without_gate_d": false
+ },
+ "gain_map_sha256": "44d5e74d55b5465f25c5b0fbc4396af363ea59c0b0278f2570c07b2c4e4b2bef",
+ "branch": "residual-explore",
+ "commit": "7cf1c62（baseline merge=b4a9909）",
+ "interpreter": "/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python (3.10.5)",
+ "torch": "2.2.0+cu121",
+ "mujoco": "3.3.0",
+ "numpy": "1.26.4",
+ "modeling_prismatic_sha256": "b5431a074c0025a12e46dc954a5e18d1d73477babb5ae42e3a12ab4b907f33a6",
+ "feature_shape": [
+  1,
+  56,
+  4096
+ ],
+ "m": 229376,
+ "dirty_patch_archive": "experiments/refcloth_residual/prep_20261031_r18e03_dirty.patch"
+}

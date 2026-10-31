@@ -1,0 +1,287 @@
+{
+ "pool_sha256": "d03d68591b9b820385d14be44758aefd95c2a63b8d68fc0926413a2eb1b04a93",
+ "pool_sha_match": true,
+ "pool_tasks": {
+  "0": {
+   "n_frames": 80,
+   "n_active": 80,
+   "n_wrist_quad": 80
+  },
+  "2": {
+   "n_frames": 80,
+   "n_active": 80,
+   "n_wrist_quad": 80
+  },
+  "6": {
+   "n_frames": 80,
+   "n_active": 80,
+   "n_wrist_quad": 80
+  },
+  "8": {
+   "n_frames": 56,
+   "n_active": 56,
+   "n_wrist_quad": 56
+  }
+ },
+ "pool_total_active": 296,
+ "pool_frame_example": {
+  "task": 0,
+  "fields": {
+   "bg": {
+    "type": "tensor",
+    "shape": [
+     1,
+     3,
+     256,
+     256
+    ],
+    "dtype": "torch.float32"
+   },
+   "seg": {
+    "type": "tensor",
+    "shape": [
+     1,
+     1,
+     256,
+     256
+    ],
+    "dtype": "torch.float32"
+   },
+   "mvp": {
+    "type": "tensor",
+    "shape": [
+     4,
+     4
+    ],
+    "dtype": "torch.float32"
+   },
+   "rot": {
+    "type": "tensor",
+    "shape": [
+     3,
+     3
+    ],
+    "dtype": "torch.float32"
+   },
+   "text_inputs": {
+    "type": "BatchFeature",
+    "keys": {
+     "input_ids": {
+      "type": "tensor",
+      "shape": [
+       1,
+       34
+      ],
+      "dtype": "torch.int64"
+     },
+     "attention_mask": {
+      "type": "tensor",
+      "shape": [
+       1,
+       34
+      ],
+      "dtype": "torch.int64"
+     },
+     "pixel_values": {
+      "type": "tensor",
+      "shape": [
+       1,
+       6,
+       224,
+       224
+      ],
+      "dtype": "torch.float32"
+     }
+    }
+   },
+   "proprio": {
+    "type": "ndarray",
+    "shape": [
+     8
+    ],
+    "dtype": "float64"
+   },
+   "wrist": {
+    "type": "tensor",
+    "shape": [
+     1,
+     3,
+     256,
+     256
+    ],
+    "dtype": "torch.float32"
+   },
+   "wrist_bg": {
+    "type": "tensor",
+    "shape": [
+     1,
+     3,
+     256,
+     256
+    ],
+    "dtype": "torch.float32"
+   },
+   "wrist_seg": {
+    "type": "tensor",
+    "shape": [
+     1,
+     1,
+     256,
+     256
+    ],
+    "dtype": "torch.float32"
+   },
+   "wrist_mvp": {
+    "type": "tensor",
+    "shape": [
+     4,
+     4
+    ],
+    "dtype": "torch.float32"
+   },
+   "clean_action_head": {
+    "type": "tensor",
+    "shape": [
+     1,
+     8,
+     7
+    ],
+    "dtype": "torch.float32"
+   },
+   "clean_hidden": {
+    "type": "tensor",
+    "shape": [
+     1,
+     56,
+     4096
+    ],
+    "dtype": "torch.bfloat16"
+   }
+  }
+ },
+ "clean_hidden": {
+  "shape": [
+   1,
+   56,
+   4096
+  ],
+  "dtype": "torch.bfloat16",
+  "m_prod": 229376
+ },
+ "clean_action_head": {
+  "type": "tensor",
+  "shape": [
+   1,
+   8,
+   7
+  ],
+  "dtype": "torch.float32"
+ },
+ "clean_hidden_shapes_all": [
+  [
+   1,
+   56,
+   4096
+  ]
+ ],
+ "input_ids_shapes_by_task": {
+  "0": [
+   [
+    1,
+    34
+   ]
+  ],
+  "2": [
+   [
+    1,
+    29
+   ]
+  ],
+  "6": [
+   [
+    1,
+    31
+   ]
+  ],
+  "8": [
+   [
+    1,
+    30
+   ]
+  ]
+ },
+ "mr_cache_sha256": "7ab459156068e23cd338bc33e100fb1113a3a367d8b020a80cdaf7cdb7249856",
+ "mr_cache_sha_match": true,
+ "mr_cache_top_keys": [
+  "frame_index_order",
+  "hidden"
+ ],
+ "mr_cache": {
+  "container": "dict",
+  "key_type": "int",
+  "len": 296,
+  "entry0": {
+   "type": "tensor",
+   "shape": [
+    1,
+    56,
+    4096
+   ],
+   "dtype": "torch.float32"
+  },
+  "entry_shapes": [
+   [
+    1,
+    56,
+    4096
+   ]
+  ]
+ },
+ "streams_container": "list",
+ "streams_len": 5000,
+ "streams_elem0": {
+  "type": "dict",
+  "keys": {
+   "idx": {
+    "type": "list"
+   },
+   "uv": {
+    "type": "tensor",
+    "shape": [
+     2,
+     3
+    ],
+    "dtype": "torch.float32"
+   }
+  }
+ },
+ "ckpt_config_subset": {
+  "image_resize_strategy": "resize-naive",
+  "image_sizes": [
+   224,
+   224
+  ],
+  "n_action_bins": 256
+ },
+ "ckpt_modeling_sha": "b5431a074c0025a12e46dc954a5e18d1d73477babb5ae42e3a12ab4b907f33a6",
+ "ckpt_action_head_sha": "809858636cf0a65009dd567d2f4e116249442790f02b8fe31f24500ea6118908",
+ "ckpt_action_head_size": 302242674,
+ "cloth_t0": {
+  "size": [
+   256,
+   256
+  ],
+  "mode": "RGB"
+ },
+ "gain_map_shape": [
+  256,
+  256,
+  3
+ ],
+ "libero_spatial_init_counts": {
+  "0": 50,
+  "2": 50,
+  "6": 50,
+  "8": 50
+ }
+}
