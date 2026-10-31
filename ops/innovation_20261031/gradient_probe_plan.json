@@ -1,0 +1,46 @@
+{
+  "tasks": [
+    0,
+    2,
+    6,
+    8
+  ],
+  "source_init_index": 3,
+  "uv": "identity",
+  "probe_ids": [
+    "fit_hi_iid_s109",
+    "fit_hi_lp_s111"
+  ],
+  "starts": [
+    "seed7_std0.01",
+    "fit_mid_lp_s107",
+    "frozen_main_mr"
+  ],
+  "step_sizes": [
+    0.01,
+    0.05
+  ],
+  "methods": [
+    "matched",
+    "transport"
+  ],
+  "evaluation": "same native source feature displacement on actual exported PNGs, same simulator state",
+  "acceptance": {
+    "aa_maxdiff": 0,
+    "mean_native_gain_ratio_min": 1.1,
+    "task_win_fraction_min": 0.75,
+    "caveat": "pilot one-step selection signal only; no closed-loop attack claim"
+  },
+  "locked_test_consumed": false,
+  "new_target_queries": 0,
+  "full_training_permitted": false,
+  "resource_policy": {
+    "shared_gpu": 0,
+    "forbidden_gpu": [
+      4
+    ],
+    "minimum_free_MB": 32000,
+    "max_parallel_gpu_jobs": 1
+  },
+  "rollback": "stop if paired renderer/injection fails; no full training after negative source gate"
+}
