@@ -15,6 +15,8 @@ import torch
 import torch.nn.functional as F
 from PIL import Image
 
+from .texutil import png_delta_stats
+
 SEED_TABLE = {
     # fit：3 幅度 × 2 结构 × 2 种子 = 12（std_hi 由规则填入）
     "fit": [("lo", 0.05, "iid", 101), ("lo", 0.05, "iid", 102),
@@ -66,7 +68,7 @@ def build_table(ctx, out_dir, mr8_png=None):
         for cand in HI_CANDIDATES:
             th = gen_theta(ctx.renderer.adv_noise.shape, "iid", cand, 9901)
             ctx.load_theta(th)
-            rms_by_std[cand] = png_delta_stats(ctx.export_png(), t0)["rms"]
+            rms_by_std[cand] = png_delta_stats(ctx.renderer.export_png(), t0)["rms"]
         hi_std = 0.8
         for cand in HI_CANDIDATES:      # 最小的 RMS≥0.7×mr_rms 者
             if rms_by_std[cand] >= 0.7 * mr_rms:
@@ -81,7 +83,7 @@ def build_table(ctx, out_dir, mr8_png=None):
             std_eff = hi_std if std is None else std
             th = gen_theta(ctx.renderer.adv_noise.shape, family, std_eff, seed)
             ctx.load_theta(th)
-            png = ctx.export_png()
+            png = ctx.renderer.export_png()
             tid = f"{split}_{amp}_{family}_s{seed}"
             Image.fromarray(png).save(os.path.join(out_dir, tid + ".png"))
             torch.save(th, os.path.join(out_dir, tid + "_theta.pt"))

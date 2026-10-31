@@ -50,7 +50,7 @@ def check_stream_consistency(iters=30, batch=8):
             "uv_presence_mismatch": uv_mismatch,
             "max_uv_absdiff_vs_6dp": max_uv_diff,
             "stream_identical": idx_mismatch == 0 and uv_mismatch == 0
-            and max_uv_diff <= 5e-7}
+            and max_uv_diff <= 1e-6}   # 6dp 舍入(≤5e-7)+float32 表示误差
 
 
 def run_ablate_reference(iters, out_stamp, device_env, log):

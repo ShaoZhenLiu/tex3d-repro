@@ -127,20 +127,21 @@ def cmd_summarize(args):
 
 
 def main():
-    ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--config", required=True)
+    common = argparse.ArgumentParser(add_help=False)
+    common.add_argument("--config", required=True)
+    ap = argparse.ArgumentParser(description=__doc__)  # --config 仅子解析器持有
     sub = ap.add_subparsers(dest="cmd", required=True)
-    sub.add_parser("textures").set_defaults(func=cmd_textures)
-    p = sub.add_parser("capture")
+    sub.add_parser("textures", parents=[common]).set_defaults(func=cmd_textures)
+    p = sub.add_parser("capture", parents=[common])
     p.add_argument("--split", required=True,
                    choices=["fit", "validation", "locked_test"])
     p.set_defaults(func=cmd_capture)
-    sub.add_parser("fit").set_defaults(func=cmd_fit)
-    p = sub.add_parser("one-step")
+    sub.add_parser("fit", parents=[common]).set_defaults(func=cmd_fit)
+    p = sub.add_parser("one-step", parents=[common])
     p.add_argument("--k", type=int, default=8)
     p.add_argument("--beta", type=float, default=1.0)
     p.set_defaults(func=cmd_one_step)
-    p = sub.add_parser("train")
+    p = sub.add_parser("train", parents=[common])
     p.add_argument("--method", required=True,
                    choices=["matched", "residual", "random", "scalar"])
     p.add_argument("--seed", type=int, default=7)
@@ -150,11 +151,11 @@ def main():
     p.add_argument("--dump-iters", type=int, default=0,
                    help="前 N iter 逐 iter dump θ（回归对照用）")
     p.set_defaults(func=cmd_train)
-    p = sub.add_parser("regress")
+    p = sub.add_parser("regress", parents=[common])
     p.add_argument("--ablate-dir", default=None)
     p.add_argument("--iters", type=int, default=30)
     p.set_defaults(func=cmd_regress)
-    sub.add_parser("summarize").set_defaults(func=cmd_summarize)
+    sub.add_parser("summarize", parents=[common]).set_defaults(func=cmd_summarize)
     args = ap.parse_args()
     args.func(args)
 

@@ -175,15 +175,18 @@ def run_train(cfg, out_dir, method, seed=7, iters=5000, batch=8,
                     action_head=ctx.ah, noisy_action_projector=ctx.nap,
                     use_film=getattr(ctx.cfg, "use_film", False))
             _ref = mr_hidden[fi].to(device)
-            d = adv_hidden.float() - _ref.float()      # [1,56,4096]
-            d_flat = d.reshape(-1)                      # [m]
             if filt is not None:
+                d_flat = (adv_hidden.float()
+                          - _ref.float()).reshape(-1)    # [m]
                 d_f = filt(d_flat.unsqueeze(0)).squeeze(0)
                 attack_feat = -(d_f.square().mean()) * scalar_w
                 d_raw = float(F.mse_loss(adv_hidden.float(), _ref.float()))
             else:
-                attack_feat = -(d_flat.square().mean()) * scalar_w
-                d_raw = float(-attack_feat)
+                # 生产逐字表述（F.mse_loss 融合核；手工 .square().mean() 的
+                # 求和顺序差 1e-6 会在 sign-SGD 下混沌放大——20261031 实测）
+                attack_feat = -F.mse_loss(adv_hidden.float(),
+                                          _ref.float()) * scalar_w
+                d_raw = float(-attack_feat) / scalar_w
             (alpha_f * attack_feat / batch).backward()
         tex = ctx.renderer.texture_tensor()
         ref = F.mse_loss(tex, t0_tex)

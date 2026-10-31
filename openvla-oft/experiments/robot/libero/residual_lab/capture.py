@@ -112,7 +112,7 @@ def run_capture(cfg, split, out_root, device="cuda"):
                             abab = _abab_check(sim, tex_id, f"task{task_id}",
                                                log)
                         rec = _capture_state(
-                            ctx, sim, obs, bid, tex_id, t0_png, texs,
+                            ctx, env, sim, obs, bid, tex_id, t0_png, texs,
                             task_id, sc["init"], step, skey, split,
                             task_description, log)
                         torch.save(rec, os.path.join(pair_dir, skey + ".pt"))
@@ -137,7 +137,7 @@ def run_capture(cfg, split, out_root, device="cuda"):
     log(f"[done] {split}: {len(records)} states × {len(texs)} textures")
 
 
-def _capture_state(ctx, sim, obs, bid, tex_id, t0_png, texs,
+def _capture_state(ctx, env, sim, obs, bid, tex_id, t0_png, texs,
                    task_id, init_idx, step, skey, split, task_description, log):
     device = ctx.device
     quad = capture_quad(env, obs, bid, device)
@@ -191,7 +191,7 @@ def _capture_state(ctx, sim, obs, bid, tex_id, t0_png, texs,
                                   ).flatten().cpu()
     q0_png = ctx.renderer.export_png()
     fR0_Q = ctx.hidden_from_tensors(
-        *ctx.compose(quad_d, tex_override=ctx.renderer.png_to_tex(q0_png)),
+        *ctx.compose(quad_d, tex_override=ctx.renderer.png_to_tex(q0_png).to(device)),
         inputs, proprio).flatten().cpu()
     rec["fR0_Q_vs_fR0_maxdiff"] = float((fR0_Q - fR0).abs().max())
     reps_r = [ctx.hidden_from_tensors(comp, wcomp, inputs, proprio
@@ -210,7 +210,7 @@ def _capture_state(ctx, sim, obs, bid, tex_id, t0_png, texs,
                         weights_only=False)
         ctx.load_theta(th)
         png = ctx.renderer.export_png()
-        tex_q = ctx.renderer.png_to_tex(png)
+        tex_q = ctx.renderer.png_to_tex(png).to(device)
         fR_float = ctx.hidden_from_tensors(
             *ctx.compose(quad_d), inputs, proprio).flatten().cpu()
         fR_Q = ctx.hidden_from_tensors(

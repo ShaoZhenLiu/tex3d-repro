@@ -18,13 +18,14 @@ from PIL import Image
 
 D = "/data/shaozhen.liu"
 _HERE = os.path.dirname(os.path.abspath(__file__))
-for _p in (_HERE, f"{D}/code/tex3d/openvla-oft/experiments/robot/libero",
-           f"{D}/code/tex3d/openvla/experiments/robot/libero", f"{D}/code/tex3d"):
-    if _p not in sys.path:
-        sys.path.insert(0, _p)
-
-import attack_oft as base                   # noqa: E402
+_PARENT = os.path.dirname(_HERE)   # openvla-oft/.../libero（attack_oft 所在目录）
+# 关键：先只插入 OFT 侧目录并按生产顺序 import（tvfix_mr→attack_oft），
+# 再让 tvfix_mr 自己插入 openvla 侧路径——否则同名 libero_utils 被 openvla
+# 2-arg 版污染（get_libero_image 签名冲突，计划§1.2.6 风险项）。
+if _PARENT not in sys.path:
+    sys.path.insert(0, _PARENT)
 import attack_oft_cloth_tvfix_mr as M       # noqa: E402  生产配方（只读复用）
+import attack_oft as base                   # noqa: E402
 import transfer_pi2ov as TR                 # noqa: E402
 import cloth_transfer_utils as ctu          # noqa: E402
 from .texutil import png_delta_stats, png_to_tex, sha16   # noqa: E402,F401
