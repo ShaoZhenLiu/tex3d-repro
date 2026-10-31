@@ -8,6 +8,7 @@ import argparse
 import copy
 import hashlib
 import json
+import os
 from pathlib import Path
 
 import numpy as np
@@ -38,6 +39,7 @@ def main(repo,output):
     mr=np.array(Image.open(repo/'experiments/pi0_cloth/oft_cloth/train_20261021_224922_tvfix-mr/Universal_Cloth_OV.png').convert('RGB'))
     output.mkdir(parents=True,exist_ok=True)
     report=dict(checkpoint=checkpoint,model_config='pi05_libero',num_denoise=10,
+        surface_mode=os.environ.get('REFCLOTH_SURFACE_MODE','legacy'),
         scope='same-state input-path diagnostic; no closed-loop success claims',
         noise_shape=list(noise_shape),texture_optimized=False,records=[])
     was_clean=APC.patch_status()=='clean';APC.ensure_patch(True)

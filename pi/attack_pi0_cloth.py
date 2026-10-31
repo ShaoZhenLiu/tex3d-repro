@@ -176,6 +176,13 @@ def align_cloth_to_table(env, lift=0.005, floor_mode=False):
     if cloth_bid == -1:
         raise RuntimeError("SurfaceAdapter：找不到桌布 body")
     sim.forward()
+    # Explicit experiment identity: legacy geometry is never silently changed.
+    surface_mode = os.environ.get("REFCLOTH_SURFACE_MODE", "legacy")
+    if surface_mode == "object_fixed_floor":
+        from surface_adapter_fixed import align_fixed_floor
+        return align_fixed_floor(env, cloth_bid, lift=lift)
+    if surface_mode != "legacy":
+        raise ValueError("Unknown REFCLOTH_SURFACE_MODE: " + surface_mode)
     if floor_mode:
         # 地面操作套件：布铺在动态物体的质心处（盖住大多数物体，天然靠机械臂
         # 工作区），高度贴地；夹紧在可达范围内。

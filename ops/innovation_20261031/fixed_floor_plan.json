@@ -1,0 +1,13 @@
+{
+  "mode": "object_fixed_floor",
+  "purpose": "explicit fixed support geometry in Object floor scene; do not overwrite legacy runs",
+  "floor_geom": "floor, horizontal static plane",
+  "cloth_world_pose": [
+    0.4,
+    0,
+    0.005
+  ],
+  "geometry_gate": "all 10 tasks x initial states 10..19 must keep this exact pose after 10 waiting steps",
+  "image_probe": "repeat preselected six common-noise camera interventions with the separately named fixed geometry",
+  "forbidden_claim": "No revised Object success rate without rerunning the affected complete evaluation cells"
+}

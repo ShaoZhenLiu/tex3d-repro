@@ -1,21 +1,23 @@
 """Inspect geometry behind the preselected Object view interventions; no policy."""
 import argparse
 import json
+import os
 from pathlib import Path
 
 import numpy as np
 
 
-def run(output):
+def run(output,all_keys=False):
     import attack_pi0_cloth as APC
     from libero.libero import benchmark
     suite=benchmark.get_benchmark_dict()['libero_object']()
-    report=dict(scope='geometry inspection only; no policy inference',records=[])
+    report=dict(scope='geometry inspection only; no policy inference',
+                surface_mode=os.environ.get('REFCLOTH_SURFACE_MODE','legacy'),records=[])
     clean=APC.patch_status()=='clean';APC.ensure_patch(True)
     try:
-        for task_id in [0,4,8]:
+        for task_id in (range(10) if all_keys else [0,4,8]):
             task=suite.get_task(task_id);states=suite.get_task_init_states(task_id)
-            for initial in [10,11]:
+            for initial in (range(10,20) if all_keys else [10,11]):
                 env,_=APC._get_libero_env(task,resolution=256)
                 try:
                     env.reset();obs=env.set_init_state(states[initial]);sim=env.env.sim;sim.forward()
@@ -38,4 +40,5 @@ def run(output):
 
 
 if __name__=='__main__':
-    ap=argparse.ArgumentParser();ap.add_argument('--out',type=Path,required=True);run(ap.parse_args().out)
+    ap=argparse.ArgumentParser();ap.add_argument('--out',type=Path,required=True);ap.add_argument('--all-keys',action='store_true')
+    args=ap.parse_args();run(args.out,args.all_keys)
