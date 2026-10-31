@@ -28,7 +28,8 @@ def main(repo,directions,output,tasks,memory_fraction):
         with runtime.state(task,6) as st:
             with torch.no_grad():a0=runtime.action(st.native0)
             report['states'].append(dict(task=task,zero_png_maxdiff=st.zero_png_maxdiff,
-                seg_area=st.quad['seg_area'],aa_feature_maxdiff=0))
+                seg_area=st.quad['seg_area'],aa_feature_maxdiff=0,
+                observation_audit=st.observation_audit))
             for start,entry in fitted['starts'].items():
                 theta=entry['theta'].to(ctx.device)
                 ctx.load_theta(theta)
@@ -42,6 +43,7 @@ def main(repo,directions,output,tasks,memory_fraction):
                 # Used only for a diagnostic inequality; it is not task success.
                 bn=st.native_all(before_png)
                 with torch.no_grad():ba={v:runtime.action(h) for v,h in bn.items()}
+                before_inter=float((ba['AA']-ba['AP']-ba['PA']+ba['PP']).square().mean())
                 before_solo={v:float((ba[v]-a0).square().mean()) for v in ['AP','PA']}
                 for eta,methods in entry['steps'].items():
                     for method,delta in methods.items():
@@ -65,9 +67,14 @@ def main(repo,directions,output,tasks,memory_fraction):
                             with torch.no_grad():actions={v:runtime.action(h) for v,h in native.items()}
                             inter=actions['AA']-actions['AP']-actions['PA']+actions['PP']
                             record['native_interaction_mse']=float(inter.square().mean())
+                            record['native_interaction_before']=before_inter
+                            record['native_interaction_gain']=record['native_interaction_mse']-before_inter
                             record['solo_before']=before_solo
                             record['solo_after']={v:float((actions[v]-a0).square().mean()) for v in ['AP','PA']}
                             record['solo_no_increase']=all(record['solo_after'][v]<=before_solo[v]+1e-8 for v in before_solo)
+                            record['solo_tolerance_mse']=1e-8
+                            record['native_joint_lower_bound_rms']=max(0.,rms(inter)-
+                                rms(actions['AP']-a0)-rms(actions['PA']-a0))
                         report['records'].append(record)
                         Image.fromarray(png).save(output/('t%d_%s_%s_%s.png'%(task,start,method,eta)))
                         print(json.dumps(record),flush=True)

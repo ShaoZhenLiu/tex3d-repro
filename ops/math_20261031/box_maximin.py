@@ -115,11 +115,17 @@ def solve_box_maximin(gradients, lower, upper, offsets=None, method='auto',
     if method != 'mw':
         try:
             import numpy as np
+            import scipy
             from scipy.optimize import linprog
         except ImportError:
             if method == 'scipy':
                 raise
         else:
+            if tuple(int(x) for x in scipy.__version__.split('.')[:2]) < (1, 6):
+                if method == 'scipy':
+                    raise RuntimeError('SciPy >=1.6 is required for HiGHS and its dual marginals')
+                return solve_box_maximin(gradients, lower, upper, offsets, method='mw',
+                                         iterations=iterations, tolerance=tolerance)
             n, d = len(gradients), len(lower)
             matrix = np.column_stack([-np.asarray(gradients), np.ones(n)])
             result = linprog([0.0]*d+[-1.0], A_ub=matrix, b_ub=offsets,

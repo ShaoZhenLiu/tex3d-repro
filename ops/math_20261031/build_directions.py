@@ -35,7 +35,10 @@ def build(paths, output):
                     pcgrad_sign=scaled_pcgrad(q.tolist(),lo,hi,take_sign=True),
                     pcgrad_vector=scaled_pcgrad(q.tolist(),lo,hi,take_sign=False))
                 solved=solve_box_maximin(scaled.tolist(),lo,hi,method='scipy')
-                candidates['maximin']=solved['delta']
+                # A zero-margin optimal face may contain arbitrary endpoint
+                # steps. This candidate abstains unless common ascent is strict.
+                accepted=solved['objective']>1e-10
+                candidates['maximin']=solved['delta'] if accepted else [0.0]*len(lo)
                 for name,delta in candidates.items():
                     delta=np.asarray(delta)
                     predicted=q@delta
@@ -45,7 +48,8 @@ def build(paths, output):
                         fractional_coordinates=int(np.sum((delta>np.asarray(lo)+1e-8)&(delta<np.asarray(hi)-1e-8))))
                     if name=='maximin':
                         record.update(duality_gap=solved['duality_gap']*common_scale,
-                                      dual_weights=solved['weights'])
+                                      dual_weights=solved['weights'],positive_margin=accepted,
+                                      optimal_margin=solved['objective']*common_scale)
                     report['records'].append(record)
                     steps[record['method']]=torch.tensor(delta,dtype=theta.dtype).reshape_as(theta)
             for name,g in [('action_mean',gs['action'].mean(0)),

@@ -36,7 +36,8 @@ def main(repo, output, tasks, initial, memory_fraction):
     for task in tasks:
         with runtime.state(task, initial) as st:
             report['states'].append(dict(task=task, zero_png_maxdiff=st.zero_png_maxdiff,
-                seg_area=st.quad['seg_area'], aa_feature_maxdiff=0))
+                seg_area=st.quad['seg_area'], aa_feature_maxdiff=0,
+                observation_audit=st.observation_audit))
             for start in bank['starts']:
                 theta = bank['starts'][start]['theta'].to(ctx.device)
                 ctx.load_theta(theta)

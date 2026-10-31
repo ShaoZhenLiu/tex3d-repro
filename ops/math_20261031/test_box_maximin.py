@@ -1,7 +1,14 @@
 """Analytic tests of execution geometry, LP bounds and sign-induced failure."""
 import unittest
+import importlib.util
 from box_maximin import (solve_box_maximin, update_box, mean_sign,
                          scaled_pcgrad, normalize_rows)
+
+try:
+    import scipy
+    HAS_HIGHS = tuple(int(x) for x in scipy.__version__.split('.')[:2]) >= (1, 6)
+except ImportError:
+    HAS_HIGHS = False
 
 
 def gain(g, step):
@@ -55,6 +62,15 @@ class GeometryTests(unittest.TestCase):
     def test_nonfinite_input_rejected(self):
         with self.assertRaises(ValueError):
             solve_box_maximin([[float('nan')]], [-1], [1], method='mw')
+
+    @unittest.skipUnless(HAS_HIGHS, 'SciPy HiGHS unavailable on local Python')
+    def test_highs_primal_dual_optimum_and_fractionality(self):
+        rows = [[1.0, 0.0], [-2.0, 1.0]]
+        result = solve_box_maximin(rows, [-1, -1], [1, 1], method='scipy')
+        self.assertAlmostEqual(result['objective'], 1.0/3, places=8)
+        self.assertLess(result['duality_gap'], 1e-8)
+        fractional = sum(-1+1e-8 < x < 1-1e-8 for x in result['delta'])
+        self.assertLessEqual(fractional, len(rows)-1)
 
 
 if __name__ == '__main__':

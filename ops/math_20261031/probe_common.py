@@ -61,7 +61,20 @@ class SourceRuntime:
         A.render_native_dual(sim)
         handle = A.strict_inject(sim, tid, ctx.t0_png)
         try:
+            live_main,live_wrist=A.render_native_dual(sim)
+            old_main=A.base.get_libero_image(obs)
+            old_wrist=A.base._extract_wrist_image(obs,256)
+            observation_audit=dict(main_maxdiff=int(np.abs(old_main.astype(int)-live_main.astype(int)).max()),
+                main_changed_fraction=float(np.any(old_main!=live_main,axis=-1).mean()),
+                wrist_maxdiff=int(np.abs(old_wrist.astype(int)-live_wrist.astype(int)).max()))
+            # Alignment and texture upload happen after set_init_state. Build
+            # masks from observations of THIS state, never stale pre-align RGB.
+            obs=dict(obs)
+            obs['agentview_image']=np.ascontiguousarray(live_main[::-1,::-1])
+            obs['robot0_eye_in_hand_image']=np.ascontiguousarray(live_wrist[::-1,::-1])
             quad = A.quad_to_dev(A.capture_quad(env, obs, bid, ctx.device), ctx.device)
+            assert np.array_equal(quad['native_main_px'],live_main)
+            assert np.array_equal(quad['native_wrist_px'],live_wrist)
             inputs = A.make_inputs(ctx, quad['native_main_px'], desc)
             proprio = A.proprio_of(obs) if ctx.use_proprio else None
             ctx.load_theta('zero')
@@ -113,6 +126,7 @@ class SourceRuntime:
 
             st = State()
             st.quad = quad
+            st.observation_audit = observation_audit
             st.zero_png_maxdiff = max_zero
             st.native0 = st.native_aa(ctx.t0_png).detach()
             repeat = st.native_aa(ctx.t0_png).detach()
