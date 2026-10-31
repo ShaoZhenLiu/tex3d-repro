@@ -209,8 +209,10 @@ native unilateral control without an additional cross-path error bound.
 
 \textbf{Identification limit.} Even knowing the native clean corner does not
 identify native total joint displacement under unrestricted additive error.
-For any action vector $z$, $A_N(i,j)=A_R(i,j)-iz$ preserves the clean corner
-and interaction while changing native joint displacement by $-z$.
+Let the known native clean output be $\bar a_{N,00}$ and set
+$b=A_R(0,0)-\bar a_{N,00}$. For any action vector $z$, the family
+$A_N^z(i,j)=A_R(i,j)-b-iz$ matches that same known clean output and preserves
+the interaction while changing native joint displacement by $-z$.
 Consequently an invariant interaction is not a surrogate for the entire native
 action effect without additional calibration or structural assumptions.
 

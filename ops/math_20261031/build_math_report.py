@@ -36,8 +36,9 @@ def build(folder):
         r=metric['validation']['methods'][key]
         rows.append([label,r['zero_score_count'],r['all_zero_states'],r['defined_state_spearman_count'],
             format(r['mean_tie_expected_native_energy'],'.6g'),
-            format(r['mean_within_state_spearman_zero_for_undefined'],'.4f')])
-    uncertainty=table(['方法','零分数/64','全零状态/16','可定义排序状态/16','并列公平选择的原生能量均值','全状态平均排序相关'],rows)
+            ('未定义（汇总记0）' if r['defined_state_spearman_count']==0 else
+             format(r['mean_within_state_spearman_zero_for_undefined'],'.4f'))])
+    uncertainty=table(['方法','零分数/64','全零状态/16','可定义排序状态/16','并列公平选择的原生能量均值','排序相关汇总（未定义按0记）'],rows)
     raw=summary['geometry_gate']['raw']['settings_passed']
     normalized=summary['geometry_gate']['l1']['settings_passed']
     sources=[
@@ -72,9 +73,9 @@ subject to  qᵢᵀδ ≥ t  for every task i
             max(−η,−5−θⱼ) ≤ δⱼ ≤ min(η,5−θⱼ)</pre>
 <p>q可为原始总目标梯度，也可按该任务fit梯度的L1范数归一化。总目标保留生产正则：J=10FD−0.1幅度MSE−0.1纹理TV。零梯度任务不删除；没有正共同上升裕量时不执行任意LP端点步。对fit中完全无梯度的坐标固定零更新，避免用求解器的任意解注入无目的纹理。</p>
 <p>数学成果是明确原始/对偶形式、可检查的对偶间隙、sign丢共同上升的反例，以及条件性原生增益界。存在最优基本解只需至多N−1个非端点自由坐标；固定坐标不计入该性质。它们是标准凸优化和线性规划的应用，不作为全新数学理论。原论文匹配参考命题讨论的是一个固定目标的局部sign优势，本反例不推翻那个命题。</p>
-<p><strong>原生结果：</strong>原始梯度版通过 RAW_PASS/6 组设置，归一化版通过 NORM_PASS/6；预设要求至少4/6。强对照包含均值sign、PCGrad后sign及保留方向的PCGrad向量。下表完整列出所有起点、步长与尺度。两个基线列分别取三种基线在该指标上的上包络，不一定来自同一策略。归一化行用对应fit任务L1尺度换算保留状态的原生J增益；没有在保留集重估尺度。</p>
+<p><strong>原生结果：</strong>原始梯度版通过 RAW_PASS/6 组设置，归一化版通过 NORM_PASS/6；预设要求至少4/6。单组门要求最差任务增益非负、超过三种基线中最大的最差增益，且平均增益保留基线最高平均增益的至少90%。强对照包含均值sign、PCGrad后sign及保留方向的PCGrad向量。下表完整列出所有起点、步长与尺度。两个基线列分别取三种基线在该指标上的上包络，不一定来自同一策略。归一化行用对应fit任务L1尺度换算保留状态的原生J增益；没有在保留集重估尺度。</p>
 GEOMETRY_TABLE
-<p>局部正例值得保留：中幅度起点、η=0.05时，raw LP的最差原生J增益约0.01055，对照为0.003591；均值约0.02226，对照为0.01556。冻结MR起点上的均值反而降低，不能仅挑中幅度结果。未通过跨设置门槛，因此没有据此启动完整训练。</p>
+<p>局部正例值得保留：中幅度起点、η=0.05时，raw LP的最差原生J增益约0.01055，对照为0.003591；均值约0.02226，对照为0.01556。冻结MR起点上的平均增益低于对照，但增益本身仍为正；不能仅挑中幅度结果。未通过跨设置门槛，因此没有据此启动完整训练。</p>
 <img src="results/figures/box_native_screen.png" alt="全部三起点两步长下原始与归一化更新的原生最差任务增益">
 <h2>尝试二：四角交互作为渲染误差不变量</h2>
 <p>在固定状态、指令和机器人输入下，分别组合Plain与扰动图像，定义：</p>
