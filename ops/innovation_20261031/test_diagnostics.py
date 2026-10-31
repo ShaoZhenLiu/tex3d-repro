@@ -19,6 +19,14 @@ class GateTests(unittest.TestCase):
         self.assertFalse(candidate_passes(dict(q_err=.4,q_signal=.9,
             **{'by_task:0.q_signal':.59}),self.thresholds))
 
+    def test_none_metric_in_present_group_rejected(self):
+        self.assertFalse(candidate_passes(dict(q_err=.4,q_signal=.9,
+            **{'by_task:0.q_signal':None}),self.thresholds,{'by_task:0':8}))
+
+    def test_explicit_empty_group_ignored(self):
+        self.assertTrue(candidate_passes(dict(q_err=.4,q_signal=.9,
+            **{'by_amp:lo.q_signal':None}),self.thresholds,{'by_amp:lo':0}))
+
     def test_invalid_global_stat_rejected(self):
         for value in [None,float('nan'),float('inf'),.51]:
             self.assertFalse(candidate_passes(dict(q_err=value,q_signal=.9),self.thresholds))

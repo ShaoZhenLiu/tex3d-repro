@@ -4,7 +4,9 @@ test_secant_transport_corrects_probe_span_and_preserves_complement (test_diagnos
 test_secant_transport_device_and_gradient (test_diagnostics.DiagnosticTests) ... ok
 test_transport_recovers_heldout_channel_scaling (test_diagnostics.DiagnosticTests) ... ok
 test_absent_group_and_error_are_not_signal_constraints (test_diagnostics.GateTests) ... ok
+test_explicit_empty_group_ignored (test_diagnostics.GateTests) ... ok
 test_invalid_global_stat_rejected (test_diagnostics.GateTests) ... ok
+test_none_metric_in_present_group_rejected (test_diagnostics.GateTests) ... ok
 test_present_bad_group_rejected (test_diagnostics.GateTests) ... ok
 test_floating_start_corrected_and_repeat_stable (test_surface_adapter.SurfaceTests) ... ok
 test_rejects_colliding_cloth (test_surface_adapter.SurfaceTests) ... ok
@@ -13,6 +15,6 @@ test_rejects_non_horizontal_plane (test_surface_adapter.SurfaceTests) ... ok
 test_rejects_tabletop_mode (test_surface_adapter.SurfaceTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 13 tests in 0.250s
+Ran 15 tests in 0.245s
 
 OK

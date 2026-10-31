@@ -1,0 +1,4306 @@
+{
+  "scope": "geometry inspection only; no policy inference",
+  "surface_mode": "object_fixed_floor",
+  "records": [
+    {
+      "task": 0,
+      "initial": 10,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 0,
+      "initial": 11,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 0,
+      "initial": 12,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 0,
+      "initial": 13,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 0,
+      "initial": 14,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 0,
+      "initial": 15,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 0,
+      "initial": 16,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 0,
+      "initial": 17,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 0,
+      "initial": 18,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 0,
+      "initial": 19,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 1,
+      "initial": 10,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 1,
+      "initial": 11,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 1,
+      "initial": 12,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 1,
+      "initial": 13,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 1,
+      "initial": 14,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 1,
+      "initial": 15,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 1,
+      "initial": 16,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 1,
+      "initial": 17,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 1,
+      "initial": 18,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 1,
+      "initial": 19,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 2,
+      "initial": 10,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 2,
+      "initial": 11,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 2,
+      "initial": 12,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 2,
+      "initial": 13,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 2,
+      "initial": 14,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 2,
+      "initial": 15,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 2,
+      "initial": 16,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 2,
+      "initial": 17,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 2,
+      "initial": 18,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 2,
+      "initial": 19,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 3,
+      "initial": 10,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 3,
+      "initial": 11,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 3,
+      "initial": 12,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 3,
+      "initial": 13,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 3,
+      "initial": 14,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 3,
+      "initial": 15,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 3,
+      "initial": 16,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 3,
+      "initial": 17,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 3,
+      "initial": 18,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 3,
+      "initial": 19,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 4,
+      "initial": 10,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 4,
+      "initial": 11,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 4,
+      "initial": 12,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 4,
+      "initial": 13,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 4,
+      "initial": 14,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 4,
+      "initial": 15,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 4,
+      "initial": 16,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 4,
+      "initial": 17,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 4,
+      "initial": 18,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 4,
+      "initial": 19,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 5,
+      "initial": 10,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 5,
+      "initial": 11,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 5,
+      "initial": 12,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 5,
+      "initial": 13,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 5,
+      "initial": 14,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 5,
+      "initial": 15,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 5,
+      "initial": 16,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 5,
+      "initial": 17,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 5,
+      "initial": 18,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 5,
+      "initial": 19,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 6,
+      "initial": 10,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 6,
+      "initial": 11,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 6,
+      "initial": 12,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 6,
+      "initial": 13,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 6,
+      "initial": 14,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 6,
+      "initial": 15,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 6,
+      "initial": 16,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 6,
+      "initial": 17,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 6,
+      "initial": 18,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 6,
+      "initial": 19,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 7,
+      "initial": 10,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 7,
+      "initial": 11,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 7,
+      "initial": 12,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 7,
+      "initial": 13,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 7,
+      "initial": 14,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 7,
+      "initial": 15,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 7,
+      "initial": 16,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 7,
+      "initial": 17,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 7,
+      "initial": 18,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 7,
+      "initial": 19,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 8,
+      "initial": 10,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 8,
+      "initial": 11,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 8,
+      "initial": 12,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 8,
+      "initial": 13,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 8,
+      "initial": 14,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 8,
+      "initial": 15,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 8,
+      "initial": 16,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 8,
+      "initial": 17,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 8,
+      "initial": 18,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 8,
+      "initial": 19,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 9,
+      "initial": 10,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 9,
+      "initial": 11,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 9,
+      "initial": 12,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 9,
+      "initial": 13,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 9,
+      "initial": 14,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 9,
+      "initial": 15,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 9,
+      "initial": 16,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 9,
+      "initial": 17,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 9,
+      "initial": 18,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    },
+    {
+      "task": 9,
+      "initial": 19,
+      "before": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      },
+      "after_wait": {
+        "cloth_local": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "cloth_world": [
+          0.4,
+          0.0,
+          0.005
+        ],
+        "table_top": []
+      }
+    }
+  ]
+}

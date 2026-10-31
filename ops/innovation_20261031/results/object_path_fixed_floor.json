@@ -1,0 +1,1344 @@
+{
+  "checkpoint": "/data/shaozhen.liu/model/RLinf-Pi05-LIBERO-130-fullshot-SFT",
+  "model_config": "pi05_libero",
+  "num_denoise": 10,
+  "surface_mode": "object_fixed_floor",
+  "object_floor_dispatch": true,
+  "runner_sha256": "a6bffa11c3a9634c0f610e1c1963466061c0eb19f6917378ed5d6e87f9b47afa",
+  "commit": "50f0a2eeb8b3d33f2f5db36f07bfa8aea0fce308",
+  "scope": "same-state input-path diagnostic; no closed-loop success claims",
+  "noise_shape": [
+    10,
+    32
+  ],
+  "texture_optimized": false,
+  "records": [
+    {
+      "task": 0,
+      "initial": 10,
+      "description": "pick up the alphabet soup and place it in the basket",
+      "texture_users": [
+        {
+          "geom": "tablecloth_visual",
+          "body_id": 2
+        }
+      ],
+      "aa_action_maxdiff": 0.0,
+      "cloth_world": [
+        0.4,
+        0.0,
+        0.005
+      ],
+      "aba_pixels_equal": true,
+      "noise_sha256": "6d4af59aa5eb4161653c200a218c4ed2331af58de81edf06606db0e3db382b77",
+      "input_diffs": {
+        "PP": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        },
+        "AP": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 63.0,
+            "rms": 15.15659122801236
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        },
+        "PA": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 61.0,
+            "rms": 7.11884589592168
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        },
+        "AA": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 63.0,
+            "rms": 15.15659122801236
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 61.0,
+            "rms": 7.11884589592168
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        }
+      },
+      "main_changed_fraction": 0.1937408447265625,
+      "wrist_changed_fraction": 0.0408782958984375,
+      "action_diffs": {
+        "PP": {
+          "all_rmse": 0.0,
+          "executed_translation_rmse": 0.0,
+          "executed_rotation_rmse": 0.0,
+          "executed_gripper_max": 0.0
+        },
+        "AP": {
+          "all_rmse": 0.01887032083437787,
+          "executed_translation_rmse": 0.03632947724566556,
+          "executed_rotation_rmse": 0.011055019302232993,
+          "executed_gripper_max": 0.0027535426836922117
+        },
+        "PA": {
+          "all_rmse": 0.00214835256668174,
+          "executed_translation_rmse": 0.0038349705361578708,
+          "executed_rotation_rmse": 0.0017359845801859682,
+          "executed_gripper_max": 0.0004256114324314719
+        },
+        "AA": {
+          "all_rmse": 0.020281663820979488,
+          "executed_translation_rmse": 0.040841131910974625,
+          "executed_rotation_rmse": 0.009176590411124173,
+          "executed_gripper_max": 0.0027976413199284345
+        }
+      }
+    },
+    {
+      "task": 0,
+      "initial": 11,
+      "description": "pick up the alphabet soup and place it in the basket",
+      "texture_users": [
+        {
+          "geom": "tablecloth_visual",
+          "body_id": 2
+        }
+      ],
+      "aa_action_maxdiff": 0.0,
+      "cloth_world": [
+        0.4,
+        0.0,
+        0.005
+      ],
+      "aba_pixels_equal": true,
+      "noise_sha256": "b569ded9c970b65c45087decf28e9cc7bbc2d95d21414f40a322023931e5a6d6",
+      "input_diffs": {
+        "PP": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        },
+        "AP": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 63.0,
+            "rms": 15.156568874196603
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        },
+        "PA": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 61.0,
+            "rms": 7.906416369145753
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        },
+        "AA": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 63.0,
+            "rms": 15.156568874196603
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 61.0,
+            "rms": 7.906416369145753
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        }
+      },
+      "main_changed_fraction": 0.1935882568359375,
+      "wrist_changed_fraction": 0.0491943359375,
+      "action_diffs": {
+        "PP": {
+          "all_rmse": 0.0,
+          "executed_translation_rmse": 0.0,
+          "executed_rotation_rmse": 0.0,
+          "executed_gripper_max": 0.0
+        },
+        "AP": {
+          "all_rmse": 0.03235430723520422,
+          "executed_translation_rmse": 0.06102553243600261,
+          "executed_rotation_rmse": 0.008065275904115167,
+          "executed_gripper_max": 0.0016799196695944651
+        },
+        "PA": {
+          "all_rmse": 0.00830655506842242,
+          "executed_translation_rmse": 0.01338166834642787,
+          "executed_rotation_rmse": 0.0018869140162730937,
+          "executed_gripper_max": 0.001185299830728459
+        },
+        "AA": {
+          "all_rmse": 0.02177633866301843,
+          "executed_translation_rmse": 0.03382178808395803,
+          "executed_rotation_rmse": 0.013075798983019414,
+          "executed_gripper_max": 0.0026965720130951443
+        }
+      }
+    },
+    {
+      "task": 4,
+      "initial": 10,
+      "description": "pick up the ketchup and place it in the basket",
+      "texture_users": [
+        {
+          "geom": "tablecloth_visual",
+          "body_id": 2
+        }
+      ],
+      "aa_action_maxdiff": 0.0,
+      "cloth_world": [
+        0.4,
+        0.0,
+        0.005
+      ],
+      "aba_pixels_equal": true,
+      "noise_sha256": "d606ebb0fb964a7c33328159b5624d09b702b27a95f759c7c1cca64986d87e1d",
+      "input_diffs": {
+        "PP": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        },
+        "AP": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 63.0,
+            "rms": 15.193136831525694
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        },
+        "PA": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 61.0,
+            "rms": 5.517040797217587
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        },
+        "AA": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 63.0,
+            "rms": 15.193136831525694
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 61.0,
+            "rms": 5.517040797217587
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        }
+      },
+      "main_changed_fraction": 0.194488525390625,
+      "wrist_changed_fraction": 0.028411865234375,
+      "action_diffs": {
+        "PP": {
+          "all_rmse": 0.0,
+          "executed_translation_rmse": 0.0,
+          "executed_rotation_rmse": 0.0,
+          "executed_gripper_max": 0.0
+        },
+        "AP": {
+          "all_rmse": 0.06145663015406199,
+          "executed_translation_rmse": 0.08229184136435684,
+          "executed_rotation_rmse": 0.005535240605991469,
+          "executed_gripper_max": 0.004342642999740409
+        },
+        "PA": {
+          "all_rmse": 0.008511426057617736,
+          "executed_translation_rmse": 0.012504516159190822,
+          "executed_rotation_rmse": 0.0017597601293172806,
+          "executed_gripper_max": 0.0005898490560356517
+        },
+        "AA": {
+          "all_rmse": 0.06432879268251926,
+          "executed_translation_rmse": 0.0890868835132554,
+          "executed_rotation_rmse": 0.0074959528950620255,
+          "executed_gripper_max": 0.0036871227313637345
+        }
+      }
+    },
+    {
+      "task": 4,
+      "initial": 11,
+      "description": "pick up the ketchup and place it in the basket",
+      "texture_users": [
+        {
+          "geom": "tablecloth_visual",
+          "body_id": 2
+        }
+      ],
+      "aa_action_maxdiff": 0.0,
+      "cloth_world": [
+        0.4,
+        0.0,
+        0.005
+      ],
+      "aba_pixels_equal": true,
+      "noise_sha256": "82e3f204154edbf84bf1117661b343c3ce70c11b1553dea967d6ce1b78cf7e4a",
+      "input_diffs": {
+        "PP": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        },
+        "AP": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 63.0,
+            "rms": 15.20036972038771
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        },
+        "PA": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 61.0,
+            "rms": 5.171910484238179
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        },
+        "AA": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 63.0,
+            "rms": 15.20036972038771
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 61.0,
+            "rms": 5.171910484238179
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        }
+      },
+      "main_changed_fraction": 0.1946868896484375,
+      "wrist_changed_fraction": 0.0255279541015625,
+      "action_diffs": {
+        "PP": {
+          "all_rmse": 0.0,
+          "executed_translation_rmse": 0.0,
+          "executed_rotation_rmse": 0.0,
+          "executed_gripper_max": 0.0
+        },
+        "AP": {
+          "all_rmse": 0.06748964251152996,
+          "executed_translation_rmse": 0.08294976840951265,
+          "executed_rotation_rmse": 0.008436264891212407,
+          "executed_gripper_max": 0.0009483590500860561
+        },
+        "PA": {
+          "all_rmse": 0.012801934781059555,
+          "executed_translation_rmse": 0.022070335484765103,
+          "executed_rotation_rmse": 0.0010592702695334574,
+          "executed_gripper_max": 0.0009122458425736557
+        },
+        "AA": {
+          "all_rmse": 0.06933970752920214,
+          "executed_translation_rmse": 0.08425748286540434,
+          "executed_rotation_rmse": 0.008107480845174797,
+          "executed_gripper_max": 0.00081260676178041
+        }
+      }
+    },
+    {
+      "task": 8,
+      "initial": 10,
+      "description": "pick up the chocolate pudding and place it in the basket",
+      "texture_users": [
+        {
+          "geom": "tablecloth_visual",
+          "body_id": 2
+        }
+      ],
+      "aa_action_maxdiff": 0.0,
+      "cloth_world": [
+        0.4,
+        0.0,
+        0.005
+      ],
+      "aba_pixels_equal": true,
+      "noise_sha256": "1006c49185e1f3de2aae3531261fbc2fe91334348dbd8cc767985c3b9d9a9420",
+      "input_diffs": {
+        "PP": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        },
+        "AP": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 63.0,
+            "rms": 15.222981905432071
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        },
+        "PA": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 62.0,
+            "rms": 9.598194559780394
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        },
+        "AA": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 63.0,
+            "rms": 15.222981905432071
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 62.0,
+            "rms": 9.598194559780394
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        }
+      },
+      "main_changed_fraction": 0.1947021484375,
+      "wrist_changed_fraction": 0.079803466796875,
+      "action_diffs": {
+        "PP": {
+          "all_rmse": 0.0,
+          "executed_translation_rmse": 0.0,
+          "executed_rotation_rmse": 0.0,
+          "executed_gripper_max": 0.0
+        },
+        "AP": {
+          "all_rmse": 0.06656419608586472,
+          "executed_translation_rmse": 0.0957804522632326,
+          "executed_rotation_rmse": 0.010191006261184271,
+          "executed_gripper_max": 0.0020412901157249586
+        },
+        "PA": {
+          "all_rmse": 0.03573488430147004,
+          "executed_translation_rmse": 0.056108594644675915,
+          "executed_rotation_rmse": 0.0052374720051558575,
+          "executed_gripper_max": 0.0013366654199715722
+        },
+        "AA": {
+          "all_rmse": 0.09652959395731225,
+          "executed_translation_rmse": 0.15108369644724554,
+          "executed_rotation_rmse": 0.014027498787736549,
+          "executed_gripper_max": 0.002341160842131318
+        }
+      }
+    },
+    {
+      "task": 8,
+      "initial": 11,
+      "description": "pick up the chocolate pudding and place it in the basket",
+      "texture_users": [
+        {
+          "geom": "tablecloth_visual",
+          "body_id": 2
+        }
+      ],
+      "aa_action_maxdiff": 0.0,
+      "cloth_world": [
+        0.4,
+        0.0,
+        0.005
+      ],
+      "aba_pixels_equal": true,
+      "noise_sha256": "b9e5ced32fefb73431491181027981e99d8ac0289c043adc01e181f70e600d6a",
+      "input_diffs": {
+        "PP": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        },
+        "AP": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 63.0,
+            "rms": 15.222981905432071
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        },
+        "PA": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 61.0,
+            "rms": 4.597233193994621
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        },
+        "AA": {
+          "/state": {
+            "shape": [
+              32
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/image/base_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 63.0,
+            "rms": 15.222981905432071
+          },
+          "/image/left_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 61.0,
+            "rms": 4.597233193994621
+          },
+          "/image/right_wrist_0_rgb": {
+            "shape": [
+              224,
+              224,
+              3
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          },
+          "/tokenized_prompt": {
+            "shape": [
+              200
+            ],
+            "maxabs": 0.0,
+            "rms": 0.0
+          }
+        }
+      },
+      "main_changed_fraction": 0.1947021484375,
+      "wrist_changed_fraction": 0.0160980224609375,
+      "action_diffs": {
+        "PP": {
+          "all_rmse": 0.0,
+          "executed_translation_rmse": 0.0,
+          "executed_rotation_rmse": 0.0,
+          "executed_gripper_max": 0.0
+        },
+        "AP": {
+          "all_rmse": 0.0374300637140621,
+          "executed_translation_rmse": 0.051139134105244656,
+          "executed_rotation_rmse": 0.0031523975510582185,
+          "executed_gripper_max": 0.0022288880979841608
+        },
+        "PA": {
+          "all_rmse": 0.020660901944351828,
+          "executed_translation_rmse": 0.022461028127155322,
+          "executed_rotation_rmse": 0.0011821493514121329,
+          "executed_gripper_max": 0.00039915225068964943
+        },
+        "AA": {
+          "all_rmse": 0.04684634371679391,
+          "executed_translation_rmse": 0.058395144145452604,
+          "executed_rotation_rmse": 0.005749467772336105,
+          "executed_gripper_max": 0.0023118412083094064
+        }
+      }
+    }
+  ],
+  "completed": true
+}

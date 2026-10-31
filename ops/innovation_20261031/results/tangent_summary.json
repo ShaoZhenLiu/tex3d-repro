@@ -1,0 +1,66 @@
+{
+  "by_start": {
+    "init": {
+      "mean_gains": {
+        "matched": 0.0015307285502785817,
+        "native_anchor": 0.0011020764359273016,
+        "local_tangent": 0.0010508188570383936
+      },
+      "tangent_vs_matched": 0.6864828233896546,
+      "tangent_vs_anchor": 0.9534899965030291
+    },
+    "moderate": {
+      "mean_gains": {
+        "matched": 0.0046042181784287095,
+        "native_anchor": 0.004524795454926789,
+        "local_tangent": 0.004560936009511352
+      },
+      "tangent_vs_matched": 0.9905994531014756,
+      "tangent_vs_anchor": 1.0079872239407444
+    },
+    "frozen_mr": {
+      "mean_gains": {
+        "matched": 0.012682273983955383,
+        "native_anchor": 0.013163648545742035,
+        "local_tangent": 0.013010390102863312
+      },
+      "tangent_vs_matched": 1.0258720257363179,
+      "tangent_vs_anchor": 0.9883574495060264
+    }
+  },
+  "overall": {
+    "mean_gains": {
+      "matched": 0.006272406904220891,
+      "native_anchor": 0.006263506812198709,
+      "local_tangent": 0.006207381656471019
+    },
+    "tangent_vs_matched": 0.9896331266860071,
+    "tangent_vs_anchor": 0.9910393398761248,
+    "wins_vs_matched": 13,
+    "wins_vs_anchor": 12,
+    "n_pairs": 24
+  },
+  "by_task": {
+    "0": {
+      "matched": 0.039810293121263385,
+      "native_anchor": 0.04061210493091494,
+      "local_tangent": 0.04027709609363228
+    },
+    "2": {
+      "matched": 0.03779312130063772,
+      "native_anchor": 0.03281348280142993,
+      "local_tangent": 0.0317558302776888
+    },
+    "6": {
+      "matched": 0.042701725265942514,
+      "native_anchor": 0.04227785347029567,
+      "local_tangent": 0.04318819334730506
+    },
+    "8": {
+      "matched": 0.030232626013457775,
+      "native_anchor": 0.03462072229012847,
+      "local_tangent": 0.033756040036678314
+    }
+  },
+  "aa_maxdiff": 0.0
+}

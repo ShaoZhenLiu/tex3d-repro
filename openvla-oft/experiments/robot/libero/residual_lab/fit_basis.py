@@ -185,7 +185,7 @@ def fit_and_report(out_root, device="cpu", betas_extra=(0.25, 0.5, 0.75)):
     # ---- Gate B 判定与候选选择（source-only） ----
     passing = []
     for c in report["candidates"]:
-        c["gate_pass"] = candidate_passes(c, GATE)
+        c["gate_pass"] = candidate_passes(c, GATE, report["group_sample_counts"])
         if c["gate_pass"]:
             passing.append(c)
     passing.sort(key=lambda c: (c["q_err"], c["k"], c["beta"]))
