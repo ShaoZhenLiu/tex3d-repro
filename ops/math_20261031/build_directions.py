@@ -48,7 +48,8 @@ def build(paths, output):
                     record=dict(start=start,eta=eta,method=normalization+'_'+name,
                         predicted_gains=predicted.tolist(),minimum_predicted_gain=float(predicted.min()),
                         gradient_scales=scales,linf=float(abs(delta).max()),l2=float(np.linalg.norm(delta)),
-                        fractional_coordinates=int(np.sum((delta>np.asarray(lo)+1e-8)&(delta<np.asarray(hi)-1e-8))))
+                        forced_zero_coordinates=int(unseen.sum()),
+                        fractional_coordinates=int(np.sum((delta>np.asarray(group_lo)+1e-8)&(delta<np.asarray(group_hi)-1e-8))))
                     if name=='maximin':
                         record.update(duality_gap=solved['duality_gap']*common_scale,
                                       dual_weights=solved['weights'],positive_margin=accepted,

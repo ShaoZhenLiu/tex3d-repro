@@ -1,0 +1,61 @@
+{
+  "candidate": "protected shared-texture interaction with mixed render-error cancellation",
+  "status": "mathematical identities and implementation only; no VLA result yet",
+  "primary_action_subset": "source action-head first 5 executed steps, 3 translations = 15 coordinates; all methods use the same fixed subset",
+  "phase_1_fidelity": {
+    "inputs": "all four native and synthesis corners under fixed state/instruction/proprio/noise; no mixed-path clean reference",
+    "grid": "3 fixed starting textures x all 4 fresh source tasks; same predetermined states for all methods",
+    "required_outputs": ["all corner action vectors", "native and synthesis unilateral/joint/interaction RMS", "absolute prediction errors", "relative errors with fixed denominator floor", "A/A and zero-texture floors", "physical PNG identity and injection checks"],
+    "screen": "compare paired interaction relative error with AA displacement relative error on all non-floor cases; require at least 25% lower aggregate normalized error AND improvement on >=3/4 tasks; report excluded near-zero interactions explicitly",
+    "stop": "no native-update training if interaction error is worse or strongly state-dependent"
+  },
+  "phase_2_native_update": {
+    "methods": ["ordinary matched feature baseline", "direct AA action displacement", "unconstrained pure interaction", "cone-protected interaction"],
+    "budget": "same texture-space L2 step norm, same number of source model forward/backward calls accounting for four-corner overhead; an equal-steps comparison is additional, not compute matched",
+    "constraints": "fixed source-side unilateral-action tolerances; a feasible starting point is required for protection claims; backtrack actual synthesis constraints and then score all exported PNGs natively",
+    "primary_endpoint": "native joint effect at or below BOTH native unilateral tolerances",
+    "failures": "infeasible, zero projected direction, zero/near-zero native interaction, or failed upload must remain explicit rows",
+    "stop": "no full training if no paired native advantage over direct AA action at equal protection and compute"
+  },
+  "phase_3_behavior": {
+    "claim": "single-view near-Plain behavior with joint-view task failure under one physical shared texture",
+    "needed": "full paired PP/AP/PA/AA closed-loop episodes, correct task predicates, independent source-heldout states and target policies, frozen selected texture and thresholds",
+    "controls": ["Matched RefCloth", "direct AA action objective", "statistically matched random textures", "unconstrained interaction", "protection without interaction objective"],
+    "avoid": "do not select new texture based on the six pi05 Object states already explored in the previous round"
+  },
+  "known_prior_art": [
+    {
+      "title": "Fool the Hydra: Adversarial Attacks against Multi-view Object Detection Systems",
+      "url": "https://arxiv.org/abs/2312.00173",
+      "occupied": "shared multi-view patches, gradient projection/aggregation, transformer attention attack",
+      "possible_distinction": "explicit single-view protection and a measured native/synthesis mixed-error cancellation mechanism, if validated"
+    },
+    {
+      "title": "Interpreting Attributions and Interactions of Adversarial Attacks",
+      "url": "https://arxiv.org/abs/2108.06895",
+      "occupied": "game-theoretic perturbation interactions; inclusion-exclusion is not new"
+    },
+    {
+      "title": "Defending Multimodal Fusion Models against Single-Source Adversaries",
+      "url": "https://arxiv.org/abs/2206.12714",
+      "occupied": "fusion vulnerability and single-source attack dependence; generic fusion weakness is not new"
+    },
+    {
+      "title": "Jailbreak in pieces: Compositional Adversarial Attacks on Multi-Modal Language Models",
+      "url": "https://arxiv.org/abs/2307.14539",
+      "occupied": "compositional cross-modal adversarial inputs; benign components combined into a harmful result is not a new broad idea"
+    },
+    {
+      "title": "TIJO: Trigger Inversion with Joint Optimization for Defending Multimodal Backdoored Models",
+      "url": "https://openaccess.thecvf.com/content/ICCV2023/papers/Sur_TIJO_Trigger_Inversion_with_Joint_Optimization_for_Defending_Multimodal_Backdoored_ICCV_2023_paper.pdf",
+      "occupied": "dual-key image/text backdoors; joint-only trigger behavior is not new in general",
+      "difference": "backdoor poisoning/model modification differs from test-time texture attack on a frozen policy"
+    },
+    {
+      "title": "Gradient Episodic Memory for Continual Learning",
+      "url": "https://arxiv.org/abs/1706.08840",
+      "occupied": "QP projection of update gradients to preserve other losses"
+    }
+  ],
+  "claims_to_avoid": ["a new general interaction identity", "a new QP solver", "C2 guarantees for actual quantized PNG paths", "automatic small relative error from second-order absolute bias", "action-distance bounds prove closed-loop task failure", "target-native probes used to select a supposedly zero-query transfer texture"]
+}

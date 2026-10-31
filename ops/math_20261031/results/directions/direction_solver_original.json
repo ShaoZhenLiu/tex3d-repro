@@ -1,0 +1,1171 @@
+{
+  "fit_only": true,
+  "fit_initial": 5,
+  "validation_initial": 6,
+  "records": [
+    {
+      "start": "init",
+      "eta": 0.01,
+      "method": "raw_mean_sign",
+      "predicted_gains": [
+        0.00026636682076142836,
+        0.0032453739469075473,
+        0.0006637518558901745,
+        0.0001941074570157455
+      ],
+      "minimum_predicted_gain": 0.0001941074570157455,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.01,
+      "l2": 0.5715767664977285,
+      "fractional_coordinates": 0
+    },
+    {
+      "start": "init",
+      "eta": 0.01,
+      "method": "raw_pcgrad_sign",
+      "predicted_gains": [
+        0.0002742448661447644,
+        0.003196289185583622,
+        0.0006547608701834716,
+        0.00023977000499301096
+      ],
+      "minimum_predicted_gain": 0.00023977000499301096,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.01,
+      "l2": 0.5715767664977285,
+      "fractional_coordinates": 0
+    },
+    {
+      "start": "init",
+      "eta": 0.01,
+      "method": "raw_pcgrad_vector",
+      "predicted_gains": [
+        4.364860014041733e-05,
+        0.0006523650022398357,
+        0.00011410721906366347,
+        3.121866374641322e-05
+      ],
+      "minimum_predicted_gain": 3.121866374641322e-05,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.01,
+      "l2": 0.05941911984603418,
+      "fractional_coordinates": 3266
+    },
+    {
+      "start": "init",
+      "eta": 0.01,
+      "method": "raw_maximin",
+      "predicted_gains": [
+        0.0005607677113675046,
+        0.0005607677113675045,
+        0.0005607677113675053,
+        0.0005607677113675044
+      ],
+      "minimum_predicted_gain": 0.0005607677113675044,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.01,
+      "l2": 0.5713848572989325,
+      "fractional_coordinates": 3,
+      "duality_gap": 0.0,
+      "dual_weights": [
+        0.40807427006410857,
+        0.007119339329413987,
+        0.14466255530913485,
+        0.4401438352973426
+      ],
+      "positive_margin": true,
+      "optimal_margin": 0.0005607677113675046
+    },
+    {
+      "start": "init",
+      "eta": 0.01,
+      "method": "l1_mean_sign",
+      "predicted_gains": [
+        0.005892599394148997,
+        0.0061508013836233015,
+        0.004882089873697752,
+        0.005140218084094759
+      ],
+      "minimum_predicted_gain": 0.004882089873697752,
+      "gradient_scales": [
+        0.08079749672199331,
+        0.3593575212116768,
+        0.1486794660107602,
+        0.08020106900270887
+      ],
+      "linf": 0.01,
+      "l2": 0.5715767664977285,
+      "fractional_coordinates": 0
+    },
+    {
+      "start": "init",
+      "eta": 0.01,
+      "method": "l1_pcgrad_sign",
+      "predicted_gains": [
+        0.005579464910644253,
+        0.0059232236159444136,
+        0.005109049678421079,
+        0.005425772576797352
+      ],
+      "minimum_predicted_gain": 0.005109049678421079,
+      "gradient_scales": [
+        0.08079749672199331,
+        0.3593575212116768,
+        0.1486794660107602,
+        0.08020106900270887
+      ],
+      "linf": 0.01,
+      "l2": 0.5715767664977285,
+      "fractional_coordinates": 0
+    },
+    {
+      "start": "init",
+      "eta": 0.01,
+      "method": "l1_pcgrad_vector",
+      "predicted_gains": [
+        0.0008800061127370557,
+        0.0010363600853282187,
+        0.0009725093486849593,
+        0.0008680988796876593
+      ],
+      "minimum_predicted_gain": 0.0008680988796876593,
+      "gradient_scales": [
+        0.08079749672199331,
+        0.3593575212116768,
+        0.1486794660107602,
+        0.08020106900270887
+      ],
+      "linf": 0.01,
+      "l2": 0.05546558331743039,
+      "fractional_coordinates": 3266
+    },
+    {
+      "start": "init",
+      "eta": 0.01,
+      "method": "l1_maximin",
+      "predicted_gains": [
+        0.005484952651611166,
+        0.005484952651611172,
+        0.005484952651611163,
+        0.0054849526516111725
+      ],
+      "minimum_predicted_gain": 0.005484952651611163,
+      "gradient_scales": [
+        0.08079749672199331,
+        0.3593575212116768,
+        0.1486794660107602,
+        0.08020106900270887
+      ],
+      "linf": 0.01,
+      "l2": 0.5714216476327741,
+      "fractional_coordinates": 3,
+      "duality_gap": 9.474527983487163e-19,
+      "dual_weights": [
+        0.22407414691234495,
+        0.2172507443820074,
+        0.2842164013828441,
+        0.27445870732280353
+      ],
+      "positive_margin": true,
+      "optimal_margin": 0.005484952651611162
+    },
+    {
+      "start": "init",
+      "eta": 0.01,
+      "method": "interaction_solo_lp",
+      "maximum_solo_linear_gain": 4.7403351860139664e-17,
+      "status": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "interaction_linear_gain": 1.0722198679706562e-07
+    },
+    {
+      "start": "init",
+      "eta": 0.05,
+      "method": "raw_mean_sign",
+      "predicted_gains": [
+        0.0013318341038071424,
+        0.01622686973453774,
+        0.0033187592794508727,
+        0.000970537285078728
+      ],
+      "minimum_predicted_gain": 0.000970537285078728,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.05,
+      "l2": 2.8578838324886475,
+      "fractional_coordinates": 0
+    },
+    {
+      "start": "init",
+      "eta": 0.05,
+      "method": "raw_pcgrad_sign",
+      "predicted_gains": [
+        0.001371224330723823,
+        0.01598144592791811,
+        0.003273804350917359,
+        0.0011988500249650552
+      ],
+      "minimum_predicted_gain": 0.0011988500249650552,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.05,
+      "l2": 2.8578838324886475,
+      "fractional_coordinates": 0
+    },
+    {
+      "start": "init",
+      "eta": 0.05,
+      "method": "raw_pcgrad_vector",
+      "predicted_gains": [
+        0.00021824300070208655,
+        0.0032618250111991795,
+        0.000570536095318317,
+        0.0001560933187320661
+      ],
+      "minimum_predicted_gain": 0.0001560933187320661,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.05,
+      "l2": 0.2970955992301709,
+      "fractional_coordinates": 3266
+    },
+    {
+      "start": "init",
+      "eta": 0.05,
+      "method": "raw_maximin",
+      "predicted_gains": [
+        0.002803838556837526,
+        0.002803838556837515,
+        0.0028038385568375183,
+        0.0028038385568375235
+      ],
+      "minimum_predicted_gain": 0.002803838556837515,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.05,
+      "l2": 2.8569242864946682,
+      "fractional_coordinates": 3,
+      "duality_gap": 0.0,
+      "dual_weights": [
+        0.40807427006410857,
+        0.007119339329413987,
+        0.14466255530913485,
+        0.4401438352973426
+      ],
+      "positive_margin": true,
+      "optimal_margin": 0.00280383855683752
+    },
+    {
+      "start": "init",
+      "eta": 0.05,
+      "method": "l1_mean_sign",
+      "predicted_gains": [
+        0.029462996970744997,
+        0.030754006918116517,
+        0.02441044936848877,
+        0.025701090420473794
+      ],
+      "minimum_predicted_gain": 0.02441044936848877,
+      "gradient_scales": [
+        0.08079749672199331,
+        0.3593575212116768,
+        0.1486794660107602,
+        0.08020106900270887
+      ],
+      "linf": 0.05,
+      "l2": 2.8578838324886475,
+      "fractional_coordinates": 0
+    },
+    {
+      "start": "init",
+      "eta": 0.05,
+      "method": "l1_pcgrad_sign",
+      "predicted_gains": [
+        0.027897324553221265,
+        0.029616118079722083,
+        0.025545248392105407,
+        0.027128862883986752
+      ],
+      "minimum_predicted_gain": 0.025545248392105407,
+      "gradient_scales": [
+        0.08079749672199331,
+        0.3593575212116768,
+        0.1486794660107602,
+        0.08020106900270887
+      ],
+      "linf": 0.05,
+      "l2": 2.8578838324886475,
+      "fractional_coordinates": 0
+    },
+    {
+      "start": "init",
+      "eta": 0.05,
+      "method": "l1_pcgrad_vector",
+      "predicted_gains": [
+        0.004400030563685278,
+        0.005181800426641095,
+        0.004862546743424798,
+        0.0043404943984382965
+      ],
+      "minimum_predicted_gain": 0.0043404943984382965,
+      "gradient_scales": [
+        0.08079749672199331,
+        0.3593575212116768,
+        0.1486794660107602,
+        0.08020106900270887
+      ],
+      "linf": 0.05,
+      "l2": 0.27732791658715195,
+      "fractional_coordinates": 3266
+    },
+    {
+      "start": "init",
+      "eta": 0.05,
+      "method": "l1_maximin",
+      "predicted_gains": [
+        0.02742476325805578,
+        0.027424763258055904,
+        0.027424763258055842,
+        0.027424763258055835
+      ],
+      "minimum_predicted_gain": 0.02742476325805578,
+      "gradient_scales": [
+        0.08079749672199331,
+        0.3593575212116768,
+        0.1486794660107602,
+        0.08020106900270887
+      ],
+      "linf": 0.05,
+      "l2": 2.8571082381638746,
+      "fractional_coordinates": 3,
+      "duality_gap": 4.168792312734352e-17,
+      "dual_weights": [
+        0.22407414691234495,
+        0.2172507443820074,
+        0.2842164013828441,
+        0.27445870732280353
+      ],
+      "positive_margin": true,
+      "optimal_margin": 0.027424763258055845
+    },
+    {
+      "start": "init",
+      "eta": 0.05,
+      "method": "interaction_solo_lp",
+      "maximum_solo_linear_gain": 2.3704555842090497e-16,
+      "status": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "interaction_linear_gain": 5.36109933985328e-07
+    },
+    {
+      "start": "moderate",
+      "eta": 0.01,
+      "method": "raw_mean_sign",
+      "predicted_gains": [
+        0.004868455826810415,
+        0.016757424945630695,
+        0.03558474662230737,
+        0.004681538858314528
+      ],
+      "minimum_predicted_gain": 0.004681538858314528,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.01,
+      "l2": 0.5715767664977285,
+      "fractional_coordinates": 0
+    },
+    {
+      "start": "moderate",
+      "eta": 0.01,
+      "method": "raw_pcgrad_sign",
+      "predicted_gains": [
+        0.004868455826810415,
+        0.016757424945630695,
+        0.03558474662230737,
+        0.004681538858314528
+      ],
+      "minimum_predicted_gain": 0.004681538858314528,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.01,
+      "l2": 0.5715767664977285,
+      "fractional_coordinates": 0
+    },
+    {
+      "start": "moderate",
+      "eta": 0.01,
+      "method": "raw_pcgrad_vector",
+      "predicted_gains": [
+        0.0004799002792811273,
+        0.0013092463950398906,
+        0.004563963762516585,
+        0.00041284551422350314
+      ],
+      "minimum_predicted_gain": 0.00041284551422350314,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.01,
+      "l2": 0.034069332565826914,
+      "fractional_coordinates": 3266
+    },
+    {
+      "start": "moderate",
+      "eta": 0.01,
+      "method": "raw_maximin",
+      "predicted_gains": [
+        0.008661442059973037,
+        0.008661442059973027,
+        0.012864127033597081,
+        0.008661442059973053
+      ],
+      "minimum_predicted_gain": 0.008661442059973027,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.01,
+      "l2": 0.5714075489381395,
+      "fractional_coordinates": 2,
+      "duality_gap": 0.0,
+      "dual_weights": [
+        0.3561019360121713,
+        0.06395227960963962,
+        0.0,
+        0.579945784378189
+      ],
+      "positive_margin": true,
+      "optimal_margin": 0.008661442059973035
+    },
+    {
+      "start": "moderate",
+      "eta": 0.01,
+      "method": "l1_mean_sign",
+      "predicted_gains": [
+        0.006637726537057169,
+        0.004879779441233951,
+        0.006403005423480992,
+        0.00660784560553096
+      ],
+      "minimum_predicted_gain": 0.004879779441233951,
+      "gradient_scales": [
+        1.1944258655333742,
+        2.905206567276603,
+        4.407053433165821,
+        1.0319741344972235
+      ],
+      "linf": 0.01,
+      "l2": 0.5715767664977285,
+      "fractional_coordinates": 0
+    },
+    {
+      "start": "moderate",
+      "eta": 0.01,
+      "method": "l1_pcgrad_sign",
+      "predicted_gains": [
+        0.006637726537057169,
+        0.004879779441233951,
+        0.006403005423480992,
+        0.00660784560553096
+      ],
+      "minimum_predicted_gain": 0.004879779441233951,
+      "gradient_scales": [
+        1.1944258655333742,
+        2.905206567276603,
+        4.407053433165821,
+        1.0319741344972235
+      ],
+      "linf": 0.01,
+      "l2": 0.5715767664977285,
+      "fractional_coordinates": 0
+    },
+    {
+      "start": "moderate",
+      "eta": 0.01,
+      "method": "l1_pcgrad_vector",
+      "predicted_gains": [
+        0.00084121070670152,
+        0.0005898985227320705,
+        0.0010636423158754131,
+        0.0008384648330129871
+      ],
+      "minimum_predicted_gain": 0.0005898985227320705,
+      "gradient_scales": [
+        1.1944258655333742,
+        2.905206567276603,
+        4.407053433165821,
+        1.0319741344972235
+      ],
+      "linf": 0.01,
+      "l2": 0.04546546280299073,
+      "fractional_coordinates": 3266
+    },
+    {
+      "start": "moderate",
+      "eta": 0.01,
+      "method": "l1_maximin",
+      "predicted_gains": [
+        0.00607368569052041,
+        0.006073685690520419,
+        0.006073685690520409,
+        0.006073685690520398
+      ],
+      "minimum_predicted_gain": 0.006073685690520398,
+      "gradient_scales": [
+        1.1944258655333742,
+        2.905206567276603,
+        4.407053433165821,
+        1.0319741344972235
+      ],
+      "linf": 0.01,
+      "l2": 0.5713680294396349,
+      "fractional_coordinates": 3,
+      "duality_gap": 1.0567315398020979e-17,
+      "dual_weights": [
+        0.22614568046042538,
+        0.3159050542097479,
+        0.24299208289046445,
+        0.21495718243936224
+      ],
+      "positive_margin": true,
+      "optimal_margin": 0.006073685690520407
+    },
+    {
+      "start": "moderate",
+      "eta": 0.01,
+      "method": "interaction_solo_lp",
+      "maximum_solo_linear_gain": 6.971081155902892e-19,
+      "status": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "interaction_linear_gain": 2.9815698349151504e-07
+    },
+    {
+      "start": "moderate",
+      "eta": 0.05,
+      "method": "raw_mean_sign",
+      "predicted_gains": [
+        0.02434227913405208,
+        0.08378712472815349,
+        0.17792373311153684,
+        0.023407694291572637
+      ],
+      "minimum_predicted_gain": 0.023407694291572637,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.05,
+      "l2": 2.8578838324886475,
+      "fractional_coordinates": 0
+    },
+    {
+      "start": "moderate",
+      "eta": 0.05,
+      "method": "raw_pcgrad_sign",
+      "predicted_gains": [
+        0.02434227913405208,
+        0.08378712472815349,
+        0.17792373311153684,
+        0.023407694291572637
+      ],
+      "minimum_predicted_gain": 0.023407694291572637,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.05,
+      "l2": 2.8578838324886475,
+      "fractional_coordinates": 0
+    },
+    {
+      "start": "moderate",
+      "eta": 0.05,
+      "method": "raw_pcgrad_vector",
+      "predicted_gains": [
+        0.002399501396405636,
+        0.006546231975199453,
+        0.022819818812582913,
+        0.002064227571117515
+      ],
+      "minimum_predicted_gain": 0.002064227571117515,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.05,
+      "l2": 0.17034666282913455,
+      "fractional_coordinates": 3266
+    },
+    {
+      "start": "moderate",
+      "eta": 0.05,
+      "method": "raw_maximin",
+      "predicted_gains": [
+        0.04330721029986525,
+        0.04330721029986523,
+        0.06432063516798546,
+        0.04330721029986522
+      ],
+      "minimum_predicted_gain": 0.04330721029986522,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.05,
+      "l2": 2.857037744690701,
+      "fractional_coordinates": 2,
+      "duality_gap": 0.0,
+      "dual_weights": [
+        0.3561019360121713,
+        0.06395227960963962,
+        0.0,
+        0.579945784378189
+      ],
+      "positive_margin": true,
+      "optimal_margin": 0.043307210299865256
+    },
+    {
+      "start": "moderate",
+      "eta": 0.05,
+      "method": "l1_mean_sign",
+      "predicted_gains": [
+        0.03318863268528584,
+        0.02439889720616977,
+        0.03201502711740496,
+        0.0330392280276548
+      ],
+      "minimum_predicted_gain": 0.02439889720616977,
+      "gradient_scales": [
+        1.1944258655333742,
+        2.905206567276603,
+        4.407053433165821,
+        1.0319741344972235
+      ],
+      "linf": 0.05,
+      "l2": 2.8578838324886475,
+      "fractional_coordinates": 0
+    },
+    {
+      "start": "moderate",
+      "eta": 0.05,
+      "method": "l1_pcgrad_sign",
+      "predicted_gains": [
+        0.03318863268528584,
+        0.02439889720616977,
+        0.03201502711740496,
+        0.0330392280276548
+      ],
+      "minimum_predicted_gain": 0.02439889720616977,
+      "gradient_scales": [
+        1.1944258655333742,
+        2.905206567276603,
+        4.407053433165821,
+        1.0319741344972235
+      ],
+      "linf": 0.05,
+      "l2": 2.8578838324886475,
+      "fractional_coordinates": 0
+    },
+    {
+      "start": "moderate",
+      "eta": 0.05,
+      "method": "l1_pcgrad_vector",
+      "predicted_gains": [
+        0.0042060535335076005,
+        0.0029494926136603523,
+        0.005318211579377067,
+        0.004192324165064938
+      ],
+      "minimum_predicted_gain": 0.0029494926136603523,
+      "gradient_scales": [
+        1.1944258655333742,
+        2.905206567276603,
+        4.407053433165821,
+        1.0319741344972235
+      ],
+      "linf": 0.05,
+      "l2": 0.22732731401495374,
+      "fractional_coordinates": 3266
+    },
+    {
+      "start": "moderate",
+      "eta": 0.05,
+      "method": "l1_maximin",
+      "predicted_gains": [
+        0.03036842845260205,
+        0.030368428452602052,
+        0.030368428452601976,
+        0.030368428452602153
+      ],
+      "minimum_predicted_gain": 0.030368428452601976,
+      "gradient_scales": [
+        1.1944258655333742,
+        2.905206567276603,
+        4.407053433165821,
+        1.0319741344972235
+      ],
+      "linf": 0.05,
+      "l2": 2.8568401471981795,
+      "fractional_coordinates": 3,
+      "duality_gap": 0.0,
+      "dual_weights": [
+        0.22614568046042538,
+        0.3159050542097479,
+        0.24299208289046445,
+        0.21495718243936224
+      ],
+      "positive_margin": true,
+      "optimal_margin": 0.030368428452602063
+    },
+    {
+      "start": "moderate",
+      "eta": 0.05,
+      "method": "interaction_solo_lp",
+      "maximum_solo_linear_gain": 1.3552527156068805e-20,
+      "status": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "interaction_linear_gain": 1.4907849174575746e-06
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.01,
+      "method": "raw_mean_sign",
+      "predicted_gains": [
+        0.05324107170758897,
+        0.03702122437701611,
+        0.06338200368161948,
+        0.05903024912116237
+      ],
+      "minimum_predicted_gain": 0.03702122437701611,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.01,
+      "l2": 0.5448853090330102,
+      "fractional_coordinates": 70
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.01,
+      "method": "raw_pcgrad_sign",
+      "predicted_gains": [
+        0.05324107170758897,
+        0.03702122437701611,
+        0.06338200368161948,
+        0.05903024912116237
+      ],
+      "minimum_predicted_gain": 0.03702122437701611,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.01,
+      "l2": 0.5448853090330102,
+      "fractional_coordinates": 70
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.01,
+      "method": "raw_pcgrad_vector",
+      "predicted_gains": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "minimum_predicted_gain": 0.0,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.0,
+      "l2": 0.0,
+      "fractional_coordinates": 2888
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.01,
+      "method": "raw_maximin",
+      "predicted_gains": [
+        0.04977613849382299,
+        0.04977613849565574,
+        0.049776138493156354,
+        0.049776138493059986
+      ],
+      "minimum_predicted_gain": 0.049776138493059986,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.01,
+      "l2": 0.5434801887845654,
+      "fractional_coordinates": 73,
+      "duality_gap": 4.235514313064633e-12,
+      "dual_weights": [
+        0.23420119521613947,
+        0.5244281900067606,
+        0.14097364513494,
+        0.10039696964215994
+      ],
+      "positive_margin": true,
+      "optimal_margin": 0.049776138493059986
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.01,
+      "method": "l1_mean_sign",
+      "predicted_gains": [
+        0.007909868725367444,
+        0.007056934062326549,
+        0.006667776068433474,
+        0.008215979654629182
+      ],
+      "minimum_predicted_gain": 0.006667776068433474,
+      "gradient_scales": [
+        6.747921539981929,
+        5.648341038649086,
+        8.795340216331365,
+        7.301071131212046
+      ],
+      "linf": 0.01,
+      "l2": 0.5442425929675103,
+      "fractional_coordinates": 70
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.01,
+      "method": "l1_pcgrad_sign",
+      "predicted_gains": [
+        0.007909868725367444,
+        0.007056934062326549,
+        0.006667776068433474,
+        0.008215979654629182
+      ],
+      "minimum_predicted_gain": 0.006667776068433474,
+      "gradient_scales": [
+        6.747921539981929,
+        5.648341038649086,
+        8.795340216331365,
+        7.301071131212046
+      ],
+      "linf": 0.01,
+      "l2": 0.5442425929675103,
+      "fractional_coordinates": 70
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.01,
+      "method": "l1_pcgrad_vector",
+      "predicted_gains": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "minimum_predicted_gain": 0.0,
+      "gradient_scales": [
+        6.747921539981929,
+        5.648341038649086,
+        8.795340216331365,
+        7.301071131212046
+      ],
+      "linf": 0.0,
+      "l2": 0.0,
+      "fractional_coordinates": 2888
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.01,
+      "method": "l1_maximin",
+      "predicted_gains": [
+        0.0073835955464339065,
+        0.007383595546308516,
+        0.007383595546802079,
+        0.0073835955467495724
+      ],
+      "minimum_predicted_gain": 0.007383595546308516,
+      "gradient_scales": [
+        6.747921539981929,
+        5.648341038649086,
+        8.795340216331365,
+        7.301071131212046
+      ],
+      "linf": 0.01,
+      "l2": 0.5445401434168358,
+      "fractional_coordinates": 73,
+      "duality_gap": 4.295776782732136e-13,
+      "dual_weights": [
+        0.2110535769712616,
+        0.29495879594478697,
+        0.3219865342319159,
+        0.17200109285203552
+      ],
+      "positive_margin": true,
+      "optimal_margin": 0.007383595546308516
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.01,
+      "method": "interaction_solo_lp",
+      "maximum_solo_linear_gain": 2.4514082538052676e-11,
+      "status": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "interaction_linear_gain": 1.138146023951423e-05
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.05,
+      "method": "raw_mean_sign",
+      "predicted_gains": [
+        0.2662053585379449,
+        0.18510612188508063,
+        0.3169100184080973,
+        0.2951512456058118
+      ],
+      "minimum_predicted_gain": 0.18510612188508063,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.05,
+      "l2": 2.724426545165057,
+      "fractional_coordinates": 70
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.05,
+      "method": "raw_pcgrad_sign",
+      "predicted_gains": [
+        0.2662053585379449,
+        0.18510612188508063,
+        0.3169100184080973,
+        0.2951512456058118
+      ],
+      "minimum_predicted_gain": 0.18510612188508063,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.05,
+      "l2": 2.724426545165057,
+      "fractional_coordinates": 70
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.05,
+      "method": "raw_pcgrad_vector",
+      "predicted_gains": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "minimum_predicted_gain": 0.0,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.0,
+      "l2": 0.0,
+      "fractional_coordinates": 2888
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.05,
+      "method": "raw_maximin",
+      "predicted_gains": [
+        0.2488806924691152,
+        0.2488806924782789,
+        0.24888069246578146,
+        0.24888069246529895
+      ],
+      "minimum_predicted_gain": 0.24888069246529895,
+      "gradient_scales": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "linf": 0.05,
+      "l2": 2.7174009439228306,
+      "fractional_coordinates": 73,
+      "duality_gap": 2.1178261608115562e-11,
+      "dual_weights": [
+        0.23420119521613947,
+        0.5244281900067606,
+        0.14097364513494,
+        0.10039696964215994
+      ],
+      "positive_margin": true,
+      "optimal_margin": 0.24888069246529962
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.05,
+      "method": "l1_mean_sign",
+      "predicted_gains": [
+        0.039549343626837215,
+        0.035284670311632745,
+        0.03333888034216736,
+        0.04107989827314591
+      ],
+      "minimum_predicted_gain": 0.03333888034216736,
+      "gradient_scales": [
+        6.747921539981929,
+        5.648341038649086,
+        8.795340216331365,
+        7.301071131212046
+      ],
+      "linf": 0.05,
+      "l2": 2.721212964837557,
+      "fractional_coordinates": 70
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.05,
+      "method": "l1_pcgrad_sign",
+      "predicted_gains": [
+        0.039549343626837215,
+        0.035284670311632745,
+        0.03333888034216736,
+        0.04107989827314591
+      ],
+      "minimum_predicted_gain": 0.03333888034216736,
+      "gradient_scales": [
+        6.747921539981929,
+        5.648341038649086,
+        8.795340216331365,
+        7.301071131212046
+      ],
+      "linf": 0.05,
+      "l2": 2.721212964837557,
+      "fractional_coordinates": 70
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.05,
+      "method": "l1_pcgrad_vector",
+      "predicted_gains": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "minimum_predicted_gain": 0.0,
+      "gradient_scales": [
+        6.747921539981929,
+        5.648341038649086,
+        8.795340216331365,
+        7.301071131212046
+      ],
+      "linf": 0.0,
+      "l2": 0.0,
+      "fractional_coordinates": 2888
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.05,
+      "method": "l1_maximin",
+      "predicted_gains": [
+        0.0369179777321695,
+        0.036917977731542574,
+        0.03691797773401041,
+        0.03691797773374789
+      ],
+      "minimum_predicted_gain": 0.036917977731542574,
+      "gradient_scales": [
+        6.747921539981929,
+        5.648341038649086,
+        8.795340216331365,
+        7.301071131212046
+      ],
+      "linf": 0.05,
+      "l2": 2.722700717084184,
+      "fractional_coordinates": 73,
+      "duality_gap": 2.1477746668834467e-12,
+      "dual_weights": [
+        0.2110535769712616,
+        0.29495879594478697,
+        0.3219865342319159,
+        0.17200109285203552
+      ],
+      "positive_margin": true,
+      "optimal_margin": 0.03691797773154255
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.05,
+      "method": "interaction_solo_lp",
+      "maximum_solo_linear_gain": 1.2257040868379754e-10,
+      "status": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "interaction_linear_gain": 5.690730119757116e-05
+    }
+  ]
+}

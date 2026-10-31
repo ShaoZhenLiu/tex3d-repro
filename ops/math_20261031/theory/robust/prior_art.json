@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-31",
+  "scope": "Focused primary-source screen; not a claim of exhaustive novelty",
+  "sources": [
+    {
+      "title": "Steepest Descent Methods for Multicriteria Optimization",
+      "url": "https://w3.impa.br/~benar/art/FliegeSvaiter2000.pdf",
+      "established": "Multiobjective steepest/feasible descent directions and Pareto first-order conditions.",
+      "boundary": "A common-ascent optimization direction is not itself new."
+    },
+    {
+      "title": "Multi-Task Learning as Multi-Objective Optimization",
+      "url": "https://arxiv.org/abs/1810.04650",
+      "established": "MGDA-style multiobjective task gradients and Pareto optimization in deep learning.",
+      "boundary": "Gradient balancing and a convex-hull diagnostic are established; the L2 vs executable L-infinity geometry must be explicit."
+    },
+    {
+      "title": "Gradient Surgery for Multi-Task Learning",
+      "url": "https://arxiv.org/abs/2001.06782",
+      "established": "PCGrad projects conflicting task gradients onto normal planes.",
+      "boundary": "Projection is a baseline. A subsequent sign operation is a separate transformation and need not preserve its common-ascent behavior."
+    },
+    {
+      "title": "Conflict-Averse Gradient Descent for Multi-task Learning",
+      "url": "https://arxiv.org/abs/2110.14048",
+      "established": "Worst local task improvement regularizes optimization of average loss; includes MGDA and ordinary gradient descent as special cases.",
+      "boundary": "Balancing average and worst local improvement is established."
+    },
+    {
+      "title": "Improving Generalization of Universal Adversarial Perturbation via Dynamic Maximin Optimization",
+      "url": "https://arxiv.org/abs/2503.12793",
+      "established": "DM-UAP uses dynamic model-data pairs and max-min-min optimization for universal perturbation generalization.",
+      "boundary": "Universal attacks with maximin are already occupied; merely switching the RefCloth loss aggregation is insufficient for an independent novelty claim."
+    }
+  ],
+  "possible_distinct_question": "Does sign-and-clip execution destroy common source-state ascent for one physical cloth, and can an executable primal LP repair it under actual native PNG export and independent-state validation?",
+  "not_claimed": ["new minimax theorem", "new LP duality", "first multiobjective attack", "certified native gradient error from finite probes", "closed-loop success from synthetic examples"]
+}

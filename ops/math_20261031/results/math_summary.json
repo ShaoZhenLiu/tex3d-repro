@@ -1,0 +1,1280 @@
+{
+  "record_count": 288,
+  "fit_state_count": 4,
+  "heldout_state_count": 4,
+  "target_queries": 0,
+  "new_closed_loop_success_rates": false,
+  "geometry": [
+    {
+      "start": "init",
+      "eta": 0.01,
+      "normalization": "raw",
+      "methods": {
+        "mean_sign": {
+          "task_gains": [
+            1.3427006933852681e-05,
+            0.0001518000046871748,
+            0.00047069358538465167,
+            3.623393263296748e-05
+          ],
+          "minimum": 1.3427006933852681e-05,
+          "mean": 0.00016803863240966166,
+          "raw_minimum": 1.3427006933852681e-05,
+          "raw_mean": 0.00016803863240966166,
+          "positive_tasks": 4,
+          "mean_native_action_gain": -1.3025989176185249e-08
+        },
+        "pcgrad_sign": {
+          "task_gains": [
+            0.000547778424788703,
+            0.0003858435479742184,
+            0.0006147300405245915,
+            0.00021650523876814987
+          ],
+          "minimum": 0.00021650523876814987,
+          "mean": 0.00044121431301391567,
+          "raw_minimum": 0.00021650523876814987,
+          "raw_mean": 0.00044121431301391567,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 3.584148373647622e-07
+        },
+        "pcgrad_vector": {
+          "task_gains": [
+            0.00011775992527418566,
+            -0.0001431762874517517,
+            0.0005312950880806966,
+            -7.354129854775238e-05
+          ],
+          "minimum": -0.0001431762874517517,
+          "mean": 0.00010808435683884454,
+          "raw_minimum": -0.0001431762874517517,
+          "raw_mean": 0.00010808435683884454,
+          "positive_tasks": 2,
+          "mean_native_action_gain": 1.1204890881799656e-07
+        },
+        "maximin": {
+          "task_gains": [
+            2.326225412616588e-05,
+            -7.411508804580115e-05,
+            0.0007843949414564119,
+            0.00025074535997191526
+          ],
+          "minimum": -7.411508804580115e-05,
+          "mean": 0.00024607186687717296,
+          "raw_minimum": -7.411508804580115e-05,
+          "raw_mean": 0.00024607186687717296,
+          "positive_tasks": 3,
+          "mean_native_action_gain": 1.2016022452598918e-06
+        }
+      },
+      "best_baseline_minimum": 0.00021650523876814987,
+      "best_baseline_mean": 0.00044121431301391567,
+      "worst_gain_better": false,
+      "gate_setting": false,
+      "mean_retention": 0.5577150595960199,
+      "fit_optimal_margin": 0.0005607677113675046,
+      "fit_duality_gap": 0.0
+    },
+    {
+      "start": "init",
+      "eta": 0.01,
+      "normalization": "l1",
+      "methods": {
+        "mean_sign": {
+          "task_gains": [
+            -0.0024107018059784917,
+            0.0014905867217201855,
+            0.0023936666816772143,
+            -0.003019523598462006
+          ],
+          "minimum": -0.003019523598462006,
+          "mean": -0.00038649300026077454,
+          "raw_minimum": -0.00024216902047555916,
+          "raw_mean": 0.00011364873544152804,
+          "positive_tasks": 2,
+          "mean_native_action_gain": 4.66155441358751e-07
+        },
+        "pcgrad_sign": {
+          "task_gains": [
+            0.001769717197597737,
+            0.001161680974504455,
+            0.0056131004302305484,
+            0.0009949730309055326
+          ],
+          "minimum": 0.0009949730309055326,
+          "mean": 0.0023848679083095683,
+          "raw_minimum": 7.9797900707489e-05,
+          "raw_mean": 0.00036869954756184493,
+          "positive_tasks": 4,
+          "mean_native_action_gain": -2.1776925507310807e-07
+        },
+        "pcgrad_vector": {
+          "task_gains": [
+            -0.0016588311350108614,
+            -0.0007691070054632051,
+            -0.0005201937325856113,
+            -0.000904193600803578
+          ],
+          "minimum": -0.0016588311350108614,
+          "mean": -0.0009630813684658139,
+          "raw_minimum": -0.00027638438702979294,
+          "raw_mean": -0.00014006830249400047,
+          "positive_tasks": 0,
+          "mean_native_action_gain": 2.481025802580916e-07
+        },
+        "maximin": {
+          "task_gains": [
+            -0.002592261520814644,
+            -0.00039140668359777627,
+            0.002647724654346714,
+            0.002823945934660366
+          ],
+          "minimum": -0.002592261520814644,
+          "mean": 0.000622000596148665,
+          "raw_minimum": -0.00020944824173057056,
+          "raw_mean": 6.75106482958647e-05,
+          "positive_tasks": 2,
+          "mean_native_action_gain": 6.568473764900773e-07
+        }
+      },
+      "best_baseline_minimum": 0.0009949730309055326,
+      "best_baseline_mean": 0.0023848679083095683,
+      "worst_gain_better": false,
+      "gate_setting": false,
+      "mean_retention": 0.26081134052810023,
+      "fit_optimal_margin": 0.005484952651611162,
+      "fit_duality_gap": 9.474527983487163e-19
+    },
+    {
+      "start": "init",
+      "eta": 0.05,
+      "normalization": "raw",
+      "methods": {
+        "mean_sign": {
+          "task_gains": [
+            0.011395739937142933,
+            0.004149514214077497,
+            0.008749121414439285,
+            0.014878918380418325
+          ],
+          "minimum": 0.004149514214077497,
+          "mean": 0.00979332348651951,
+          "raw_minimum": 0.004149514214077497,
+          "raw_mean": 0.00979332348651951,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 5.19410168919876e-06
+        },
+        "pcgrad_sign": {
+          "task_gains": [
+            0.009940342757181494,
+            0.0046243762022641025,
+            0.01014825353704509,
+            0.014453934168705015
+          ],
+          "minimum": 0.0046243762022641025,
+          "mean": 0.009791726666298926,
+          "raw_minimum": 0.0046243762022641025,
+          "raw_mean": 0.009791726666298926,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 4.835808866232583e-06
+        },
+        "pcgrad_vector": {
+          "task_gains": [
+            -0.000300563656855957,
+            0.00025146208317892126,
+            0.0010886727653996783,
+            -0.00017412555789633223
+          ],
+          "minimum": -0.000300563656855957,
+          "mean": 0.00021636140845657757,
+          "raw_minimum": -0.000300563656855957,
+          "raw_mean": 0.00021636140845657757,
+          "positive_tasks": 2,
+          "mean_native_action_gain": 4.621221449951918e-07
+        },
+        "maximin": {
+          "task_gains": [
+            0.009691791392106098,
+            0.004928145690064412,
+            0.00906003338022856,
+            0.011917030105541926
+          ],
+          "minimum": 0.004928145690064412,
+          "mean": 0.008899250141985249,
+          "raw_minimum": 0.004928145690064412,
+          "raw_mean": 0.008899250141985249,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 9.472309855595995e-06
+        }
+      },
+      "best_baseline_minimum": 0.0046243762022641025,
+      "best_baseline_mean": 0.00979332348651951,
+      "worst_gain_better": true,
+      "gate_setting": true,
+      "mean_retention": 0.9087058294597384,
+      "fit_optimal_margin": 0.00280383855683752,
+      "fit_duality_gap": 0.0
+    },
+    {
+      "start": "init",
+      "eta": 0.05,
+      "normalization": "l1",
+      "methods": {
+        "mean_sign": {
+          "task_gains": [
+            0.1367342923199681,
+            0.01350811125025168,
+            0.06884080579780144,
+            0.19471996566367553
+          ],
+          "minimum": 0.01350811125025168,
+          "mean": 0.10345079375792418,
+          "raw_minimum": 0.004854241375142008,
+          "raw_mean": 0.010438498389703453,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 9.849042797327456e-06
+        },
+        "pcgrad_sign": {
+          "task_gains": [
+            0.13621994999931275,
+            0.014475856951486588,
+            0.07891227313940774,
+            0.19593383784593227
+          ],
+          "minimum": 0.014475856951486588,
+          "mean": 0.10638547948403483,
+          "raw_minimum": 0.0052020080715010405,
+          "raw_mean": 0.010913744229037547,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 8.979029942679517e-06
+        },
+        "pcgrad_vector": {
+          "task_gains": [
+            0.002891620368618713,
+            -0.00021262876772319608,
+            0.006430305979456685,
+            -0.0005071397924646621
+          ],
+          "minimum": -0.0005071397924646621,
+          "mean": 0.0021505394469718848,
+          "raw_minimum": -7.640974690730114e-05,
+          "raw_mean": 0.00026815181154233973,
+          "positive_tasks": 2,
+          "mean_native_action_gain": 7.983041427905846e-08
+        },
+        "maximin": {
+          "task_gains": [
+            0.12932947871114037,
+            0.013350667825948676,
+            0.075307301269087,
+            0.209175456242127
+          ],
+          "minimum": 0.013350667825948676,
+          "mean": 0.10679072601207576,
+          "raw_minimum": 0.004797662896453402,
+          "raw_mean": 0.010804976391955276,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 1.0956523468053092e-05
+        }
+      },
+      "best_baseline_minimum": 0.014475856951486588,
+      "best_baseline_mean": 0.10638547948403483,
+      "worst_gain_better": false,
+      "gate_setting": false,
+      "mean_retention": 1.0038092278194952,
+      "fit_optimal_margin": 0.027424763258055845,
+      "fit_duality_gap": 4.168792312734352e-17
+    },
+    {
+      "start": "moderate",
+      "eta": 0.01,
+      "normalization": "raw",
+      "methods": {
+        "mean_sign": {
+          "task_gains": [
+            0.001530660898424685,
+            0.006047398434020579,
+            0.0034488687524572015,
+            0.00026191084180027246
+          ],
+          "minimum": 0.00026191084180027246,
+          "mean": 0.0028222097316756845,
+          "raw_minimum": 0.00026191084180027246,
+          "raw_mean": 0.0028222097316756845,
+          "positive_tasks": 4,
+          "mean_native_action_gain": -5.6813901210261974e-06
+        },
+        "pcgrad_sign": {
+          "task_gains": [
+            0.001530660898424685,
+            0.006047398434020579,
+            0.0034488687524572015,
+            0.00026191084180027246
+          ],
+          "minimum": 0.00026191084180027246,
+          "mean": 0.0028222097316756845,
+          "raw_minimum": 0.00026191084180027246,
+          "raw_mean": 0.0028222097316756845,
+          "positive_tasks": 4,
+          "mean_native_action_gain": -5.6813901210261974e-06
+        },
+        "pcgrad_vector": {
+          "task_gains": [
+            0.0021393397357314797,
+            -0.0006919367704540519,
+            0.0003810213413089486,
+            -0.0003499551210552482
+          ],
+          "minimum": -0.0006919367704540519,
+          "mean": 0.00036961729638278207,
+          "raw_minimum": -0.0006919367704540519,
+          "raw_mean": 0.00036961729638278207,
+          "positive_tasks": 2,
+          "mean_native_action_gain": 1.1752690625144169e-06
+        },
+        "maximin": {
+          "task_gains": [
+            0.0014844709890894509,
+            -8.604620816186903e-05,
+            0.004846182267647228,
+            -0.0016424818080850029
+          ],
+          "minimum": -0.0016424818080850029,
+          "mean": 0.0011505313101224518,
+          "raw_minimum": -0.0016424818080850029,
+          "raw_mean": 0.0011505313101224518,
+          "positive_tasks": 2,
+          "mean_native_action_gain": 1.6061676433309913e-06
+        }
+      },
+      "best_baseline_minimum": 0.00026191084180027246,
+      "best_baseline_mean": 0.0028222097316756845,
+      "worst_gain_better": false,
+      "gate_setting": false,
+      "mean_retention": 0.4076703787139607,
+      "fit_optimal_margin": 0.008661442059973035,
+      "fit_duality_gap": 0.0
+    },
+    {
+      "start": "moderate",
+      "eta": 0.01,
+      "normalization": "l1",
+      "methods": {
+        "mean_sign": {
+          "task_gains": [
+            0.0006816809738705225,
+            0.0013525927184580375,
+            0.0008479770468137044,
+            -0.00027089417721590806
+          ],
+          "minimum": -0.00027089417721590806,
+          "mean": 0.000652839140481589,
+          "raw_minimum": -0.0002795557840727242,
+          "raw_mean": 0.0020503257517702905,
+          "positive_tasks": 3,
+          "mean_native_action_gain": 5.405931915447582e-07
+        },
+        "pcgrad_sign": {
+          "task_gains": [
+            0.0006816809738705225,
+            0.0013525927184580375,
+            0.0008479770468137044,
+            -0.00027089417721590806
+          ],
+          "minimum": -0.00027089417721590806,
+          "mean": 0.000652839140481589,
+          "raw_minimum": -0.0002795557840727242,
+          "raw_mean": 0.0020503257517702905,
+          "positive_tasks": 3,
+          "mean_native_action_gain": 5.405931915447582e-07
+        },
+        "pcgrad_vector": {
+          "task_gains": [
+            0.0006076861945552505,
+            -0.0005274932243374714,
+            1.965339152446775e-05,
+            -0.0004662500073528899
+          ],
+          "minimum": -0.0005274932243374714,
+          "mean": -9.160091140266078e-05,
+          "raw_minimum": -0.0015324767795391325,
+          "raw_mean": -0.000300296267960215,
+          "positive_tasks": 2,
+          "mean_native_action_gain": -2.848097665264504e-06
+        },
+        "maximin": {
+          "task_gains": [
+            0.0009353055976343266,
+            0.0018342974422496507,
+            0.001341782263841711,
+            -0.0007498651221395936
+          ],
+          "minimum": -0.0007498651221395936,
+          "mean": 0.0008403800453965236,
+          "raw_minimum": -0.0007738414104096619,
+          "raw_mean": 0.0028964077238924774,
+          "positive_tasks": 3,
+          "mean_native_action_gain": 2.452360149618471e-06
+        }
+      },
+      "best_baseline_minimum": -0.00027089417721590806,
+      "best_baseline_mean": 0.000652839140481589,
+      "worst_gain_better": false,
+      "gate_setting": false,
+      "mean_retention": 1.2872697013487713,
+      "fit_optimal_margin": 0.006073685690520407,
+      "fit_duality_gap": 1.0567315398020979e-17
+    },
+    {
+      "start": "moderate",
+      "eta": 0.05,
+      "normalization": "raw",
+      "methods": {
+        "mean_sign": {
+          "task_gains": [
+            0.0048670535790733965,
+            0.03226030523655936,
+            0.021525676350574938,
+            0.0035906853037886294
+          ],
+          "minimum": 0.0035906853037886294,
+          "mean": 0.01556093011749908,
+          "raw_minimum": 0.0035906853037886294,
+          "raw_mean": 0.01556093011749908,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 1.981186414923286e-06
+        },
+        "pcgrad_sign": {
+          "task_gains": [
+            0.0048670535790733965,
+            0.03226030523655936,
+            0.021525676350574938,
+            0.0035906853037886294
+          ],
+          "minimum": 0.0035906853037886294,
+          "mean": 0.01556093011749908,
+          "raw_minimum": 0.0035906853037886294,
+          "raw_mean": 0.01556093011749908,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 1.981186414923286e-06
+        },
+        "pcgrad_vector": {
+          "task_gains": [
+            -6.12351461313776e-05,
+            -0.0002594205900095514,
+            0.0027712707058526465,
+            0.001032854674849648
+          ],
+          "minimum": -0.0002594205900095514,
+          "mean": 0.0008708674111403414,
+          "raw_minimum": -0.0002594205900095514,
+          "raw_mean": 0.0008708674111403414,
+          "positive_tasks": 2,
+          "mean_native_action_gain": 2.853910245903535e-06
+        },
+        "maximin": {
+          "task_gains": [
+            0.01054958298336714,
+            0.039821256394498045,
+            0.022711305390112096,
+            0.015961982752196485
+          ],
+          "minimum": 0.01054958298336714,
+          "mean": 0.02226103188004344,
+          "raw_minimum": 0.01054958298336714,
+          "raw_mean": 0.02226103188004344,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 9.828243037190987e-06
+        }
+      },
+      "best_baseline_minimum": 0.0035906853037886294,
+      "best_baseline_mean": 0.01556093011749908,
+      "worst_gain_better": true,
+      "gate_setting": true,
+      "mean_retention": 1.4305720616924913,
+      "fit_optimal_margin": 0.043307210299865256,
+      "fit_duality_gap": 0.0
+    },
+    {
+      "start": "moderate",
+      "eta": 0.05,
+      "normalization": "l1",
+      "methods": {
+        "mean_sign": {
+          "task_gains": [
+            0.006268406490069018,
+            0.013638902553331642,
+            0.0055005908570218715,
+            0.00852170929590893
+          ],
+          "minimum": 0.0055005908570218715,
+          "mean": 0.008482402299082866,
+          "raw_minimum": 0.007487146847415707,
+          "raw_mean": 0.020036639377940438,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 3.313664365123259e-06
+        },
+        "pcgrad_sign": {
+          "task_gains": [
+            0.006268406490069018,
+            0.013638902553331642,
+            0.0055005908570218715,
+            0.00852170929590893
+          ],
+          "minimum": 0.0055005908570218715,
+          "mean": 0.008482402299082866,
+          "raw_minimum": 0.007487146847415707,
+          "raw_mean": 0.020036639377940438,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 3.313664365123259e-06
+        },
+        "pcgrad_vector": {
+          "task_gains": [
+            0.0011419727244306684,
+            0.002244897064770778,
+            0.00045367258730643213,
+            -0.0007690410788325745
+          ],
+          "minimum": -0.0007690410788325745,
+          "mean": 0.0007678753244188261,
+          "raw_minimum": -0.0007936305017210571,
+          "raw_mean": 0.002272905071731654,
+          "positive_tasks": 3,
+          "mean_native_action_gain": 3.765308065339923e-08
+        },
+        "maximin": {
+          "task_gains": [
+            0.006720669188157759,
+            0.014244763889106954,
+            0.005667827308476216,
+            0.006938312195795024
+          ],
+          "minimum": 0.005667827308476216,
+          "mean": 0.008392893145383988,
+          "raw_minimum": 0.0071601587231271,
+          "raw_mean": 0.020387474808376285,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 4.053580141771818e-06
+        }
+      },
+      "best_baseline_minimum": 0.0055005908570218715,
+      "best_baseline_mean": 0.008482402299082866,
+      "worst_gain_better": true,
+      "gate_setting": true,
+      "mean_retention": 0.9894476646422965,
+      "fit_optimal_margin": 0.030368428452602063,
+      "fit_duality_gap": 0.0
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.01,
+      "normalization": "raw",
+      "methods": {
+        "mean_sign": {
+          "task_gains": [
+            0.05141217373311502,
+            0.021060296520590605,
+            0.030973741039633573,
+            0.031017550453543485
+          ],
+          "minimum": 0.021060296520590605,
+          "mean": 0.03361594043672067,
+          "raw_minimum": 0.021060296520590605,
+          "raw_mean": 0.03361594043672067,
+          "positive_tasks": 4,
+          "mean_native_action_gain": -1.5750760212540627e-05
+        },
+        "pcgrad_sign": {
+          "task_gains": [
+            0.05141217373311502,
+            0.021060296520590605,
+            0.030973741039633573,
+            0.031017550453543485
+          ],
+          "minimum": 0.021060296520590605,
+          "mean": 0.03361594043672067,
+          "raw_minimum": 0.021060296520590605,
+          "raw_mean": 0.03361594043672067,
+          "positive_tasks": 4,
+          "mean_native_action_gain": -1.5750760212540627e-05
+        },
+        "pcgrad_vector": {
+          "task_gains": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "minimum": 0.0,
+          "mean": 0.0,
+          "raw_minimum": 0.0,
+          "raw_mean": 0.0,
+          "positive_tasks": 0,
+          "mean_native_action_gain": 0.0
+        },
+        "maximin": {
+          "task_gains": [
+            0.037996136024594396,
+            0.019699298217892736,
+            0.017674826458096593,
+            0.02089615948498258
+          ],
+          "minimum": 0.017674826458096593,
+          "mean": 0.024066605046391576,
+          "raw_minimum": 0.017674826458096593,
+          "raw_mean": 0.024066605046391576,
+          "positive_tasks": 4,
+          "mean_native_action_gain": -3.0927592888474464e-05
+        }
+      },
+      "best_baseline_minimum": 0.021060296520590605,
+      "best_baseline_mean": 0.03361594043672067,
+      "worst_gain_better": false,
+      "gate_setting": false,
+      "mean_retention": 0.715928358205389,
+      "fit_optimal_margin": 0.049776138493059986,
+      "fit_duality_gap": 4.235514313064633e-12
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.01,
+      "normalization": "l1",
+      "methods": {
+        "mean_sign": {
+          "task_gains": [
+            0.007644037574499169,
+            0.004702200834930698,
+            0.0026971953666755787,
+            0.00444211280667531
+          ],
+          "minimum": 0.0026971953666755787,
+          "mean": 0.004871386645695188,
+          "raw_minimum": 0.02372275087982434,
+          "raw_mean": 0.033573983050882994,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 9.314622730016708e-06
+        },
+        "pcgrad_sign": {
+          "task_gains": [
+            0.007644037574499169,
+            0.004702200834930698,
+            0.0026971953666755787,
+            0.00444211280667531
+          ],
+          "minimum": 0.0026971953666755787,
+          "mean": 0.004871386645695188,
+          "raw_minimum": 0.02372275087982434,
+          "raw_mean": 0.033573983050882994,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 9.314622730016708e-06
+        },
+        "pcgrad_vector": {
+          "task_gains": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "minimum": 0.0,
+          "mean": 0.0,
+          "raw_minimum": 0.0,
+          "raw_mean": 0.0,
+          "positive_tasks": 0,
+          "mean_native_action_gain": 0.0
+        },
+        "maximin": {
+          "task_gains": [
+            0.005892851155316511,
+            0.005659646512322586,
+            0.0026387508088613534,
+            0.003946289968634584
+          ],
+          "minimum": 0.0026387508088613534,
+          "mean": 0.004534384611283759,
+          "raw_minimum": 0.02320871111005518,
+          "raw_mean": 0.030938241444527836,
+          "positive_tasks": 4,
+          "mean_native_action_gain": -0.00013095256872475147
+        }
+      },
+      "best_baseline_minimum": 0.0026971953666755787,
+      "best_baseline_mean": 0.004871386645695188,
+      "worst_gain_better": false,
+      "gate_setting": false,
+      "mean_retention": 0.9308201013546654,
+      "fit_optimal_margin": 0.007383595546308516,
+      "fit_duality_gap": 4.295776782732136e-13
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.05,
+      "normalization": "raw",
+      "methods": {
+        "mean_sign": {
+          "task_gains": [
+            0.1761634197086095,
+            0.11977533958852282,
+            0.1389126028865575,
+            0.13204406164586535
+          ],
+          "minimum": 0.11977533958852282,
+          "mean": 0.1417238559573888,
+          "raw_minimum": 0.11977533958852282,
+          "raw_mean": 0.1417238559573888,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 7.420615293085575e-05
+        },
+        "pcgrad_sign": {
+          "task_gains": [
+            0.1761634197086095,
+            0.11977533958852282,
+            0.1389126028865575,
+            0.13204406164586535
+          ],
+          "minimum": 0.11977533958852282,
+          "mean": 0.1417238559573888,
+          "raw_minimum": 0.11977533958852282,
+          "raw_mean": 0.1417238559573888,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 7.420615293085575e-05
+        },
+        "pcgrad_vector": {
+          "task_gains": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "minimum": 0.0,
+          "mean": 0.0,
+          "raw_minimum": 0.0,
+          "raw_mean": 0.0,
+          "positive_tasks": 0,
+          "mean_native_action_gain": 0.0
+        },
+        "maximin": {
+          "task_gains": [
+            0.14901792462915164,
+            0.12429451402276737,
+            0.12009447272866947,
+            0.11818563397973758
+          ],
+          "minimum": 0.11818563397973758,
+          "mean": 0.12789813634008151,
+          "raw_minimum": 0.11818563397973758,
+          "raw_mean": 0.12789813634008151,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 6.50607980787754e-05
+        }
+      },
+      "best_baseline_minimum": 0.11977533958852282,
+      "best_baseline_mean": 0.1417238559573888,
+      "worst_gain_better": false,
+      "gate_setting": false,
+      "mean_retention": 0.9024460665149827,
+      "fit_optimal_margin": 0.24888069246529962,
+      "fit_duality_gap": 2.1178261608115562e-11
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.05,
+      "normalization": "l1",
+      "methods": {
+        "mean_sign": {
+          "task_gains": [
+            0.02553723004520858,
+            0.021646892656423236,
+            0.014790487940892385,
+            0.01634457536493837
+          ],
+          "minimum": 0.014790487940892385,
+          "mean": 0.019579796501865643,
+          "raw_minimum": 0.11933290734887114,
+          "raw_mean": 0.1360031343996524,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 7.599638774991035e-05
+        },
+        "pcgrad_sign": {
+          "task_gains": [
+            0.02553723004520858,
+            0.021646892656423236,
+            0.014790487940892385,
+            0.01634457536493837
+          ],
+          "minimum": 0.014790487940892385,
+          "mean": 0.019579796501865643,
+          "raw_minimum": 0.11933290734887114,
+          "raw_mean": 0.1360031343996524,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 7.599638774991035e-05
+        },
+        "pcgrad_vector": {
+          "task_gains": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "minimum": 0.0,
+          "mean": 0.0,
+          "raw_minimum": 0.0,
+          "raw_mean": 0.0,
+          "positive_tasks": 0,
+          "mean_native_action_gain": 0.0
+        },
+        "maximin": {
+          "task_gains": [
+            0.025097307010822092,
+            0.02007604129543332,
+            0.013298502974123699,
+            0.016201755218655974
+          ],
+          "minimum": 0.013298502974123699,
+          "mean": 0.01866840162475877,
+          "raw_minimum": 0.11339632794260979,
+          "raw_mean": 0.12950150296092033,
+          "positive_tasks": 4,
+          "mean_native_action_gain": 6.38479832559824e-05
+        }
+      },
+      "best_baseline_minimum": 0.014790487940892385,
+      "best_baseline_mean": 0.019579796501865643,
+      "worst_gain_better": false,
+      "gate_setting": false,
+      "mean_retention": 0.9534522804146595,
+      "fit_optimal_margin": 0.03691797773154255,
+      "fit_duality_gap": 2.1477746668834467e-12
+    }
+  ],
+  "fusion": [
+    {
+      "start": "init",
+      "eta": 0.01,
+      "method": "action_mean",
+      "solo_preserved_states": 0,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": -6.182582268365877e-07,
+      "mean_interaction_gain": 1.4426745451601164e-06,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "init",
+      "eta": 0.01,
+      "method": "interaction_mean",
+      "solo_preserved_states": 1,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": 1.2585399389308805e-06,
+      "mean_interaction_gain": 3.3248807085328735e-07,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "init",
+      "eta": 0.01,
+      "method": "interaction_penalized",
+      "solo_preserved_states": 1,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": 1.1949765621466213e-09,
+      "mean_interaction_gain": -4.805316393685644e-07,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "init",
+      "eta": 0.01,
+      "method": "interaction_solo_lp",
+      "solo_preserved_states": 1,
+      "successful_joint_and_solo_states": 1,
+      "mean_joint_gain": 7.518927560568045e-07,
+      "mean_interaction_gain": 3.142730520266923e-08,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "init",
+      "eta": 0.05,
+      "method": "action_mean",
+      "solo_preserved_states": 0,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": 5.696341148109241e-06,
+      "mean_interaction_gain": 4.0933144873633864e-07,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "init",
+      "eta": 0.05,
+      "method": "interaction_mean",
+      "solo_preserved_states": 0,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": 7.90920735482814e-06,
+      "mean_interaction_gain": -1.230341695190873e-07,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "init",
+      "eta": 0.05,
+      "method": "interaction_penalized",
+      "solo_preserved_states": 0,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": 6.9740321322342425e-06,
+      "mean_interaction_gain": -9.373970044634916e-07,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "init",
+      "eta": 0.05,
+      "method": "interaction_solo_lp",
+      "solo_preserved_states": 0,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": 6.42518303095585e-06,
+      "mean_interaction_gain": 2.8626146786336903e-07,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "moderate",
+      "eta": 0.01,
+      "method": "action_mean",
+      "solo_preserved_states": 1,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": -1.9810563571809325e-06,
+      "mean_interaction_gain": 5.280806476548605e-07,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "moderate",
+      "eta": 0.01,
+      "method": "interaction_mean",
+      "solo_preserved_states": 0,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": -1.1388092389097437e-06,
+      "mean_interaction_gain": -8.144634193740785e-07,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "moderate",
+      "eta": 0.01,
+      "method": "interaction_penalized",
+      "solo_preserved_states": 0,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": 9.99659732769942e-07,
+      "mean_interaction_gain": 1.1670084631987265e-07,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "moderate",
+      "eta": 0.01,
+      "method": "interaction_solo_lp",
+      "solo_preserved_states": 3,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": -1.9293188415758777e-06,
+      "mean_interaction_gain": -5.110955498821568e-07,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "moderate",
+      "eta": 0.05,
+      "method": "action_mean",
+      "solo_preserved_states": 1,
+      "successful_joint_and_solo_states": 1,
+      "mean_joint_gain": 1.7553702946315752e-05,
+      "mean_interaction_gain": 9.074143463294604e-07,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "moderate",
+      "eta": 0.05,
+      "method": "interaction_mean",
+      "solo_preserved_states": 1,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": -2.2984568204265088e-07,
+      "mean_interaction_gain": -5.390730848375824e-07,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "moderate",
+      "eta": 0.05,
+      "method": "interaction_penalized",
+      "solo_preserved_states": 1,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": 6.72785517963348e-07,
+      "mean_interaction_gain": 8.696763416082831e-07,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "moderate",
+      "eta": 0.05,
+      "method": "interaction_solo_lp",
+      "solo_preserved_states": 1,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": -6.765950729459291e-06,
+      "mean_interaction_gain": -5.877794819753035e-07,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.01,
+      "method": "action_mean",
+      "solo_preserved_states": 0,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": 3.414647653698921e-05,
+      "mean_interaction_gain": -5.9108060668222606e-08,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.01,
+      "method": "interaction_mean",
+      "solo_preserved_states": 0,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": -9.825616143643856e-05,
+      "mean_interaction_gain": 2.1506235498236492e-05,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.01,
+      "method": "interaction_penalized",
+      "solo_preserved_states": 1,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": -0.0002072413917630911,
+      "mean_interaction_gain": 1.3768930330115836e-05,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.01,
+      "method": "interaction_solo_lp",
+      "solo_preserved_states": 0,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": -8.046277798712254e-05,
+      "mean_interaction_gain": 1.667455399001483e-05,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.05,
+      "method": "action_mean",
+      "solo_preserved_states": 0,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": 0.0005053391214460135,
+      "mean_interaction_gain": -1.2262486052350141e-05,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.05,
+      "method": "interaction_mean",
+      "solo_preserved_states": 0,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": -9.010732173919678e-05,
+      "mean_interaction_gain": 6.78946034895489e-05,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.05,
+      "method": "interaction_penalized",
+      "solo_preserved_states": 4,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": -0.000692321453243494,
+      "mean_interaction_gain": -1.528855773358373e-05,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    },
+    {
+      "start": "frozen_mr",
+      "eta": 0.05,
+      "method": "interaction_solo_lp",
+      "solo_preserved_states": 1,
+      "successful_joint_and_solo_states": 0,
+      "mean_joint_gain": -0.0004013306461274624,
+      "mean_interaction_gain": 3.327685499243671e-05,
+      "positive_lower_bound_states": 0,
+      "gate_setting": false
+    }
+  ],
+  "fidelity": {
+    "all": {
+      "action_AA_relative_error": 0.33168277471785973,
+      "action_interaction_relative_error": 0.5495584487508922,
+      "interaction_vs_AA_error": 1.6568796773313437,
+      "near_zero_native_interaction_count": 0
+    },
+    "init": {
+      "action_AA_relative_error": 1.3968354786145858,
+      "action_interaction_relative_error": 1.4222794986905474,
+      "interaction_vs_AA_error": 1.0182154738088394,
+      "near_zero_native_interaction_count": 0
+    },
+    "moderate": {
+      "action_AA_relative_error": 0.7560306511232654,
+      "action_interaction_relative_error": 1.4797622694679975,
+      "interaction_vs_AA_error": 1.9572781437755926,
+      "near_zero_native_interaction_count": 0
+    },
+    "frozen_mr": {
+      "action_AA_relative_error": 0.32429438800603866,
+      "action_interaction_relative_error": 0.41987741862773126,
+      "interaction_vs_AA_error": 1.2947415501371944,
+      "near_zero_native_interaction_count": 0
+    },
+    "per_task": [
+      {
+        "task": 0,
+        "AA_relative_error": 0.3185422461652614,
+        "interaction_relative_error": 0.7713078516271861
+      },
+      {
+        "task": 2,
+        "AA_relative_error": 0.2317173595680165,
+        "interaction_relative_error": 0.4889188190709906
+      },
+      {
+        "task": 6,
+        "AA_relative_error": 0.44358368872598014,
+        "interaction_relative_error": 0.5708991450690696
+      },
+      {
+        "task": 8,
+        "AA_relative_error": 0.3010257481849455,
+        "interaction_relative_error": 0.472806440352611
+      }
+    ],
+    "tasks_interaction_better": 0,
+    "gate": false
+  },
+  "method_overall": {
+    "action_mean": {
+      "mean_native_J_gain": 0.001074924857039165,
+      "mean_native_FD_gain": 0.00011347467322290565,
+      "mean_native_action_gain": 9.335605458223502e-05,
+      "positive_J_states_settings": 16
+    },
+    "interaction_mean": {
+      "mean_native_J_gain": 0.0009384078887098612,
+      "mean_native_FD_gain": 9.998953949737673e-05,
+      "mean_native_action_gain": -3.0094065133804786e-05,
+      "positive_J_states_settings": 18
+    },
+    "interaction_penalized": {
+      "mean_native_J_gain": -0.00551256947883303,
+      "mean_native_FD_gain": -0.0005453104798410399,
+      "mean_native_action_gain": -0.00014848586210784256,
+      "positive_J_states_settings": 13
+    },
+    "interaction_solo_lp": {
+      "mean_native_J_gain": -0.0019570783415399236,
+      "mean_native_FD_gain": -0.00018964329501613975,
+      "mean_native_action_gain": -8.055193631643458e-05,
+      "positive_J_states_settings": 14
+    },
+    "l1_maximin": {
+      "mean_native_J_gain": 0.032432685662994676,
+      "mean_native_FD_gain": 0.0032495860238365517,
+      "mean_native_action_gain": -8.164212388805936e-06,
+      "positive_J_states_settings": 21
+    },
+    "l1_mean_sign": {
+      "mean_native_J_gain": 0.03370270495089851,
+      "mean_native_FD_gain": 0.0033765390568684475,
+      "mean_native_action_gain": 1.658007771254688e-05,
+      "positive_J_states_settings": 21
+    },
+    "l1_pcgrad_sign": {
+      "mean_native_J_gain": 0.03382442105947425,
+      "mean_native_FD_gain": 0.003388781481286666,
+      "mean_native_action_gain": 1.632108812070025e-05,
+      "positive_J_states_settings": 23
+    },
+    "l1_pcgrad_vector": {
+      "mean_native_J_gain": 0.00035011538546996304,
+      "mean_native_FD_gain": 3.516578484171381e-05,
+      "mean_native_action_gain": -4.1375193167899244e-07,
+      "positive_J_states_settings": 7
+    },
+    "raw_maximin": {
+      "mean_native_J_gain": 0.0307536044309169,
+      "mean_native_FD_gain": 0.003081445121400369,
+      "mean_native_action_gain": 9.3735879952798e-06,
+      "positive_J_states_settings": 21
+    },
+    "raw_mean_sign": {
+      "mean_native_J_gain": 0.0339473830603689,
+      "mean_native_FD_gain": 0.0034007642364789112,
+      "mean_native_action_gain": 9.98937745203913e-06,
+      "positive_J_states_settings": 24
+    },
+    "raw_pcgrad_sign": {
+      "mean_native_J_gain": 0.03399264620376618,
+      "mean_native_FD_gain": 0.003405280758064085,
+      "mean_native_action_gain": 9.99156878596826e-06,
+      "positive_J_states_settings": 24
+    },
+    "raw_pcgrad_vector": {
+      "mean_native_J_gain": 0.0002608217454697576,
+      "mean_native_FD_gain": 2.622546162456274e-05,
+      "mean_native_action_gain": 7.672250603718567e-07,
+      "positive_J_states_settings": 8
+    }
+  },
+  "audit": {
+    "zero_png_maxdiff": 0,
+    "aa_feature_maxdiff": 0,
+    "stale_observation_maxdiff": 0,
+    "all_native_upload_and_ABA_assertions_passed": true,
+    "source_peak_allocated_bytes": 19076759040
+  },
+  "geometry_gate": {
+    "raw": {
+      "settings_passed": 2,
+      "required_settings": 4,
+      "gate": false
+    },
+    "l1": {
+      "settings_passed": 1,
+      "required_settings": 4,
+      "gate": false
+    }
+  },
+  "fusion_gate": {
+    "action_mean": {
+      "settings_passed": 0,
+      "required_settings": 4,
+      "gate": false
+    },
+    "interaction_mean": {
+      "settings_passed": 0,
+      "required_settings": 4,
+      "gate": false
+    },
+    "interaction_penalized": {
+      "settings_passed": 0,
+      "required_settings": 4,
+      "gate": false
+    },
+    "interaction_solo_lp": {
+      "settings_passed": 0,
+      "required_settings": 4,
+      "gate": false
+    }
+  }
+}

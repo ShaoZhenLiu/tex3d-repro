@@ -1,0 +1,78 @@
+候选：动作空间中的渲染误差椭球与精确最坏情形位移
+2026-10-31，面向源策略，不使用目标策略梯度或目标侧纹理选择。
+
+一、为什么区别于上一轮失败方法
+
+上一轮的逐状态secant在高维feature里预测原生位移；预测误差下降并未带来有效更新。
+这里不预测或修正整个feature，也不删除全局残差子空间，而是直接使用实际动作头，把合成—原生差异映射到即将执行的15个平移控制量；优化方向必须考虑这些控制量上的不确定性。
+
+记 d_R=f_R(T)-f_R(T0)，d_N=f_N(T)-f_N(T0)，动作头为H，P选前5步的xyz并按生产统计反归一化。
+u_R=P[H(f_N(T0)+d_R)-H(f_N(T0))]。
+u_N=P[H(f_N(T))-H(f_N(T0))]。
+e=u_N-u_R。
+H使用精确生产权重；没有对H作线性近似。f_N(T0)是固定的原生clean锚点。
+
+二、精确椭球最坏情况目标
+
+在fit源状态的交错一半状态上估计C=E[e e^T]+ridge I。使用原点二阶矩而不减误差均值，使固定偏差也进入不确定集合。
+在另一半fit状态上，用误差Mahalanobis长度的90%经验分位数确定rho。
+validation不参与估计C或rho。
+
+绝对误差版本：L_abs(u)=min_{e^T C^-1 e <= rho^2} ||u+e||^2。
+其零区间可能导致小幅初始化时没有梯度，这应报告为方法退化，不能静默换回Matched。
+
+相对误差版本：先对 e/||u_R|| 估计C_rel，再令
+L_rel(u)=min_{e^T C_rel^-1 e <= rho^2 ||u||^2} ||u+e||^2。
+该目标正齐次：L_rel(a u)=a^2 L_rel(u)，a>=0。
+它允许不同纹理幅度使用同一相对误差几何，但仍可能在不可信方向上退化为0。
+
+设C=V diag(c_i) V^T，v=V^T u。令r^2=rho^2（absolute）或rho^2||u||^2（relative）。
+若 u^T C^-1 u <= r^2，则最坏动作是0，目标与梯度都为0。
+否则唯一mu>0满足 sum_i c_i v_i^2/(c_i+mu)^2=r^2。
+y*=V diag(mu/(c_i+mu))v，L=||y*||^2。
+
+包络梯度：
+absolute：grad_u L=2y*。
+relative：grad_u L=2[y* - mu rho^2 u]。
+relative中遗漏半径随u变化的导数，会得到错误梯度。代码不对二分搜索反向，而使用精确包络梯度。
+
+三、可成立的数学声明与不能成立的声明
+
+若实际误差确实满足所用椭球约束，则 ||u_N||^2 >= L(u_R)。这是条件下界。
+因此，若新纹理满足误差约束且L(new)超过已知旧纹理的原生动作位移，则可推出该新纹理原生位移更大。
+这不等价于机器人任务失败，更不等价于目标模型迁移成功。
+
+随机源探针上的90%经验覆盖并不保证经过优化选择的新纹理仍被覆盖。它不是对抗证书。
+半径只是源侧校准模型的一部分，验证必须检查真正原生纹理更新；不允许把源预测下界写成已证实的闭环改进。
+
+特别需要避免一个“看起来有数学、实际上不改变更新方向”的版本：
+(||u||-rho)_+^2只是普通action-MSE的单调变换；对单样本sign更新，非零区间内没有新的方向。
+本候选采用各向异性椭球，并在relative情况下计入半径导数，才会改变方向。
+
+四、与直接action loss和固定广义特征度量的对照
+
+直接action loss：max ||u_R||^2。已有VLA纹理工作使用动作空间目标，因此仅把feature loss换成action loss不足以主张创新。
+固定广义特征度量：在相同fit数据估计S=E[u_N u_N^T]，解S q=lambda C q；取前5方向构成trace归一化的W，优化u_R^T W u_R。这是对照，不是新特征值理论。
+精确ellipsoid目标：对每个当前u自适应解mu，方向由不确定性的各向异性及当前动作共同决定，不是固定W，也不是预测feature的线性transport。
+
+五、已交付代码及接口
+
+uncertainty_metric.py：fit_uncertainty_model、robust_action_score、quadratic_metric_score。
+fit_metric_cache.py：读取既有源fit/validation，加载生产head；输出uncertainty_model.pt与轻量JSON。
+test_uncertainty_metric.py：5项等方差闭式解、KKT约束、条件下界、有限差分、齐次性/反向检查。
+
+命令示例（模型与缓存路径由主agent补入，GPU分配由主agent管理）：
+python -m unittest -v test_uncertainty_metric
+python fit_metric_cache.py --root .../20261031_run1 --head-source .../action_heads.py --checkpoint .../action_head--150000_checkpoint.pt --statistics .../dataset_statistics.json --statistics-key <生产数据集key> --out <新目录> --device cuda:0
+
+若不提供--statistics，输出明确属于归一化head动作坐标。提供后采用q01/q99的仿射scale，并记录统计文件hash。接入原生一步门时，必须对动作位移使用相同的scale。
+
+离线检验不仅报告自己度量的分数，而是比较所有方法挑出的纹理在原始、未加权、同一15维原生动作空间中的真实能量，并报告每状态排名、椭球覆盖和零梯度比例。它只是必要筛选，不是优化验证。
+
+六、创新性边界
+
+信赖域椭球二次优化、稳健最小二乘、广义特征分解、动作空间攻击均已有先例；本候选没有新定理优先权主张。
+如果原生更新与闭环实验通过，潜在方法贡献只能是：用源侧可观测的渲染误差建立决策空间不确定几何，并通过精确最坏情况梯度选择具有部署可信度的物理纹理更新；还必须证明收益超过直接action-MSE及固定各向异性度量。
+若这些对照未过，不应把推导的正确性当作方法新颖性或有效性的替代。
+
+直接核对的一手文献见sources.json。

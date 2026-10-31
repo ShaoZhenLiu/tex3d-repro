@@ -1,0 +1,166 @@
+\documentclass[10pt]{article}
+\usepackage{amsmath,amssymb,amsthm,geometry,hyperref}
+\geometry{margin=1in}
+\newtheorem{proposition}{Proposition}
+\newcommand{\R}{\mathbb R}
+\title{Common ascent must be defined in the executable update geometry}
+\author{RefCloth mathematical exploration, 2026-10-31}
+\date{}
+\begin{document}
+\maketitle
+
+\paragraph{Status and novelty boundary.}
+This is a mathematically explicit, testable optimization candidate, not a
+validated new attack. Multiobjective steepest descent, MGDA, PCGrad, CAGrad,
+and maximin universal attacks are established. The proposed question is whether
+the sign-and-clip execution geometry of a shared physical texture destroys
+cross-state ascent, and whether respecting that geometry improves actual
+native-exported updates. The linear program and its dual are standard convex
+analysis. None of the results below proves closed-loop attack success.
+
+\paragraph{Problem.}
+Let $J_i(\theta)$ be the source objective for task--state group $i$, including
+the same texture regularizer in every group. An example matching the current
+code is $J_i=10D_i-0.1A-0.1V$. Let $g_i=\nabla J_i(\theta)$, with optional
+fixed positive normalization $q_i=g_i/s_i$, $s_i=\max(\|g_i\|_1,\varepsilon)$.
+Keep zero rows: a zero-gradient group prevents strict first-order common ascent.
+The actual feasible parameter increment is the box
+\[
+ B(\theta,\eta)=\{\delta:\ell_j\leq\delta_j\leq u_j\},\qquad
+ \ell_j=\max(-\eta,-5-\theta_j),\quad
+ u_j=\min(\eta,5-\theta_j).
+\]
+It contains $0$. Solve the executable maximin problem
+\begin{equation}\label{eq:primal}
+ \gamma^*=\max_{\delta\in B}\min_i(q_i^\top\delta+c_i)
+ =\max_{\delta,t}\{t:q_i^\top\delta+c_i\geq t\ \forall i,\ \delta\in B\}.
+\end{equation}
+Default $c_i=0$; fixed uncertainty penalties are discussed below. The output is
+the primal increment $\delta^*$, not the sign of a weighted gradient.
+
+\begin{proposition}[Sign can destroy common ascent]
+Even for two linear objectives, averaging or applying a sign after PCGrad can
+decrease one objective despite existence of a strict common-ascent box step.
+\end{proposition}
+\begin{proof}
+Take $g_1=(1,0)$, $g_2=(-2,1)$ and $B=[-1,1]^2$.
+The sign of their mean is $(-1,1)$, yielding gains $(-1,3)$.
+Projecting each row against the original conflicting other row as in PCGrad
+gives $\widetilde g_1=(1/5,2/5)$ and $\widetilde g_2=(0,1)$.
+Their sum $(1/5,7/5)$ has gains $(1/5,1)$, both positive. Its sign $(1,1)$,
+however, yields gains $(1,-1)$. In contrast, $\delta^*=(1/3,1)$ gives gains
+$(1/3,1/3)$. It is maximin optimal: to obtain gain $t$, one needs
+$\delta_1\geq t$ and $\delta_2\geq t+2\delta_1\geq3t$; since
+$\delta_2\leq1$, $t\leq1/3$.
+\end{proof}
+
+\paragraph{Normalization is a separate factor.}
+For the same example, $\ell_1$-normalized gradients are
+$(1,0)$ and $(-2/3,1/3)$. Their mean has positive coordinates, so its sign is
+$(1,1)$ and the second normalized gain is $-1/3$. The normalized maximin
+solution is $(1/5,1)$ with common gain $1/5$. Thus normalization alone does
+not fix execution geometry, and a normalized-mean control is necessary.
+
+\begin{proposition}[Dual bound and common-ascent diagnostic]\label{prop:dual}
+For the simplex $\Delta_n$, the optimal value in \eqref{eq:primal} is
+\[
+ \gamma^*=\min_{w\in\Delta_n}\left[
+ \sum_j\max\{\ell_j h_j,u_j h_j\}+w^\top c\right],\qquad
+ h=\sum_iw_iq_i.
+\]
+Any feasible primal increment supplies a lower bound; any simplex weight vector
+supplies an upper bound. For a symmetric cube and $c=0$ this becomes
+$\gamma^*=\eta\min_{w\in\Delta_n}\|\sum_iw_iq_i\|_1$.
+With $c=0$, $\gamma^*>0$ if and only if a feasible strict common-ascent increment
+exists. In the symmetric full-dimensional cube, $\gamma^*=0$ if and only if
+$0\in\operatorname{conv}\{q_i\}$.
+\end{proposition}
+\begin{proof}
+Write the finite minimum as $\min_{w\in\Delta_n}\sum_iw_i(q_i^\top\delta+c_i)$.
+The two feasible sets are convex compact and the expression is affine in each
+argument, so minimax interchange applies. Maximizing $h^\top\delta$ over a
+box separates coordinate-wise and gives the displayed support function.
+The remaining claims follow directly from feasibility, compactness, and the
+fact that a norm is zero exactly at zero.
+\end{proof}
+
+\paragraph{Do not sign the optimal dual combination either.}
+In the unnormalized example, optimal dual weights are $(2/3,1/3)$ and their
+combination is $(0,1/3)$. Its sign $(0,1)$ yields worst gain $0$, whereas
+the primal optimum has worst gain $1/3$. The fractional first coordinate is
+chosen in a zero dual-gradient direction to satisfy the active task constraints.
+
+\begin{proposition}[Few fractional coordinates suffice]
+Suppose all $d$ box intervals have nonzero width. There exists an optimal basic
+solution of \eqref{eq:primal} with at most $n-1$ increment coordinates strictly
+between their two bounds. More sharply, if it has $k$ active task constraints,
+the number of such coordinates is at most $k-1$.
+\end{proposition}
+\begin{proof}
+The LP has $d+1$ variables $(\delta,t)$. If $p$ coordinates are strictly inside
+their intervals, at most $d-p$ independent active box constraints are available.
+At a basic solution, active task and box constraints together must span
+$d+1$ dimensions, so $d-p+k\geq d+1$ and $p\leq k-1\leq n-1$.
+An optimal basic solution exists because the box is bounded and the optimal
+epigraph level is finite. This statement concerns an optimal basic solution,
+not every point of an optimal face or an averaged no-regret iterate.
+\end{proof}
+
+\paragraph{Implication for four groups.}
+A basic LP solution needs at most three fractional coordinates among the
+thousands of cloth parameters; the others lie at executable box endpoints.
+This avoids explaining a gain merely by shrinking the entire update. Report
+the observed fractional count and primal/dual gap rather than assuming the
+numerical solver returned the required basic solution.
+
+\begin{proposition}[Conditional native-export lower bound]
+Let $F_i(\theta)$ be a continuously relaxed native objective, and suppose on the
+relevant box segment that
+\[
+ \|\nabla F_i(\theta)-g_i\|_1\leq\rho_i,\qquad
+ \|\nabla F_i(a)-\nabla F_i(b)\|_1\leq L_i\|a-b\|_\infty.
+\]
+Suppose also that the native objective as a function of the actual texture
+$\mathcal F_i(T)$ is $\kappa_i$-Lipschitz in texture $\ell_\infty$ distance and
+the export quantizer has error at most $q$. For $\|\delta\|_\infty\leq\eta$,
+the actually exported native gain is bounded below by
+\[
+ g_i^\top\delta-\rho_i\eta-\tfrac12 L_i\eta^2-2\kappa_iq.
+\]
+Consequently, setting $c_i=-\rho_i\eta-\tfrac12L_i\eta^2-2\kappa_iq$ in the
+LP yields a common native gain of at least $\gamma^*$, under these assumptions.
+For normalized objectives, divide each function, gradient and bound by the
+same fixed positive $s_i$.
+\end{proposition}
+\begin{proof}
+The gradient-error term follows from H\"older's inequality with the
+$\ell_1/\ell_\infty$ dual pair. Integrating the gradient-Lipschitz remainder
+along the segment gives $L_i\|\delta\|_\infty^2/2$. Comparing the relaxed and
+quantized textures at both endpoints costs at most $2\kappa_iq$.
+\end{proof}
+
+\paragraph{Limits of the proposition.}
+Finite calibration probes do not establish a global $\ell_1$ gradient-error or
+curvature bound. Empirical estimates therefore do not constitute a certificate.
+For 8-bit nearest rounding $q\leq1/(2\cdot255)$; truncation instead gives a
+larger bound up to $1/255$, so inspect the real export implementation. If both
+endpoints export the identical PNG, native gain is exactly zero even when the
+relaxed linear prediction is positive. Discrete quantized deployment is not
+differentiable in texture parameters; the relaxed theorem and actual PNG test
+must be kept distinct. No bound above establishes behavior along future
+closed-loop states or black-box target policies.
+
+\paragraph{Primary-source prior work.}
+\begin{itemize}
+\item Fliege and Svaiter (2000), multiobjective descent:
+\url{https://w3.impa.br/~benar/art/FliegeSvaiter2000.pdf}.
+\item Sener and Koltun (2018), MGDA in multi-task learning:
+\url{https://arxiv.org/abs/1810.04650}.
+\item Yu et al. (2020), PCGrad:
+\url{https://arxiv.org/abs/2001.06782}.
+\item Liu et al. (2021), CAGrad:
+\url{https://arxiv.org/abs/2110.14048}.
+\item Zhang et al. (2025), dynamic maximin universal perturbation:
+\url{https://arxiv.org/abs/2503.12793}.
+\end{itemize}
+\end{document}

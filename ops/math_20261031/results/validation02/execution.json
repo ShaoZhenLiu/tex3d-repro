@@ -1,0 +1,18 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds": 102.17020750045776,
+  "command": [
+    "/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python",
+    "/data/shaozhen.liu/code/tex3d/ops/math_20261031/validate_math.py",
+    "--repo",
+    "/data/shaozhen.liu/code/tex3d",
+    "--directions",
+    "/data/shaozhen.liu/code/tex3d/experiments/refcloth_math/20261031/directions/directions.pt",
+    "--out",
+    "/data/shaozhen.liu/code/tex3d/experiments/refcloth_math/20261031/validation02",
+    "--tasks",
+    "0,2",
+    "--memory-fraction",
+    ".48"
+  ]
+}

@@ -1,0 +1,1829 @@
+{
+  "scope": "source cached-feature exploration; no native update or closed-loop success claim",
+  "locked_test_consumed": false,
+  "target_queries": 0,
+  "action_subset": "first 5 execution actions, translation only (15 coordinates)",
+  "action_units": {
+    "units": "source translation control units after affine q01/q99 unnormalization",
+    "statistics": "/data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/dataset_statistics.json",
+    "statistics_key": "libero_spatial_no_noops",
+    "statistics_sha256": "3f8b7854c8634ea6ccfd6ef6b8f983e3b30b067c2cdaf690b152c0899d5d9282",
+    "affine_scale": [
+      0.8414866057038306,
+      0.768750011920929,
+      0.9348214268684387
+    ],
+    "note": "Offsets cancel in displacement. This assumes production affine q01/q99 unnormalization without additional clipping."
+  },
+  "action_prediction": "H(native_clean_feature + synthetic_feature_displacement) - H(native_clean_feature)",
+  "fit_split": "alternate time-sorted states within each source task: even shape, odd radius",
+  "shape_states": [
+    "t0_i0_s000",
+    "t0_i0_s030",
+    "t0_i0_s060",
+    "t2_i0_s000",
+    "t2_i0_s030",
+    "t2_i0_s060",
+    "t6_i0_s000",
+    "t6_i0_s030",
+    "t6_i0_s060",
+    "t8_i0_s000",
+    "t8_i0_s030",
+    "t8_i0_s060"
+  ],
+  "calibration_states": [
+    "t0_i0_s015",
+    "t0_i0_s045",
+    "t0_i0_s075",
+    "t2_i0_s015",
+    "t2_i0_s045",
+    "t2_i0_s075",
+    "t6_i0_s015",
+    "t6_i0_s045",
+    "t6_i0_s075",
+    "t8_i0_s015",
+    "t8_i0_s045",
+    "t8_i0_s075"
+  ],
+  "shape_rows": 144,
+  "calibration_rows": 144,
+  "ridge": 0.01,
+  "quantile": 0.9,
+  "covariance_eigenvalues": {
+    "absolute": [
+      5.247264151144409e-06,
+      6.5212625181264615e-06,
+      8.16365156723792e-06,
+      1.0370042782551962e-05,
+      1.1571484524444353e-05,
+      1.4138991349065471e-05,
+      1.552442429599664e-05,
+      1.691603229892854e-05,
+      2.3010163128193562e-05,
+      2.7969720478730383e-05,
+      5.71981947718349e-05,
+      8.993499372090341e-05,
+      0.0002577775783801484,
+      0.000775827562280779,
+      0.0015319997610122472
+    ],
+    "relative": [
+      0.010191105976403448,
+      0.01666987164248587,
+      0.018306756006497407,
+      0.021747737736425455,
+      0.026313219032099676,
+      0.02986360170297858,
+      0.03202269528276827,
+      0.03947729078215364,
+      0.04397454354282615,
+      0.05495516615865694,
+      0.07916245606018812,
+      0.08499752885415147,
+      0.34724349254845555,
+      0.6488466016647109,
+      0.8349929670659887
+    ]
+  },
+  "radii": {
+    "absolute": 7.681992684173296,
+    "relative": 6.013386661653242
+  },
+  "head_source_sha256": "8e42df65d6407d64d47457286d9be05466d25d8a0f094aa9dfb90de84a9aa7cc",
+  "checkpoint_sha256": "809858636cf0a65009dd567d2f4e116249442790f02b8fe31f24500ea6118908",
+  "mathematical_guarantee": "conditional on actual error lying in fitted ellipsoid; random probe coverage does not certify optimized textures",
+  "fit": {
+    "n": 288,
+    "state_count": 24,
+    "methods": {
+      "feature_fd": {
+        "pooled_spearman": 0.9082341688468787,
+        "mean_within_state_spearman": 0.9216200466200466,
+        "mean_selected_native_energy": 0.0013542029789504093,
+        "mean_chosen_over_oracle": 0.8313105108710578,
+        "zero_score_count": 0,
+        "per_state": [
+          {
+            "state": "t0_i0_s000",
+            "spearman": 0.9020979020979021,
+            "chosen_texture": "fit_hi_lp_s111",
+            "chosen_native_energy": 0.0005518781978694715,
+            "oracle_native_energy": 0.0006541692471409843,
+            "chosen_over_oracle": 0.843632133857452
+          },
+          {
+            "state": "t0_i0_s015",
+            "spearman": 0.9370629370629371,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.00017482931015194188,
+            "oracle_native_energy": 0.0006603206325935818,
+            "chosen_over_oracle": 0.26476426984456636
+          },
+          {
+            "state": "t0_i0_s030",
+            "spearman": 0.951048951048951,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.00019588920301233894,
+            "oracle_native_energy": 0.00019588920301233894,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i0_s045",
+            "spearman": 0.9370629370629371,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.003015039565744618,
+            "oracle_native_energy": 0.00460862087992772,
+            "chosen_over_oracle": 0.6542173123582916
+          },
+          {
+            "state": "t0_i0_s060",
+            "spearman": 0.951048951048951,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.004945211640585802,
+            "oracle_native_energy": 0.004945211640585802,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i0_s075",
+            "spearman": 0.9090909090909091,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.00019297381413515625,
+            "oracle_native_energy": 0.00026460620313682493,
+            "chosen_over_oracle": 0.7292868112973588
+          },
+          {
+            "state": "t2_i0_s000",
+            "spearman": 0.9300699300699301,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.00014278484107690565,
+            "oracle_native_energy": 0.0002114179233342766,
+            "chosen_over_oracle": 0.6753677210760699
+          },
+          {
+            "state": "t2_i0_s015",
+            "spearman": 0.9370629370629371,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.0007907158958989476,
+            "oracle_native_energy": 0.0007907158958989476,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i0_s030",
+            "spearman": 0.8321678321678322,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.000753224466487842,
+            "oracle_native_energy": 0.001315548425394996,
+            "chosen_over_oracle": 0.5725554848060305
+          },
+          {
+            "state": "t2_i0_s045",
+            "spearman": 0.951048951048951,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.003331614607390191,
+            "oracle_native_energy": 0.003602284280527008,
+            "chosen_over_oracle": 0.9248616566438176
+          },
+          {
+            "state": "t2_i0_s060",
+            "spearman": 0.8811188811188811,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.0005119942538238618,
+            "oracle_native_energy": 0.0007454839727193037,
+            "chosen_over_oracle": 0.6867944483853343
+          },
+          {
+            "state": "t2_i0_s075",
+            "spearman": 0.8741258741258742,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.0003165060416599094,
+            "oracle_native_energy": 0.0004828610886515557,
+            "chosen_over_oracle": 0.6554805286625773
+          },
+          {
+            "state": "t6_i0_s000",
+            "spearman": 0.9020979020979021,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.0003334176938306272,
+            "oracle_native_energy": 0.0003334176938306272,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s015",
+            "spearman": 0.958041958041958,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.0013756411552045152,
+            "oracle_native_energy": 0.0013756411552045152,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s030",
+            "spearman": 0.9370629370629371,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.0009599021178599252,
+            "oracle_native_energy": 0.0009599021178599252,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s045",
+            "spearman": 0.9230769230769231,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.0012475440019774917,
+            "oracle_native_energy": 0.0014019594131475313,
+            "chosen_over_oracle": 0.8898574311624596
+          },
+          {
+            "state": "t6_i0_s060",
+            "spearman": 0.993006993006993,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.0023070541346359415,
+            "oracle_native_energy": 0.0023070541346359415,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s075",
+            "spearman": 0.9790209790209791,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.002261211911596713,
+            "oracle_native_energy": 0.002261211911596713,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t8_i0_s000",
+            "spearman": 0.965034965034965,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.0006666918595116097,
+            "oracle_native_energy": 0.0007436482885766484,
+            "chosen_over_oracle": 0.8965150189314169
+          },
+          {
+            "state": "t8_i0_s015",
+            "spearman": 0.8881118881118881,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.00018581416193587144,
+            "oracle_native_energy": 0.00018624676803610308,
+            "chosen_over_oracle": 0.9976772423769106
+          },
+          {
+            "state": "t8_i0_s030",
+            "spearman": 0.8881118881118881,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0006786069311400376,
+            "oracle_native_energy": 0.000981464271790006,
+            "chosen_over_oracle": 0.6914229591897282
+          },
+          {
+            "state": "t8_i0_s045",
+            "spearman": 0.9230769230769231,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0042934556208206335,
+            "oracle_native_energy": 0.004874868816989932,
+            "chosen_over_oracle": 0.880732545223996
+          },
+          {
+            "state": "t8_i0_s060",
+            "spearman": 0.916083916083916,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.003074056125860696,
+            "oracle_native_energy": 0.003074056125860696,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t8_i0_s075",
+            "spearman": 0.8531468531468531,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0001948139425987775,
+            "oracle_native_energy": 0.00033115476444163,
+            "chosen_over_oracle": 0.588286697089378
+          }
+        ]
+      },
+      "direct_action": {
+        "pooled_spearman": 0.9229355300226258,
+        "mean_within_state_spearman": 0.9096736596736597,
+        "mean_selected_native_energy": 0.001317772240153455,
+        "mean_chosen_over_oracle": 0.8694903584240108,
+        "zero_score_count": 0,
+        "per_state": [
+          {
+            "state": "t0_i0_s000",
+            "spearman": 0.9300699300699301,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0006541692471409843,
+            "oracle_native_energy": 0.0006541692471409843,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i0_s015",
+            "spearman": 0.958041958041958,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.0006603206325935818,
+            "oracle_native_energy": 0.0006603206325935818,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i0_s030",
+            "spearman": 0.9300699300699301,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.00019588920301233894,
+            "oracle_native_energy": 0.00019588920301233894,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i0_s045",
+            "spearman": 0.8601398601398601,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.0027873955000202203,
+            "oracle_native_energy": 0.00460862087992772,
+            "chosen_over_oracle": 0.6048220438700822
+          },
+          {
+            "state": "t0_i0_s060",
+            "spearman": 0.986013986013986,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.004945211640585802,
+            "oracle_native_energy": 0.004945211640585802,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i0_s075",
+            "spearman": 0.8461538461538461,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.00019297381413515625,
+            "oracle_native_energy": 0.00026460620313682493,
+            "chosen_over_oracle": 0.7292868112973588
+          },
+          {
+            "state": "t2_i0_s000",
+            "spearman": 0.8951048951048951,
+            "chosen_texture": "fit_hi_lp_s111",
+            "chosen_native_energy": 0.0002114179233342766,
+            "oracle_native_energy": 0.0002114179233342766,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i0_s015",
+            "spearman": 0.958041958041958,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.0007907158958989476,
+            "oracle_native_energy": 0.0007907158958989476,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i0_s030",
+            "spearman": 0.8811188811188811,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.000753224466487842,
+            "oracle_native_energy": 0.001315548425394996,
+            "chosen_over_oracle": 0.5725554848060305
+          },
+          {
+            "state": "t2_i0_s045",
+            "spearman": 0.9090909090909091,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.0031516690201927344,
+            "oracle_native_energy": 0.003602284280527008,
+            "chosen_over_oracle": 0.874908467726942
+          },
+          {
+            "state": "t2_i0_s060",
+            "spearman": 0.8881118881118881,
+            "chosen_texture": "fit_hi_lp_s111",
+            "chosen_native_energy": 0.0006479538793820752,
+            "oracle_native_energy": 0.0007454839727193037,
+            "chosen_over_oracle": 0.8691721124714893
+          },
+          {
+            "state": "t2_i0_s075",
+            "spearman": 0.9300699300699301,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0004828610886515557,
+            "oracle_native_energy": 0.0004828610886515557,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s000",
+            "spearman": 0.9370629370629371,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.0003334176938306272,
+            "oracle_native_energy": 0.0003334176938306272,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s015",
+            "spearman": 0.993006993006993,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.0013756411552045152,
+            "oracle_native_energy": 0.0013756411552045152,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s030",
+            "spearman": 0.8811188811188811,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.0009599021178599252,
+            "oracle_native_energy": 0.0009599021178599252,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s045",
+            "spearman": 0.8321678321678322,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0014019594131475313,
+            "oracle_native_energy": 0.0014019594131475313,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s060",
+            "spearman": 0.972027972027972,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.0023070541346359415,
+            "oracle_native_energy": 0.0023070541346359415,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s075",
+            "spearman": 0.986013986013986,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.002261211911596713,
+            "oracle_native_energy": 0.002261211911596713,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t8_i0_s000",
+            "spearman": 0.951048951048951,
+            "chosen_texture": "fit_hi_lp_s111",
+            "chosen_native_energy": 0.0007436482885766484,
+            "oracle_native_energy": 0.0007436482885766484,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t8_i0_s015",
+            "spearman": 0.6503496503496503,
+            "chosen_texture": "fit_mid_lp_s108",
+            "chosen_native_energy": 4.74866262230498e-05,
+            "oracle_native_energy": 0.00018624676803610308,
+            "chosen_over_oracle": 0.25496617591691434
+          },
+          {
+            "state": "t8_i0_s030",
+            "spearman": 0.8531468531468531,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.0005751357498787357,
+            "oracle_native_energy": 0.000981464271790006,
+            "chosen_over_oracle": 0.5859976429195903
+          },
+          {
+            "state": "t8_i0_s045",
+            "spearman": 0.9370629370629371,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0042934556208206335,
+            "oracle_native_energy": 0.004874868816989932,
+            "chosen_over_oracle": 0.880732545223996
+          },
+          {
+            "state": "t8_i0_s060",
+            "spearman": 0.916083916083916,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.0015226639760314586,
+            "oracle_native_energy": 0.003074056125860696,
+            "chosen_over_oracle": 0.4953273179438558
+          },
+          {
+            "state": "t8_i0_s075",
+            "spearman": 0.951048951048951,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.00033115476444163,
+            "oracle_native_energy": 0.00033115476444163,
+            "chosen_over_oracle": 1.0
+          }
+        ]
+      },
+      "generalized": {
+        "pooled_spearman": 0.8483280686736674,
+        "mean_within_state_spearman": 0.8461538461538461,
+        "mean_selected_native_energy": 0.001201698260991098,
+        "mean_chosen_over_oracle": 0.7816169569847612,
+        "zero_score_count": 0,
+        "per_state": [
+          {
+            "state": "t0_i0_s000",
+            "spearman": 0.8811188811188811,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0006541692471409843,
+            "oracle_native_energy": 0.0006541692471409843,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i0_s015",
+            "spearman": 0.6993006993006993,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.00023816834774063091,
+            "oracle_native_energy": 0.0006603206325935818,
+            "chosen_over_oracle": 0.3606859092152891
+          },
+          {
+            "state": "t0_i0_s030",
+            "spearman": 0.8321678321678322,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.00019588920301233894,
+            "oracle_native_energy": 0.00019588920301233894,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i0_s045",
+            "spearman": 0.8251748251748252,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.0027873955000202203,
+            "oracle_native_energy": 0.00460862087992772,
+            "chosen_over_oracle": 0.6048220438700822
+          },
+          {
+            "state": "t0_i0_s060",
+            "spearman": 0.965034965034965,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.004945211640585802,
+            "oracle_native_energy": 0.004945211640585802,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i0_s075",
+            "spearman": 0.4195804195804196,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.00011409138186901853,
+            "oracle_native_energy": 0.00026460620313682493,
+            "chosen_over_oracle": 0.4311742525931002
+          },
+          {
+            "state": "t2_i0_s000",
+            "spearman": 0.9230769230769231,
+            "chosen_texture": "fit_hi_lp_s111",
+            "chosen_native_energy": 0.0002114179233342766,
+            "oracle_native_energy": 0.0002114179233342766,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i0_s015",
+            "spearman": 0.9300699300699301,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.0007907158958989476,
+            "oracle_native_energy": 0.0007907158958989476,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i0_s030",
+            "spearman": 0.8391608391608392,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.000753224466487842,
+            "oracle_native_energy": 0.001315548425394996,
+            "chosen_over_oracle": 0.5725554848060305
+          },
+          {
+            "state": "t2_i0_s045",
+            "spearman": 0.8741258741258742,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.0031516690201927344,
+            "oracle_native_energy": 0.003602284280527008,
+            "chosen_over_oracle": 0.874908467726942
+          },
+          {
+            "state": "t2_i0_s060",
+            "spearman": 0.9090909090909091,
+            "chosen_texture": "fit_hi_lp_s111",
+            "chosen_native_energy": 0.0006479538793820752,
+            "oracle_native_energy": 0.0007454839727193037,
+            "chosen_over_oracle": 0.8691721124714893
+          },
+          {
+            "state": "t2_i0_s075",
+            "spearman": 0.6923076923076923,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.0003165060416599094,
+            "oracle_native_energy": 0.0004828610886515557,
+            "chosen_over_oracle": 0.6554805286625773
+          },
+          {
+            "state": "t6_i0_s000",
+            "spearman": 0.8391608391608392,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.0003334176938306272,
+            "oracle_native_energy": 0.0003334176938306272,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s015",
+            "spearman": 0.8671328671328671,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.0006875190466396466,
+            "oracle_native_energy": 0.0013756411552045152,
+            "chosen_over_oracle": 0.4997808069630149
+          },
+          {
+            "state": "t6_i0_s030",
+            "spearman": 0.965034965034965,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.0009599021178599252,
+            "oracle_native_energy": 0.0009599021178599252,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s045",
+            "spearman": 0.958041958041958,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0014019594131475313,
+            "oracle_native_energy": 0.0014019594131475313,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s060",
+            "spearman": 0.9440559440559441,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.0023070541346359415,
+            "oracle_native_energy": 0.0023070541346359415,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s075",
+            "spearman": 0.8811188811188811,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.002261211911596713,
+            "oracle_native_energy": 0.002261211911596713,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t8_i0_s000",
+            "spearman": 0.9020979020979021,
+            "chosen_texture": "fit_hi_lp_s111",
+            "chosen_native_energy": 0.0007436482885766484,
+            "oracle_native_energy": 0.0007436482885766484,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t8_i0_s015",
+            "spearman": 0.5314685314685315,
+            "chosen_texture": "fit_hi_lp_s111",
+            "chosen_native_energy": 0.0001712702056117501,
+            "oracle_native_energy": 0.00018624676803610308,
+            "chosen_over_oracle": 0.9195875311970523
+          },
+          {
+            "state": "t8_i0_s030",
+            "spearman": 0.8391608391608392,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.0005751357498787357,
+            "oracle_native_energy": 0.000981464271790006,
+            "chosen_over_oracle": 0.5859976429195903
+          },
+          {
+            "state": "t8_i0_s045",
+            "spearman": 0.9090909090909091,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.002978387172693197,
+            "oracle_native_energy": 0.004874868816989932,
+            "chosen_over_oracle": 0.6109676556449883
+          },
+          {
+            "state": "t8_i0_s060",
+            "spearman": 0.951048951048951,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.0015226639760314586,
+            "oracle_native_energy": 0.003074056125860696,
+            "chosen_over_oracle": 0.4953273179438558
+          },
+          {
+            "state": "t8_i0_s075",
+            "spearman": 0.9300699300699301,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 9.21760059593999e-05,
+            "oracle_native_energy": 0.00033115476444163,
+            "chosen_over_oracle": 0.2783472136202559
+          }
+        ]
+      },
+      "robust_absolute": {
+        "pooled_spearman": 0.5438668626624603,
+        "mean_within_state_spearman": 0.6581791436544205,
+        "mean_selected_native_energy": 0.0013112693954578719,
+        "mean_chosen_over_oracle": 0.8057677591853175,
+        "zero_score_count": 248,
+        "per_state": [
+          {
+            "state": "t0_i0_s000",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0006541692471409843,
+            "oracle_native_energy": 0.0006541692471409843,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i0_s015",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.00017482931015194188,
+            "oracle_native_energy": 0.0006603206325935818,
+            "chosen_over_oracle": 0.26476426984456636
+          },
+          {
+            "state": "t0_i0_s030",
+            "spearman": 0.5321811563901744,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.00019588920301233894,
+            "oracle_native_energy": 0.00019588920301233894,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i0_s045",
+            "spearman": 0.7738454669748985,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.0027873955000202203,
+            "oracle_native_energy": 0.00460862087992772,
+            "chosen_over_oracle": 0.6048220438700822
+          },
+          {
+            "state": "t0_i0_s060",
+            "spearman": 0.8320918999730093,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.004945211640585802,
+            "oracle_native_energy": 0.004945211640585802,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i0_s075",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.00011409138186901853,
+            "oracle_native_energy": 0.00026460620313682493,
+            "chosen_over_oracle": 0.4311742525931002
+          },
+          {
+            "state": "t2_i0_s000",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.00017484076450586692,
+            "oracle_native_energy": 0.0002114179233342766,
+            "chosen_over_oracle": 0.8269912112863919
+          },
+          {
+            "state": "t2_i0_s015",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.00016972156777592722,
+            "oracle_native_energy": 0.0007907158958989476,
+            "chosen_over_oracle": 0.21464291872237434
+          },
+          {
+            "state": "t2_i0_s030",
+            "spearman": 0.38166527377477155,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.000753224466487842,
+            "oracle_native_energy": 0.001315548425394996,
+            "chosen_over_oracle": 0.5725554848060305
+          },
+          {
+            "state": "t2_i0_s045",
+            "spearman": 0.7738454669748985,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.003331614607390191,
+            "oracle_native_energy": 0.003602284280527008,
+            "chosen_over_oracle": 0.9248616566438176
+          },
+          {
+            "state": "t2_i0_s060",
+            "spearman": 0.5913123959890827,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0007454839727193037,
+            "oracle_native_energy": 0.0007454839727193037,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i0_s075",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0004828610886515557,
+            "oracle_native_energy": 0.0004828610886515557,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s000",
+            "spearman": 0.48038446141526137,
+            "chosen_texture": "fit_hi_lp_s112",
+            "chosen_native_energy": 0.0003334176938306272,
+            "oracle_native_energy": 0.0003334176938306272,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s015",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0006102309738356017,
+            "oracle_native_energy": 0.0013756411552045152,
+            "chosen_over_oracle": 0.44359749744829297
+          },
+          {
+            "state": "t6_i0_s030",
+            "spearman": 0.48038446141526137,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.0009599021178599252,
+            "oracle_native_energy": 0.0009599021178599252,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s045",
+            "spearman": 0.8320918999730093,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0014019594131475313,
+            "oracle_native_energy": 0.0014019594131475313,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s060",
+            "spearman": 0.8404128189727393,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.0023070541346359415,
+            "oracle_native_energy": 0.0023070541346359415,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s075",
+            "spearman": 0.8320918999730093,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.002261211911596713,
+            "oracle_native_energy": 0.002261211911596713,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t8_i0_s000",
+            "spearman": 0.6504436355879909,
+            "chosen_texture": "fit_hi_lp_s111",
+            "chosen_native_energy": 0.0007436482885766484,
+            "oracle_native_energy": 0.0007436482885766484,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t8_i0_s015",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.00018624676803610308,
+            "oracle_native_energy": 0.00018624676803610308,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t8_i0_s030",
+            "spearman": 0.38166527377477155,
+            "chosen_texture": "fit_hi_iid_s110",
+            "chosen_native_energy": 0.0005751357498787357,
+            "oracle_native_energy": 0.000981464271790006,
+            "chosen_over_oracle": 0.5859976429195903
+          },
+          {
+            "state": "t8_i0_s045",
+            "spearman": 0.8320918999730093,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0042934556208206335,
+            "oracle_native_energy": 0.004874868816989932,
+            "chosen_over_oracle": 0.880732545223996
+          },
+          {
+            "state": "t8_i0_s060",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.003074056125860696,
+            "oracle_native_energy": 0.003074056125860696,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t8_i0_s075",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0001948139425987775,
+            "oracle_native_energy": 0.00033115476444163,
+            "chosen_over_oracle": 0.588286697089378
+          }
+        ]
+      },
+      "robust_relative": {
+        "pooled_spearman": -0.09265531067339146,
+        "mean_within_state_spearman": -0.3056992027188027,
+        "mean_selected_native_energy": 0.0011440574998930518,
+        "mean_chosen_over_oracle": 0.6904059796669612,
+        "zero_score_count": 287,
+        "per_state": [
+          {
+            "state": "t0_i0_s000",
+            "spearman": -0.3056992027188027,
+            "chosen_texture": "fit_lo_lp_s104",
+            "chosen_native_energy": 5.152052298715318e-06,
+            "oracle_native_energy": 0.0006541692471409843,
+            "chosen_over_oracle": 0.00787571766975002
+          },
+          {
+            "state": "t0_i0_s015",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.00017482931015194188,
+            "oracle_native_energy": 0.0006603206325935818,
+            "chosen_over_oracle": 0.26476426984456636
+          },
+          {
+            "state": "t0_i0_s030",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.00019588920301233894,
+            "oracle_native_energy": 0.00019588920301233894,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i0_s045",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.003015039565744618,
+            "oracle_native_energy": 0.00460862087992772,
+            "chosen_over_oracle": 0.6542173123582916
+          },
+          {
+            "state": "t0_i0_s060",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0025652242208282607,
+            "oracle_native_energy": 0.004945211640585802,
+            "chosen_over_oracle": 0.5187289053061415
+          },
+          {
+            "state": "t0_i0_s075",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.00011409138186901853,
+            "oracle_native_energy": 0.00026460620313682493,
+            "chosen_over_oracle": 0.4311742525931002
+          },
+          {
+            "state": "t2_i0_s000",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.00017484076450586692,
+            "oracle_native_energy": 0.0002114179233342766,
+            "chosen_over_oracle": 0.8269912112863919
+          },
+          {
+            "state": "t2_i0_s015",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.00016972156777592722,
+            "oracle_native_energy": 0.0007907158958989476,
+            "chosen_over_oracle": 0.21464291872237434
+          },
+          {
+            "state": "t2_i0_s030",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0008332177692876333,
+            "oracle_native_energy": 0.001315548425394996,
+            "chosen_over_oracle": 0.6333615344014858
+          },
+          {
+            "state": "t2_i0_s045",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.003331614607390191,
+            "oracle_native_energy": 0.003602284280527008,
+            "chosen_over_oracle": 0.9248616566438176
+          },
+          {
+            "state": "t2_i0_s060",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0007454839727193037,
+            "oracle_native_energy": 0.0007454839727193037,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i0_s075",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0004828610886515557,
+            "oracle_native_energy": 0.0004828610886515557,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s000",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.00015208068458948983,
+            "oracle_native_energy": 0.0003334176938306272,
+            "chosen_over_oracle": 0.4561266165638626
+          },
+          {
+            "state": "t6_i0_s015",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0006102309738356017,
+            "oracle_native_energy": 0.0013756411552045152,
+            "chosen_over_oracle": 0.44359749744829297
+          },
+          {
+            "state": "t6_i0_s030",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0007557272880994003,
+            "oracle_native_energy": 0.0009599021178599252,
+            "chosen_over_oracle": 0.7872961982668328
+          },
+          {
+            "state": "t6_i0_s045",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0014019594131475313,
+            "oracle_native_energy": 0.0014019594131475313,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i0_s060",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.002230100125019607,
+            "oracle_native_energy": 0.0023070541346359415,
+            "chosen_over_oracle": 0.9666440381866124
+          },
+          {
+            "state": "t6_i0_s075",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0016703154386919954,
+            "oracle_native_energy": 0.002261211911596713,
+            "chosen_over_oracle": 0.7386815141587207
+          },
+          {
+            "state": "t8_i0_s000",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0004018211813580006,
+            "oracle_native_energy": 0.0007436482885766484,
+            "chosen_over_oracle": 0.5403376670537239
+          },
+          {
+            "state": "t8_i0_s015",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.00018624676803610308,
+            "oracle_native_energy": 0.00018624676803610308,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t8_i0_s030",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0006786069311400376,
+            "oracle_native_energy": 0.000981464271790006,
+            "chosen_over_oracle": 0.6914229591897282
+          },
+          {
+            "state": "t8_i0_s045",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0042934556208206335,
+            "oracle_native_energy": 0.004874868816989932,
+            "chosen_over_oracle": 0.880732545223996
+          },
+          {
+            "state": "t8_i0_s060",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.003074056125860696,
+            "oracle_native_energy": 0.003074056125860696,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t8_i0_s075",
+            "spearman": null,
+            "chosen_texture": "fit_hi_iid_s109",
+            "chosen_native_energy": 0.0001948139425987775,
+            "oracle_native_energy": 0.00033115476444163,
+            "chosen_over_oracle": 0.588286697089378
+          }
+        ]
+      }
+    },
+    "uncertainty_coverage": {
+      "absolute": {
+        "coverage": 0.9479166666666666,
+        "positive_fraction": 0.1388888888888889,
+        "all_bound_violations": 0,
+        "covered_bound_violations": 0,
+        "maximum_covered_violation": -1.3455271582402024e-06
+      },
+      "relative": {
+        "coverage": 0.8993055555555556,
+        "positive_fraction": 0.003472222222222222,
+        "all_bound_violations": 0,
+        "covered_bound_violations": 0,
+        "maximum_covered_violation": -1.860659037511123e-06
+      }
+    }
+  },
+  "validation": {
+    "n": 64,
+    "state_count": 16,
+    "methods": {
+      "feature_fd": {
+        "pooled_spearman": 0.6904761904761904,
+        "mean_within_state_spearman": 0.6624999999999999,
+        "mean_selected_native_energy": 0.00035224221126314907,
+        "mean_chosen_over_oracle": 0.7258622775995072,
+        "zero_score_count": 0,
+        "per_state": [
+          {
+            "state": "t0_i1_s000",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00014832409038959498,
+            "oracle_native_energy": 0.00014832409038959498,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i1_s020",
+            "spearman": 0.3999999999999999,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 5.655575429611272e-05,
+            "oracle_native_energy": 0.0002240632808518707,
+            "chosen_over_oracle": 0.25240973925353705
+          },
+          {
+            "state": "t0_i1_s040",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.0006572278804529023,
+            "oracle_native_energy": 0.0006572278804529023,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i1_s060",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.000325412436140133,
+            "oracle_native_energy": 0.00048793046068324836,
+            "chosen_over_oracle": 0.6669237982897366
+          },
+          {
+            "state": "t2_i1_s000",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 7.780606585741927e-05,
+            "oracle_native_energy": 7.780606585741927e-05,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i1_s020",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.000368446424179837,
+            "oracle_native_energy": 0.000368446424179837,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i1_s040",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.002094844046006326,
+            "oracle_native_energy": 0.002094844046006326,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i1_s060",
+            "spearman": 0.9999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00019589577113373436,
+            "oracle_native_energy": 0.00019589577113373436,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i1_s000",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 0.0003894378001729051,
+            "oracle_native_energy": 0.00044384294942755064,
+            "chosen_over_oracle": 0.8774225222574451
+          },
+          {
+            "state": "t6_i1_s020",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 0.0001439856638749634,
+            "oracle_native_energy": 0.00022040946114578995,
+            "chosen_over_oracle": 0.6532644430346118
+          },
+          {
+            "state": "t6_i1_s040",
+            "spearman": 0.3999999999999999,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.0005224304879336335,
+            "oracle_native_energy": 0.0005224304879336335,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i1_s060",
+            "spearman": 0.3999999999999999,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 8.800847753040641e-05,
+            "oracle_native_energy": 0.00014601862499283937,
+            "chosen_over_oracle": 0.6027209031363107
+          },
+          {
+            "state": "t8_i1_s000",
+            "spearman": -0.19999999999999996,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 1.0304048140009624e-05,
+            "oracle_native_energy": 6.520749226380601e-05,
+            "chosen_over_oracle": 0.1580193898321248
+          },
+          {
+            "state": "t8_i1_s020",
+            "spearman": 0.5999999999999999,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 0.00031804185654861413,
+            "oracle_native_energy": 0.00034851154556209677,
+            "chosen_over_oracle": 0.9125719379989561
+          },
+          {
+            "state": "t8_i1_s040",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00011279209061414724,
+            "oracle_native_energy": 0.0005290918979447321,
+            "chosen_over_oracle": 0.21318052885007374
+          },
+          {
+            "state": "t8_i1_s060",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 0.0001263624869396463,
+            "oracle_native_energy": 0.00045571638143725813,
+            "chosen_over_oracle": 0.2772831789393192
+          }
+        ]
+      },
+      "direct_action": {
+        "pooled_spearman": 0.7783424908424907,
+        "mean_within_state_spearman": 0.6874999999999999,
+        "mean_selected_native_energy": 0.0004016476866662599,
+        "mean_chosen_over_oracle": 0.8420133305541386,
+        "zero_score_count": 0,
+        "per_state": [
+          {
+            "state": "t0_i1_s000",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00014832409038959498,
+            "oracle_native_energy": 0.00014832409038959498,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i1_s020",
+            "spearman": 0.3999999999999999,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.0002240632808518707,
+            "oracle_native_energy": 0.0002240632808518707,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i1_s040",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.0006572278804529023,
+            "oracle_native_energy": 0.0006572278804529023,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i1_s060",
+            "spearman": 0.9999999999999998,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 0.00048793046068324836,
+            "oracle_native_energy": 0.00048793046068324836,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i1_s000",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 6.756316462308866e-05,
+            "oracle_native_energy": 7.780606585741927e-05,
+            "chosen_over_oracle": 0.8683534359248947
+          },
+          {
+            "state": "t2_i1_s020",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.000368446424179837,
+            "oracle_native_energy": 0.000368446424179837,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i1_s040",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.002094844046006326,
+            "oracle_native_energy": 0.002094844046006326,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i1_s060",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00019589577113373436,
+            "oracle_native_energy": 0.00019589577113373436,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i1_s000",
+            "spearman": 0.9999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00044384294942755064,
+            "oracle_native_energy": 0.00044384294942755064,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i1_s020",
+            "spearman": 0.5999999999999999,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 0.0001439856638749634,
+            "oracle_native_energy": 0.00022040946114578995,
+            "chosen_over_oracle": 0.6532644430346118
+          },
+          {
+            "state": "t6_i1_s040",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.0005224304879336335,
+            "oracle_native_energy": 0.0005224304879336335,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i1_s060",
+            "spearman": 0.3999999999999999,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 8.800847753040641e-05,
+            "oracle_native_energy": 0.00014601862499283937,
+            "chosen_over_oracle": 0.6027209031363107
+          },
+          {
+            "state": "t8_i1_s000",
+            "spearman": -0.19999999999999996,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 1.0304048140009624e-05,
+            "oracle_native_energy": 6.520749226380601e-05,
+            "chosen_over_oracle": 0.1580193898321248
+          },
+          {
+            "state": "t8_i1_s020",
+            "spearman": 0.5999999999999999,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 0.00031804185654861413,
+            "oracle_native_energy": 0.00034851154556209677,
+            "chosen_over_oracle": 0.9125719379989561
+          },
+          {
+            "state": "t8_i1_s040",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 0.0005290918979447321,
+            "oracle_native_energy": 0.0005290918979447321,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t8_i1_s060",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 0.0001263624869396463,
+            "oracle_native_energy": 0.00045571638143725813,
+            "chosen_over_oracle": 0.2772831789393192
+          }
+        ]
+      },
+      "generalized": {
+        "pooled_spearman": 0.6655219780219779,
+        "mean_within_state_spearman": 0.5874999999999999,
+        "mean_selected_native_energy": 0.00037289207993696915,
+        "mean_chosen_over_oracle": 0.7851880355330192,
+        "zero_score_count": 0,
+        "per_state": [
+          {
+            "state": "t0_i1_s000",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00014832409038959498,
+            "oracle_native_energy": 0.00014832409038959498,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i1_s020",
+            "spearman": 0.3999999999999999,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.0002240632808518707,
+            "oracle_native_energy": 0.0002240632808518707,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i1_s040",
+            "spearman": 0.9999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.0006572278804529023,
+            "oracle_native_energy": 0.0006572278804529023,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i1_s060",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 0.00048793046068324836,
+            "oracle_native_energy": 0.00048793046068324836,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i1_s000",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 6.756316462308866e-05,
+            "oracle_native_energy": 7.780606585741927e-05,
+            "chosen_over_oracle": 0.8683534359248947
+          },
+          {
+            "state": "t2_i1_s020",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.000368446424179837,
+            "oracle_native_energy": 0.000368446424179837,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i1_s040",
+            "spearman": 0.19999999999999996,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.002094844046006326,
+            "oracle_native_energy": 0.002094844046006326,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i1_s060",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 9.409572333323408e-05,
+            "oracle_native_energy": 0.00019589577113373436,
+            "chosen_over_oracle": 0.4803356539483269
+          },
+          {
+            "state": "t6_i1_s000",
+            "spearman": 0.9999999999999998,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00044384294942755064,
+            "oracle_native_energy": 0.00044384294942755064,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i1_s020",
+            "spearman": 0.3999999999999999,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 0.0001439856638749634,
+            "oracle_native_energy": 0.00022040946114578995,
+            "chosen_over_oracle": 0.6532644430346118
+          },
+          {
+            "state": "t6_i1_s040",
+            "spearman": 0.19999999999999996,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.0005224304879336335,
+            "oracle_native_energy": 0.0005224304879336335,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i1_s060",
+            "spearman": 0.3999999999999999,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 0.00014601862499283937,
+            "oracle_native_energy": 0.00014601862499283937,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t8_i1_s000",
+            "spearman": -0.19999999999999996,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 1.0304048140009624e-05,
+            "oracle_native_energy": 6.520749226380601e-05,
+            "chosen_over_oracle": 0.1580193898321248
+          },
+          {
+            "state": "t8_i1_s020",
+            "spearman": 0.5999999999999999,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 0.00031804185654861413,
+            "oracle_native_energy": 0.00034851154556209677,
+            "chosen_over_oracle": 0.9125719379989561
+          },
+          {
+            "state": "t8_i1_s040",
+            "spearman": 0.5999999999999999,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00011279209061414724,
+            "oracle_native_energy": 0.0005290918979447321,
+            "chosen_over_oracle": 0.21318052885007374
+          },
+          {
+            "state": "t8_i1_s060",
+            "spearman": 0.7999999999999998,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 0.0001263624869396463,
+            "oracle_native_energy": 0.00045571638143725813,
+            "chosen_over_oracle": 0.2772831789393192
+          }
+        ]
+      },
+      "robust_absolute": {
+        "pooled_spearman": 0.3747607377927408,
+        "mean_within_state_spearman": 0.6890188815701604,
+        "mean_selected_native_energy": 0.0003913920114013343,
+        "mean_chosen_over_oracle": 0.8752776943272267,
+        "zero_score_count": 59,
+        "per_state": [
+          {
+            "state": "t0_i1_s000",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00014832409038959498,
+            "oracle_native_energy": 0.00014832409038959498,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i1_s020",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.0002240632808518707,
+            "oracle_native_energy": 0.0002240632808518707,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i1_s040",
+            "spearman": 0.9486832980505138,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.0006572278804529023,
+            "oracle_native_energy": 0.0006572278804529023,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i1_s060",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.000325412436140133,
+            "oracle_native_energy": 0.00048793046068324836,
+            "chosen_over_oracle": 0.6669237982897366
+          },
+          {
+            "state": "t2_i1_s000",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 6.756316462308866e-05,
+            "oracle_native_energy": 7.780606585741927e-05,
+            "chosen_over_oracle": 0.8683534359248947
+          },
+          {
+            "state": "t2_i1_s020",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.000368446424179837,
+            "oracle_native_energy": 0.000368446424179837,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i1_s040",
+            "spearman": 0.7745966692414834,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.002094844046006326,
+            "oracle_native_energy": 0.002094844046006326,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i1_s060",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00019589577113373436,
+            "oracle_native_energy": 0.00019589577113373436,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i1_s000",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00044384294942755064,
+            "oracle_native_energy": 0.00044384294942755064,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i1_s020",
+            "spearman": 0.2581988897471611,
+            "chosen_texture": "validation_hi_lp_s204",
+            "chosen_native_energy": 0.0001439856638749634,
+            "oracle_native_energy": 0.00022040946114578995,
+            "chosen_over_oracle": 0.6532644430346118
+          },
+          {
+            "state": "t6_i1_s040",
+            "spearman": 0.7745966692414834,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.0005224304879336335,
+            "oracle_native_energy": 0.0005224304879336335,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i1_s060",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 8.800847753040641e-05,
+            "oracle_native_energy": 0.00014601862499283937,
+            "chosen_over_oracle": 0.6027209031363107
+          },
+          {
+            "state": "t8_i1_s000",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 6.520749226380601e-05,
+            "oracle_native_energy": 6.520749226380601e-05,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t8_i1_s020",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00034851154556209677,
+            "oracle_native_energy": 0.00034851154556209677,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t8_i1_s040",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00011279209061414724,
+            "oracle_native_energy": 0.0005290918979447321,
+            "chosen_over_oracle": 0.21318052885007374
+          },
+          {
+            "state": "t8_i1_s060",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00045571638143725813,
+            "oracle_native_energy": 0.00045571638143725813,
+            "chosen_over_oracle": 1.0
+          }
+        ]
+      },
+      "robust_relative": {
+        "pooled_spearman": null,
+        "mean_within_state_spearman": null,
+        "mean_selected_native_energy": 0.000396168498730761,
+        "mean_chosen_over_oracle": 0.8969486666375635,
+        "zero_score_count": 64,
+        "per_state": [
+          {
+            "state": "t0_i1_s000",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00014832409038959498,
+            "oracle_native_energy": 0.00014832409038959498,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i1_s020",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.0002240632808518707,
+            "oracle_native_energy": 0.0002240632808518707,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i1_s040",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.0006572278804529023,
+            "oracle_native_energy": 0.0006572278804529023,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t0_i1_s060",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.000325412436140133,
+            "oracle_native_energy": 0.00048793046068324836,
+            "chosen_over_oracle": 0.6669237982897366
+          },
+          {
+            "state": "t2_i1_s000",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 6.756316462308866e-05,
+            "oracle_native_energy": 7.780606585741927e-05,
+            "chosen_over_oracle": 0.8683534359248947
+          },
+          {
+            "state": "t2_i1_s020",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.000368446424179837,
+            "oracle_native_energy": 0.000368446424179837,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i1_s040",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.002094844046006326,
+            "oracle_native_energy": 0.002094844046006326,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t2_i1_s060",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00019589577113373436,
+            "oracle_native_energy": 0.00019589577113373436,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i1_s000",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00044384294942755064,
+            "oracle_native_energy": 0.00044384294942755064,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i1_s020",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00022040946114578995,
+            "oracle_native_energy": 0.00022040946114578995,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i1_s040",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.0005224304879336335,
+            "oracle_native_energy": 0.0005224304879336335,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t6_i1_s060",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 8.800847753040641e-05,
+            "oracle_native_energy": 0.00014601862499283937,
+            "chosen_over_oracle": 0.6027209031363107
+          },
+          {
+            "state": "t8_i1_s000",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 6.520749226380601e-05,
+            "oracle_native_energy": 6.520749226380601e-05,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t8_i1_s020",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00034851154556209677,
+            "oracle_native_energy": 0.00034851154556209677,
+            "chosen_over_oracle": 1.0
+          },
+          {
+            "state": "t8_i1_s040",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00011279209061414724,
+            "oracle_native_energy": 0.0005290918979447321,
+            "chosen_over_oracle": 0.21318052885007374
+          },
+          {
+            "state": "t8_i1_s060",
+            "spearman": null,
+            "chosen_texture": "validation_hi_iid_s203",
+            "chosen_native_energy": 0.00045571638143725813,
+            "oracle_native_energy": 0.00045571638143725813,
+            "chosen_over_oracle": 1.0
+          }
+        ]
+      }
+    },
+    "uncertainty_coverage": {
+      "absolute": {
+        "coverage": 0.96875,
+        "positive_fraction": 0.078125,
+        "all_bound_violations": 0,
+        "covered_bound_violations": 0,
+        "maximum_covered_violation": -1.0304048140009624e-05
+      },
+      "relative": {
+        "coverage": 0.921875,
+        "positive_fraction": 0.0,
+        "all_bound_violations": 0,
+        "covered_bound_violations": 0,
+        "maximum_covered_violation": -1.0304048140009624e-05
+      }
+    }
+  }
+}

@@ -1,0 +1,304 @@
+{
+  "baseline_commit": "f8928603e5bde00e77456720169901abb59c7b92",
+  "heldout_protocol_commit": "291f9ad",
+  "runs": {
+    "fit02": {
+      "execution": {
+        "exit_code": 0,
+        "elapsed_seconds": 77.14788818359375,
+        "command": [
+          "/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python",
+          "/data/shaozhen.liu/code/tex3d/ops/math_20261031/collect_math.py",
+          "--repo",
+          "/data/shaozhen.liu/code/tex3d",
+          "--out",
+          "/data/shaozhen.liu/code/tex3d/experiments/refcloth_math/20261031/fit02",
+          "--tasks",
+          "0,2",
+          "--memory-fraction",
+          ".48"
+        ]
+      },
+      "artifacts": [
+        {
+          "name": "collection.json",
+          "bytes": 9661,
+          "sha256": "6431080299b0a6e01c1833ebd5fd02947a82646d4f0f8b90932fc7f6827e034d"
+        },
+        {
+          "name": "collection.partial.json",
+          "bytes": 9633,
+          "sha256": "2dd972062e28b46cffad04a85f4c8e144e6d9102ed2d536e6e4189b9bd7ee292"
+        },
+        {
+          "name": "execution.json",
+          "bytes": 412,
+          "sha256": "7a5194c612abbd4474068dede6c1dc7c2d096c28ef2c6bca582dcdb121d0b96f"
+        },
+        {
+          "name": "gradient_bank.pt",
+          "bytes": 556054,
+          "sha256": "6025dd85f5f0b5ac7bf5893d85175063e7ae9f1e8e4f7e7ab1b5a8a337b46997"
+        }
+      ]
+    },
+    "fit68": {
+      "execution": {
+        "exit_code": 0,
+        "elapsed_seconds": 74.37426662445068,
+        "command": [
+          "/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python",
+          "/data/shaozhen.liu/code/tex3d/ops/math_20261031/collect_math.py",
+          "--repo",
+          "/data/shaozhen.liu/code/tex3d",
+          "--out",
+          "/data/shaozhen.liu/code/tex3d/experiments/refcloth_math/20261031/fit68",
+          "--tasks",
+          "6,8",
+          "--memory-fraction",
+          ".48"
+        ]
+      },
+      "artifacts": [
+        {
+          "name": "collection.json",
+          "bytes": 9670,
+          "sha256": "b28747fabb981f2a14c7d51264db8d26f5e16313919eee59eeccce7ba974d8c5"
+        },
+        {
+          "name": "collection.partial.json",
+          "bytes": 9642,
+          "sha256": "ec8dd3dd7040608dfb3461990698b5b998e25839e1ab013950582a92cf6ce656"
+        },
+        {
+          "name": "execution.json",
+          "bytes": 412,
+          "sha256": "97b2b7618b81e45f2bed10311ef72923ada8d7b5ed4c11924f7db8b7f50ec5d9"
+        },
+        {
+          "name": "gradient_bank.pt",
+          "bytes": 556054,
+          "sha256": "ecc4d6fcce45fbd72834040e5020ffc67d89c8291b0f7d363c5b150ff1647579"
+        }
+      ]
+    },
+    "fit02_live": {
+      "execution": {
+        "exit_code": 0,
+        "elapsed_seconds": 67.75320243835449,
+        "command": [
+          "/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python",
+          "/data/shaozhen.liu/code/tex3d/ops/math_20261031/collect_math.py",
+          "--repo",
+          "/data/shaozhen.liu/code/tex3d",
+          "--out",
+          "/data/shaozhen.liu/code/tex3d/experiments/refcloth_math/20261031/fit02_live",
+          "--tasks",
+          "0,2",
+          "--memory-fraction",
+          ".48"
+        ]
+      },
+      "artifacts": [
+        {
+          "name": "collection.json",
+          "bytes": 9929,
+          "sha256": "2e917f60b91833b74a1f0c0ab733e74eb38a6cfb3dab6a63d8058da57f346ddd"
+        },
+        {
+          "name": "collection.partial.json",
+          "bytes": 9901,
+          "sha256": "317e0491ea411360b550f66106a6c4cb16cf609f8c4b94a9e47b546207819b64"
+        },
+        {
+          "name": "execution.json",
+          "bytes": 417,
+          "sha256": "7136f5bfc33d7374ad9332d151aa482bd3df47f9c4fbabdaa02ef923c4726e5c"
+        },
+        {
+          "name": "gradient_bank.pt",
+          "bytes": 556054,
+          "sha256": "3447ebd95ed0ac70e66a1559aea735f23c886f7d1079648f11bfe28388b0cbea"
+        }
+      ]
+    },
+    "fit68_live": {
+      "execution": {
+        "exit_code": 0,
+        "elapsed_seconds": 67.0721664428711,
+        "command": [
+          "/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python",
+          "/data/shaozhen.liu/code/tex3d/ops/math_20261031/collect_math.py",
+          "--repo",
+          "/data/shaozhen.liu/code/tex3d",
+          "--out",
+          "/data/shaozhen.liu/code/tex3d/experiments/refcloth_math/20261031/fit68_live",
+          "--tasks",
+          "6,8",
+          "--memory-fraction",
+          ".48"
+        ]
+      },
+      "artifacts": [
+        {
+          "name": "collection.json",
+          "bytes": 9927,
+          "sha256": "ba4d7c36e85151338a65459ecab9bac9a387c14c80f540b241cbda3d252c8cd9"
+        },
+        {
+          "name": "collection.partial.json",
+          "bytes": 9899,
+          "sha256": "ed20a27b2931a8a96b0f303250697964767ff8d13219e31d467b25d8394115e6"
+        },
+        {
+          "name": "execution.json",
+          "bytes": 416,
+          "sha256": "c519c5d3697ba926bf4555ee5d84212895771f7a663f0a5eb1bc2d47d052911b"
+        },
+        {
+          "name": "gradient_bank.pt",
+          "bytes": 556054,
+          "sha256": "dbdf1c636c0feec947e1ebc16a7b3dbf341cff369121ffcc6c7cc760f7a8919b"
+        }
+      ]
+    },
+    "validation02": {
+      "execution": {
+        "exit_code": 0,
+        "elapsed_seconds": 102.17020750045776,
+        "command": [
+          "/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python",
+          "/data/shaozhen.liu/code/tex3d/ops/math_20261031/validate_math.py",
+          "--repo",
+          "/data/shaozhen.liu/code/tex3d",
+          "--directions",
+          "/data/shaozhen.liu/code/tex3d/experiments/refcloth_math/20261031/directions/directions.pt",
+          "--out",
+          "/data/shaozhen.liu/code/tex3d/experiments/refcloth_math/20261031/validation02",
+          "--tasks",
+          "0,2",
+          "--memory-fraction",
+          ".48"
+        ]
+      },
+      "artifacts": [
+        {
+          "name": "execution.json",
+          "bytes": 538,
+          "sha256": "62b08542c8defe2ea52136f20aa40dfb873ebd0685bc751354fbae1b59edd927"
+        },
+        {
+          "name": "validation.json",
+          "bytes": 131352,
+          "sha256": "4cb02e61e07a7e199969f7454154ec9b949155134f58ac6918c20040a8df508e"
+        },
+        {
+          "name": "validation.partial.json",
+          "bytes": 131320,
+          "sha256": "9f223d49aec1ae601f8d558f0d126d619f8b30ce26be972df118d9543d19d32e"
+        }
+      ]
+    },
+    "validation68": {
+      "execution": {
+        "exit_code": 0,
+        "elapsed_seconds": 104.68259119987488,
+        "command": [
+          "/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python",
+          "/data/shaozhen.liu/code/tex3d/ops/math_20261031/validate_math.py",
+          "--repo",
+          "/data/shaozhen.liu/code/tex3d",
+          "--directions",
+          "/data/shaozhen.liu/code/tex3d/experiments/refcloth_math/20261031/directions/directions.pt",
+          "--out",
+          "/data/shaozhen.liu/code/tex3d/experiments/refcloth_math/20261031/validation68",
+          "--tasks",
+          "6,8",
+          "--memory-fraction",
+          ".48"
+        ]
+      },
+      "artifacts": [
+        {
+          "name": "execution.json",
+          "bytes": 538,
+          "sha256": "a5b1a844d1c9bf7398d97f8bdb47d62963237ed353da8dd03dac5626d82ebb4e"
+        },
+        {
+          "name": "validation.json",
+          "bytes": 131390,
+          "sha256": "583d4f097f85c918ddba7877223c1e5289b505faf012aaecfa7961c3a3f712b4"
+        },
+        {
+          "name": "validation.partial.json",
+          "bytes": 131358,
+          "sha256": "5303fb769a0f2dda8cabbf7d69afd3db130bf78e4ecea0d462fb75d2723fb66b"
+        }
+      ]
+    },
+    "metric": {
+      "execution": {
+        "exit_code": 0,
+        "elapsed_seconds": 15.09378433227539,
+        "command": [
+          "/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python",
+          "/data/shaozhen.liu/code/tex3d/ops/math_20261031/fit_metric_cache.py",
+          "--root",
+          "/data/shaozhen.liu/code/tex3d/experiments/refcloth_residual/20261031_run1",
+          "--head-source",
+          "/data/shaozhen.liu/code/tex3d-deps/openvla-oft/prismatic/models/action_heads.py",
+          "--checkpoint",
+          "/data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/action_head--150000_checkpoint.pt",
+          "--statistics",
+          "/data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/dataset_statistics.json",
+          "--out",
+          "/data/shaozhen.liu/code/tex3d/experiments/refcloth_math/20261031/metric"
+        ]
+      },
+      "artifacts": [
+        {
+          "name": "action_displacement_pairs.json",
+          "bytes": 379130,
+          "sha256": "c1d1b6e0a79035a0bc41955a247ae3b354a15f370be6ce7cee3233bbaa9d79e9"
+        },
+        {
+          "name": "execution.json",
+          "bytes": 725,
+          "sha256": "7bc9e59d5dbf654da2d1171ec7513dc99c773dd495695d4ee142929cbf06b6ba"
+        },
+        {
+          "name": "metric_cache_report.json",
+          "bytes": 70207,
+          "sha256": "952a2d418e556e0e92cb448dd6c8bc0e8d25494bcabaf69ec98821e8ee50f798"
+        },
+        {
+          "name": "metric_reassessment.json",
+          "bytes": 202694,
+          "sha256": "7a6998aabd50d84864c8203f918233e7411c64e35ef227a4e4e64fa337869269"
+        },
+        {
+          "name": "uncertainty_model.pt",
+          "bytes": 9330,
+          "sha256": "8f4951b5531eda8a621660d5f1e54da9da08e901161c5956415490d5ef5dfe14"
+        }
+      ]
+    }
+  },
+  "raw_server_location": "/data/shaozhen.liu/code/tex3d/experiments/refcloth_math/20261031",
+  "source_definition_hashes": {
+    "/data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/dataset_statistics.json": "3f8b7854c8634ea6ccfd6ef6b8f983e3b30b067c2cdaf690b152c0899d5d9282",
+    "/data/shaozhen.liu/code/tex3d-deps/openvla-oft/prismatic/models/action_heads.py": "8e42df65d6407d64d47457286d9be05466d25d8a0f094aa9dfb90de84a9aa7cc"
+  },
+  "source_model_only": true,
+  "gpus": [
+    0,
+    1,
+    2
+  ],
+  "gpu4_used": false,
+  "shared_patch_owner": {
+    "initial": "already_patched",
+    "bootstrap_exit": 0
+  },
+  "original_direction_tensors_unchanged_after_metadata_correction": true
+}

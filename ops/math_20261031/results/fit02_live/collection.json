@@ -1,0 +1,295 @@
+{
+  "tasks": [
+    0,
+    2
+  ],
+  "initial": 5,
+  "scope": "source-only gradients and native fidelity, not closed-loop",
+  "commit": "d5f9e80a040c75a9075fbe27bde4088323fbf263",
+  "records": [
+    {
+      "task": 0,
+      "start": "init",
+      "action_displacement": {
+        "error_rms": 0.0015405711662188335,
+        "truth_rms": 0.0012928545868748991,
+        "prediction_rms": 0.0012100882693143879,
+        "relative_error": 1.1916043628253021,
+        "cosine": 0.24366973359111105
+      },
+      "action_interaction": {
+        "error_rms": 0.003478162438606095,
+        "truth_rms": 0.001990067361512277,
+        "prediction_rms": 0.002630578343698438,
+        "relative_error": 1.7477611591815645,
+        "cosine": -0.1162652233690378
+      },
+      "native_joint_rms": 0.0012928545868748991,
+      "native_solo_main_rms": 0.0012466592978490714,
+      "native_solo_wrist_rms": 0.0014707985672195753,
+      "feature_displacement": {
+        "error_rms": 0.04848654230075074,
+        "truth_rms": 0.034136330137985366,
+        "prediction_rms": 0.03440008033360372,
+        "relative_error": 1.420379463895479,
+        "cosine": -0.000975149733325987
+      },
+      "feature_interaction": {
+        "error_rms": 0.06735552950208551,
+        "truth_rms": 0.04694138950238371,
+        "prediction_rms": 0.049087196165211504,
+        "relative_error": 1.4348857205998378,
+        "cosine": 0.016552126471894538
+      },
+      "gradient_norms": {
+        "fd": 0.00024304156249854714,
+        "action": 8.158624950738158e-06,
+        "interaction": 5.518075454347127e-07,
+        "solo_main": 1.7627202169023803e-06,
+        "solo_wrist": 1.5364841601694934e-05,
+        "protected": 1.5357189113274217e-05
+      }
+    },
+    {
+      "task": 0,
+      "start": "moderate",
+      "action_displacement": {
+        "error_rms": 0.00470429044091713,
+        "truth_rms": 0.007830081417018053,
+        "prediction_rms": 0.004726647599129081,
+        "relative_error": 0.6007971297326146,
+        "cosine": 0.8311397582946387
+      },
+      "action_interaction": {
+        "error_rms": 0.0026541716692623715,
+        "truth_rms": 0.0019748030797829552,
+        "prediction_rms": 0.002422680101497749,
+        "relative_error": 1.3440183967882426,
+        "cosine": 0.28474276746938365
+      },
+      "native_joint_rms": 0.007830081417018053,
+      "native_solo_main_rms": 0.001631679617803145,
+      "native_solo_wrist_rms": 0.008956408463018586,
+      "feature_displacement": {
+        "error_rms": 0.10470373337842201,
+        "truth_rms": 0.10643778332523396,
+        "prediction_rms": 0.07189346375043798,
+        "relative_error": 0.9837083233731639,
+        "cosine": 0.36164853691752974
+      },
+      "feature_interaction": {
+        "error_rms": 0.07080239899444912,
+        "truth_rms": 0.05071714460338271,
+        "prediction_rms": 0.0492730004035318,
+        "relative_error": 1.3960249447822182,
+        "cosine": -0.0025855243825219027
+      },
+      "gradient_norms": {
+        "fd": 0.0035935777705162764,
+        "action": 8.118814730551094e-05,
+        "interaction": 8.289571269415319e-07,
+        "solo_main": 6.536396085721208e-06,
+        "solo_wrist": 7.273829396581277e-05,
+        "protected": 7.289068162208423e-05
+      }
+    },
+    {
+      "task": 0,
+      "start": "frozen_mr",
+      "action_displacement": {
+        "error_rms": 0.03658327369937472,
+        "truth_rms": 0.11562045793754515,
+        "prediction_rms": 0.08415228993750686,
+        "relative_error": 0.3164083100166923,
+        "cosine": 0.9821120190545295
+      },
+      "action_interaction": {
+        "error_rms": 0.005685657018256743,
+        "truth_rms": 0.00886873397532173,
+        "prediction_rms": 0.009750859231976102,
+        "relative_error": 0.6410900399175052,
+        "cosine": 0.8175915708284586
+      },
+      "native_joint_rms": 0.11562045793754515,
+      "native_solo_main_rms": 0.023362932872301005,
+      "native_solo_wrist_rms": 0.09995212268904478,
+      "feature_displacement": {
+        "error_rms": 0.2314778218999926,
+        "truth_rms": 0.5920142881036552,
+        "prediction_rms": 0.5706283614357313,
+        "relative_error": 0.391000397374638,
+        "cosine": 0.9213714379579836
+      },
+      "feature_interaction": {
+        "error_rms": 0.10930889260682262,
+        "truth_rms": 0.19167132905830853,
+        "prediction_rms": 0.20706516020491605,
+        "relative_error": 0.5702933930904692,
+        "cosine": 0.8524575455828147
+      },
+      "gradient_norms": {
+        "fd": 0.03160259500145912,
+        "action": 0.0018250345019623637,
+        "interaction": 5.864488775841892e-05,
+        "solo_main": 0.0002561169967520982,
+        "solo_wrist": 0.0013695490779355168,
+        "protected": 0.0013685039011761546
+      }
+    },
+    {
+      "task": 2,
+      "start": "init",
+      "action_displacement": {
+        "error_rms": 0.0018069529892879535,
+        "truth_rms": 0.001648724906635599,
+        "prediction_rms": 0.0013484173386941675,
+        "relative_error": 1.0959699717130107,
+        "cosine": 0.2859530445268747
+      },
+      "action_interaction": {
+        "error_rms": 0.003359642244228789,
+        "truth_rms": 0.0022797881933298327,
+        "prediction_rms": 0.001953133130074879,
+        "relative_error": 1.4736642000596265,
+        "cosine": -0.255464945733461
+      },
+      "native_joint_rms": 0.001648724906635599,
+      "native_solo_main_rms": 0.0009222240928066326,
+      "native_solo_wrist_rms": 0.0012556582574704898,
+      "feature_displacement": {
+        "error_rms": 0.046545058551921786,
+        "truth_rms": 0.031800157309533464,
+        "prediction_rms": 0.03311598932947257,
+        "relative_error": 1.4636738459771048,
+        "cosine": -0.027786569742337654
+      },
+      "feature_interaction": {
+        "error_rms": 0.06250246259290976,
+        "truth_rms": 0.04435969020288764,
+        "prediction_rms": 0.044695428601045,
+        "relative_error": 1.4089923150284107,
+        "cosine": 0.014855085091733954
+      },
+      "gradient_norms": {
+        "fd": 0.0012445827014744282,
+        "action": 5.092287210572977e-06,
+        "interaction": 6.052264893696702e-07,
+        "solo_main": 2.620699433464324e-06,
+        "solo_wrist": 1.142667588283075e-05,
+        "protected": 1.1634396287263371e-05
+      }
+    },
+    {
+      "task": 2,
+      "start": "moderate",
+      "action_displacement": {
+        "error_rms": 0.0077042384973168,
+        "truth_rms": 0.010002939606775072,
+        "prediction_rms": 0.009543717919000104,
+        "relative_error": 0.7701974419698243,
+        "cosine": 0.6902306535752569
+      },
+      "action_interaction": {
+        "error_rms": 0.002849484137223771,
+        "truth_rms": 0.0021859924662593453,
+        "prediction_rms": 0.002520720644045139,
+        "relative_error": 1.3035196512363962,
+        "cosine": 0.2734015133780874
+      },
+      "native_joint_rms": 0.010002939606775072,
+      "native_solo_main_rms": 0.003167546405550549,
+      "native_solo_wrist_rms": 0.007787408616008641,
+      "feature_displacement": {
+        "error_rms": 0.07764058191476056,
+        "truth_rms": 0.09140587564599424,
+        "prediction_rms": 0.08667200981690772,
+        "relative_error": 0.8494047167761373,
+        "cosine": 0.6209669533321018
+      },
+      "feature_interaction": {
+        "error_rms": 0.06429671302346678,
+        "truth_rms": 0.04554113567908046,
+        "prediction_rms": 0.0466830634927445,
+        "relative_error": 1.4118381560915219,
+        "cosine": 0.028042371970005142
+      },
+      "gradient_norms": {
+        "fd": 0.008302059955894947,
+        "action": 0.00022376110428012908,
+        "interaction": 1.6887972833501408e-06,
+        "solo_main": 1.9703296857187524e-05,
+        "solo_wrist": 0.00020608509657904506,
+        "protected": 0.00020692838006652892
+      }
+    },
+    {
+      "task": 2,
+      "start": "frozen_mr",
+      "action_displacement": {
+        "error_rms": 0.017434193257150985,
+        "truth_rms": 0.08200247196138527,
+        "prediction_rms": 0.06750434214248012,
+        "relative_error": 0.21260570370806256,
+        "cosine": 0.9915314842362424
+      },
+      "action_interaction": {
+        "error_rms": 0.004478140118499602,
+        "truth_rms": 0.012453992700058977,
+        "prediction_rms": 0.015055342463834352,
+        "relative_error": 0.3595746541973158,
+        "cosine": 0.9645685858070119
+      },
+      "native_joint_rms": 0.08200247196138527,
+      "native_solo_main_rms": 0.024530252847847607,
+      "native_solo_wrist_rms": 0.07176508229707532,
+      "feature_displacement": {
+        "error_rms": 0.17980839636365706,
+        "truth_rms": 0.5755103081607797,
+        "prediction_rms": 0.5569372448121791,
+        "relative_error": 0.31243297264003855,
+        "cosine": 0.950103287115412
+      },
+      "feature_interaction": {
+        "error_rms": 0.09559973186164394,
+        "truth_rms": 0.24072859867611357,
+        "prediction_rms": 0.23761885986685963,
+        "relative_error": 0.3971266080864279,
+        "cosine": 0.920197778964129
+      },
+      "gradient_norms": {
+        "fd": 0.02814650535583496,
+        "action": 0.0009058457217179239,
+        "interaction": 9.028757631313056e-05,
+        "solo_main": 0.00019092032744083554,
+        "solo_wrist": 0.0008857295615598559,
+        "protected": 0.0008760631317272782
+      }
+    }
+  ],
+  "states": [
+    {
+      "task": 0,
+      "zero_png_maxdiff": 0,
+      "seg_area": 0.2560882568359375,
+      "aa_feature_maxdiff": 0,
+      "observation_audit": {
+        "main_maxdiff": 0,
+        "main_changed_fraction": 0.0,
+        "wrist_maxdiff": 0
+      }
+    },
+    {
+      "task": 2,
+      "zero_png_maxdiff": 0,
+      "seg_area": 0.2461395263671875,
+      "aa_feature_maxdiff": 0,
+      "observation_audit": {
+        "main_maxdiff": 0,
+        "main_changed_fraction": 0.0,
+        "wrist_maxdiff": 0
+      }
+    }
+  ],
+  "gpu_peak_bytes": 19076759040,
+  "completed": true
+}

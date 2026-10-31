@@ -1,0 +1,44 @@
+{
+  "screen_date": "2026-10-31",
+  "scope": "Focused primary-source overlap screen, not an exhaustive novelty or priority claim",
+  "sources": [
+    {
+      "title": "Computing a Trust Region Step",
+      "authors": "Jorge J. More and D. C. Sorensen",
+      "year": 1983,
+      "url": "https://epubs.siam.org/doi/10.1137/0904038",
+      "overlap": "Quadratic minimization under ellipsoidal constraints and a secular-equation solver are established numerical optimization.",
+      "consequence": "Do not claim the inner ellipsoid solver or its multiplier equation as a new theorem."
+    },
+    {
+      "title": "Robust Solutions to Least-Squares Problems with Uncertain Data",
+      "authors": "Laurent El Ghaoui and Herve Lebret",
+      "year": 1997,
+      "url": "https://people.eecs.berkeley.edu/~elghaoui/Pubs/rob-ls.pdf",
+      "overlap": "Bounded-uncertainty minimax least-squares formulations and robust regularization.",
+      "consequence": "Decision-space renderer uncertainty is an application hypothesis; minimax treatment of an ellipsoid is not new by itself."
+    },
+    {
+      "title": "Exploring patterns enriched in a dataset with contrastive principal component analysis",
+      "year": 2018,
+      "url": "https://www.nature.com/articles/s41467-018-04608-8",
+      "overlap": "Contrastive covariance structure and eigendirections that emphasize signal relative to a background distribution.",
+      "consequence": "A signal-versus-renderer-error eigenspace alone is not sufficient mathematical novelty."
+    },
+    {
+      "title": "UniTexture: Cross-Task Universal Adversarial Textures for Vision-Language-Action Models",
+      "year": 2026,
+      "url": "https://arxiv.org/html/2608.13453v1",
+      "overlap": "A shared object-bound texture is optimized across tasks with explicit native action-space targets.",
+      "consequence": "Direct action-MSE must be a baseline; merely replacing feature displacement with an action objective is already occupied."
+    },
+    {
+      "title": "Action Robust Reinforcement Learning and Applications in Continuous Control",
+      "authors": "Chen Tessler, Yonathan Efroni, Shie Mannor",
+      "year": 2019,
+      "url": "https://proceedings.mlr.press/v97/tessler19a.html",
+      "overlap": "Control under additive or alternative adversarial action uncertainty.",
+      "consequence": "Uncertainty in a control action is an established setting, although here the uncertainty models a renderer discrepancy rather than an actuator adversary."
+    }
+  ]
+}

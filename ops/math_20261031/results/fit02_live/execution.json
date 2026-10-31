@@ -1,0 +1,16 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds": 67.75320243835449,
+  "command": [
+    "/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python",
+    "/data/shaozhen.liu/code/tex3d/ops/math_20261031/collect_math.py",
+    "--repo",
+    "/data/shaozhen.liu/code/tex3d",
+    "--out",
+    "/data/shaozhen.liu/code/tex3d/experiments/refcloth_math/20261031/fit02_live",
+    "--tasks",
+    "0,2",
+    "--memory-fraction",
+    ".48"
+  ]
+}

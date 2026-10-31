@@ -1,0 +1,102 @@
+% Candidate mathematics; no empirical validity is asserted by these identities.
+\section*{Protected interaction under a shared physical texture}
+Fix a simulator state, instruction, proprioception, and policy inference noise.
+Let $A_P(u,v)\in\mathbb R^d$ be the selected action coordinates from rendering
+path $P\in\{R,N\}$, when the two views use texture parameters $u$ and $v$.
+The physical deployment is the diagonal $u=v=\theta$. Off-diagonal evaluations
+are camera-input interventions, not additional realizable physical textures.
+Define
+\[
+ d_{1,P}=A_P(\theta,0)-A_P(0,0),\quad
+ d_{2,P}=A_P(0,\theta)-A_P(0,0),\quad
+ d_{J,P}=A_P(\theta,\theta)-A_P(0,0),
+\]
+\[
+ I_P=A_P(\theta,\theta)-A_P(\theta,0)-A_P(0,\theta)+A_P(0,0).
+\]
+All four references must use the same rendering path. Replacing only the clean
+corner by a native reference reintroduces the offset from the existing paper.
+
+\paragraph{Proposition 1 (algebraic joint-effect bound).}
+For any norm, without differentiability assumptions,
+\[
+ \|d_{J,N}\|\ge\max\{0,\|I_N\|-\|d_{1,N}\|-\|d_{2,N}\|\}.
+\]
+If $\|I_R-I_N\|\le\xi$ and both native unilateral effects are at most
+$\tau_1,\tau_2$, then
+\[
+ \|d_{J,N}\|\ge\max\{0,\|I_R\|-\xi-\tau_1-\tau_2\}.
+\]
+Proof: $d_{J,N}=I_N+d_{1,N}+d_{2,N}$ and the reverse triangle inequality.
+RMS on a fixed $d$-dimensional action subset is a scaled Euclidean norm, so the
+same bound holds for the experimental RMS. This is an action-effect bound,
+not a task-failure or closed-loop safety certificate.
+
+\paragraph{Proposition 2 (separable cross-path errors cancel).}
+Let $E(u,v)=A_R(u,v)-A_N(u,v)$. Exactly,
+\[
+ I_R-I_N=E(\theta,\theta)-E(\theta,0)-E(0,\theta)+E(0,0).
+\]
+Consequently, if $E(u,v)=b+e_1(u)+e_2(v)$ at the four queried corners, then
+$I_R=I_N$, even when the ordinary displacement error
+$d_{J,R}-d_{J,N}=E(\theta,\theta)-E(0,0)$ is large.
+This assumption is empirical, not a property guaranteed by dual rendering.
+An error in nonlinear view fusion is not separable and need not cancel.
+
+\paragraph{Proposition 3 (mixed-curvature representation).}
+If $A_P$ is $C^2$ on the rectangle of texture interpolations, the fundamental
+theorem of calculus twice gives
+\[
+ I_P=\int_0^1\!\int_0^1D_{12} A_P(s\theta,t\theta)
+                    [\theta,\theta],dt\,ds.
+\]
+Thus, if the bilinear operator norm $\|D_{12}E\|\le L_{12}$ throughout it,
+$\|I_R-I_N\|\le L_{12}\|\theta\|^2$.
+This is an absolute second-order error bound. Since $I_N$ is itself generally
+second-order, it does not guarantee small relative error or a useful gradient.
+Actual PNG quantization, clipping, and finite-precision inference invalidate
+unqualified $C^2$ claims; Propositions 1--2 still hold algebraically for their
+four observed outputs. The smooth statement refers to an ideal continuous
+rendering/policy extension.
+
+\paragraph{Local spectral interpretation (not a new eigensolver).}
+For an ideal smooth path and a fixed action direction $q$, define
+$H_q=\tfrac12(D_{12}(q^\top A)(0,0)+D_{12}(q^\top A)(0,0)^\top)$.
+Then $q^\top I(t v)=t^2v^\top H_qv+O(t^3)$ when third derivatives are bounded.
+Let $J_1=D_1A(0,0)$, $J_2=D_2A(0,0)$, and $P$ project onto
+$\ker J_1\cap\ker J_2$. The maximizer of $v^\top H_qv$ over unit vectors in
+that subspace is a largest-eigenvalue vector of the restricted operator
+$P H_q P$. The absolute-value version uses the largest-magnitude eigenvalue.
+This does not solve $\max_v\|D_{12}A[v,v]\|$ globally; that vector objective
+is quartic. With exact first-order unilateral nulling, both solo outputs and
+the interaction become second-order, so finite-step constraints remain needed.
+
+\paragraph{Candidate optimization.}
+One possible source-only test is
+\[
+ \max_\theta\ \mathbb E_{x,u}\|I_R(\theta;x,u)\|^2,
+ \quad C_v(\theta)=\mathbb E_{x,u}\|d_{v,R}(\theta;x,u)\|^2\le\tau_v^2,
+ \quad T_\theta\in\mathcal T_\epsilon.
+\]
+The thresholds are fixed source-side and must be checked per state or via a
+prespecified tail constraint if worst-state protection is claimed. An average
+constraint alone does not give each-state protection. All original amplitude,
+TV, rasterization/export, and source/target separation requirements remain.
+
+For $g=\nabla\|I_R\|^2$ and $h_v=\nabla C_v$, an economical local subproblem is
+\[
+ \max_{\|\delta\|_2\le r}g^\top\delta
+ \quad\text{subject to }h_v^\top\delta\le0,\ v=1,2.
+\]
+Writing $\mathcal C$ for this convex cone, its exact solution is
+$\delta=r\Pi_{\mathcal C}(g)/\|\Pi_{\mathcal C}(g)\|$, or zero when the
+projection vanishes. The projection has a two-dimensional nonnegative dual;
+enumerating zero, one, or two active constraints solves the small problem.
+This is standard gradient-constrained quadratic programming, closely related
+to Gradient Episodic Memory, not an independent mathematical novelty claim.
+If $C_v$ has $\beta_v$-Lipschitz gradient, a feasible current point satisfies
+$C_v(\theta+\delta)\le C_v(\theta)+\beta_v r^2/2$.
+In practice use a finite-step backtracking check with frozen margins; do not
+infer protection from the sign of a local derivative alone. A zero/small
+initialization has a vanishing interaction gradient, so spectral or nonzero
+initialization needs to be separated from training gains in the comparisons.

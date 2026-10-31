@@ -1,0 +1,9 @@
+Proposition 2b: unique normalized invariant and a limitation of identification
+
+Order the four corners (00,10,01,11). A linear contrast c00*A00+c10*A10+c01*A01+c11*A11 with c11=1 is invariant to every additive nuisance b+e1(i)+e2(j) if and only if (c00,c10,c01,c11)=(1,-1,-1,1).
+
+Proof: annihilating the main-view indicator gives c10+c11=0; annihilating the wrist indicator gives c01+c11=0; annihilating constants gives c00+c10+c01+c11=0. These force the unique contrast. The nuisance space has dimension three in the four-dimensional corner space. The one remaining quotient coordinate is the interaction. This is a standard factorial-contrast fact applied to a specified rendering-error model, not a new general mathematical identity.
+
+Native total joint displacement is NOT identifiable from the four synthesis outputs under unrestricted additive error, even with the native clean corner known. For any action vector q, the possible native map AN(i,j)=AR(i,j)-i*q has the same clean corner and the same interaction, while changing its native joint displacement by -q. Additional calibration or structural assumptions are necessary to infer the joint displacement. The interaction estimand becomes useful only if it can be made behaviorally consequential under unilateral protection, as Proposition 1 quantifies.
+
+An empirical rejection is informative: if measured IR-IN is not smaller than the ordinary matched joint-displacement error, then the assumed additive renderer-error family is not supported at those states/textures. The identity remains true; the proposed method's justification fails.

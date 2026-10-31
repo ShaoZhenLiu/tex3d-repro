@@ -1,0 +1,403 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=0.77in]{geometry}
+\usepackage{microtype}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlength{\abovedisplayskip}{7pt}
+\setlength{\belowdisplayskip}{7pt}
+\newtheorem{proposition}{Proposition}[section]
+\newcommand{\R}{\mathbb R}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\ip}[2]{\left\langle#1,#2\right\rangle}
+\newcommand{\pos}[1]{\left[#1\right]_+}
+\newcommand{\simplex}{\Delta_m}
+\title{Mathematical notes on executable common ascent,\protect\\
+cross-view invariants, and decision-space uncertainty}
+\author{RefCloth exploration notes}
+\date{31 October 2026}
+\begin{document}
+\maketitle
+\vspace{-8pt}
+
+\textbf{Scope.} These notes specify three falsifiable source-side candidates.
+Their ingredients---linear-programming duality, multiobjective ascent,
+factorial/M\"obius contrasts, and ellipsoidal robust optimization---are standard
+mathematics, not claimed new general theorems. The application hypotheses must
+be distinguished from these identities. No experimental outcomes are reported
+here; no result below establishes task failure, closed-loop transfer, or an
+unconditional deployment certificate.
+
+\section{Common ascent in the final executable box}
+Fix a texture-parameter vector $\theta\in[-b,b]^p$, step budget $\eta>0$, and
+source task--state objectives $J_i$, $i=1,\ldots,m$. Put
+$g_i=\nabla J_i(\theta)$ and $q_i=g_i/s_i$, where $s_i>0$ is fixed for this
+step. Raw gradients use $s_i=1$; another choice is
+$s_i=\max(\norm{g_i}_1,\varepsilon)$. Zero-gradient groups must be retained.
+Common regularizers belong in every $J_i$ if their gradients enter the update.
+
+An update followed by parameter clipping can execute precisely the increments
+\begin{equation}\label{eq:box}
+ B=\{\delta:\ell_j\leq\delta_j\leq u_j\},\quad
+ \ell_j=\max\{-\eta,-b-\theta_j\},\qquad
+ u_j=\min\{\eta,b-\theta_j\}.
+\end{equation}
+This box contains zero but need not be symmetric. With fixed offsets $c_i$, solve
+\begin{equation}\label{eq:lp}
+ \gamma^*=\max_{\delta\in B}\min_i(q_i^\top\delta+c_i)
+ =\max_{\delta,t}\{t:q_i^\top\delta+c_i\geq t\ \forall i,\ \delta\in B\}.
+\end{equation}
+The executable output is the \emph{primal increment} $\delta^*$ itself.
+Normalization and execution geometry are distinct design choices.
+
+\begin{proposition}[Support-function dual]
+For $\simplex=\{w\geq0:\sum_iw_i=1\}$ and $h(w)=\sum_iw_iq_i$,
+\begin{equation}\label{eq:dual}
+ \gamma^*=\min_{w\in\simplex}
+ \left\{\sum_{j=1}^p\max\{\ell_jh_j(w),u_jh_j(w)\}+w^\top c\right\}.
+\end{equation}
+Every feasible $\delta$ gives a lower bound in \eqref{eq:lp}; every simplex
+weight vector gives an upper bound in \eqref{eq:dual}. Their difference is a
+directly checkable primal--dual gap.
+\end{proposition}
+\begin{proof}
+Replace the finite minimum over groups by the minimum over simplex mixtures.
+The resulting objective is affine in each variable on convex compact sets,
+so minimax interchange applies. Maximizing $h^\top\delta$ over $B$ separates
+coordinate-wise, giving the support function displayed in \eqref{eq:dual}.
+\end{proof}
+
+For the full symmetric cube $B=[-\eta,\eta]^p$ and $c=0$,
+\begin{equation}\label{eq:l1dual}
+ \gamma^*=\eta\min_{w\in\simplex}\norm{\textstyle\sum_iw_iq_i}_1.
+\end{equation}
+Thus $\gamma^*=0$ exactly when $0\in\operatorname{conv}\{q_i\}$ in this
+symmetric case. More generally, with $c=0$, $\gamma^*>0$ is equivalent to
+existence of a strict common-ascent increment \emph{in the actual box}.
+The convex-hull equivalence cannot be transferred without qualification to a
+clipped box with zero on its boundary.
+
+Multiobjective gradient combination predates this application
+\cite{sener,pcgrad}. What must be tested is whether respecting the executed
+box changes native updates, beyond using existing gradient combination alone.
+
+\newpage
+\subsection*{Why a final sign can invalidate a common-ascent direction}
+Take two linear objectives with $g_1=(1,0)$, $g_2=(-2,1)$ and
+$B=[-1,1]^2$. The sign of their mean is $(-1,1)$, with objective gains
+$(-1,3)$. Projecting each conflicting gradient against the original other
+gradient, as in the two-group PCGrad calculation \cite{pcgrad}, gives
+\[
+ \widetilde g_1=(1/5,2/5),\qquad \widetilde g_2=(0,1).
+\]
+Their sum has positive gains $(1/5,1)$, whereas its sign $(1,1)$ has gains
+$(1,-1)$. A strict common-ascent direction existed and was destroyed by signing.
+The maximin primal solution instead is
+\[
+ \delta^*=(1/3,1),\qquad \gamma^*=1/3.
+\]
+Indeed, gains at least $t$ require $\delta_1\geq t$ and
+$\delta_2\geq t+2\delta_1\geq3t$, hence $t\leq1/3$.
+Even signing the optimal dual combination is insufficient: weights
+$(2/3,1/3)$ give $h=(0,1/3)$, whose sign $(0,1)$ has worst gain zero.
+The missing fractional coordinate is determined by active primal constraints.
+For $\ell_1$-normalized rows $(1,0)$ and $(-2/3,1/3)$, the sign of their mean
+still harms the second group; the normalized LP optimum is $(1/5,1)$.
+
+\begin{proposition}[Sparse fractionality of an optimal basic solution]
+After eliminating fixed coordinates of $B$, there exists an optimal basic
+solution with at most $m-1$ increment coordinates strictly inside their bounds.
+If that solution has $k$ active group constraints, the sharper limit is $k-1$.
+\end{proposition}
+\begin{proof}
+There are $p+1$ free LP variables $(\delta,t)$. If $r$ increment coordinates
+are interior, at most $p-r$ independent box constraints are active. A basic
+solution requires $p+1$ independent active constraints, so
+$p-r+k\geq p+1$. An optimal vertex exists for this pointed LP with bounded
+increment box and finite optimum. The claim concerns an optimal basic
+solution, not every point on its optimal face or an averaged solver iterate.
+\end{proof}
+
+\begin{proposition}[Conditional native-export gain bound]\label{prop:native}
+Let $F_i(\theta)=\mathcal F_i(T_\theta)$ be a continuously relaxed native
+objective. At the current point and along the relevant box segment, assume
+\[
+ \norm{\nabla F_i(\theta)-g_i}_1\leq\rho_i,\qquad
+ \norm{\nabla F_i(a)-\nabla F_i(a')}_1\leq L_i\norm{a-a'}_\infty.
+\]
+Suppose $\mathcal F_i$ is $\kappa_i$-Lipschitz in texture $\ell_\infty$ norm,
+and the actual export $Q$ satisfies $\norm{Q(T)-T}_\infty\leq q$. Then
+\begin{equation}\label{eq:nativebound}
+ \mathcal F_i(Q(T_{\theta+\delta}))-\mathcal F_i(Q(T_\theta))
+ \geq g_i^\top\delta-\rho_i\eta-\tfrac12L_i\eta^2-2\kappa_iq.
+\end{equation}
+\end{proposition}
+\begin{proof}
+Integrate the native gradient along the step. H\"older's inequality bounds its
+initial discrepancy by $\rho_i\eta$, and the integrated remainder by
+$L_i\eta^2/2$. Comparing quantized and relaxed textures at both endpoints costs
+at most $2\kappa_iq$.
+\end{proof}
+Dividing $F_i,g_i$ and the remainder by the same fixed $s_i$, the LP offset
+$c_i=-(\rho_i\eta+L_i\eta^2/2+2\kappa_iq)/s_i$ gives a conditional common
+normalized native-gain lower bound $\gamma^*$.
+
+These bounds require justified gradient-error, curvature, and export constants.
+Finite probes do not establish uniform constants. Nearest 8-bit rounding has
+$q\leq1/(2\cdot255)$; truncation may require $q\leq1/255$. Identical exported
+PNGs have zero native gain despite a positive relaxed prediction. Clipping and
+nonsmooth TV also require their own smoothness qualifications.
+
+\newpage
+\section{Four-corner interaction as a conditional rendering invariant}
+Fix simulator state, instruction, proprioception, inference noise, and action
+coordinates. Let $A_P(u,v)\in\R^d$ denote the selected action vector when the
+two views use textures $u,v$ through path $P\in\{R,N\}$ (synthesis/native).
+Physical deployment uses the shared diagonal $u=v=\theta$; off-diagonal
+evaluations are camera-input interventions, not separately deployable textures.
+Put $A_{P,ij}=A_P(i\theta,j\theta)$ and
+\begin{align}
+ d_{1,P}&=A_{P,10}-A_{P,00},&
+ d_{2,P}&=A_{P,01}-A_{P,00},\notag\\
+ d_{J,P}&=A_{P,11}-A_{P,00},&
+ I_P&=A_{P,11}-A_{P,10}-A_{P,01}+A_{P,00}.\label{eq:corners}
+\end{align}
+All four corners within each contrast use the same rendering path.
+
+\begin{proposition}[Unique normalized linear invariant]
+A linear contrast $\sum_{i,j\in\{0,1\}}c_{ij}A_{ij}$ with $c_{11}=1$ is
+invariant to every additive nuisance $b+e_1(i)+e_2(j)$ if and only if
+\begin{equation}\label{eq:unique}
+ (c_{00},c_{10},c_{01},c_{11})=(1,-1,-1,1).
+\end{equation}
+\end{proposition}
+\begin{proof}
+Annihilating the first-view indicator forces $c_{10}+c_{11}=0$; annihilating
+the second forces $c_{01}+c_{11}=0$; annihilating constants forces
+$\sum c_{ij}=0$. These equations give \eqref{eq:unique}, which also suffices.
+The additive nuisance subspace has dimension three in the four-dimensional
+corner space, leaving one quotient coordinate. This is a standard
+factorial/M\"obius contrast, not a new general invariance theorem \cite{rota}.
+\end{proof}
+
+Define the cross-path action error $E(u,v)=A_R(u,v)-A_N(u,v)$. Exactly,
+\begin{equation}\label{eq:errorcontrast}
+ I_R-I_N=E(\theta,\theta)-E(\theta,0)-E(0,\theta)+E(0,0).
+\end{equation}
+Thus the error cancels if $E(u,v)=b+e_1(u)+e_2(v)$ at these corners, even if
+$d_{J,R}-d_{J,N}$ is large. A nonlinear fusion error need not be separable.
+Replacing only $A_{R,00}$ by $A_{N,00}$ changes the contrast to
+$I_R-E(0,0)$ and spoils the cancellation of a constant cross-path offset.
+
+\begin{proposition}[Behavioral relevance requires unilateral control]
+For any norm,
+\begin{equation}\label{eq:jointbound}
+ \norm{d_{J,N}}\geq\pos{\norm{I_N}-\norm{d_{1,N}}-\norm{d_{2,N}}}.
+\end{equation}
+If $\norm{I_R-I_N}\leq\xi$ and $\norm{d_{v,N}}\leq\tau_v$, then
+$\norm{d_{J,N}}\geq\pos{\norm{I_R}-\xi-\tau_1-\tau_2}$.
+\end{proposition}
+\begin{proof}
+Use $d_{J,N}=I_N+d_{1,N}+d_{2,N}$ and the reverse triangle inequality twice.
+\end{proof}
+RMS on a fixed $d$-coordinate subset is a scaled Euclidean norm, so the same
+bound applies. Constraints on synthesis unilateral effects alone do not give
+native unilateral control without an additional cross-path error bound.
+
+\textbf{Identification limit.} Even knowing the native clean corner does not
+identify native total joint displacement under unrestricted additive error.
+For any action vector $z$, $A_N(i,j)=A_R(i,j)-iz$ preserves the clean corner
+and interaction while changing native joint displacement by $-z$.
+Consequently an invariant interaction is not a surrogate for the entire native
+action effect without additional calibration or structural assumptions.
+
+\newpage
+\subsection*{Mixed curvature, relative error, and protected local updates}
+For an ideal $C^2$ extension on the rectangle of texture interpolations, two
+applications of the fundamental theorem of calculus give
+\begin{equation}\label{eq:mixed}
+ I_P(\theta)=\int_0^1\!\int_0^1
+ D_{12}A_P(s\theta,t\theta)[\theta,\theta],dt\,ds.
+\end{equation}
+If the bilinear operator norm of $D_{12}E$, for the chosen input and output
+norms, is uniformly at most $L_{12}$ there,
+\begin{equation}\label{eq:mixederror}
+ \norm{I_R-I_N}\leq L_{12}\norm{\theta}^2.
+\end{equation}
+This is an \emph{absolute} second-order error bound. The interaction itself is
+generally second-order, so relative fidelity need not improve as the texture
+shrinks. For example, scalar maps $A_N(u,v)=uv$ and
+$E(u,v)=a uv$ give $I_N(\theta)=\theta^2$ and
+$|I_R-I_N|/|I_N|=|a|$ for every nonzero $\theta$.
+When $I_N=0$, relative error is undefined. A fixed denominator floor must be
+specified before inspection if relative errors are summarized.
+
+\textbf{Smoothness limit.} Quantized PNGs, finite-precision inference, clipping,
+and visibility changes do not automatically admit this $C^2$ extension.
+The four-corner algebra, uniqueness, and triangle inequalities remain exact
+for observed outputs; the smooth mixed-curvature interpretation is conditional.
+Uncoupled inference noises would additionally confound the four-corner contrast.
+
+A possible protected source objective is
+\begin{equation}\label{eq:protected}
+ \max_{\theta}\ \mathbb E\norm{I_R(\theta)}^2,
+ \qquad C_v(\theta)=\mathbb E\norm{d_{v,R}(\theta)}^2\leq\tau_v^2,
+ \qquad T_\theta\in\mathcal T_\epsilon.
+\end{equation}
+An average constraint does not imply each-state protection; a worst-state or
+tail claim requires the corresponding prespecified constraint. Native
+unilateral effects must be tested separately, as \eqref{eq:jointbound} requires.
+For $g=\nabla\norm{I_R}^2$ and $h_v=\nabla C_v$, an economical local problem is
+\begin{equation}\label{eq:cone}
+ \max_{\delta\in\mathcal C,\,\norm{\delta}_2\leq r}g^\top\delta,
+ \qquad\mathcal C=\{\delta:h_v^\top\delta\leq0,\ v=1,2\}.
+\end{equation}
+Its solution is $r\Pi_{\mathcal C}(g)/\norm{\Pi_{\mathcal C}(g)}$ when the
+projection is nonzero, and zero otherwise. Moreau's cone decomposition gives
+the corresponding support-function identity. This is standard constrained
+gradient projection, related to GEM \cite{gem}; the two-constraint dual can be
+solved by enumerating active sets. If $\nabla C_v$ is $\beta_v$-Lipschitz,
+$C_v(\theta+\delta)\leq C_v(\theta)+\beta_v r^2/2$ for such a first-order
+feasible step. Finite-step protection still needs a margin or an actual
+backtracking check.
+
+\textbf{Local spectral observation.}
+For a fixed action direction $a$, let
+$H_a=\operatorname{sym}(D_{12}(a^\top A)(0,0))$. With bounded third derivatives,
+\[
+ a^\top I(tv)=t^2v^\top H_av+O(t^3).
+\]
+If $P$ projects onto $\ker D_1A(0,0)\cap\ker D_2A(0,0)$, maximizing this
+signed quadratic over unit vectors in that subspace is a restricted eigenvalue
+problem. Maximizing the full vector norm is instead quartic and is not solved
+by one such eigenvector. First-order unilateral nulling does not remove
+second-order solo changes. Also, $\norm{I(\theta)}^2=O(\norm{\theta}^4)$ near
+zero, so its gradient can vanish there; initialization and optimization gains
+must be separated.
+
+\newpage
+\section{Decision-space ellipsoidal renderer uncertainty}
+Fix a source action head $H$ and a linear map $P$ selecting execution-relevant
+coordinates in one common control-unit system. Let $z_{N,0}$ be native clean
+features, $d_R=z_R(\theta)-z_R(0)$ and $d_N=z_N(\theta)-z_N(0)$. Define
+\begin{equation}\label{eq:actiondisp}
+ u_R=P\{H(z_{N,0}+d_R)-H(z_{N,0})\},\quad
+ u_N=P\{H(z_{N,0}+d_N)-H(z_{N,0})\},\quad e=u_N-u_R.
+\end{equation}
+The action head is evaluated as given, without a linear approximation. The
+native clean anchor is fixed. Production affine action-unnormalization scales
+belong in $P$; their offsets cancel in displacements. Mixing normalized and
+unnormalized coordinates would change the Euclidean objective and its geometry.
+
+Given a fitted $C\succ0$, consider the conservative action-energy objective
+\begin{equation}\label{eq:ellipsoid}
+ V(u)=\min_e\{\norm{u+e}_2^2:e^\top C^{-1}e\leq r(u)^2\}.
+\end{equation}
+Absolute uncertainty uses $r(u)=\rho$. Relative uncertainty uses
+$r(u)=\rho\norm{u}_2$, with a separately estimated dimensionless shape.
+The following is a standard ellipsoidal quadratic subproblem
+\cite{more,elghaoui}; its exact solution is useful for specifying the gradient.
+
+\begin{proposition}[Inner optimum and envelope derivative]\label{prop:ellipsoid}
+Write $C=U\operatorname{diag}(c_j)U^\top$, $v=U^\top u$, and suppose $r(u)>0$.
+If $u^\top C^{-1}u\leq r(u)^2$, then $V(u)=0$ and $e^*=-u$.
+Otherwise there is a unique $\mu>0$ satisfying
+\begin{equation}\label{eq:secular}
+ \sum_j\frac{c_jv_j^2}{(c_j+\mu)^2}=r(u)^2,
+\end{equation}
+and the worst-case remaining action and objective are
+\begin{equation}\label{eq:worst}
+ y^*=u+e^*=U\operatorname{diag}\!\left(\frac{\mu}{c_j+\mu}\right)v,
+ \qquad V(u)=\norm{y^*}_2^2.
+\end{equation}
+At an exterior point, the two envelope gradients are
+\begin{equation}\label{eq:envelope}
+ \nabla V_{\rm abs}(u)=2y^*,\qquad
+ \nabla V_{\rm rel}(u)=2\{y^*-\mu\rho^2u\}.
+\end{equation}
+\end{proposition}
+\begin{proof}
+The convex inner problem has a unique optimizer. Its Lagrangian is
+$\norm{u+e}^2+\mu(e^\top C^{-1}e-r(u)^2)$. Exterior points satisfy Slater's
+condition and have an active constraint. Stationarity gives
+$e^*=-C(C+\mu I)^{-1}u$, yielding \eqref{eq:secular}--\eqref{eq:worst}.
+The left side of \eqref{eq:secular} decreases continuously from a value above
+$r(u)^2$ to zero, hence has a unique positive root. Differentiating the
+Lagrangian with respect to $u$ at its optimum gives
+$2y^*-\mu\nabla(r(u)^2)$, which proves \eqref{eq:envelope}.
+\end{proof}
+
+At strict interior points, both value and gradient are zero. With zero radius,
+the limiting problem is simply $V(u)=\norm{u}^2$. Relative uncertainty is
+positively homogeneous: $V_{\rm rel}(a u)=a^2 V_{\rm rel}(u)$ for $a\geq0$.
+Omitting the second term in its envelope gradient gives the right forward
+score but the wrong update. A single isotropic subtraction
+$(\norm{u}-\rho)_+^2$ is only a monotone radial transformation of action energy;
+on one sample its nonzero sign-gradient direction is unchanged. Anisotropic
+uncertainty must be distinguished from such a scalar reweighting.
+
+\newpage
+\subsection*{What calibration and a conditional lower bound do not prove}
+If the \emph{actual} error $u_N-u_R$ belongs to the chosen uncertainty set,
+\begin{equation}\label{eq:conditionalvalue}
+ \norm{u_N}^2\geq V(u_R),\qquad 0\leq V(u_R)\leq\norm{u_R}^2.
+\end{equation}
+This follows because the actual error and zero error are feasible competitors
+for the inner minimum. If the new texture obeys that membership condition and
+its lower bound exceeds a measured old native action energy, an improvement
+of that native action energy follows. Neither an increase of the lower bound
+alone nor membership measured at a different texture establishes the premise.
+
+A source-only estimation recipe can use disjoint \emph{state groups} for shape
+and radius estimation. For absolute errors, one possible origin-centered shape
+is $C=\mathbb E[ee^\top]+\lambda I$; centering would remove a systematic error
+that the uncertainty model may need to cover. Relative errors can instead fit
+the shape of $e/\norm{u_R}$, with a declared treatment of zero or negligible
+denominators. A held-out empirical quantile of Mahalanobis lengths defines an
+empirical radius, not a uniform error bound. Correlated probes and state shift
+further limit a naive probabilistic interpretation. Optimization-selected
+textures need not follow the calibration distribution, so random-probe
+coverage cannot certify them.
+
+For a fixed comparison, signal-versus-error covariance can also define
+generalized directions $S a=\lambda C a$, with $S=\mathbb E[u_Nu_N^\top]$.
+That is an established generalized-eigenvalue construction. Direct action
+objectives are already used in VLA texture attacks \cite{unitexture}. Thus a
+meaningful distinction must be a tested advantage of the uncertainty geometry
+over both direct action energy and a fixed action-space quadratic metric.
+
+\textbf{Evaluation requirements implied by the mathematics.}
+An ellipsoid can contain $-u_R$, making the robust score and its gradient zero;
+this is a substantive failure of optimization usability. Flat-score states
+must not silently disappear from rank summaries, nor may arbitrary argmax
+ties be interpreted as useful selection. Report tie rules, degeneracy, and
+each-state behavior. All candidate updates must be evaluated in the same
+unweighted native control coordinates. Differing loss scales must not silently
+change regularization strength. Finally, native value fidelity and native
+gradient fidelity are different questions: a smaller prediction error does
+not by itself justify a better executable update.
+
+\begin{thebibliography}{9}\small
+\setlength{\itemsep}{3pt}
+\bibitem{sener} O. Sener and V. Koltun. \emph{Multi-Task Learning as Multi-Objective
+Optimization}. 2018. \href{https://arxiv.org/abs/1810.04650}{Primary paper}.
+\bibitem{pcgrad} T. Yu et al. \emph{Gradient Surgery for Multi-Task Learning}.
+2020. \href{https://arxiv.org/abs/2001.06782}{Primary paper}.
+\bibitem{rota} G.-C. Rota. \emph{On the Foundations of Combinatorial Theory I:
+Theory of M\"obius Functions}. 1964.
+\href{https://webhomes.maths.ed.ac.uk/~v1ranick/papers/rota1.pdf}{Original paper}.
+\bibitem{gem} D. Lopez-Paz and M. A. Ranzato. \emph{Gradient Episodic Memory
+for Continual Learning}. 2017. \href{https://arxiv.org/abs/1706.08840}{Primary paper}.
+\bibitem{more} J. J. Mor\'e and D. C. Sorensen. \emph{Computing a Trust Region
+Step}. 1983. \href{https://epubs.siam.org/doi/10.1137/0904038}{Publisher article}.
+\bibitem{elghaoui} L. El Ghaoui and H. Lebret. \emph{Robust Solutions to
+Least-Squares Problems with Uncertain Data}. 1997.
+\href{https://people.eecs.berkeley.edu/~elghaoui/Pubs/rob-ls.pdf}{Author-hosted paper}.
+\bibitem{unitexture} \emph{UniTexture: Cross-Task Universal Adversarial Textures
+for Vision-Language-Action Models}. 2026.
+\href{https://arxiv.org/html/2608.13453v1}{Primary paper}.
+\end{thebibliography}
+\end{document}

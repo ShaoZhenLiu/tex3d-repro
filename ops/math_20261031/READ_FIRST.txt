@@ -1,0 +1,6 @@
+Read REPORT.html and mathematical_notes.pdf.
+Scripts are in this directory; data and figures in results/.
+No candidate passed the complete native-update gate. No new closed-loop success rates.
+Raw tensors and model weights remain at the server path in run_manifest.json.
+Only physical GPUs0,1,2 on 4090 were used. GPU4 was never used.
+Public synchronization was explicitly authorized by the user.

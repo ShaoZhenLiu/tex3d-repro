@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-31",
+  "validated_new_main_method": false,
+  "new_closed_loop_success_rates": false,
+  "target_policy_queries": 0,
+  "source_validation": {
+    "fit_initial": 5,
+    "validation_initial": 6,
+    "tasks": [0,2,6,8],
+    "fit_states": 4,
+    "heldout_states": 4,
+    "native_update_records": 288,
+    "independent_sample_caution": "288 settings are repeated evaluations of four heldout simulator states"
+  },
+  "final_box_maximin": {
+    "raw_passed_settings": 2,
+    "l1_normalized_passed_settings": 1,
+    "settings_per_variant": 6,
+    "required_settings": 4,
+    "decision": "conditional mathematical result and local positive cases; no full training"
+  },
+  "protected_interaction": {
+    "native_AA_displacement_relative_error": 0.33168277471785973,
+    "native_interaction_relative_error": 0.5495584487508922,
+    "protected_settings_passed": 0,
+    "settings": 6,
+    "decision": "separable-error identity is valid but does not match this empirical error sufficiently; no full training"
+  },
+  "ellipsoidal_action_uncertainty": {
+    "absolute_covered_pairs": 62,
+    "relative_covered_pairs": 59,
+    "absolute_zero_scores": 59,
+    "relative_zero_scores": 64,
+    "validation_pairs": 64,
+    "covered_bound_violations": 0,
+    "decision": "conditional lower bounds are mostly vacuous; no 7B training or update test"
+  },
+  "mathematical_tests": 22,
+  "gpu_policy": {"used_4090_GPUs": [0,1,2], "GPU4_used": false, "09_GPU_jobs": 0},
+  "paper_modified": false,
+  "github_visibility": "public, explicitly authorized previously",
+  "novelty_caution": "standard LP, robust optimization and interaction algebra are not claimed as new mathematics"
+}

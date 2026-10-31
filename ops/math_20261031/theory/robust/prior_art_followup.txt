@@ -1,0 +1,68 @@
+Focused prior-art核对：最坏组攻击、MOO后sign与最终更新盒LP
+2026-10-31
+
+结论
+
+DM-UAP并未使用本轮的逐任务共同上升box primal；将它直接写成同算法先例并不准确。但是，“通用攻击改成maximin”“用MOO解决多源梯度冲突”“物理纹理受限空间中的梯度协调”均有直接攻击先例。本轮只能把LP表述为已有多目标优化工具在RefCloth更新中的应用，以及一项可检验的sign执行分析；目前没有足够依据声称独立新数学框架。
+
+在此次实际读到的攻击方法中，没有确认与“每步max_delta min_i g_i·delta，在参数clip后的完整更新盒直接解primal并保留分数坐标”逐项完全相同的实现。这个有限核对不是不存在先例的证明，也不能用于“首次”声明。
+
+1. DM-UAP：需要纠正maximin的具体含义
+
+Primary全文：https://arxiv.org/html/2503.12793v3
+已读§3.1–3.3、Eq(3)–(8)、Algorithm 1。
+
+Eq(5)外层最大化仍是各样本损失的平均值，内层联合优化模型参数邻域与输入邻域中的model-data pairs。§3.3先优化模型、再优化输入。最终UAP更新Eq(8)使用Adam，再clip到L∞预算内；文中明确说用Adam代替旧SGD+sign。
+
+因此它不是每步在任务梯度上解max–min线性规划，也不是本轮的box primal。不过它直接占据“maximin改善UAP泛化”的宽泛立场；本轮不能把maximin-UAP本身当作新概念。
+
+2. 更直接的跨域最坏攻击：Wang et al., NeurIPS 2021
+
+Primary全文：https://arxiv.org/html/1906.03563v3
+正式会议PDF：https://papers.nips.cc/paper/2021/file/85e5526a360b0bcf082d8d42e7bf100b-Paper.pdf
+标题：Adversarial Attack Generation Empowered by Min-Max Optimization
+已读§2、§3.1–3.2。
+
+该文已用simplex域权重统一多个模型、多个输入的通用扰动、以及多种变换下的最坏域攻击。APGDA交替更新攻击变量与域权重；攻击变量用当前加权梯度做一步梯度更新后Euclidean投影，L∞时投影就是clip。
+
+与本轮区别：它不在每次迭代固定一组梯度后精确解最终更新盒的共同上升LP。相同部分则很强：最坏输入/最坏变换替代均值、对难攻击域自适应加权都已存在。本轮的方法定位和对照不能只提MGDA或DM-UAP而遗漏此文。
+
+3. TA-MOO：确有MOO组合后再sign的直接攻击先例
+
+Primary全文：https://arxiv.org/html/2304.13229v2
+标题：Generating Adversarial Examples with Task Oriented Multi-Objective Optimization
+已读§2、§3.1–3.2、Appendix E.3/E.6。
+
+§2 Eq(2)在simplex上最小化混合梯度的L2平方；§3.1 Eq(3)加入按目标是否已达成的正则。§3.1明确L∞时使用sign(g_t)再投影，Appendix E.6再次说明实际更新用梯度符号。
+
+它未解本轮box primal。本轮二维反例说明，L2共同上升向量经过sign后一般不保留共同上升性质；不能据此推断TA-MOO实际攻击无效，也不能将该反例误写成其所有理论结论错误。TA-MOO已覆盖“多目标生成攻击/通用扰动/变换攻击”的应用论点，后续若主张方法优越，应补相关MOO攻击基线，而不只比平均sign。
+
+4. MLA-LP：攻击领域已经直接用LP求多约束、L∞扰动
+
+论文：Generating Multi-label Adversarial Examples by Linear Programming, IJCNN 2020
+DOI：https://doi.org/10.1109/IJCNN48605.2020.9206614
+作者代码：https://github.com/hinanmu/MLALP
+作者上传的全文：https://www.researchgate.net/publication/340930450_Generating_Multi-label_Adversarial_Examples_by_Linear_Programming
+该全文页面明确标为作者Xin Lin上传的Author content；此次读的是原论文§III.B，不依赖综述转述。
+
+Eq(10)–(14)用逐标签loss Jacobian约束希望达到的损失阈值，并最小化扰动L∞范数，直接转成LP迭代求解。它是单图多标签目标，不是跨状态共享纹理的固定半径max–min增益LP；但“保留全部一阶约束并直接解L∞攻击LP”显然不能宣称新颖。固定半径最大化共同线性裕量与最小范数达到指定线性裕量，在凸几何上也紧密相关。
+
+5. JMOF：物理纹理空间的梯度冲突也已有直接研究
+
+Primary全文：https://arxiv.org/html/2605.17772v1
+标题：Towards Universal Physical Adversarial Attacks via a Joint Multi-Objective and Multi-Model Optimization Framework
+已读§III.A、§III.E。
+
+该文针对共享3D物理纹理的多模型/多目标梯度冲突；OGA在局部纹理块上构建Gram矩阵，做特征分解与能量归一，再自适应加权融合。文中给出的是谱变换融合，未见本轮共同上升box LP。
+
+因此不能声称首次在受限物理纹理空间处理梯度冲突。本轮若能成立，区别应在最终sign/clip更新如何影响逐状态线性增益，以及这种区别是否通过原生导出和独立状态验证，而非笼统“梯度一致”。
+
+本轮可以和不可以怎么写
+
+可以：
+“针对RefCloth现有sign更新，分析多目标合方向经过符号化后可能丢失共同上升；使用标准LP在实际参数更新盒中选择可执行增量，并通过原生PNG和留出源初态检验。”
+
+不可以：
+“首次提出多目标通用攻击”“首个maximin物理纹理”“新的minimax对偶定理”“首次用LP直接求L∞攻击”“源侧一阶上升保证闭环迁移成功”。
+
+若独立初态上的native增益不稳定，本轮应登记为数学分析及负结果候选，而不因为证明完整就将其升级为主贡献。

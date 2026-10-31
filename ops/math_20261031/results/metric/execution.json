@@ -1,0 +1,18 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds": 15.09378433227539,
+  "command": [
+    "/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python",
+    "/data/shaozhen.liu/code/tex3d/ops/math_20261031/fit_metric_cache.py",
+    "--root",
+    "/data/shaozhen.liu/code/tex3d/experiments/refcloth_residual/20261031_run1",
+    "--head-source",
+    "/data/shaozhen.liu/code/tex3d-deps/openvla-oft/prismatic/models/action_heads.py",
+    "--checkpoint",
+    "/data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/action_head--150000_checkpoint.pt",
+    "--statistics",
+    "/data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt/dataset_statistics.json",
+    "--out",
+    "/data/shaozhen.liu/code/tex3d/experiments/refcloth_math/20261031/metric"
+  ]
+}
