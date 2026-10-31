@@ -70,41 +70,60 @@ def find_bowl_tex(sim, env, search):
 
 
 def capture_evidence(task, tid, conditions, search, out_ev, f):
-    """同一初态（init 10）下逐条件注入并捕获帧/差分 mask（注入后、动作前）。"""
+    """同一初态（init 10）下逐条件注入并捕获帧/差分 mask。
+
+    取证顺序（第 15 轮勘误）：obs 的图像在 set_init_state 时已渲染，注入后再
+    读 obs 拿到的是旧帧（首轮 maxdiff=0 的成因）；正确做法是注入后统一执行
+    一步哑动作、以新 obs 的渲染为准。各条件同待遇，另存"无注入"对照帧。"""
     import attack_oft as _UP
     from libero.libero import benchmark as _bm
     suite = _bm.get_benchmark_dict()["libero_spatial"]()
     task = suite.get_task(tid)
     inits = suite.get_task_init_states(tid)
     frames = {}
-    for cond, tex_path in conditions.items():
+
+    def grab(tag, inject_path):
         env, _ = build_env(task)
         env.reset()
-        obs = env.set_init_state(inits[10])
+        env.set_init_state(inits[10])
         sim = env.env.sim
         sim.forward()
-        tex_id = find_bowl_tex(sim, env, search)
-        restore = ctu.inject_mujoco_texture(
-            sim, tex_id, np.array(Image.open(tex_path).convert("RGB")))
+        tex_id, restore = -1, None
+        if inject_path is not None:
+            tex_id = find_bowl_tex(sim, env, search)
+            restore = ctu.inject_mujoco_texture(
+                sim, tex_id, np.array(Image.open(inject_path).convert("RGB")))
         try:
-            sim.forward()
+            obs, _, _, _ = env.step(_UP.get_libero_dummy_action("openvla"))
             img = _UP.get_libero_image(obs)
-            frames[cond] = img
+            frames[tag] = img
             Image.fromarray(img).save(
-                os.path.join(out_ev, f"frame_{cond}_t{tid}.png"))
+                os.path.join(out_ev, f"frame_{tag}_t{tid}.png"))
         finally:
-            ctu.restore_mujoco_texture(sim, tex_id, *restore)
+            if restore is not None:
+                ctu.restore_mujoco_texture(sim, tex_id, *restore)
             env.close()
+
+    grab("none", None)
+    for cond, tex_path in conditions.items():
+        grab(cond, tex_path)
     for cond in ("th0", "adv_t%d" % tid):
-        d = np.abs(frames[cond].astype(np.int16) - frames["orig"].astype(np.int16))
+        d = np.abs(frames[cond].astype(np.int16)
+                   - frames["orig"].astype(np.int16))
         mask = (d >= 8).any(axis=2)
         Image.fromarray((mask * 255).astype(np.uint8)).save(
             os.path.join(out_ev, f"mask_{cond}_vs_orig_t{tid}.png"))
+        d_none = np.abs(frames["orig"].astype(np.int16)
+                        - frames["none"].astype(np.int16))
         frac = float(mask.mean())
         f.write(f"evidence t{tid}: mask {cond}-vs-orig changed={frac:.4f} "
-                f"maxdiff={int(d.max())}\n")
+                f"maxdiff={int(d.max())} | orig-vs-none changed="
+                f"{float((d_none >= 8).any(axis=2).mean()):.4f} "
+                f"maxdiff={int(d_none.max())}\n")
         print(f"[evidence] t{tid} {cond}-vs-orig changed={frac:.4f} "
-              f"maxdiff={int(d.max())}", flush=True)
+              f"maxdiff={int(d.max())} | orig-vs-none "
+              f"changed={float((d_none >= 8).any(axis=2).mean()):.4f}",
+              flush=True)
 
 
 def run_condition(cfg, model, processor, modules, cond, tex_path, tasks,
@@ -197,6 +216,8 @@ def main():
     ap.add_argument("--tasks", default="0,8")
     ap.add_argument("--trials", type=int, default=5)
     ap.add_argument("--init-offset", type=int, default=10)
+    ap.add_argument("--evidence-only", action="store_true",
+                    help="只重跑同态取证（取证顺序勘误后）")
     args = ap.parse_args()
     tasks = [int(t) for t in args.tasks.split(",")]
 
@@ -208,6 +229,20 @@ def main():
 
     os.makedirs(os.path.join(OUT, "evidence"), exist_ok=True)
     stamp = time.strftime("%Y%m%d_%H%M%S")
+    if args.evidence_only:
+        ev = os.path.join(OUT, f"evidence_rerun_{stamp}.txt")
+        with open(ev, "w", encoding="utf-8") as f:
+            from libero.libero import benchmark
+            suite = benchmark.get_benchmark_dict()["libero_spatial"]()
+            for tid in tasks:
+                conds_t = {"orig": conditions["orig"], "th0": conditions["th0"],
+                           f"adv_t{tid}": conditions[f"adv_t{tid}"]}
+                capture_evidence(suite.get_task(tid), tid, conds_t,
+                                 obj["search"], os.path.join(OUT, "evidence"), f)
+            f.write("DONE-EVIDENCE-RERUN\n")
+        print("[source-check] DONE-EVIDENCE-RERUN", flush=True)
+        return
+
     summary = os.path.join(OUT, f"source_check_{stamp}.txt")
     with open(summary, "w", encoding="utf-8") as f:
         f.write("Tex3D 源端最小检查（第15轮 P1-2）：2任务×3条件×初态10-14=30回合\n")

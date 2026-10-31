@@ -181,7 +181,7 @@ def train(args):
              else "（全池）"))
 
     mr_hidden = None
-    if args.ref == "mr":
+    if args.ref == "mr" or args.ref_switch > 0:
         assert sha256(MR_CACHE) == CACHE_SHA
         full = torch.load(MR_CACHE, map_location="cpu", weights_only=False)["hidden"]
         assert len(full) == 296
@@ -302,6 +302,12 @@ def train(args):
             samp_log.write("%d %d %d %d %s\n" % (
                 it, slot, fi, act[fi][0],
                 " ".join("%.6f" % x for x in uvl)))
+        if args.ref_switch > 0 and it == args.ref_switch:
+            print(f"[ref-switch] it={it} "
+                  f"{'mr->native' if args.ref == 'mr' else 'native->mr'}",
+                  flush=True)
+        use_mr_now = ((args.ref == "mr")
+                      != (args.ref_switch > 0 and it >= args.ref_switch))
         attack_sum = 0.0
         feat_val = float("nan")
         for fi in batch_idx:
@@ -339,7 +345,8 @@ def train(args):
                 adv_action = action_head.predict_action(adv_hidden)
             attack_action = -F.mse_loss(adv_action.float(),
                                         fr["clean_action_head"])
-            _ref_h = (mr_hidden[fi].to(device) if mr_hidden is not None
+            _ref_h = (mr_hidden[fi].to(device)
+                      if mr_hidden is not None and use_mr_now
                       else fr["clean_hidden"])
             attack_feat = -F.mse_loss(adv_hidden.float(), _ref_h.float())
             attack = (args.alpha_action * attack_action
@@ -406,6 +413,8 @@ def main():
     p = sub.add_parser("train")
     p.add_argument("--tag", required=True)
     p.add_argument("--ref", choices=["mr", "native"], required=True)
+    p.add_argument("--ref-switch", type=int, default=0,
+                   help=">0 时在该 iter 切换参考（mr<->native）；θ/RNG/采样流/优化器均不动")
     p.add_argument("--stream", choices=["fresh", "replay"], default="fresh")
     p.add_argument("--stream-file", default="")
     p.add_argument("--uv", choices=["on", "off"], default="on")
