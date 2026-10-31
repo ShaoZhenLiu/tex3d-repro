@@ -1,0 +1,51 @@
+{
+  "purpose": "Object same-state input route intervention, not an attack optimization",
+  "target": "pi05_libero / RLinf-Pi05-LIBERO-130-fullshot-SFT",
+  "denoise": 10,
+  "keys": [
+    [
+      0,
+      10
+    ],
+    [
+      0,
+      11
+    ],
+    [
+      4,
+      10
+    ],
+    [
+      4,
+      11
+    ],
+    [
+      8,
+      10
+    ],
+    [
+      8,
+      11
+    ]
+  ],
+  "conditions": {
+    "PP": "Plain main + Plain wrist",
+    "AP": "RefCloth main + Plain wrist",
+    "PA": "Plain main + RefCloth wrist",
+    "AA": "RefCloth both views"
+  },
+  "noise": "explicit identical infer(noise=...) within every paired state; hash and A/A saved",
+  "injection": "native upload asserted; A-B-A pixel restoration exact; texture users limited to cloth body",
+  "selection": "all six preselected keys reported; no result-dependent cases",
+  "acceptance": "finite actions, 7 output coordinates, exact A-B-A; repeated actions differ <1e-6",
+  "forbidden_claims": [
+    "closed-loop success rates",
+    "universal Object mechanism from six early states",
+    "new texture training"
+  ],
+  "gpu": 0,
+  "forbidden_gpu": [
+    4
+  ],
+  "github_visibility": "public, explicitly authorized by user after visibility check"
+}

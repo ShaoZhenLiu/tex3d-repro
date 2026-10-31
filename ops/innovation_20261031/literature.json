@@ -1,0 +1,62 @@
+{
+  "checked_date": "2026-10-31",
+  "scope": "Focused primary-source novelty screen, not an exhaustive priority claim",
+  "sources": [
+    {
+      "title": "Tex3D: Objects as Attack Surfaces via Adversarial 3D Textures for Vision-Language-Action Models",
+      "url": "https://arxiv.org/html/2604.01618v1",
+      "established_overlap": "Differentiable scene compositing, object textures, trajectory-aware frame prioritization and vertex parameterization.",
+      "consequence": "These components are inherited baselines, not new RefCloth contributions."
+    },
+    {
+      "title": "UniTexture: Cross-Task Universal Adversarial Textures for Vision-Language-Action Models",
+      "url": "https://arxiv.org/html/2608.13453v1",
+      "established_overlap": "A shared object-bound texture, joint task optimization, native action-space targets and cross-model evaluation.",
+      "consequence": "A universal texture or adding an action loss alone does not establish a distinct contribution."
+    },
+    {
+      "title": "TRAP: Hijacking VLA CoT-Reasoning via Adversarial Patches",
+      "url": "https://arxiv.org/abs/2603.23117",
+      "established_overlap": "Physical visual patches can hijack intermediate reasoning in CoT-based policies.",
+      "consequence": "A background carrier alone is not a sufficient novelty claim; current non-CoT scope must remain explicit."
+    },
+    {
+      "title": "Black-Box Adversarial Patch Attacks on VLAs via Ancestor VLM Exploitation",
+      "url": "https://arxiv.org/abs/2610.09708",
+      "established_overlap": "Ancestor-only visual and instruction-grounding attacks, and model-dependent limits of inherited transfer.",
+      "consequence": "Moving feature losses to an ancestor or combining vision/language terms is already occupied."
+    },
+    {
+      "title": "Across Viewpoints and Time: Trajectory-Generalizable Physical Attacks on World Models and Video Understanding Models",
+      "url": "https://arxiv.org/abs/2610.15343",
+      "established_overlap": "A printable texture with trajectory-aware representation alignment and task refinement for video and world models.",
+      "consequence": "Generic temporal alignment or shared adversarial embedding is not a strong standalone novelty direction."
+    },
+    {
+      "title": "Causal Analysis of Robot Foundation Models Enables Efficiency Gains",
+      "url": "https://arxiv.org/abs/2610.20750",
+      "established_overlap": "Activation interventions identify a limited action-conditioning interface; representation changes are not automatically causal action changes.",
+      "consequence": "Feature-fidelity gains require decoder and native-update validation, not only cosine or MSE."
+    },
+    {
+      "title": "Synthesizing Robust Adversarial Examples",
+      "url": "https://proceedings.mlr.press/v80/athalye18b.html",
+      "established_overlap": "Expectation over transformations and physical 3D adversarial optimization.",
+      "consequence": "EoT and basic texture-to-image differentiability are established foundations."
+    }
+  ],
+  "current_candidate": {
+    "description": "State-conditioned source-native secant transport of feature displacement",
+    "rationale": "An empirical crossed diagnostic found far worse residual-basis retention across late states than across new textures at seen states.",
+    "mathematical_novelty": "The minimum-norm ridge/secant mapping is standard linear algebra and is not claimed as a new theorem.",
+    "possible_contribution": "A source-only deployment calibration procedure that corrects state-dependent displacement directions, with explicit probe costs and native-gradient validation.",
+    "required_evidence": [
+      "Unseen probe textures and fresh source states",
+      "Source action-head validation",
+      "True native-rendered gradient and step comparison",
+      "Paired short-training regression before a full training claim",
+      "Matched-compute closed-loop evaluation on unchanged target policies",
+      "Multi-seed confirmation without target-guided selection"
+    ]
+  }
+}
