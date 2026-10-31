@@ -1,0 +1,79 @@
+# RefCloth residual 探索配置（residual-explore 分支，2026-10-31）
+# 全部路径为 41 服务器实测值；fail-fast，无静默回退。
+version: 1
+run_id: 20261031_run1
+scope: authorized_simulator_only
+paths:
+  repo_root: /data/shaozhen.liu/code/tex3d
+  source_checkpoint: /data/shaozhen.liu/code/tex3d-ws/g7/oft-spatial-ckpt
+  source_pool: /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/r0f_pool.pt
+  matched_reference_cache: /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/mr_plain_cache.pt
+  cloth_mesh: /data/shaozhen.liu/code/tex3d-deps/libero/libero/libero/assets/tablecloth/tablecloth.obj
+  base_texture: /data/shaozhen.liu/code/tex3d-deps/libero/libero/libero/assets/tablecloth/cloth_base.png
+  gain_map: /data/shaozhen.liu/code/tex3d-deps/libero/libero/libero/assets/tablecloth/cloth_gain_map.npy
+  stream_file: /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/fixed_streams_seed7.pt
+  mr8_png: /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261021_224922_tvfix-mr/Universal_Cloth_OV.png
+  mr8_theta: /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261021_224922_tvfix-mr/Ep0_Cloth_Delta_OV.pt
+  native8_png: /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261021_153634_tvfix-bs8/Universal_Cloth_OV.png
+  native8_theta: /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261021_153634_tvfix-bs8/Ep0_Cloth_Delta_OV.pt
+  bs8_png: /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261021_153634_tvfix-bs8/Universal_Cloth_OV.png
+  bs8_theta: /data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/train_20261021_153634_tvfix-bs8/Ep0_Cloth_Delta_OV.pt
+  output_root: /data/shaozhen.liu/code/tex3d/experiments/refcloth_residual/20261031_run1
+source:
+  cameras: [agentview, robot0_eye_in_hand]
+  task_ids: [0, 2, 6, 8]
+  feature_interface: predict_action_second_return
+  feature_layout: {shape: [1, 56, 4096], dtype_out: float32, m: 229376,
+                   semantics: action_token_hidden, prompt_independent: true}
+  forward_precision: bf16_autocast_readout_fp32
+  use_proprio: true
+  use_wrist: true
+calibration:
+  residual: deployment_total
+  decompose_quantization: true
+  zero_test_repeats: 5
+  native_upload: fail_fast
+  native_resize: reject
+  uv_pairing_mode: identity_only
+  splits:
+    fit: {init_index: 0, states_per_task: 6, stride: 15}
+    validation: {init_index: 1, states_per_task: 4, stride: 20}
+    locked_test: {init_index: 2, states_per_task: 4, stride: 20}
+  group_split_keys: [rollout_id, base_texture_seed]
+  trained_textures: locked_stress_only
+basis:
+  algorithm: uncentered_thin_svd
+  center: false
+  whiten: false
+  normalize_rows: false
+  rank_candidates: [0, 1, 2, 4, 8, 16, 32, 64]
+  beta_initial: [1.0]
+  beta_optional: [0.25, 0.5, 0.75]
+  frozen_during_training: true
+  random_basis_seeds: [1001, 1002, 1003, 1004, 1005]
+  gate: {max_error_energy_ratio: 0.5, min_native_signal_energy_ratio: 0.8,
+         min_group_signal_energy_ratio: 0.6}
+one_step:
+  step_sizes: [0.001, 0.005, 0.01, 0.05]
+  apply_actual_parameter_projection: true
+  evaluation: native_png_feature_and_full_objective
+training:
+  seed_pilot: 7
+  seeds_confirmatory: [7, 8, 9]
+  methods: [matched, residual, random]
+  conditional_scalar_control_if_gamma_below: 0.9
+  updates: 5000
+  batch_size: 8
+  learning_rate: 0.05
+  epsilon: 0.25098039215686274
+  init_std: 0.01
+  parameter_bounds: [-5.0, 5.0]
+  alpha_feature: 10.0
+  alpha_action: 0.0
+  lambda_amplitude: 0.1
+  lambda_tv: 0.1
+  uv_sampling: shared_per_batch_and_cameras
+  sampling_stream: full_precision_paired_replay
+  checkpoint_updates_completed: [0, 100, 250, 499, 500, 501, 1000, 2000, 3500, 5000]
+  final_selection: final_update_not_target_best
+  allow_full_multiseed_without_gate_d: false
