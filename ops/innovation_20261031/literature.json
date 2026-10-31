@@ -61,6 +61,30 @@
       "url": "https://ojs.aaai.org/index.php/AAAI/article/view/6154",
       "established_overlap": "Selective universal perturbations with limited collateral effects already exist for classifiers.",
       "consequence": "An instruction-selective VLA extension needs task-grounding and closed-loop evidence beyond adding attack and preservation losses."
+    },
+    {
+      "title": "Fool the Hydra: Adversarial Attacks against Multi-view Object Detection Systems",
+      "url": "https://arxiv.org/abs/2312.00173",
+      "established_overlap": "A single shared patch aggregates gradients from calibrated views; a separate attack disrupts transformer attention.",
+      "consequence": "Joint multi-view optimization and gradient aggregation alone are established, not a new RefCloth algorithm."
+    },
+    {
+      "title": "Adversarial Attacks for Multi-view Deep Models",
+      "url": "https://arxiv.org/abs/2006.11004",
+      "established_overlap": "Two-stage single-view transfer and end-to-end multi-view attacks were studied in 2020.",
+      "consequence": "The broad multi-view attack setting is not new."
+    },
+    {
+      "title": "Interpreting Attributions and Interactions of Adversarial Attacks",
+      "url": "https://arxiv.org/abs/2108.06895",
+      "established_overlap": "Game-theoretic attribution and interaction among adversarial perturbations.",
+      "consequence": "The inclusion-exclusion interaction formula itself is not a new mathematical contribution."
+    },
+    {
+      "title": "Do Vision-Language-Action Models Understand Instructions? A Mechanistic Interpretability Study on Language Grounding",
+      "url": "https://arxiv.org/abs/2610.10178",
+      "established_overlap": "Controlled instruction corruption and activation/attribution patching in pi0.5 and GR00T; sensitivity can vary by language perturbation.",
+      "consequence": "A language-sensitivity diagnostic alone is occupied; physically valid same-scene counterfactuals and native behavioral evidence are needed for a distinct background-attack contribution."
     }
   ],
   "current_candidate": {
@@ -78,5 +102,6 @@
     ],
     "status": "FAILED_NATIVE_ONE_STEP_GATE; no full training launched",
     "additional_test": "Current-texture tangent variant also failed against matched and native-anchor controls"
-  }
+  },
+  "intervention_status": "Frozen target diagnostics only: no trained texture, selection, or closed-loop success claim; all six target states are now exploratory."
 }

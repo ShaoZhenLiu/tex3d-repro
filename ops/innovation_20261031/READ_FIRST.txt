@@ -1,0 +1,11 @@
+RefCloth innovation exploration, 2026-10-31
+
+Read REPORT.html with its results/ directory.
+Scripts and preregistered plans are in this directory.
+All lightweight results are under results/.
+See decisions.json, literature.json and run_manifest.json for scope, prior work, and raw-array hashes.
+
+No validated new algorithm or new closed-loop success rates were obtained.
+Only 4090 physical GPU0 was used; GPU4 was not used.
+Both servers passed 15 CPU checks; a CUDA gradient/device check also passed.
+Public GitHub synchronization was explicitly authorized by the user.

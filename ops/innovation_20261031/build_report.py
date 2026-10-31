@@ -36,6 +36,29 @@ def build(folder):
             ['task/init','主相机变化像素 %','腕相机变化像素 %','仅主相机扰动：平移RMSE','仅腕相机扰动：平移RMSE','双相机扰动：平移RMSE'],object_rows)+\
             '<p>图片、预处理后差分、纹理材质使用者、A→B→A像素恢复与A/A动作检查均在 object_path_production.json 和配套截图中。因每个状态均使用显式相同 noise，视角组合的差异不混入独立去噪噪声。</p>'
     else:object_section='<p>Object 通路实验尚未形成完整结果；不提前补充结论。</p>'
+    interaction_section=''
+    if (result/'multiview_summary.json').exists():
+        mv=json.loads((result/'multiview_summary.json').read_text(encoding='utf-8'))
+        rows=[]
+        for rec in mv['by_state']:
+            rows.append([str(rec['task'])+'/'+str(rec['initial'])]+[
+                format(rec['textures'][t]['median_amplification'],'.3f') for t in ['MR','random101','random102']])
+        interaction_section='<h2>跨视角交互：强度增加，稳定放大仍未过门</h2><p>在全部六个原有状态上，对冻结MR和已有统计匹配随机纹理101、102，分别使用三份显式共同推理噪声，共54条完整记录。相机干预仍保持相同状态和指令；所有原始MR/noise0动作精确复现，A/A误差为0。</p>'
+        interaction_section+='<pre>I_view = a_AA − a_AP − a_PA + a_PP\namplification = RMS(a_AA−a_PP) / (RMS(a_AP−a_PP)+RMS(a_PA−a_PP))</pre>'
+        interaction_section+='<p>以上均只使用前五个执行动作的三个平移坐标。MR交互RMS中位数相对随机101和102分别为<strong>'+format(mv['MR_interaction_vs_random']['random101'],'.2f')+'倍</strong>和<strong>'+format(mv['MR_interaction_vs_random']['random102'],'.2f')+'倍</strong>。但三份噪声中至少两份放大比超过1.1的状态只有<strong>'+str(mv['stable_MR_amplification_states'])+'/6</strong>，未达到跑前要求的5/6；不能称为普遍的协同放大。</p>'
+        interaction_section+=table(['task/init','MR放大比中位数','随机101','随机102'],rows)
+        interaction_section+='<p>此公式是标准交互差分；相机融合攻击、跨视角梯度聚合及扰动交互分析均已有工作。这里可保留的是受控经验线索，尚不能凭它声称新算法或首次发现。三份噪声重复不计作三个独立场景。</p>'
+    if (result/'instruction_summary.json').exists():
+        ins=json.loads((result/'instruction_summary.json').read_text(encoding='utf-8'))
+        rows=[]
+        for rec in ins['by_state']:
+            rows.append([str(rec['task'])+'/'+str(rec['initial']),format(rec['plain_instruction_response_rms'],'.5f')]+[
+                format(rec['textures'][t]['median_language_texture_interaction_rms'],'.5f') for t in ['MR','random101','random102']])
+        interaction_section+='<h2>同场景有效指令干预</h2><p>保持图片、机器人状态和显式噪声不变，对比原任务指令与“pick up the salad dressing and place it in the basket”。先逐个检查BDDL：三个场景均确实包含salad_dressing_1。不同任务的物体集合并不相同，所以没有把可能指向缺失物体的指令互换。使用同样两张冻结随机对照，完整报告6状态×3噪声×3纹理的54条差分记录。</p>'
+        interaction_section+='<pre>I_language = (a_adv,alternative − a_plain,alternative)\n             − (a_adv,original − a_plain,original)</pre>'
+        interaction_section+='<p>MR语言—纹理交互RMS中位数相对随机101和102分别为<strong>'+format(ins['MR_interaction_vs_random']['random101'],'.2f')+'倍</strong>和<strong>'+format(ins['MR_interaction_vs_random']['random102'],'.2f')+'倍</strong>；状态中位数超过两种随机对照的为<strong>'+str(ins['states_MR_exceeds_both_controls'])+'/6</strong>。跑前探索筛选结果为<strong>'+('通过' if ins['exploratory_screen'] else '未通过')+'</strong>。</p>'
+        interaction_section+=table(['task/init','Plain指令响应RMS','MR语言—纹理交互RMS','随机101','随机102'],rows)
+        interaction_section+='<p><strong>动作对指令有响应，不等于正确执行了指令。</strong>替代目标的Plain闭环能力尚未验证；也没有测出“只破坏一个指令而保护另一个”的任务成功率。本轮未训练或据目标侧结果选择任何纹理。六个目标状态已作为探索数据登记，后续新方法不能再把它们当作未触碰的目标测试集。</p><img src="results/intervention_evidence.png" alt="全部状态的相机交互和有效指令交互对照">'
     native_rows=[]
     for key,label in [('init','初始化'),('moderate','中幅度纹理'),('frozen_mr','冻结正式MR纹理')]:
         m=tangent['by_start'][key];native_rows.append([label,format(m['tangent_vs_matched'],'.4f'),format(m['tangent_vs_anchor'],'.4f')])
@@ -71,13 +94,16 @@ TANGENT_TABLE
 <p>首轮相机诊断复用了这一遗漏，因此已登记为 legacy instrumentation，不能作为主表物理载体的机制证据。已修复仪表化入口以匹配主评测，并另外提供显式 object_fixed_floor 模式用于固定支撑验收。固定模式使用(0.4,0,0.005)世界坐标；它与主评测的物体质心放置是两个实验身份，不互相替代。</p>
 <p>这项证据直接要求复核旧 Object 暴露统计及其解释；不能据此直接否定采用正确 floor 分派的主表成功率。旧记录不覆盖，未伪造新的闭环成功数。</p>
 OBJECT_SECTION
+INTERACTION_SECTION
 <h2>对论文与下一轮的建议</h2>
 <p><strong>当前不把两版校准方法加入主方法。</strong>这些结果可作为作者内部探索材料；如附录记录，只需给出候选范围、预算和停止结果。不能把负结果写成Matched已经最优，也不能宣称创新性评分已提高。</p>
-<p>更值得先回答的是背景输入如何影响任务条件控制。Object的同状态视角干预应先确认输入实际变化、跨相机通路和任务条件性；进一步可检验“同一固定背景是否能够按指令语义选择性地改变行为，同时保持其他指令的能力”。这仍是待验证问题，且必须与既有分类选择性UAP及CoT劫持工作区分，不能仅把触发/保护两项损失相加后换名。</p>
-<p>该方向的第一道门应使用同一场景的不同有效指令，先验证Plain策略确实响应指令；然后在源侧预定触发与保护条件，固定阈值和纹理种子，最后才做跨模型闭环。改变场景和指令同时发生的任务ID分组，不能证明语言条件性。</p>
+<p>本轮已把实际输入变化、相机通路和同场景指令交互分开检查。<strong>当前证据不足以把“普遍跨视角放大”或“语言特异劫持”加入论文贡献。</strong>相机交互强度的对照差异可保留为下一轮线索；“同一固定背景是否能够按指令语义选择性地改变行为，同时保持其他指令的能力”则仍缺少稳定支持。两者均必须与既有分类选择性UAP、CoT劫持、VLA语言敏感性和多视角攻击工作区分，不能仅把触发/保护两项损失相加后换名。</p>
+<p>若继续方法探索，建议先检验一个更明确的假设：<strong>能否在源侧学习同一张物理纹理，使单一路相机受扰时行为接近Plain，只有双路共同受扰时稳定失效。</strong>这要求单视角保护约束、联合行为端点、统计匹配随机对照，以及原Matched和直接动作损失基线；不应把已有的多视角梯度求和重新命名。此处只给出可证伪问题，本轮没有实现或验证该新优化器。AP/PA相机混合是诊断干预，实际物理部署仍只能用AA同一张纹理。</p>
+<p>该方向下一道门应先验证Plain在同一场景对两种有效目标均有闭环能力，并分别用相应物体是否进入篮子的谓词判断，不能沿用原任务的单一成功谓词。随后在源侧预定触发与保护条件，固定阈值和纹理种子，最后才做跨模型闭环。改变场景和指令同时发生的任务ID分组，不能证明语言条件性。源侧方法必须在未使用这些目标探索状态的情况下选择，且比较原Matched、直接动作损失和统计匹配随机纹理。</p>
+<p><strong>已知应修正的稿件位置：</strong>sec/1_intro.tex 中“Object约1.5%”及motivation_exposure图、sec/X_suppl.tex 对旧Object暴露的解释，需要在重采旧60个Object暴露回合后更新，或先撤去该数值和解释。当前六个早期快照记录的是PNG变化像素比例，与完整回合的布面mask中位数不是同一统计量，不能直接替换。主表成功率与其原始评测入口保持独立审计。</p>
 <h2>代码、验收与保留范围</h2>
 <p>修改前两台服务器均与GitHub residual-explore的e94de0b对齐，探索代码独立分支保存。旧判门已修复：空组不自动淘汰，分组下界只检查信号保留；对29个历史候选重新判定仍为0个通过，旧结果文件未覆盖。已有8项CPU/CUDA数学与设备/梯度检查通过。</p>
-<p>只使用4090的GPU0，未使用GPU4；GPU任务单进程顺序执行。09接收相同分支，不加载新的模型或产生大规模数据。仓库公开状态已由用户明确确认，继续按公开仓库同步；模型、原始特征.pt和视频不进入Git。新增支撑面拒绝动态物体、倾斜平面、碰撞布和桌面场景误用，相关测试与前述诊断合计13项通过。</p>
+<p>只使用4090的GPU0，未使用GPU4；GPU任务单进程顺序执行。09接收相同分支，不加载新的模型或产生大规模数据。仓库公开状态已由用户明确确认，继续按公开仓库同步；模型、原始特征.pt和视频不进入Git。新增支撑面拒绝动态物体、倾斜平面、碰撞布和桌面场景误用，相关测试与前述诊断合计15项CPU检查通过；另有CUDA设备与反向梯度检查通过。</p>
 <p class="minor">数据：results/*.json；源码与跑前计划：code/；参考文献筛查：literature.json。初次梯度运行的设备错误已单独隔离；修复后补充了CUDA设备和梯度测试。论文工程RefCloth_Closure_20261031未被改写。</p>
 <h2>直接核对的主要文献</h2><ol>SOURCES</ol>
 </main></body></html>'''
@@ -88,7 +114,10 @@ OBJECT_SECTION
         ['前五执行动作的相对平移MSE','1.0000',format(action_metrics['executed_translation'],'.4f')]])
     document=document.replace('PROJECTION_TABLE',table(['交叉条件','残差保留 q_err','原生信号保留 q_signal'],projection))
     document=document.replace('LOCAL_TABLE',local_table).replace('TANGENT_TABLE',table(['起点','局部校准/Matched增益','局部校准/原生锚点增益'],native_rows))
-    document=document.replace('OBJECT_SECTION',object_section).replace('SOURCES',sources)
+    object_section+='<p>下图是主评测放置方式的一个固定状态快照；只用于确认物理载体和遮挡，不作为完整回合统计。</p><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">'+''.join(
+        '<figure style="margin:0"><img src="results/production_images/object_t0_i10_'+key+'.png"><figcaption>'+label+'</figcaption></figure>'
+        for key,label in [('PP_main','Plain主视角'),('AA_main','MR主视角'),('PP_wrist','Plain腕视角'),('AA_wrist','MR腕视角')])+'</div>'
+    document=document.replace('OBJECT_SECTION',object_section).replace('INTERACTION_SECTION',interaction_section).replace('SOURCES',sources)
     (folder/'探索报告.html').write_text(document,encoding='utf-8')
     print('report written')
 

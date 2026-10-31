@@ -1,0 +1,910 @@
+{
+  "scope": "exploratory language-texture action interaction; not semantic success or optimization",
+  "runner_sha256": "791b8b6c981dc7abac50e99fc039c63172bd6e29548f9bdec76244cd8b27ae73",
+  "commit": "9249f122354d9b8b38f0641b01da7faca84868b9",
+  "texture_sha256": {
+    "MR": "51ad185f0495373784fcf39b48cdbcf75b32b947cdaabf71429e1868de863187",
+    "random101": "f3008d8187a73b93b165f6ef37534c3da5ed3bf30a06af2bf60962e21e611b69",
+    "random102": "d9137fb05b9633c663b04b2ae5447bea852477da6f3ee123179f7559daca105b"
+  },
+  "object_floor_dispatch": true,
+  "records": [
+    {
+      "task": 0,
+      "initial": 10,
+      "noise_id": 0,
+      "texture": "MR",
+      "prompts": {
+        "original": "pick up the alphabet soup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.050999074656745795,
+      "original_texture_effect_rms": 0.19014469072373713,
+      "alternative_texture_effect_rms": 0.22471041492805807,
+      "language_texture_interaction_rms": 0.0899693517824658,
+      "perturbed_instruction_response_rms": 0.043342544266112136
+    },
+    {
+      "task": 0,
+      "initial": 10,
+      "noise_id": 0,
+      "texture": "random101",
+      "prompts": {
+        "original": "pick up the alphabet soup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.050999074656745795,
+      "original_texture_effect_rms": 0.037927446604602635,
+      "alternative_texture_effect_rms": 0.07945988436593186,
+      "language_texture_interaction_rms": 0.08508308971963068,
+      "perturbed_instruction_response_rms": 0.11815186667533005
+    },
+    {
+      "task": 0,
+      "initial": 10,
+      "noise_id": 0,
+      "texture": "random102",
+      "prompts": {
+        "original": "pick up the alphabet soup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.050999074656745795,
+      "original_texture_effect_rms": 0.053297072901776314,
+      "alternative_texture_effect_rms": 0.09953876614997542,
+      "language_texture_interaction_rms": 0.12154925073897824,
+      "perturbed_instruction_response_rms": 0.15802695164456665
+    },
+    {
+      "task": 0,
+      "initial": 10,
+      "noise_id": 1,
+      "texture": "MR",
+      "prompts": {
+        "original": "pick up the alphabet soup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.04853193031100178,
+      "original_texture_effect_rms": 0.16389840299835304,
+      "alternative_texture_effect_rms": 0.18482900274741232,
+      "language_texture_interaction_rms": 0.11202175318759391,
+      "perturbed_instruction_response_rms": 0.07294568131585302
+    },
+    {
+      "task": 0,
+      "initial": 10,
+      "noise_id": 1,
+      "texture": "random101",
+      "prompts": {
+        "original": "pick up the alphabet soup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.04853193031100178,
+      "original_texture_effect_rms": 0.03046567998442734,
+      "alternative_texture_effect_rms": 0.08813410803966538,
+      "language_texture_interaction_rms": 0.0814512917831255,
+      "perturbed_instruction_response_rms": 0.11687835009682077
+    },
+    {
+      "task": 0,
+      "initial": 10,
+      "noise_id": 1,
+      "texture": "random102",
+      "prompts": {
+        "original": "pick up the alphabet soup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.04853193031100178,
+      "original_texture_effect_rms": 0.03773657089314901,
+      "alternative_texture_effect_rms": 0.1076681434722708,
+      "language_texture_interaction_rms": 0.11557397454954833,
+      "perturbed_instruction_response_rms": 0.15335975477545036
+    },
+    {
+      "task": 0,
+      "initial": 10,
+      "noise_id": 2,
+      "texture": "MR",
+      "prompts": {
+        "original": "pick up the alphabet soup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.036475524682224494,
+      "original_texture_effect_rms": 0.21827119659963123,
+      "alternative_texture_effect_rms": 0.2543372867773438,
+      "language_texture_interaction_rms": 0.12628231178165536,
+      "perturbed_instruction_response_rms": 0.1002962465174227
+    },
+    {
+      "task": 0,
+      "initial": 10,
+      "noise_id": 2,
+      "texture": "random101",
+      "prompts": {
+        "original": "pick up the alphabet soup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.036475524682224494,
+      "original_texture_effect_rms": 0.016110401829526545,
+      "alternative_texture_effect_rms": 0.05970846873519833,
+      "language_texture_interaction_rms": 0.05052282585925017,
+      "perturbed_instruction_response_rms": 0.07785677490566119
+    },
+    {
+      "task": 0,
+      "initial": 10,
+      "noise_id": 2,
+      "texture": "random102",
+      "prompts": {
+        "original": "pick up the alphabet soup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.036475524682224494,
+      "original_texture_effect_rms": 0.015426071368418821,
+      "alternative_texture_effect_rms": 0.07273333187387798,
+      "language_texture_interaction_rms": 0.0785083976508143,
+      "perturbed_instruction_response_rms": 0.10828535983688294
+    },
+    {
+      "task": 0,
+      "initial": 11,
+      "noise_id": 0,
+      "texture": "MR",
+      "prompts": {
+        "original": "pick up the alphabet soup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.08911941869014976,
+      "original_texture_effect_rms": 0.30186776304571966,
+      "alternative_texture_effect_rms": 0.34400957456440917,
+      "language_texture_interaction_rms": 0.18378016106875258,
+      "perturbed_instruction_response_rms": 0.10369335391038763
+    },
+    {
+      "task": 0,
+      "initial": 11,
+      "noise_id": 0,
+      "texture": "random101",
+      "prompts": {
+        "original": "pick up the alphabet soup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.08911941869014976,
+      "original_texture_effect_rms": 0.02920449090594333,
+      "alternative_texture_effect_rms": 0.04078999407419287,
+      "language_texture_interaction_rms": 0.028478798483716684,
+      "perturbed_instruction_response_rms": 0.09297984077162882
+    },
+    {
+      "task": 0,
+      "initial": 11,
+      "noise_id": 0,
+      "texture": "random102",
+      "prompts": {
+        "original": "pick up the alphabet soup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.08911941869014976,
+      "original_texture_effect_rms": 0.03871734365948336,
+      "alternative_texture_effect_rms": 0.06894676329043697,
+      "language_texture_interaction_rms": 0.03758508330143418,
+      "perturbed_instruction_response_rms": 0.10939721865185525
+    },
+    {
+      "task": 0,
+      "initial": 11,
+      "noise_id": 1,
+      "texture": "MR",
+      "prompts": {
+        "original": "pick up the alphabet soup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.10497141367218454,
+      "original_texture_effect_rms": 0.2785794702571977,
+      "alternative_texture_effect_rms": 0.317072749840037,
+      "language_texture_interaction_rms": 0.1644899036553458,
+      "perturbed_instruction_response_rms": 0.06755460892688006
+    },
+    {
+      "task": 0,
+      "initial": 11,
+      "noise_id": 1,
+      "texture": "random101",
+      "prompts": {
+        "original": "pick up the alphabet soup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.10497141367218454,
+      "original_texture_effect_rms": 0.03565915496017765,
+      "alternative_texture_effect_rms": 0.05633826893794036,
+      "language_texture_interaction_rms": 0.0254803368736294,
+      "perturbed_instruction_response_rms": 0.1157239231227902
+    },
+    {
+      "task": 0,
+      "initial": 11,
+      "noise_id": 1,
+      "texture": "random102",
+      "prompts": {
+        "original": "pick up the alphabet soup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.10497141367218454,
+      "original_texture_effect_rms": 0.05469662671965785,
+      "alternative_texture_effect_rms": 0.0752872664580615,
+      "language_texture_interaction_rms": 0.02878456077990828,
+      "perturbed_instruction_response_rms": 0.12282147242462857
+    },
+    {
+      "task": 0,
+      "initial": 11,
+      "noise_id": 2,
+      "texture": "MR",
+      "prompts": {
+        "original": "pick up the alphabet soup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.09414814402745052,
+      "original_texture_effect_rms": 0.2629362889505624,
+      "alternative_texture_effect_rms": 0.2785908825181506,
+      "language_texture_interaction_rms": 0.1244004735147461,
+      "perturbed_instruction_response_rms": 0.03821118179605139
+    },
+    {
+      "task": 0,
+      "initial": 11,
+      "noise_id": 2,
+      "texture": "random101",
+      "prompts": {
+        "original": "pick up the alphabet soup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.09414814402745052,
+      "original_texture_effect_rms": 0.020525237190702914,
+      "alternative_texture_effect_rms": 0.04742707585379133,
+      "language_texture_interaction_rms": 0.035309201765328986,
+      "perturbed_instruction_response_rms": 0.09321821139746372
+    },
+    {
+      "task": 0,
+      "initial": 11,
+      "noise_id": 2,
+      "texture": "random102",
+      "prompts": {
+        "original": "pick up the alphabet soup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.09414814402745052,
+      "original_texture_effect_rms": 0.04666570797401097,
+      "alternative_texture_effect_rms": 0.07796592874513335,
+      "language_texture_interaction_rms": 0.034429961270015706,
+      "perturbed_instruction_response_rms": 0.10632332847475738
+    },
+    {
+      "task": 4,
+      "initial": 10,
+      "noise_id": 0,
+      "texture": "MR",
+      "prompts": {
+        "original": "pick up the ketchup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.13189254520556268,
+      "original_texture_effect_rms": 0.06901978746641335,
+      "alternative_texture_effect_rms": 0.15281539737141714,
+      "language_texture_interaction_rms": 0.15584905763028115,
+      "perturbed_instruction_response_rms": 0.26702643236571816
+    },
+    {
+      "task": 4,
+      "initial": 10,
+      "noise_id": 0,
+      "texture": "random101",
+      "prompts": {
+        "original": "pick up the ketchup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.13189254520556268,
+      "original_texture_effect_rms": 0.10829326544688,
+      "alternative_texture_effect_rms": 0.09615496367403331,
+      "language_texture_interaction_rms": 0.12087661061620779,
+      "perturbed_instruction_response_rms": 0.22375954842345092
+    },
+    {
+      "task": 4,
+      "initial": 10,
+      "noise_id": 0,
+      "texture": "random102",
+      "prompts": {
+        "original": "pick up the ketchup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.13189254520556268,
+      "original_texture_effect_rms": 0.02761053440758132,
+      "alternative_texture_effect_rms": 0.0742510995865422,
+      "language_texture_interaction_rms": 0.06764678292766324,
+      "perturbed_instruction_response_rms": 0.1767316871966434
+    },
+    {
+      "task": 4,
+      "initial": 10,
+      "noise_id": 1,
+      "texture": "MR",
+      "prompts": {
+        "original": "pick up the ketchup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.11946809991150018,
+      "original_texture_effect_rms": 0.12618162863525512,
+      "alternative_texture_effect_rms": 0.21589935234961433,
+      "language_texture_interaction_rms": 0.14096947030844661,
+      "perturbed_instruction_response_rms": 0.24988218255399627
+    },
+    {
+      "task": 4,
+      "initial": 10,
+      "noise_id": 1,
+      "texture": "random101",
+      "prompts": {
+        "original": "pick up the ketchup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.11946809991150018,
+      "original_texture_effect_rms": 0.11702333810856007,
+      "alternative_texture_effect_rms": 0.1308844246613788,
+      "language_texture_interaction_rms": 0.12227650444300477,
+      "perturbed_instruction_response_rms": 0.2133309792565636
+    },
+    {
+      "task": 4,
+      "initial": 10,
+      "noise_id": 1,
+      "texture": "random102",
+      "prompts": {
+        "original": "pick up the ketchup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.11946809991150018,
+      "original_texture_effect_rms": 0.04147362192584037,
+      "alternative_texture_effect_rms": 0.09870376982064442,
+      "language_texture_interaction_rms": 0.0746291975385165,
+      "perturbed_instruction_response_rms": 0.17173163093797647
+    },
+    {
+      "task": 4,
+      "initial": 10,
+      "noise_id": 2,
+      "texture": "MR",
+      "prompts": {
+        "original": "pick up the ketchup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.14790063564837344,
+      "original_texture_effect_rms": 0.12141134987354335,
+      "alternative_texture_effect_rms": 0.18207149538316988,
+      "language_texture_interaction_rms": 0.136597978749644,
+      "perturbed_instruction_response_rms": 0.2496232400842979
+    },
+    {
+      "task": 4,
+      "initial": 10,
+      "noise_id": 2,
+      "texture": "random101",
+      "prompts": {
+        "original": "pick up the ketchup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.14790063564837344,
+      "original_texture_effect_rms": 0.12215046306509796,
+      "alternative_texture_effect_rms": 0.10992141422471215,
+      "language_texture_interaction_rms": 0.12816985316071736,
+      "perturbed_instruction_response_rms": 0.245147105877293
+    },
+    {
+      "task": 4,
+      "initial": 10,
+      "noise_id": 2,
+      "texture": "random102",
+      "prompts": {
+        "original": "pick up the ketchup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.14790063564837344,
+      "original_texture_effect_rms": 0.04298261627444892,
+      "alternative_texture_effect_rms": 0.07506374625912429,
+      "language_texture_interaction_rms": 0.058071202322987535,
+      "perturbed_instruction_response_rms": 0.16972415503812258
+    },
+    {
+      "task": 4,
+      "initial": 11,
+      "noise_id": 0,
+      "texture": "MR",
+      "prompts": {
+        "original": "pick up the ketchup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.14512649794643137,
+      "original_texture_effect_rms": 0.0739348776236088,
+      "alternative_texture_effect_rms": 0.22795628749786961,
+      "language_texture_interaction_rms": 0.19462072797435198,
+      "perturbed_instruction_response_rms": 0.31271573725231344
+    },
+    {
+      "task": 4,
+      "initial": 11,
+      "noise_id": 0,
+      "texture": "random101",
+      "prompts": {
+        "original": "pick up the ketchup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.14512649794643137,
+      "original_texture_effect_rms": 0.08393925732800642,
+      "alternative_texture_effect_rms": 0.1360277748053921,
+      "language_texture_interaction_rms": 0.20133315585036388,
+      "perturbed_instruction_response_rms": 0.34356426064035234
+    },
+    {
+      "task": 4,
+      "initial": 11,
+      "noise_id": 0,
+      "texture": "random102",
+      "prompts": {
+        "original": "pick up the ketchup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.14512649794643137,
+      "original_texture_effect_rms": 0.03046699518130661,
+      "alternative_texture_effect_rms": 0.1027519387609362,
+      "language_texture_interaction_rms": 0.12385213866022937,
+      "perturbed_instruction_response_rms": 0.266020446466682
+    },
+    {
+      "task": 4,
+      "initial": 11,
+      "noise_id": 1,
+      "texture": "MR",
+      "prompts": {
+        "original": "pick up the ketchup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.11254876209720817,
+      "original_texture_effect_rms": 0.07101786188453865,
+      "alternative_texture_effect_rms": 0.11135995946470736,
+      "language_texture_interaction_rms": 0.11073398674763785,
+      "perturbed_instruction_response_rms": 0.20170534613301339
+    },
+    {
+      "task": 4,
+      "initial": 11,
+      "noise_id": 1,
+      "texture": "random101",
+      "prompts": {
+        "original": "pick up the ketchup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.11254876209720817,
+      "original_texture_effect_rms": 0.09692739104932778,
+      "alternative_texture_effect_rms": 0.08222946900408369,
+      "language_texture_interaction_rms": 0.17764945440886287,
+      "perturbed_instruction_response_rms": 0.2861457849300063
+    },
+    {
+      "task": 4,
+      "initial": 11,
+      "noise_id": 1,
+      "texture": "random102",
+      "prompts": {
+        "original": "pick up the ketchup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.11254876209720817,
+      "original_texture_effect_rms": 0.044334017913202906,
+      "alternative_texture_effect_rms": 0.060999142144175185,
+      "language_texture_interaction_rms": 0.10391013440019285,
+      "perturbed_instruction_response_rms": 0.21373838996489086
+    },
+    {
+      "task": 4,
+      "initial": 11,
+      "noise_id": 2,
+      "texture": "MR",
+      "prompts": {
+        "original": "pick up the ketchup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.1328168948319497,
+      "original_texture_effect_rms": 0.10341463234356328,
+      "alternative_texture_effect_rms": 0.10617420812151118,
+      "language_texture_interaction_rms": 0.15362175627403327,
+      "perturbed_instruction_response_rms": 0.20171457495142142
+    },
+    {
+      "task": 4,
+      "initial": 11,
+      "noise_id": 2,
+      "texture": "random101",
+      "prompts": {
+        "original": "pick up the ketchup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.1328168948319497,
+      "original_texture_effect_rms": 0.12766755062764798,
+      "alternative_texture_effect_rms": 0.05387236223052757,
+      "language_texture_interaction_rms": 0.15579100113543026,
+      "perturbed_instruction_response_rms": 0.28159981823323704
+    },
+    {
+      "task": 4,
+      "initial": 11,
+      "noise_id": 2,
+      "texture": "random102",
+      "prompts": {
+        "original": "pick up the ketchup and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.1328168948319497,
+      "original_texture_effect_rms": 0.07081605155543445,
+      "alternative_texture_effect_rms": 0.03430582358419789,
+      "language_texture_interaction_rms": 0.09531852076789632,
+      "perturbed_instruction_response_rms": 0.22431386304715487
+    },
+    {
+      "task": 8,
+      "initial": 10,
+      "noise_id": 0,
+      "texture": "MR",
+      "prompts": {
+        "original": "pick up the chocolate pudding and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.10530454441689122,
+      "original_texture_effect_rms": 0.09133360948362251,
+      "alternative_texture_effect_rms": 0.1522825756623539,
+      "language_texture_interaction_rms": 0.11870834438596108,
+      "perturbed_instruction_response_rms": 0.18855773333134473
+    },
+    {
+      "task": 8,
+      "initial": 10,
+      "noise_id": 0,
+      "texture": "random101",
+      "prompts": {
+        "original": "pick up the chocolate pudding and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.10530454441689122,
+      "original_texture_effect_rms": 0.04667040503196704,
+      "alternative_texture_effect_rms": 0.024958009744583433,
+      "language_texture_interaction_rms": 0.031516397887752595,
+      "perturbed_instruction_response_rms": 0.1263231878965594
+    },
+    {
+      "task": 8,
+      "initial": 10,
+      "noise_id": 0,
+      "texture": "random102",
+      "prompts": {
+        "original": "pick up the chocolate pudding and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.10530454441689122,
+      "original_texture_effect_rms": 0.08300731620292606,
+      "alternative_texture_effect_rms": 0.048221494317804224,
+      "language_texture_interaction_rms": 0.05884806834732532,
+      "perturbed_instruction_response_rms": 0.15881127130113273
+    },
+    {
+      "task": 8,
+      "initial": 10,
+      "noise_id": 1,
+      "texture": "MR",
+      "prompts": {
+        "original": "pick up the chocolate pudding and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.07805418186218381,
+      "original_texture_effect_rms": 0.03151639168600484,
+      "alternative_texture_effect_rms": 0.1339252199577587,
+      "language_texture_interaction_rms": 0.12756553693151595,
+      "perturbed_instruction_response_rms": 0.1565310736562669
+    },
+    {
+      "task": 8,
+      "initial": 10,
+      "noise_id": 1,
+      "texture": "random101",
+      "prompts": {
+        "original": "pick up the chocolate pudding and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.07805418186218381,
+      "original_texture_effect_rms": 0.03200415350091078,
+      "alternative_texture_effect_rms": 0.018847051134867173,
+      "language_texture_interaction_rms": 0.01642514211451054,
+      "perturbed_instruction_response_rms": 0.08982707981678674
+    },
+    {
+      "task": 8,
+      "initial": 10,
+      "noise_id": 1,
+      "texture": "random102",
+      "prompts": {
+        "original": "pick up the chocolate pudding and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.07805418186218381,
+      "original_texture_effect_rms": 0.07051348420070751,
+      "alternative_texture_effect_rms": 0.03232098743273986,
+      "language_texture_interaction_rms": 0.054469770167536465,
+      "perturbed_instruction_response_rms": 0.13056875661010567
+    },
+    {
+      "task": 8,
+      "initial": 10,
+      "noise_id": 2,
+      "texture": "MR",
+      "prompts": {
+        "original": "pick up the chocolate pudding and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.0975868191520151,
+      "original_texture_effect_rms": 0.047984832705068155,
+      "alternative_texture_effect_rms": 0.1399983752034576,
+      "language_texture_interaction_rms": 0.12785526388359786,
+      "perturbed_instruction_response_rms": 0.16813793940781335
+    },
+    {
+      "task": 8,
+      "initial": 10,
+      "noise_id": 2,
+      "texture": "random101",
+      "prompts": {
+        "original": "pick up the chocolate pudding and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.0975868191520151,
+      "original_texture_effect_rms": 0.036573689720941466,
+      "alternative_texture_effect_rms": 0.025594945903697784,
+      "language_texture_interaction_rms": 0.017066984468067637,
+      "perturbed_instruction_response_rms": 0.10972028874752196
+    },
+    {
+      "task": 8,
+      "initial": 10,
+      "noise_id": 2,
+      "texture": "random102",
+      "prompts": {
+        "original": "pick up the chocolate pudding and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.0975868191520151,
+      "original_texture_effect_rms": 0.07396797785809699,
+      "alternative_texture_effect_rms": 0.03935612883156419,
+      "language_texture_interaction_rms": 0.050784564633836994,
+      "perturbed_instruction_response_rms": 0.14637709893730658
+    },
+    {
+      "task": 8,
+      "initial": 11,
+      "noise_id": 0,
+      "texture": "MR",
+      "prompts": {
+        "original": "pick up the chocolate pudding and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.1568350089357539,
+      "original_texture_effect_rms": 0.06185806788744915,
+      "alternative_texture_effect_rms": 0.20681301888745868,
+      "language_texture_interaction_rms": 0.2125017171411496,
+      "perturbed_instruction_response_rms": 0.12691833939453875
+    },
+    {
+      "task": 8,
+      "initial": 11,
+      "noise_id": 0,
+      "texture": "random101",
+      "prompts": {
+        "original": "pick up the chocolate pudding and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.1568350089357539,
+      "original_texture_effect_rms": 0.2627172946282798,
+      "alternative_texture_effect_rms": 0.24740710845222424,
+      "language_texture_interaction_rms": 0.4403334453317529,
+      "perturbed_instruction_response_rms": 0.296150620965308
+    },
+    {
+      "task": 8,
+      "initial": 11,
+      "noise_id": 0,
+      "texture": "random102",
+      "prompts": {
+        "original": "pick up the chocolate pudding and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.1568350089357539,
+      "original_texture_effect_rms": 0.2303888028937155,
+      "alternative_texture_effect_rms": 0.241987277107631,
+      "language_texture_interaction_rms": 0.37818534928871805,
+      "perturbed_instruction_response_rms": 0.23933123820580382
+    },
+    {
+      "task": 8,
+      "initial": 11,
+      "noise_id": 1,
+      "texture": "MR",
+      "prompts": {
+        "original": "pick up the chocolate pudding and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.15195774291963632,
+      "original_texture_effect_rms": 0.04190003288336673,
+      "alternative_texture_effect_rms": 0.21071421226866055,
+      "language_texture_interaction_rms": 0.23537005290286703,
+      "perturbed_instruction_response_rms": 0.13404492794725323
+    },
+    {
+      "task": 8,
+      "initial": 11,
+      "noise_id": 1,
+      "texture": "random101",
+      "prompts": {
+        "original": "pick up the chocolate pudding and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.15195774291963632,
+      "original_texture_effect_rms": 0.24974072565380623,
+      "alternative_texture_effect_rms": 0.24084043599017232,
+      "language_texture_interaction_rms": 0.4167206093593369,
+      "perturbed_instruction_response_rms": 0.26739618924434655
+    },
+    {
+      "task": 8,
+      "initial": 11,
+      "noise_id": 1,
+      "texture": "random102",
+      "prompts": {
+        "original": "pick up the chocolate pudding and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.15195774291963632,
+      "original_texture_effect_rms": 0.22040682915426701,
+      "alternative_texture_effect_rms": 0.2442784769119993,
+      "language_texture_interaction_rms": 0.3655857899302705,
+      "perturbed_instruction_response_rms": 0.21754581383358912
+    },
+    {
+      "task": 8,
+      "initial": 11,
+      "noise_id": 2,
+      "texture": "MR",
+      "prompts": {
+        "original": "pick up the chocolate pudding and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.12266961258104632,
+      "original_texture_effect_rms": 0.09593295890944488,
+      "alternative_texture_effect_rms": 0.1841857207763321,
+      "language_texture_interaction_rms": 0.1791434681562377,
+      "perturbed_instruction_response_rms": 0.08977449725768631
+    },
+    {
+      "task": 8,
+      "initial": 11,
+      "noise_id": 2,
+      "texture": "random101",
+      "prompts": {
+        "original": "pick up the chocolate pudding and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.12266961258104632,
+      "original_texture_effect_rms": 0.1693789510210077,
+      "alternative_texture_effect_rms": 0.14941776969274642,
+      "language_texture_interaction_rms": 0.2912456879410583,
+      "perturbed_instruction_response_rms": 0.1709049017568023
+    },
+    {
+      "task": 8,
+      "initial": 11,
+      "noise_id": 2,
+      "texture": "random102",
+      "prompts": {
+        "original": "pick up the chocolate pudding and place it in the basket",
+        "alternative": "pick up the salad dressing and place it in the basket"
+      },
+      "aa_maxdiff": 0.0,
+      "plain_instruction_response_rms": 0.12266961258104632,
+      "original_texture_effect_rms": 0.14758948233021368,
+      "alternative_texture_effect_rms": 0.14793048851690235,
+      "language_texture_interaction_rms": 0.2558881326432327,
+      "perturbed_instruction_response_rms": 0.13536708130614566
+    }
+  ],
+  "checks": [
+    {
+      "task": 0,
+      "initial": 10,
+      "reference_maxdiff": 0.0
+    },
+    {
+      "task": 0,
+      "initial": 11,
+      "reference_maxdiff": 0.0
+    },
+    {
+      "task": 4,
+      "initial": 10,
+      "reference_maxdiff": 0.0
+    },
+    {
+      "task": 4,
+      "initial": 11,
+      "reference_maxdiff": 0.0
+    },
+    {
+      "task": 8,
+      "initial": 10,
+      "reference_maxdiff": 0.0
+    },
+    {
+      "task": 8,
+      "initial": 11,
+      "reference_maxdiff": 0.0
+    }
+  ],
+  "completed": true
+}

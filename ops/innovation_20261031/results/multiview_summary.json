@@ -1,0 +1,247 @@
+{
+  "record_count": 54,
+  "independent_scene_count": 6,
+  "noise_count": 3,
+  "warning": "Noise repeats are not independent scenes. No closed-loop task-success claim.",
+  "by_texture": {
+    "MR": {
+      "median_interaction_rms": 0.11357693321031453,
+      "median_amplification": 0.8564080647014833,
+      "amplification_over_1p1": 8
+    },
+    "random101": {
+      "median_interaction_rms": 0.02987812820872815,
+      "median_amplification": 0.7457266884928427,
+      "amplification_over_1p1": 3
+    },
+    "random102": {
+      "median_interaction_rms": 0.024799313785743786,
+      "median_amplification": 0.4877641909988042,
+      "amplification_over_1p1": 3
+    }
+  },
+  "by_state": [
+    {
+      "task": 0,
+      "initial": 10,
+      "textures": {
+        "MR": {
+          "median_interaction_rms": 0.1395513973136126,
+          "median_amplification": 2.095639513576829,
+          "amplification_per_noise": [
+            2.500147478166857,
+            1.6516285677364517,
+            2.095639513576829
+          ],
+          "amplified_noises": 3
+        },
+        "random101": {
+          "median_interaction_rms": 0.029736536234244618,
+          "median_amplification": 0.5004760346124968,
+          "amplification_per_noise": [
+            0.5719298051182509,
+            0.5004760346124968,
+            0.4353784195020084
+          ],
+          "amplified_noises": 0
+        },
+        "random102": {
+          "median_interaction_rms": 0.017961743375514972,
+          "median_amplification": 0.3692931245249476,
+          "amplification_per_noise": [
+            0.47970870391546205,
+            0.3692931245249476,
+            0.2000986919005542
+          ],
+          "amplified_noises": 0
+        }
+      }
+    },
+    {
+      "task": 0,
+      "initial": 11,
+      "textures": {
+        "MR": {
+          "median_interaction_rms": 0.260589294595442,
+          "median_amplification": 3.297496434942255,
+          "amplification_per_noise": [
+            3.297496434942255,
+            3.3172428192302563,
+            2.635580097824976
+          ],
+          "amplified_noises": 3
+        },
+        "random101": {
+          "median_interaction_rms": 0.030019720183211685,
+          "median_amplification": 0.5644645865755563,
+          "amplification_per_noise": [
+            0.6424863510203234,
+            0.5644645865755563,
+            0.32114043560607736
+          ],
+          "amplified_noises": 0
+        },
+        "random102": {
+          "median_interaction_rms": 0.03618257039440547,
+          "median_amplification": 0.4659621481044427,
+          "amplification_per_noise": [
+            0.4659621481044427,
+            0.5749445780000826,
+            0.4431964538970345
+          ],
+          "amplified_noises": 0
+        }
+      }
+    },
+    {
+      "task": 4,
+      "initial": 10,
+      "textures": {
+        "MR": {
+          "median_interaction_rms": 0.08997652658310208,
+          "median_amplification": 0.857979652240797,
+          "amplification_per_noise": [
+            0.8548364771621697,
+            1.4874553506875312,
+            0.857979652240797
+          ],
+          "amplified_noises": 1
+        },
+        "random101": {
+          "median_interaction_rms": 0.04019511495349495,
+          "median_amplification": 0.9620105004510519,
+          "amplification_per_noise": [
+            0.9620105004510519,
+            0.9936419436185939,
+            0.9210070906228153
+          ],
+          "amplified_noises": 0
+        },
+        "random102": {
+          "median_interaction_rms": 0.023347396286639288,
+          "median_amplification": 0.45207203814737285,
+          "amplification_per_noise": [
+            0.3306276683061104,
+            0.49231853305655576,
+            0.45207203814737285
+          ],
+          "amplified_noises": 0
+        }
+      }
+    },
+    {
+      "task": 4,
+      "initial": 11,
+      "textures": {
+        "MR": {
+          "median_interaction_rms": 0.11473093626123479,
+          "median_amplification": 0.6149252388550988,
+          "amplification_per_noise": [
+            0.6149252388550988,
+            0.8302346177439393,
+            0.5826673080925976
+          ],
+          "amplified_noises": 0
+        },
+        "random101": {
+          "median_interaction_rms": 0.01682906055995983,
+          "median_amplification": 0.9175333832517472,
+          "amplification_per_noise": [
+            0.8489670259653621,
+            0.9175333832517472,
+            0.9331426123303244
+          ],
+          "amplified_noises": 0
+        },
+        "random102": {
+          "median_interaction_rms": 0.027856760129583533,
+          "median_amplification": 0.48320984894105257,
+          "amplification_per_noise": [
+            0.3908067390644994,
+            0.48320984894105257,
+            0.6255006640554426
+          ],
+          "amplified_noises": 0
+        }
+      }
+    },
+    {
+      "task": 8,
+      "initial": 10,
+      "textures": {
+        "MR": {
+          "median_interaction_rms": 0.10531894176119691,
+          "median_amplification": 0.19535363299077124,
+          "amplification_per_noise": [
+            0.34916146475570176,
+            0.13190391120428943,
+            0.19535363299077124
+          ],
+          "amplified_noises": 0
+        },
+        "random101": {
+          "median_interaction_rms": 0.02240401078567884,
+          "median_amplification": 0.4978899726504277,
+          "amplification_per_noise": [
+            0.5476981827152415,
+            0.4227753915633466,
+            0.4978899726504277
+          ],
+          "amplified_noises": 0
+        },
+        "random102": {
+          "median_interaction_rms": 0.018629195375531576,
+          "median_amplification": 0.7685958946130612,
+          "amplification_per_noise": [
+            0.7849655244797641,
+            0.7016669065854717,
+            0.7685958946130612
+          ],
+          "amplified_noises": 0
+        }
+      }
+    },
+    {
+      "task": 8,
+      "initial": 11,
+      "textures": {
+        "MR": {
+          "median_interaction_rms": 0.052934336554720456,
+          "median_amplification": 0.5467436521383857,
+          "amplification_per_noise": [
+            0.5062878008052963,
+            0.5467436521383857,
+            2.0171952878024353
+          ],
+          "amplified_noises": 1
+        },
+        "random101": {
+          "median_interaction_rms": 0.11416242750550981,
+          "median_amplification": 1.4577732320590306,
+          "amplification_per_noise": [
+            1.356529671098539,
+            1.4577732320590306,
+            1.7540441929344897
+          ],
+          "amplified_noises": 3
+        },
+        "random102": {
+          "median_interaction_rms": 0.07561734703768946,
+          "median_amplification": 1.2709325024864395,
+          "amplification_per_noise": [
+            1.1663015361001692,
+            1.2709325024864395,
+            1.3365742713776587
+          ],
+          "amplified_noises": 3
+        }
+      }
+    }
+  ],
+  "stable_MR_amplification_states": 2,
+  "MR_interaction_vs_random": {
+    "random101": 3.801340312112854,
+    "random102": 4.57984177270283
+  },
+  "broad_mechanism_gate": false
+}

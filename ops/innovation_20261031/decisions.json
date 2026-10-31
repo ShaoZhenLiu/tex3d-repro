@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-31",
+  "validated_new_algorithm": false,
+  "new_closed_loop_success_rates": false,
+  "state_conditioned_secant": {
+    "feature_MSE_ratio": 0.6514266,
+    "action_MSE_ratio": 0.486606,
+    "first_five_translation_MSE_ratio": 0.795855,
+    "native_one_step_gain_vs_matched": 0.997328,
+    "decision": "reject this tested variant for full training"
+  },
+  "current_texture_tangent": {
+    "native_one_step_gain_vs_matched": 0.989633,
+    "native_one_step_gain_vs_native_anchor": 0.991039,
+    "decision": "reject this tested variant for full training"
+  },
+  "multiview": {
+    "grid": "6 states x 3 noises x 3 frozen textures",
+    "stable_MR_amplification_states": "2/6",
+    "broad_mechanism_gate": false,
+    "decision": "retain a heterogeneous empirical clue; do not claim universal amplification"
+  },
+  "language_texture": {
+    "grid": "6 states x 3 noises x 3 frozen textures; two valid instructions per scene",
+    "states_MR_exceeds_both_controls": "3/6",
+    "exploratory_screen": false,
+    "decision": "do not claim language-specific hijacking or selective task failure"
+  },
+  "instrumentation": {
+    "affected": "old Object exposure instrumentation and first route diagnostic that copied it",
+    "unaffected_by_this_specific_omission": "main success evaluator already dispatched floor_mode=True; existing Spatial/Goal trajectory set",
+    "required_followup": "recollect 60 old Object exposure rollouts, or remove their number/explanation until recollected",
+    "snapshot_caution": "changed-pixel fractions from six early snapshots cannot replace full-rollout cloth-mask coverage statistics"
+  },
+  "test_split_policy": {
+    "old_locked_test": "not consumed",
+    "target_exploratory_keys": [[0,10],[0,11],[4,10],[4,11],[8,10],[8,11]],
+    "future_use": "must not describe these six target states as untouched tests for a subsequently selected method",
+    "texture_selection": "none; all target-diagnostic textures were frozen beforehand"
+  },
+  "paper_modified": false,
+  "github_visibility": "public, explicitly authorized by user",
+  "gpu_used": "4090-48G physical GPU0 only",
+  "gpu4_used": false
+}

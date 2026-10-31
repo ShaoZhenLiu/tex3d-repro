@@ -1,0 +1,444 @@
+{
+  "runs": {
+    "20261031_multiview_control": {
+      "execution": {
+        "exit_code": 0,
+        "elapsed_seconds": 226.98491096496582,
+        "command": [
+          "/data/shaozhen.liu/envs/tex3d-pi0-mj330/bin/python",
+          "/data/shaozhen.liu/code/tex3d/ops/innovation_20261031/multiview_control.py",
+          "--repo",
+          "/data/shaozhen.liu/code/tex3d",
+          "--out",
+          "/data/shaozhen.liu/code/tex3d/experiments/refcloth_innovation/20261031_multiview_control",
+          "--reference",
+          "/data/shaozhen.liu/code/tex3d/experiments/refcloth_innovation/20261031_object_production"
+        ]
+      },
+      "raw_arrays": [
+        {
+          "name": "object_t0_i10_MR_n0.npz",
+          "bytes": 4508,
+          "sha256": "63100246261ee813ac506f39eafee8443b2890166aa7e42a40a5e5ebc235a31f"
+        },
+        {
+          "name": "object_t0_i10_MR_n1.npz",
+          "bytes": 4495,
+          "sha256": "5767dd73b1fd3e8c13722a66c2d7d2e879d06f33b6a3b301d26cfb63691e4d36"
+        },
+        {
+          "name": "object_t0_i10_MR_n2.npz",
+          "bytes": 4501,
+          "sha256": "fe17b3bf8f10904be6cd5240865247dd5b4c95cc3229536b9fdf5d50904b8b85"
+        },
+        {
+          "name": "object_t0_i10_random101_n0.npz",
+          "bytes": 4504,
+          "sha256": "4f86909182e799bb5cdd49adbef7774c37730fc3fab1468ccb8f22125f90e914"
+        },
+        {
+          "name": "object_t0_i10_random101_n1.npz",
+          "bytes": 4499,
+          "sha256": "c7d7c53ec46b1c9f3db965f0a7e9bc471ba41a8410e81964411330e0dc14bb1e"
+        },
+        {
+          "name": "object_t0_i10_random101_n2.npz",
+          "bytes": 4507,
+          "sha256": "0d03a60938f56e81dd65b464a28f870415bccfd7d8767c54448e6eed570e2730"
+        },
+        {
+          "name": "object_t0_i10_random102_n0.npz",
+          "bytes": 4513,
+          "sha256": "d9c54d570a66bac8945ef4e10454ad8880523ad497099378e7d2028d507172bb"
+        },
+        {
+          "name": "object_t0_i10_random102_n1.npz",
+          "bytes": 4495,
+          "sha256": "23133fd48c25876ecf3d723ca0b30439e0a261c9bf6d9ffeed2fc5bbb335d4e5"
+        },
+        {
+          "name": "object_t0_i10_random102_n2.npz",
+          "bytes": 4506,
+          "sha256": "6155d86295e4b3f0606104ae29359b2c1dfc91166c4ea35fd3dd11ed34f3d05f"
+        },
+        {
+          "name": "object_t0_i11_MR_n0.npz",
+          "bytes": 4500,
+          "sha256": "0c15ed4fd95229c8ac7dd53e3ceafdc3493f4e0d09c31ee5b66b49bd7bad000f"
+        },
+        {
+          "name": "object_t0_i11_MR_n1.npz",
+          "bytes": 4504,
+          "sha256": "7656847f50113f9072d446fd11db0bdde17a5d0c0dd425e270ffba739e692f27"
+        },
+        {
+          "name": "object_t0_i11_MR_n2.npz",
+          "bytes": 4477,
+          "sha256": "0b11d036dfd26413baa9d6b88c73edbdb211be14804bb50a559b76fec5d0e10b"
+        },
+        {
+          "name": "object_t0_i11_random101_n0.npz",
+          "bytes": 4498,
+          "sha256": "3c315a007f5a77881fbe5a11f40042095cc1f3b235ba340a31d7e31f51e767f6"
+        },
+        {
+          "name": "object_t0_i11_random101_n1.npz",
+          "bytes": 4500,
+          "sha256": "4f85402f62e2cbb6ca668e2ee29c462ac38dada2d3516e27a415e3235fef7864"
+        },
+        {
+          "name": "object_t0_i11_random101_n2.npz",
+          "bytes": 4481,
+          "sha256": "7d563a96b4835c6e69e0cb59e792226e7ec18426248751798f30a7072d9bff63"
+        },
+        {
+          "name": "object_t0_i11_random102_n0.npz",
+          "bytes": 4506,
+          "sha256": "244c66babd0987805b40effab82d7d1a1b91a112b0329da752b55f12229b3455"
+        },
+        {
+          "name": "object_t0_i11_random102_n1.npz",
+          "bytes": 4505,
+          "sha256": "b9f7eff8e5a07b3fa19448b91e6693dd1d6e9d8edfa59a2d2b46725627eed6bb"
+        },
+        {
+          "name": "object_t0_i11_random102_n2.npz",
+          "bytes": 4483,
+          "sha256": "b63f020b0a0985507b626acd46b949991d4139b19bfc93bac3ceb700aa2ab984"
+        },
+        {
+          "name": "object_t4_i10_MR_n0.npz",
+          "bytes": 4498,
+          "sha256": "34e8139d211185b3f04388399bed7200b8b0a37ec98b43e0176fa191919e1b80"
+        },
+        {
+          "name": "object_t4_i10_MR_n1.npz",
+          "bytes": 4490,
+          "sha256": "7637ff4cc8fdb840843a43f9731608871f4267ed8302cb73ca6bbf57efb12ec6"
+        },
+        {
+          "name": "object_t4_i10_MR_n2.npz",
+          "bytes": 4494,
+          "sha256": "4a8fa2c5cdbae16edbe8347a3d1be067657528bd9f6f7fa1725dd26280b69230"
+        },
+        {
+          "name": "object_t4_i10_random101_n0.npz",
+          "bytes": 4501,
+          "sha256": "6e9d8bcb52176ff546e3764d11db12394b354eab8ffc8f0124f47c4f0111f2eb"
+        },
+        {
+          "name": "object_t4_i10_random101_n1.npz",
+          "bytes": 4478,
+          "sha256": "283e724fee88f2d1e31c71a08ac529e19e58e7d779fbedbe15846ac77e4b5f47"
+        },
+        {
+          "name": "object_t4_i10_random101_n2.npz",
+          "bytes": 4499,
+          "sha256": "ecc267ec3c5a7b140f6d62175265653adb6a87024690656b0e03dd838debcc09"
+        },
+        {
+          "name": "object_t4_i10_random102_n0.npz",
+          "bytes": 4494,
+          "sha256": "8ac3b059f102e1d3795fe33fe82ac792110165eaf4e7ff5da0f524a6ef2938a4"
+        },
+        {
+          "name": "object_t4_i10_random102_n1.npz",
+          "bytes": 4478,
+          "sha256": "5bd4dafb21715a9670f545cdf248b2cd54d16011c6424ff4cbda2bbee5802f6c"
+        },
+        {
+          "name": "object_t4_i10_random102_n2.npz",
+          "bytes": 4496,
+          "sha256": "77598cf9c60161f01ba17fb4d2d66dcded6882652447f3520492c6e253befdd4"
+        },
+        {
+          "name": "object_t4_i11_MR_n0.npz",
+          "bytes": 4494,
+          "sha256": "301641e92bf34437fb73104c1c3ef6b441508913ef0266c5f54d239bdb70640d"
+        },
+        {
+          "name": "object_t4_i11_MR_n1.npz",
+          "bytes": 4494,
+          "sha256": "765d819e68a4339fb2e32e1dde9b4dcc6c0a1bd559fa7e0576278c9b6bb6ec04"
+        },
+        {
+          "name": "object_t4_i11_MR_n2.npz",
+          "bytes": 4500,
+          "sha256": "4d2fdaf7562d668c55552379ee3ded89664f9b14a75e89a7f3f8cffc196a8db1"
+        },
+        {
+          "name": "object_t4_i11_random101_n0.npz",
+          "bytes": 4497,
+          "sha256": "1c1423415982fca7102286b14312d5545776c6007a06221e1aa94971cd69de38"
+        },
+        {
+          "name": "object_t4_i11_random101_n1.npz",
+          "bytes": 4502,
+          "sha256": "6887dfbdbcdb4ff51ef3863b099da5cd7c055906d07dfae443299aaa8d2bcb33"
+        },
+        {
+          "name": "object_t4_i11_random101_n2.npz",
+          "bytes": 4497,
+          "sha256": "e5f04d3fbbe80f3c4a60016dbace4f0cde6ab2a6a10e4fe75e236e6af8b55ec4"
+        },
+        {
+          "name": "object_t4_i11_random102_n0.npz",
+          "bytes": 4498,
+          "sha256": "132d9c91c882f2634952e0e80906dc83c1da00c4dc545418b4911c9cc2bfdf2c"
+        },
+        {
+          "name": "object_t4_i11_random102_n1.npz",
+          "bytes": 4493,
+          "sha256": "ea17f3c285721b6568f19e7e349f62f8f0e652e3435dfb80405c9c9a16e82f21"
+        },
+        {
+          "name": "object_t4_i11_random102_n2.npz",
+          "bytes": 4499,
+          "sha256": "155416ea446c1c28f5a31440cae296b25dc6801c97fe988991ad2de33bdc9510"
+        },
+        {
+          "name": "object_t8_i10_MR_n0.npz",
+          "bytes": 4507,
+          "sha256": "4e73555c9907d0eebb72bd6c83590a42ae723e299eb3088bab88d854bf010fbf"
+        },
+        {
+          "name": "object_t8_i10_MR_n1.npz",
+          "bytes": 4509,
+          "sha256": "abbc017abb8ff1386a46fb819fde7da8488ee9d2a710fff741965a915146b7b0"
+        },
+        {
+          "name": "object_t8_i10_MR_n2.npz",
+          "bytes": 4493,
+          "sha256": "adebc1a8a12978c9a8ac194c561e2af8aeda7845e641d764e99f772a9b195d56"
+        },
+        {
+          "name": "object_t8_i10_random101_n0.npz",
+          "bytes": 4515,
+          "sha256": "6c74cf3fd4ba8fd1c3ddb49730caff4512864d53e34efde807a8f95e8a5e8774"
+        },
+        {
+          "name": "object_t8_i10_random101_n1.npz",
+          "bytes": 4501,
+          "sha256": "1f30f48240bc9c8e7e92b9f05bdcde326bb24d00421b95c6529ae5fcc10ba963"
+        },
+        {
+          "name": "object_t8_i10_random101_n2.npz",
+          "bytes": 4499,
+          "sha256": "3ac04cb54e6def6970fdfb3f4e04124d81ca973435cc3856f693662365c46b40"
+        },
+        {
+          "name": "object_t8_i10_random102_n0.npz",
+          "bytes": 4510,
+          "sha256": "43ab44cda3fb0d90d85f524adfb42a8435525ec4a4c59f42be1b58ad33cda01f"
+        },
+        {
+          "name": "object_t8_i10_random102_n1.npz",
+          "bytes": 4496,
+          "sha256": "ef89dd625a616df7b3109cb38a091b5307739aca250d54aa460fa07ca1de9ebe"
+        },
+        {
+          "name": "object_t8_i10_random102_n2.npz",
+          "bytes": 4499,
+          "sha256": "2042737d7689b36f395a847798d289e07a214b5e78743b6ab7e73f9d48a88a54"
+        },
+        {
+          "name": "object_t8_i11_MR_n0.npz",
+          "bytes": 4497,
+          "sha256": "39b49f60c78c1508a44d6b838dae16dad35b9a86a37a0f5b35c5d42358d19ef7"
+        },
+        {
+          "name": "object_t8_i11_MR_n1.npz",
+          "bytes": 4490,
+          "sha256": "adc6ba7b7b5c6d3ac8d0892d5b688e91be6645acd6d8a391d1254534d2603674"
+        },
+        {
+          "name": "object_t8_i11_MR_n2.npz",
+          "bytes": 4472,
+          "sha256": "ddcfa503ea4a006789491e49ab9e18799be4c8b60e9ab1ab3905decc5eaf95e1"
+        },
+        {
+          "name": "object_t8_i11_random101_n0.npz",
+          "bytes": 4499,
+          "sha256": "19df0a9bea458d309bc7655a36242399cfb01de1723fcd7b56d4f70db4083c13"
+        },
+        {
+          "name": "object_t8_i11_random101_n1.npz",
+          "bytes": 4488,
+          "sha256": "bc3bacaf140f905a91a803e2ad88f7ae0d0ff9a6ace713871b9328acd1d37b06"
+        },
+        {
+          "name": "object_t8_i11_random101_n2.npz",
+          "bytes": 4486,
+          "sha256": "8e0a3a93076d1790df1ed02617e0d7edcd0e1421a04152faa0e348c68fd88798"
+        },
+        {
+          "name": "object_t8_i11_random102_n0.npz",
+          "bytes": 4498,
+          "sha256": "68a0a0bfe5aebb8e561a3c2cd9a43c5f8fd393025d599123329731bafba66a02"
+        },
+        {
+          "name": "object_t8_i11_random102_n1.npz",
+          "bytes": 4484,
+          "sha256": "e4af05897b38bd17d3e46e183e03b812d9473b6971ed9d92c7dfcf87e5f66526"
+        },
+        {
+          "name": "object_t8_i11_random102_n2.npz",
+          "bytes": 4482,
+          "sha256": "646516150ded848178fb6421592a4793df877e8d7b38d1f4fa82cf215a694107"
+        }
+      ],
+      "result_sha256": "e2b2bc41aa6da014d25075b1c7a1db9388ad5c1891dd76f201ceefebf9027a3d"
+    },
+    "20261031_instruction_counterfactual": {
+      "execution": {
+        "exit_code": 0,
+        "elapsed_seconds": 183.70092749595642,
+        "command": [
+          "/data/shaozhen.liu/envs/tex3d-pi0-mj330/bin/python",
+          "/data/shaozhen.liu/code/tex3d/ops/innovation_20261031/instruction_counterfactual.py",
+          "--repo",
+          "/data/shaozhen.liu/code/tex3d",
+          "--out",
+          "/data/shaozhen.liu/code/tex3d/experiments/refcloth_innovation/20261031_instruction_counterfactual",
+          "--reference",
+          "/data/shaozhen.liu/code/tex3d/experiments/refcloth_innovation/20261031_object_production"
+        ]
+      },
+      "raw_arrays": [
+        {
+          "name": "object_t0_i10_n0.npz",
+          "bytes": 7787,
+          "sha256": "e14c6b0eb2b9af0bbfdab7dab79e5462e622a1e65c4acb5d0222f97f27008ae4"
+        },
+        {
+          "name": "object_t0_i10_n1.npz",
+          "bytes": 7770,
+          "sha256": "6d2d3e0b9bd7c918616f491f319d53818a8e220ad804445cc41bc2caca7b8fde"
+        },
+        {
+          "name": "object_t0_i10_n2.npz",
+          "bytes": 7790,
+          "sha256": "2a607a0d532e576b90db33af5763d4e7b37730b0bfb3b951762d6ac2f2b0d8ea"
+        },
+        {
+          "name": "object_t0_i11_n0.npz",
+          "bytes": 7787,
+          "sha256": "b8a71a0a98fa19b445219e42091ca9f1c19e71ddbdeb3b67875073bf7d442893"
+        },
+        {
+          "name": "object_t0_i11_n1.npz",
+          "bytes": 7782,
+          "sha256": "410695bbdf891245842ea0272a23484c048a54383b86519cd3d9ff67a07a44a5"
+        },
+        {
+          "name": "object_t0_i11_n2.npz",
+          "bytes": 7738,
+          "sha256": "c0f8849bf8b43514c69f1b1c49a3a308a9d4fd773833a459a23dc458b8fa3214"
+        },
+        {
+          "name": "object_t4_i10_n0.npz",
+          "bytes": 7781,
+          "sha256": "a8c6cec825b5947d998cd3e82a202464c4148abaf9f8e7af58afa115be38dfdf"
+        },
+        {
+          "name": "object_t4_i10_n1.npz",
+          "bytes": 7753,
+          "sha256": "bfd3ad30594178c6c8f5c7aa14a03623e993bb26c95e1b391e665ae18021e64c"
+        },
+        {
+          "name": "object_t4_i10_n2.npz",
+          "bytes": 7763,
+          "sha256": "4327e9cde5dd9cd96c4c2ca7db10e24a7f9023a7b768da71bd55876f5ab53ba9"
+        },
+        {
+          "name": "object_t4_i11_n0.npz",
+          "bytes": 7762,
+          "sha256": "ce66352f44080837cfff61968acce8e32f5f1ffc0fa87e3b8543f44f280ca353"
+        },
+        {
+          "name": "object_t4_i11_n1.npz",
+          "bytes": 7759,
+          "sha256": "7ab9d89b7979645466b46d73887582d70b69000acaecda8f0acdfbc071b54194"
+        },
+        {
+          "name": "object_t4_i11_n2.npz",
+          "bytes": 7775,
+          "sha256": "baa354ce5cb83e327fa44bdbffca91bbc3d991a46e7981234762bd0e74b3296c"
+        },
+        {
+          "name": "object_t8_i10_n0.npz",
+          "bytes": 7791,
+          "sha256": "9b741780b5ac0301e6ca5401b732ce1dbf41bf7ae9a12d29aa6e209f3e720482"
+        },
+        {
+          "name": "object_t8_i10_n1.npz",
+          "bytes": 7782,
+          "sha256": "78d9621c61c81fa5d42b767cc646636c90bc0736bb0e323a6f81635dc014705c"
+        },
+        {
+          "name": "object_t8_i10_n2.npz",
+          "bytes": 7788,
+          "sha256": "daacfb63a67b52149f4d49e8c4e867f331e617f1c9523ceaa426b47dd2f5c783"
+        },
+        {
+          "name": "object_t8_i11_n0.npz",
+          "bytes": 7779,
+          "sha256": "8f4ec70a1cfa09170310270351370be83bd1ad6f8622afbe3bc340b8d3cfe4f5"
+        },
+        {
+          "name": "object_t8_i11_n1.npz",
+          "bytes": 7771,
+          "sha256": "a8f7d1db1559abdfe9f7d4ac2e97860a4d3c44c0aae474b14bc1451452ad6ae7"
+        },
+        {
+          "name": "object_t8_i11_n2.npz",
+          "bytes": 7754,
+          "sha256": "0583a9bc956c9e5ae56ba992fc0bfcfa847775975d31a0b7697465a13087d12a"
+        }
+      ],
+      "result_sha256": "079961cd3d45cea2e36a692a6f742debd40b8c7a2ef121e79e1357abd4358502"
+    },
+    "20261031_object_production": {
+      "execution": {
+        "exit": 0
+      },
+      "raw_arrays": [
+        {
+          "name": "object_t0_i10_actions.npz",
+          "bytes": 4508,
+          "sha256": "63100246261ee813ac506f39eafee8443b2890166aa7e42a40a5e5ebc235a31f"
+        },
+        {
+          "name": "object_t0_i11_actions.npz",
+          "bytes": 4500,
+          "sha256": "0c15ed4fd95229c8ac7dd53e3ceafdc3493f4e0d09c31ee5b66b49bd7bad000f"
+        },
+        {
+          "name": "object_t4_i10_actions.npz",
+          "bytes": 4498,
+          "sha256": "34e8139d211185b3f04388399bed7200b8b0a37ec98b43e0176fa191919e1b80"
+        },
+        {
+          "name": "object_t4_i11_actions.npz",
+          "bytes": 4494,
+          "sha256": "301641e92bf34437fb73104c1c3ef6b441508913ef0266c5f54d239bdb70640d"
+        },
+        {
+          "name": "object_t8_i10_actions.npz",
+          "bytes": 4507,
+          "sha256": "4e73555c9907d0eebb72bd6c83590a42ae723e299eb3088bab88d854bf010fbf"
+        },
+        {
+          "name": "object_t8_i11_actions.npz",
+          "bytes": 4497,
+          "sha256": "39b49f60c78c1508a44d6b838dae16dad35b9a86a37a0f5b35c5d42358d19ef7"
+        }
+      ],
+      "result_sha256": "336c3dc56675ee4b4d2ec65429a3f1b862ce6376632b2c8ce884010ce092ae38"
+    }
+  },
+  "raw_data_location": "/data/shaozhen.liu/code/tex3d/experiments/refcloth_innovation",
+  "target_policy": "frozen pi05_libero; no new texture optimization",
+  "gpu": 0,
+  "forbidden_gpu": 4
+}

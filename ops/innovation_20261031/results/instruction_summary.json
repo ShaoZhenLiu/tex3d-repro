@@ -1,0 +1,127 @@
+{
+  "record_count": 54,
+  "independent_scene_count": 6,
+  "noise_count": 3,
+  "warning": "Action conditioning is not semantic competence. The alternative Plain goal needs closed-loop validation.",
+  "by_texture": {
+    "MR": {
+      "median_language_texture_interaction_rms": 0.1387837245290453,
+      "median_original_texture_effect_rms": 0.09967379562650408,
+      "median_alternative_texture_effect_rms": 0.1958210108174355
+    },
+    "random101": {
+      "median_language_texture_interaction_rms": 0.10297985016791923,
+      "median_original_texture_effect_rms": 0.06530483117998673,
+      "median_alternative_texture_effect_rms": 0.08084467668500778
+    },
+    "random102": {
+      "median_language_texture_interaction_rms": 0.0765687975946654,
+      "median_original_texture_effect_rms": 0.04998139043789364,
+      "median_alternative_texture_effect_rms": 0.0751755063585929
+    }
+  },
+  "by_state": [
+    {
+      "task": 0,
+      "initial": 10,
+      "textures": {
+        "MR": {
+          "median_language_texture_interaction_rms": 0.11202175318759391
+        },
+        "random101": {
+          "median_language_texture_interaction_rms": 0.0814512917831255
+        },
+        "random102": {
+          "median_language_texture_interaction_rms": 0.11557397454954833
+        }
+      },
+      "plain_instruction_response_rms": 0.04853193031100178
+    },
+    {
+      "task": 0,
+      "initial": 11,
+      "textures": {
+        "MR": {
+          "median_language_texture_interaction_rms": 0.1644899036553458
+        },
+        "random101": {
+          "median_language_texture_interaction_rms": 0.028478798483716684
+        },
+        "random102": {
+          "median_language_texture_interaction_rms": 0.034429961270015706
+        }
+      },
+      "plain_instruction_response_rms": 0.09414814402745052
+    },
+    {
+      "task": 4,
+      "initial": 10,
+      "textures": {
+        "MR": {
+          "median_language_texture_interaction_rms": 0.14096947030844661
+        },
+        "random101": {
+          "median_language_texture_interaction_rms": 0.12227650444300477
+        },
+        "random102": {
+          "median_language_texture_interaction_rms": 0.06764678292766324
+        }
+      },
+      "plain_instruction_response_rms": 0.13189254520556268
+    },
+    {
+      "task": 4,
+      "initial": 11,
+      "textures": {
+        "MR": {
+          "median_language_texture_interaction_rms": 0.15362175627403327
+        },
+        "random101": {
+          "median_language_texture_interaction_rms": 0.17764945440886287
+        },
+        "random102": {
+          "median_language_texture_interaction_rms": 0.10391013440019285
+        }
+      },
+      "plain_instruction_response_rms": 0.1328168948319497
+    },
+    {
+      "task": 8,
+      "initial": 10,
+      "textures": {
+        "MR": {
+          "median_language_texture_interaction_rms": 0.12756553693151595
+        },
+        "random101": {
+          "median_language_texture_interaction_rms": 0.017066984468067637
+        },
+        "random102": {
+          "median_language_texture_interaction_rms": 0.054469770167536465
+        }
+      },
+      "plain_instruction_response_rms": 0.0975868191520151
+    },
+    {
+      "task": 8,
+      "initial": 11,
+      "textures": {
+        "MR": {
+          "median_language_texture_interaction_rms": 0.2125017171411496
+        },
+        "random101": {
+          "median_language_texture_interaction_rms": 0.4167206093593369
+        },
+        "random102": {
+          "median_language_texture_interaction_rms": 0.3655857899302705
+        }
+      },
+      "plain_instruction_response_rms": 0.15195774291963632
+    }
+  ],
+  "MR_interaction_vs_random": {
+    "random101": 1.3476784468295901,
+    "random102": 1.8125362927040984
+  },
+  "states_MR_exceeds_both_controls": 3,
+  "exploratory_screen": false
+}
