@@ -1,0 +1,46 @@
+{
+  "baseline": "e94de0b2436cf47e79beda32ae0fc657374070bb",
+  "branch": "innovation-20261031",
+  "purpose": "source-only hypothesis exploration before any full training or target evaluation",
+  "data_root": "/data/shaozhen.liu/code/tex3d/experiments/refcloth_residual/20261031_run1",
+  "locked_test_access": false,
+  "splits": {
+    "fit": "early source states step<=45 and odd texture seeds",
+    "new_texture": "same early states, even texture seeds",
+    "new_state": "late source states step>45, odd seeds",
+    "both_new": "late states and even seeds",
+    "validation": "existing independent validation"
+  },
+  "models": [
+    "global_scalar",
+    "token_scalar",
+    "channel_diagonal",
+    "positive_token_energy_metric"
+  ],
+  "decision": {
+    "vector_transport": {
+      "relative_residual_error_max": 0.75,
+      "mean_cosine_gain_min": 0.1,
+      "groups": [
+        "both_new",
+        "validation"
+      ],
+      "validation_tasks_improved_min": 3
+    },
+    "energy_metric": {
+      "relative_mse_max": 0.5,
+      "pearson_gain_min": 0.1,
+      "groups": [
+        "both_new",
+        "validation"
+      ]
+    }
+  },
+  "prohibited": [
+    "retune thresholds after seeing results",
+    "target-guided selection",
+    "consume locked_test",
+    "claim attack gain from feature diagnostics"
+  ],
+  "followup": "Only a passing and literature-distinct hypothesis advances to gradient and short-training gates"
+}
