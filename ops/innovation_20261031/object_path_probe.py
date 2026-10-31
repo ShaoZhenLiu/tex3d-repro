@@ -9,6 +9,7 @@ import copy
 import hashlib
 import json
 import os
+import subprocess
 from pathlib import Path
 
 import numpy as np
@@ -40,6 +41,9 @@ def main(repo,output):
     output.mkdir(parents=True,exist_ok=True)
     report=dict(checkpoint=checkpoint,model_config='pi05_libero',num_denoise=10,
         surface_mode=os.environ.get('REFCLOTH_SURFACE_MODE','legacy'),
+        object_floor_dispatch=True,
+        runner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=str(repo),text=True).strip(),
         scope='same-state input-path diagnostic; no closed-loop success claims',
         noise_shape=list(noise_shape),texture_optimized=False,records=[])
     was_clean=APC.patch_status()=='clean';APC.ensure_patch(True)
@@ -114,6 +118,7 @@ def main(repo,output):
                             executed_rotation_rmse=float(np.sqrt(np.mean(delta[:5,3:6]**2))),
                             executed_gripper_max=float(np.max(np.abs(delta[:5,6]))))
                     rec=dict(task=task_id,initial=initial,description=desc,texture_users=users,aa_action_maxdiff=aa_floor,
+                        cloth_world=sim.data.body_xpos[bid].tolist(),
                         aba_pixels_equal=True,noise_sha256=hashlib.sha256(noise.tobytes()).hexdigest(),input_diffs=input_diffs,
                         main_changed_fraction=float(np.mean(np.max(np.abs(a0.astype(int)-p0.astype(int)),axis=-1)>1)),
                         wrist_changed_fraction=float(np.mean(np.max(np.abs(a1.astype(int)-p1.astype(int)),axis=-1)>1)),

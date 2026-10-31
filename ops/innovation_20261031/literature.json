@@ -43,6 +43,24 @@
       "url": "https://proceedings.mlr.press/v80/athalye18b.html",
       "established_overlap": "Expectation over transformations and physical 3D adversarial optimization.",
       "consequence": "EoT and basic texture-to-image differentiability are established foundations."
+    },
+    {
+      "title": "Obfuscated Gradients Give a False Sense of Security: Circumventing Defenses to Adversarial Examples",
+      "url": "https://proceedings.mlr.press/v80/athalye18a.html",
+      "established_overlap": "BPDA is an established method for using a surrogate backward path with an actual forward computation.",
+      "consequence": "The native-anchor control and generic surrogate-backward construction are not claimed as new algorithms."
+    },
+    {
+      "title": "Does Adversarial Training Improve Generalization in Multi-View VLAs? Revealing and Mitigating View Collapse",
+      "url": "https://arxiv.org/abs/2609.33707",
+      "established_overlap": "View interventions distinguish robust perception from reduced reliance on a view.",
+      "consequence": "A camera-dependence observation alone is not a new VLA fusion mechanism."
+    },
+    {
+      "title": "CD-UAP: Class Discriminative Universal Adversarial Perturbation",
+      "url": "https://ojs.aaai.org/index.php/AAAI/article/view/6154",
+      "established_overlap": "Selective universal perturbations with limited collateral effects already exist for classifiers.",
+      "consequence": "An instruction-selective VLA extension needs task-grounding and closed-loop evidence beyond adding attack and preservation losses."
     }
   ],
   "current_candidate": {
@@ -57,6 +75,8 @@
       "Paired short-training regression before a full training claim",
       "Matched-compute closed-loop evaluation on unchanged target policies",
       "Multi-seed confirmation without target-guided selection"
-    ]
+    ],
+    "status": "FAILED_NATIVE_ONE_STEP_GATE; no full training launched",
+    "additional_test": "Current-texture tangent variant also failed against matched and native-anchor controls"
   }
 }
