@@ -121,9 +121,9 @@ def solve_box_maximin(gradients, lower, upper, offsets=None, method='auto',
             if method == 'scipy':
                 raise
         else:
-            if tuple(int(x) for x in scipy.__version__.split('.')[:2]) < (1, 6):
+            if tuple(int(x) for x in scipy.__version__.split('.')[:2]) < (1, 7):
                 if method == 'scipy':
-                    raise RuntimeError('SciPy >=1.6 is required for HiGHS and its dual marginals')
+                    raise RuntimeError('SciPy >=1.7 is required for HiGHS dual marginals')
                 return solve_box_maximin(gradients, lower, upper, offsets, method='mw',
                                          iterations=iterations, tolerance=tolerance)
             n, d = len(gradients), len(lower)

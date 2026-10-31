@@ -108,9 +108,12 @@ def spearman(x, y):
 
 
 def assess(metadata, u, n, feature_scores, model):
+    assert torch.isfinite(u).all() and torch.isfinite(n).all()
     true_energy = n.square().mean(-1)
-    scores = dict(feature_fd=feature_scores, direct_action=u.square().mean(-1),
+    scores = dict(direct_action=u.square().mean(-1),
                   generalized=quadratic_metric_score(u, model, reduction='none').double())
+    if feature_scores is not None:
+        scores['feature_fd'] = feature_scores
     coverage = {}
     for mode in ['absolute', 'relative']:
         entry = model[mode]
@@ -119,34 +122,105 @@ def assess(metadata, u, n, feature_scores, model):
         error_norm = mahalanobis_squared(n-u, entry)
         covered = error_norm <= info['radius_squared']*(1+1e-10)
         violation = scores['robust_'+mode]-true_energy
+        tolerance = 1e-10+1e-7*torch.maximum(scores['robust_'+mode], true_energy)
+        violation_mask = violation > tolerance
         coverage[mode] = dict(coverage=float(covered.double().mean()),
-            positive_fraction=float((value > 1e-14).double().mean()),
-            all_bound_violations=int((violation > 1e-7).sum()),
-            covered_bound_violations=int(((violation > 1e-7)&covered).sum()),
+            positive_fraction=float((value/u.shape[-1] > 1e-14).double().mean()),
+            exact_positive_fraction=float((value > 0).double().mean()),
+            all_bound_violations=int(violation_mask.sum()),
+            covered_bound_violations=int((violation_mask&covered).sum()),
             maximum_covered_violation=float(violation[covered].max()) if bool(covered.any()) else None)
         assert coverage[mode]['covered_bound_violations'] == 0
     states = sorted(set(r['state'] for r in metadata))
-    report = dict(n=len(metadata), state_count=len(states), methods={}, uncertainty_coverage=coverage)
+    report = dict(n=len(metadata), state_count=len(states), methods={}, uncertainty_coverage=coverage,
+        zero_score_threshold=1e-14,
+        selection_rule='Highest surrogate score; ties within 1e-14+1e-10*maxabs use lexicographically first texture ID; also report uniform tie expectation',
+        evaluation_warning='States, not texture pairs, are the independent grouping unit. Undefined flat-state correlations are additionally counted as zero to avoid selective exclusion.')
     for name, score in scores.items():
+        assert torch.isfinite(score).all()
         per_state = []
         for state in states:
             indices = [i for i, r in enumerate(metadata) if r['state'] == state]
             local_score = score[indices]
-            best = int(local_score.argmax())
-            chosen = indices[best]
+            maximum = float(local_score.max())
+            tied = [i for i in indices if abs(float(score[i])-maximum) <= 1e-14+1e-10*abs(maximum)]
+            chosen = min(tied, key=lambda i: metadata[i]['texture'])
             oracle = float(true_energy[indices].max())
+            expected = statistics.mean(float(true_energy[i]) for i in tied)
+            selectable = maximum > 1e-14 and float(local_score.max()-local_score.min()) > 1e-14
             per_state.append(dict(state=state,
                 spearman=spearman(local_score.tolist(), true_energy[indices].tolist()),
                 chosen_texture=metadata[chosen]['texture'], chosen_native_energy=float(true_energy[chosen]),
+                max_score=maximum, score_range=float(local_score.max()-local_score.min()),
+                all_zero_scores=bool(local_score.abs().max() <= 1e-14),
+                selection_informative=selectable, max_tie_count=len(tied),
+                tied_textures=[metadata[i]['texture'] for i in tied],
+                tie_expected_native_energy=expected,
+                tie_min_native_energy=min(float(true_energy[i]) for i in tied),
+                tie_max_native_energy=max(float(true_energy[i]) for i in tied),
                 oracle_native_energy=oracle,
-                chosen_over_oracle=float(true_energy[chosen])/max(oracle, 1e-20)))
+                chosen_over_oracle=float(true_energy[chosen])/oracle if oracle > 1e-20 else None,
+                tie_expected_over_oracle=expected/oracle if oracle > 1e-20 else None))
         rank_values = [r['spearman'] for r in per_state if r['spearman'] is not None]
+        oracle_ratios = [r['chosen_over_oracle'] for r in per_state if r['chosen_over_oracle'] is not None]
+        expected_oracle_ratios = [r['tie_expected_over_oracle'] for r in per_state if r['tie_expected_over_oracle'] is not None]
         report['methods'][name] = dict(
             pooled_spearman=spearman(score.tolist(), true_energy.tolist()),
             mean_within_state_spearman=statistics.mean(rank_values) if rank_values else None,
+            defined_state_spearman_count=len(rank_values),
+            mean_within_state_spearman_zero_for_undefined=statistics.mean(
+                r['spearman'] if r['spearman'] is not None else 0 for r in per_state),
             mean_selected_native_energy=statistics.mean(r['chosen_native_energy'] for r in per_state),
-            mean_chosen_over_oracle=statistics.mean(r['chosen_over_oracle'] for r in per_state),
+            mean_tie_expected_native_energy=statistics.mean(r['tie_expected_native_energy'] for r in per_state),
+            mean_chosen_over_oracle=statistics.mean(oracle_ratios) if oracle_ratios else None,
+            mean_tie_expected_over_oracle=statistics.mean(expected_oracle_ratios) if expected_oracle_ratios else None,
+            nonzero_oracle_states=len(oracle_ratios),
+            all_zero_states=sum(r['all_zero_scores'] for r in per_state),
+            informative_selection_states=sum(r['selection_informative'] for r in per_state),
+            unique_max_states=sum(r['max_tie_count'] == 1 for r in per_state),
             zero_score_count=int((score <= 1e-14).sum()), per_state=per_state)
+    direct = {r['state']: r for r in report['methods']['direct_action']['per_state']}
+    for name, method in report['methods'].items():
+        comparisons = []
+        for r in method['per_state']:
+            baseline = direct[r['state']]['tie_expected_native_energy']
+            difference = r['tie_expected_native_energy']-baseline
+            tolerance = 1e-12+1e-7*abs(baseline)
+            outcome = 'win' if difference > tolerance else ('loss' if difference < -tolerance else 'tie')
+            comparisons.append(dict(state=r['state'], outcome=outcome,
+                selection_informative=r['selection_informative'],
+                expected_native_energy=r['tie_expected_native_energy'], baseline_expected_native_energy=baseline))
+        baseline_mean = report['methods']['direct_action']['mean_tie_expected_native_energy']
+        method['vs_direct_action'] = dict(
+            expected_energy_ratio=method['mean_tie_expected_native_energy']/baseline_mean if baseline_mean > 1e-20 else None,
+            wins=sum(r['outcome'] == 'win' for r in comparisons),
+            losses=sum(r['outcome'] == 'loss' for r in comparisons),
+            ties=sum(r['outcome'] == 'tie' for r in comparisons),
+            informative_wins=sum(r['outcome'] == 'win' and r['selection_informative'] for r in comparisons),
+            states=comparisons)
+    return report
+
+
+def reassess_cached_actions(pairs_path, model_path, output_path):
+    """CPU-only assessment of an already completed cache job, without the head.
+
+    Older pair files did not retain feature_fd. In that case the FD baseline is
+    explicitly omitted here, and remains available in the original report.
+    """
+    pairs = json.loads(Path(pairs_path).read_text())
+    model = torch.load(model_path, map_location='cpu', weights_only=False)
+    report = dict(scope='CPU reassessment of frozen cached action pairs; no refit or new policy query',
+                  pair_sha256=hashlib.sha256(Path(pairs_path).read_bytes()).hexdigest(),
+                  model_sha256=hashlib.sha256(Path(model_path).read_bytes()).hexdigest())
+    for split in ['fit', 'validation']:
+        rows = pairs[split]
+        metadata = [r['meta'] for r in rows]
+        predicted = torch.tensor([r['predicted'] for r in rows], dtype=torch.double)
+        native = torch.tensor([r['native'] for r in rows], dtype=torch.double)
+        feature = torch.tensor([r['feature_fd'] for r in rows], dtype=torch.double) if all('feature_fd' in r for r in rows) else None
+        report[split] = assess(metadata, predicted, native, feature, model)
+        report[split]['feature_fd_available'] = feature is not None
+    Path(output_path).write_text(json.dumps(report, indent=2), encoding='utf-8')
     return report
 
 
@@ -187,8 +261,8 @@ def main(args):
                   fit=assess(fit_meta, fit_u, fit_n, fit_f, model),
                   validation=assess(val_meta, val_u, val_n, val_f, model))
     (args.out/'metric_cache_report.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
-    pairs = dict(fit=[dict(meta=m, predicted=u.tolist(), native=n.tolist()) for m, u, n in zip(fit_meta, fit_u, fit_n)],
-                 validation=[dict(meta=m, predicted=u.tolist(), native=n.tolist()) for m, u, n in zip(val_meta, val_u, val_n)])
+    pairs = dict(fit=[dict(meta=m, predicted=u.tolist(), native=n.tolist(), feature_fd=float(f)) for m, u, n, f in zip(fit_meta, fit_u, fit_n, fit_f)],
+                 validation=[dict(meta=m, predicted=u.tolist(), native=n.tolist(), feature_fd=float(f)) for m, u, n, f in zip(val_meta, val_u, val_n, val_f)])
     (args.out/'action_displacement_pairs.json').write_text(json.dumps(pairs, indent=2), encoding='utf-8')
     print(json.dumps(dict(radii=report['radii'], validation=report['validation']), indent=2), flush=True)
 

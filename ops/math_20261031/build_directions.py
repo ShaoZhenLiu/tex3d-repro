@@ -31,10 +31,13 @@ def build(paths, output):
                 q=np.asarray(q)
                 common_scale=max(np.max(np.abs(q)),1e-15)
                 scaled=q/common_scale
-                candidates=dict(mean_sign=mean_sign(q.tolist(),lo,hi),
-                    pcgrad_sign=scaled_pcgrad(q.tolist(),lo,hi,take_sign=True),
-                    pcgrad_vector=scaled_pcgrad(q.tolist(),lo,hi,take_sign=False))
-                solved=solve_box_maximin(scaled.tolist(),lo,hi,method='scipy')
+                unseen=np.all(q==0,axis=0)
+                group_lo=np.where(unseen,0.,lo).tolist()
+                group_hi=np.where(unseen,0.,hi).tolist()
+                candidates=dict(mean_sign=mean_sign(q.tolist(),group_lo,group_hi),
+                    pcgrad_sign=scaled_pcgrad(q.tolist(),group_lo,group_hi,take_sign=True),
+                    pcgrad_vector=scaled_pcgrad(q.tolist(),group_lo,group_hi,take_sign=False))
+                solved=solve_box_maximin(scaled.tolist(),group_lo,group_hi,method='scipy')
                 # A zero-margin optimal face may contain arbitrary endpoint
                 # steps. This candidate abstains unless common ascent is strict.
                 accepted=solved['objective']>1e-10
@@ -60,12 +63,14 @@ def build(paths, output):
             objective=gs['interaction'].mean(0)
             solo=np.concatenate([gs['solo_main'],gs['solo_wrist']])
             solo=solo/np.maximum(np.sum(abs(solo),axis=1,keepdims=True),1e-15)
+            invisible=(objective==0)&np.all(solo==0,axis=0)
+            protected_bounds=list(zip(np.where(invisible,0.,lo),np.where(invisible,0.,hi)))
             if np.linalg.norm(objective)<1e-14:
                 delta=np.zeros_like(objective)
                 lp_message='zero interaction gradient; no arbitrary LP step'
             else:
                 objective=objective/max(np.max(abs(objective)),1e-15)
-                lp=linprog(-objective,A_ub=solo,b_ub=np.zeros(len(solo)),bounds=list(zip(lo,hi)),method='highs')
+                lp=linprog(-objective,A_ub=solo,b_ub=np.zeros(len(solo)),bounds=protected_bounds,method='highs')
                 assert lp.success,lp.message
                 delta=lp.x
                 assert np.max(solo@delta)<1e-6

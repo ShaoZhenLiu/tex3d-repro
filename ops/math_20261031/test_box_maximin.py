@@ -6,7 +6,7 @@ from box_maximin import (solve_box_maximin, update_box, mean_sign,
 
 try:
     import scipy
-    HAS_HIGHS = tuple(int(x) for x in scipy.__version__.split('.')[:2]) >= (1, 6)
+    HAS_HIGHS = tuple(int(x) for x in scipy.__version__.split('.')[:2]) >= (1, 7)
 except ImportError:
     HAS_HIGHS = False
 

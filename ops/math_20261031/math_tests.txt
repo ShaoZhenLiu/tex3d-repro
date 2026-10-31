@@ -1,5 +1,6 @@
 test_executable_box_accounts_for_parameter_clip (test_box_maximin.GeometryTests) ... ok
 test_fixed_uncertainty_offsets_shift_guaranteed_gain (test_box_maximin.GeometryTests) ... ok
+test_highs_primal_dual_optimum_and_fractionality (test_box_maximin.GeometryTests) ... ok
 test_l1_normalization_does_not_fix_mean_sign (test_box_maximin.GeometryTests) ... ok
 test_mean_and_pcgrad_sign_can_destroy_common_ascent (test_box_maximin.GeometryTests) ... ok
 test_nonfinite_input_rejected (test_box_maximin.GeometryTests) ... ok
@@ -21,6 +22,6 @@ test_two_active_constraints_can_force_zero (test_fusion_math.ProjectionTests) ..
 test_unconstrained_direction (test_fusion_math.ProjectionTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 21 tests in 0.931s
+Ran 22 tests in 0.929s
 
 OK

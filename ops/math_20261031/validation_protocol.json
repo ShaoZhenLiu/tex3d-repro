@@ -1,0 +1,26 @@
+{
+  "written_before": "heldout initial6 evaluation",
+  "fit": "source initial5 four tasks, all method gradients frozen before evaluation",
+  "heldout": "same four source tasks, independent initial6, same three starts and two step sizes",
+  "optimization_geometry": {
+    "raw": "production J=10 native_FD - 0.1 amplitude_MSE - 0.1 texture_TV; compare raw mean-sign, PCGrad-sign, PCGrad-vector and max-min",
+    "normalized": "divide heldout native J gains by the corresponding FIT task gradient L1 norms; compare all normalized counterparts",
+    "screen": "in >=4/6 start-step settings, max-min must improve worst-task gain over ALL three relevant baselines and have nonnegative worst-task gain; mean gain must retain at least 90% of the strongest mean baseline in those settings",
+    "numerical_tolerance": "1e-8 on normalized comparison scales; zero-margin LP abstains",
+    "no_claim": "first-order LP optimality alone is not native-rendering or closed-loop success"
+  },
+  "fusion": {
+    "fidelity": "aggregate interaction error/truth energy ratio at least 25% smaller than AA displacement counterpart and improved on at least3/4 tasks, excluding no cases silently; report near-zero denominators",
+    "native_step": "exploratory diagnostic even if fidelity fails; no full training allowed without successful native gate",
+    "solo_tolerance_mse": 1e-8,
+    "screen": "joint effect increases >10% while both solo effects do not increase beyond tolerance on >=3/4 states in >=4/6 start-step settings",
+    "protection_scope": "only local action-output protection; not closed-loop task competence"
+  },
+  "ellipsoid": {
+    "fixed_rho_scale": 1.0,
+    "zero_score_interpretation": "a score identically zero cannot be accepted based on arbitrary argmax selection",
+    "action_metric": "production affine-unscaled first-five translation control coordinates",
+    "gate": "offline ranking is auxiliary; a candidate must provide nonzero useful gradients before native update testing"
+  },
+  "reporting": "all starts and steps; both raw and normalized tail/mean; no target-model query or test-driven texture selection"
+}
