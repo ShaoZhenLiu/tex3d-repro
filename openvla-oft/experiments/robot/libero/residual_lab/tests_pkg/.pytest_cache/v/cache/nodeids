@@ -1,0 +1,12 @@
+[
+  "test_residual_core.py::test_beta_zero_is_identity",
+  "test_residual_core.py::test_bfloat16_difference_is_promoted_first",
+  "test_residual_core.py::test_conditional_native_bound",
+  "test_residual_core.py::test_invalid_basis_and_data_rejected",
+  "test_residual_core.py::test_projector_idempotence_and_explicit_matrix",
+  "test_residual_core.py::test_random_control_does_not_change_global_rng",
+  "test_residual_core.py::test_reference_is_detached_and_basis_not_trained",
+  "test_residual_core.py::test_soft_filter_energy_and_gradient",
+  "test_residual_core.py::test_uncentered_svd_keeps_constant_error",
+  "test_residual_core.py::test_zero_rank_matches_mr"
+]
