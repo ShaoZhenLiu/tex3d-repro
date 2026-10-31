@@ -1,0 +1,16 @@
+{
+  "purpose": "Separate language conditioning from scene differences in the six already-explored states",
+  "keys": [[0,10],[0,11],[4,10],[4,11],[8,10],[8,11]],
+  "prompts": ["original valid task instruction", "pick up the salad dressing and place it in the basket"],
+  "validity": "All three BDDL object sets explicitly contain salad_dressing_1; assert before evaluation. The alternative goal is physically meaningful, but closed-loop competence is not yet validated.",
+  "textures": ["Plain", "frozen MR", "existing matched random101", "existing matched random102"],
+  "noise_ids": [0,1,2],
+  "common_noise": "61000 + task*100 + initial + noise_id*100000, same for both prompts and all textures",
+  "action_subset": "first five execution actions, translation coordinates",
+  "primary_metric": "RMS((a_adv,alternative-a_plain,alternative)-(a_adv,original-a_plain,original))",
+  "comparisons": "All state/noise pairs and both random controls; no case or texture selection",
+  "exploratory_screen": "Median MR language-texture interaction exceeds each random by 1.25x and MR state medians exceed both controls on at least 5/6 states",
+  "forbidden_claims": ["semantic hijacking proven", "instruction-selective task failure", "new trained method", "untouched target test"],
+  "gpu": 0,
+  "forbidden_gpu": [4]
+}
