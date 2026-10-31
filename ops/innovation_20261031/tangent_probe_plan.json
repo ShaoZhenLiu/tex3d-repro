@@ -1,0 +1,42 @@
+{
+  "motivation": "feature-value calibration passed while native one-step gain failed; test CURRENT-texture directional calibration against explicit native-anchor/BPDA control",
+  "source_tasks": [
+    0,
+    2,
+    6,
+    8
+  ],
+  "source_init_index": 4,
+  "starts": [
+    "init",
+    "moderate",
+    "frozen_mr"
+  ],
+  "eta": [
+    0.01,
+    0.05
+  ],
+  "probe_radius": 0.05,
+  "probe_directions": [
+    "matched gradient sign",
+    "fixed Rademacher orthogonalized against first direction"
+  ],
+  "methods": [
+    "matched",
+    "native_anchor",
+    "local_tangent"
+  ],
+  "required_gain_ratio_over_each_control": 1.1,
+  "required_task_win_fraction": 0.75,
+  "no_target_queries": true,
+  "locked_test_consumed": false,
+  "forbidden_gpu": [
+    4
+  ],
+  "gpu": 0,
+  "standard_components_not_novel": [
+    "BPDA native forward anchor",
+    "ridge least-squares secant correction"
+  ],
+  "stop": "No full training if native update gate fails; do not tune step size or probe radius using these outcomes"
+}
