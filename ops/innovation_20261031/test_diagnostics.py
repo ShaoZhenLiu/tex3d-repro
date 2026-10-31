@@ -3,6 +3,7 @@ import torch
 
 from gate_audit import candidate_passes
 from diagnose import crossed_masks, fit_transport, pca_basis, projection_metrics
+from local_transport import transport
 
 
 class GateTests(unittest.TestCase):
@@ -45,6 +46,14 @@ class DiagnosticTests(unittest.TestCase):
         metrics=projection_metrics(native+residual,native,basis)
         self.assertLess(metrics['q_err'],1e-10)
         self.assertAlmostEqual(metrics['q_signal'],1.)
+
+    def test_secant_transport_corrects_probe_span_and_preserves_complement(self):
+        probes=torch.tensor([[1.,0.,0.],[0.,1.,0.]])
+        native=torch.tensor([[2.,1.,0.],[1.,3.,0.]])
+        query=torch.tensor([[2.,3.,7.]])
+        expected=torch.tensor([[7.,11.,7.]])
+        torch.testing.assert_close(transport(query,probes,native,ridge=0),expected)
+        torch.testing.assert_close(transport(torch.zeros_like(query),probes,native),torch.zeros_like(query))
 
 
 if __name__=='__main__':

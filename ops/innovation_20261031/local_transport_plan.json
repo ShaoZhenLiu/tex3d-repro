@@ -1,0 +1,23 @@
+{
+  "parent_diagnostic_commit": "855cede",
+  "motivation": "global residual subspace preserves texture directions within early states but fails on late states; state-conditioned transport is a new exploratory hypothesis",
+  "source_only": true,
+  "locked_test_consumed": false,
+  "calibration": "six interleaved texture seeds per fit state; two per validation state",
+  "validation": "other texture seeds at each state; calibration includes new-state native source probes and is not a zero-calibration generalization claim",
+  "ridge": 0.01,
+  "decision": {
+    "relative_residual_error_max": 0.75,
+    "mean_cosine_gain_min": 0.1,
+    "validation_states_improved_fraction_min": 0.75
+  },
+  "resource_policy": {
+    "server": "4090-48G",
+    "allowed_shared_gpu": 0,
+    "forbidden_gpu": [
+      4
+    ],
+    "max_parallel_gpu_processes": 1
+  },
+  "innovation_claim": "candidate only; minimum-norm multisecant correction itself is established mathematics"
+}
