@@ -17,7 +17,7 @@ def transport(query, probes_r, probes_n, ridge=0.01):
     q, r, n = query.flatten(1).double(), probes_r.flatten(1).double(), probes_n.flatten(1).double()
     gram = r @ r.T
     regularizer = ridge * gram.diag().mean().clamp_min(1e-20)
-    coefficients = torch.linalg.solve(gram + regularizer * torch.eye(len(r),dtype=torch.float64),
+    coefficients = torch.linalg.solve(gram + regularizer * torch.eye(len(r),dtype=torch.float64,device=gram.device),
                                       r @ q.T).T
     return (q + coefficients @ (n-r)).float().reshape(shape)
 

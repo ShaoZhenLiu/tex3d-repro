@@ -55,6 +55,16 @@ class DiagnosticTests(unittest.TestCase):
         torch.testing.assert_close(transport(query,probes,native,ridge=0),expected)
         torch.testing.assert_close(transport(torch.zeros_like(query),probes,native),torch.zeros_like(query))
 
+    def test_secant_transport_device_and_gradient(self):
+        device='cuda:0' if torch.cuda.is_available() else 'cpu'
+        probes=torch.tensor([[1.,0.,0.],[0.,1.,0.]],device=device)
+        native=torch.tensor([[2.,1.,0.],[1.,3.,0.]],device=device)
+        query=torch.tensor([[2.,3.,7.]],device=device,requires_grad=True)
+        result=transport(query,probes,native,ridge=0)
+        self.assertEqual(result.device,query.device)
+        result.sum().backward()
+        torch.testing.assert_close(query.grad,torch.tensor([[3.,4.,1.]],device=device))
+
 
 if __name__=='__main__':
     torch.set_num_threads(2)
