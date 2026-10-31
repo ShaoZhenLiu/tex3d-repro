@@ -114,7 +114,9 @@ def setup_episode(task, inits, init_idx, texture_path):
     env.set_init_state(inits[init_idx])
     sim = env.env.sim
     sim.forward()
-    APC.align_cloth_to_table(env)
+    # Match the production evaluator's Object floor dispatch.
+    floor_mode = task.problem_folder == "libero_object"
+    APC.align_cloth_to_table(env, floor_mode=floor_mode)
     _, cloth_bid, _ = APC.get_target_model_matrix(env, APC.CLOTH_SEARCH)
     tex_id = APC.find_target_texture_id(sim, cloth_bid, APC.CLOTH_SEARCH)
     assert tex_id >= 0, "桌布纹理 id 未找到"

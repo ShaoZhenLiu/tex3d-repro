@@ -1,0 +1,11 @@
+{
+  "scope": "Object instrumentation and the first route diagnostic omitted floor_mode; primary run_eval already dispatches floor_mode for Object",
+  "main_evaluator_evidence": "pi/attack_pi0_cloth.py run_eval sets floor_mode=(suite==libero_object) and passes it to evaluate_native",
+  "affected_artifacts": [
+    "historical Object exposure records from eval_cloth_instrumented",
+    "20261031_object_path first diagnostic"
+  ],
+  "unaffected_claim": "No basis from this audit alone to invalidate main Object task-success counts",
+  "action": "instrumented runner now matches production dispatch; first diagnostic kept under legacy instrumentation identity; rerun route probe in production dispatch",
+  "new_fixed_floor_mode": "Separate opt-in alternative with constant x/y; not a replacement for historical production centroid placement"
+}

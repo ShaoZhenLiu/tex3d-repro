@@ -27,7 +27,7 @@ def run(output,all_keys=False):
                         for sid in range(sim.model.nsite):
                             if sim.model.site_id2name(sid)=='table_top':sites.append(sim.data.site_xpos[sid].tolist())
                         return dict(cloth_local=sim.model.body_pos[bid].tolist(),cloth_world=sim.data.body_xpos[bid].tolist(),table_top=sites)
-                    before=snapshot();APC.align_cloth_to_table(env);after=snapshot()
+                    before=snapshot();APC.align_cloth_to_table(env,floor_mode=True);after=snapshot()
                     for _ in range(10):env.step(APC.get_libero_dummy_action())
                     end=snapshot()
                     rec=dict(task=task_id,initial=initial,before=before,after=after,after_wait=end)

@@ -59,7 +59,8 @@ def main(repo,output):
             for initial in [10,11]:
                 env,desc=APC._get_libero_env(task,resolution=256)
                 env.reset();obs=env.set_init_state(inits[initial]);sim=env.env.sim;sim.forward()
-                APC.align_cloth_to_table(env)
+                # Match run_eval's Object-specific floor dispatch exactly.
+                APC.align_cloth_to_table(env,floor_mode=True)
                 _,bid,_=APC.get_target_model_matrix(env,APC.CLOTH_SEARCH)
                 tid=APC.find_target_texture_id(sim,bid,APC.CLOTH_SEARCH)
                 assert tid>=0
