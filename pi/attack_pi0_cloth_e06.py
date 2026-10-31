@@ -419,7 +419,7 @@ def train(args):
             new_inputs, _, _ = APC.replace_image_in_processed_inputs(
                 fr["processed_inputs"], adv_img, device)
             adv_obs = _pi_model.Observation.from_dict(new_inputs)
-            adv_embs, _, _ = extract_split_features(model, adv_obs)
+            adv_embs, _, _ = APC.extract_split_features(model, adv_obs)
             ref = (refs[fi].to(device) if refs is not None
                    else fr["clean_img_embs"])
             attack = -F.mse_loss(adv_embs.float(), ref.float())
