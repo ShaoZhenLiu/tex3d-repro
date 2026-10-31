@@ -1,0 +1,26 @@
+test_executable_box_accounts_for_parameter_clip (test_box_maximin.GeometryTests) ... ok
+test_fixed_uncertainty_offsets_shift_guaranteed_gain (test_box_maximin.GeometryTests) ... ok
+test_l1_normalization_does_not_fix_mean_sign (test_box_maximin.GeometryTests) ... ok
+test_mean_and_pcgrad_sign_can_destroy_common_ascent (test_box_maximin.GeometryTests) ... ok
+test_nonfinite_input_rejected (test_box_maximin.GeometryTests) ... ok
+test_opposed_gradients_cannot_have_strict_common_ascent (test_box_maximin.GeometryTests) ... ok
+test_zero_group_is_not_dropped (test_box_maximin.GeometryTests) ... ok
+test_constraint_active_and_conditional_bound (test_uncertainty_metric.EllipsoidTests) ... ok
+test_envelope_gradients_by_finite_difference (test_uncertainty_metric.EllipsoidTests) ... ok
+test_inside_and_zero_radius (test_uncertainty_metric.EllipsoidTests) ... ok
+test_isotropic_closed_form (test_uncertainty_metric.EllipsoidTests) ... ok
+test_relative_homogeneity_and_autograd (test_uncertainty_metric.EllipsoidTests) ... ok
+test_additive_action_has_zero_interaction_and_no_ratio (test_fusion_math.AlgebraTests) ... ok
+test_nonseparable_error_does_not_cancel (test_fusion_math.AlgebraTests) ... ok
+test_separable_renderer_error_cancels_exactly (test_fusion_math.AlgebraTests) ... ok
+test_kkt_solution_beats_feasible_angular_search (test_fusion_math.ProjectionTests) ... ok
+test_opposite_constraints_form_a_subspace (test_fusion_math.ProjectionTests) ... ok
+test_scaling_constraint_does_not_change_direction (test_fusion_math.ProjectionTests) ... ok
+test_single_active_constraint (test_fusion_math.ProjectionTests) ... ok
+test_two_active_constraints_can_force_zero (test_fusion_math.ProjectionTests) ... ok
+test_unconstrained_direction (test_fusion_math.ProjectionTests) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 0.931s
+
+OK
