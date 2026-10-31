@@ -18,6 +18,7 @@ import os
 import torch
 
 from . import residual_core
+from .gate_validation import candidate_passes
 from .residual_core import ResidualFilter, fit_uncentered_basis, random_orthobasis
 
 RANKS = [0, 1, 2, 4, 8, 16, 32, 64]
@@ -111,6 +112,7 @@ def fit_and_report(out_root, device="cpu", betas_extra=(0.25, 0.5, 0.75)):
                 [r[field] == val for r in val_rows])
 
     report = {"n_fit": n, "m": m, "num_rank": num_rank, "gate": GATE,
+              "group_sample_counts": {name: int(mask.sum()) for name, mask in gmask.items()},
               "candidates": [], "abs_rms": {
                   "r_deploy": rms_per_feat(Vd.cpu()),
                   "dR_float": rms_per_feat(Sd.cpu()),
@@ -183,12 +185,7 @@ def fit_and_report(out_root, device="cpu", betas_extra=(0.25, 0.5, 0.75)):
     # ---- Gate B 判定与候选选择（source-only） ----
     passing = []
     for c in report["candidates"]:
-        ok = (c["q_err"] is not None and c["q_err"] <= GATE["max_q_err"]
-              and c["q_signal"] is not None
-              and c["q_signal"] >= GATE["min_q_signal"])
-        groups_ok = all(v is not None and v >= GATE["min_group_q_signal"]
-                        for kk, v in c.items() if kk.startswith("by_"))
-        c["gate_pass"] = bool(ok and groups_ok)
+        c["gate_pass"] = candidate_passes(c, GATE)
         if c["gate_pass"]:
             passing.append(c)
     passing.sort(key=lambda c: (c["q_err"], c["k"], c["beta"]))
