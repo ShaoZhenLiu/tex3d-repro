@@ -1,0 +1,16 @@
+{
+  "source_only": true,
+  "backbone_loaded": false,
+  "gpu": 0,
+  "forbidden_gpu": [
+    4
+  ],
+  "calibration": "same state interleaved probe seeds, exactly the local transport split",
+  "comparator": "native clean feature anchor plus identity versus corrected synthetic displacement",
+  "gate": {
+    "validation_relative_action_mse_max": 0.75,
+    "validation_improved_state_fraction_min": 0.75,
+    "repeat_maxdiff_max": 0
+  },
+  "scope": "feature estimate through unchanged source decoder; not texture optimization or closed-loop evidence"
+}
