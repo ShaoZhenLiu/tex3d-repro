@@ -42,7 +42,9 @@ def mcnemar(b,c):
 
 
 def build(args):
-    root=args.root;raw=root/'raw';(root/'figures').mkdir(exist_ok=True)
+    root=args.root;raw=root/'raw'
+    if not raw.exists():raw=root
+    (root/'figures').mkdir(exist_ok=True)
     episodes=[];registrations=[]
     for name in ['pi0_main','pi05_main','pi0_tail','pi05_tail']:
         r=raw/name
