@@ -7,6 +7,7 @@ import json
 import os
 import subprocess
 import time
+from types import SimpleNamespace
 from pathlib import Path
 
 import numpy as np
@@ -69,6 +70,26 @@ def main(args):
     def remember_env(*a, **kw):
         env, desc = real_env(*a, **kw)
         current['env'] = env
+        current['cameras'] = {}
+        original_step = env.step
+        def step(*sa, **sk):
+            sim = env.env.sim
+            if not getattr(sim, '_object_camera_hook', False):
+                original_render = sim.render
+                current['original_render'] = original_render
+                def sensor_render(*ra, **rk):
+                    result = original_render(*ra, **rk)
+                    cam = rk.get('camera_name')
+                    if cam in ['agentview', 'robot0_eye_in_hand'] and rk.get('width') == 256 and not rk.get('segmentation', False):
+                        assert not rk.get('depth', False)
+                        native = getattr(sim.data, '_data', sim.data)
+                        current['cameras'][cam] = dict(data=copy.copy(native),
+                            image=np.ascontiguousarray(result[::-1, ::-1]))
+                    return result
+                sim.render = sensor_render
+                sim._object_camera_hook = True
+            return original_step(*sa, **sk)
+        env.step = step
         return env, desc
 
     A._get_libero_env = remember_env
@@ -76,8 +97,11 @@ def main(args):
 
     def process(raw):
         import jax
+        from openpi_client import image_tools
         z = policy._input_transform(copy.deepcopy(raw))
         middle = {k: v.copy() for k, v in z['image'].items()}
+        for key, source in [('base_0_rgb', 'observation/image'), ('left_wrist_0_rgb', 'observation/wrist_image')]:
+            assert np.array_equal(middle[key], image_tools.resize_with_pad(raw[source], 224, 224))
         tensors = jax.tree.map(lambda x: torch.from_numpy(np.array(x)).to(policy._pytorch_device)[None, ...], z)
         obs = model_module.Observation.from_dict(tensors)
         with torch.no_grad():
@@ -105,9 +129,18 @@ def main(args):
         return state
 
     def render(sim):
-        # Do not call sim.forward: consume precisely the production cached state.
-        return tuple(np.ascontiguousarray(sim.render(width=256, height=256, camera_name=c,
-                         mode='offscreen')[::-1, ::-1]) for c in ['agentview', 'robot0_eye_in_hand'])
+        # Render copied sensor-exposure MjData; live physics and camera cache stay intact.
+        context = sim._render_context_offscreen
+        live_data = context.data
+        result = []
+        try:
+            for camera in ['agentview', 'robot0_eye_in_hand']:
+                context.data = SimpleNamespace(_data=current['cameras'][camera]['data'])
+                result.append(np.ascontiguousarray(current['original_render'](width=256, height=256,
+                              camera_name=camera, mode='offscreen')[::-1, ::-1]))
+        finally:
+            context.data = live_data
+        return tuple(result)
 
     def capture(raw, folder=None):
         env = current['env']
@@ -118,6 +151,11 @@ def main(args):
         assert tid >= 0 and len(geoms)
         frozen = integration_state(sim)
         actual = (raw['observation/image'], raw['observation/wrist_image'])
+        cameras = [current['cameras'][name] for name in ['agentview', 'robot0_eye_in_hand']]
+        assert cameras[0]['data'].time == cameras[1]['data'].time
+        assert np.array_equal(cameras[0]['data'].qpos, cameras[1]['data'].qpos)
+        assert np.array_equal(cameras[0]['data'].qvel, cameras[1]['data'].qvel)
+        assert all(np.array_equal(x, y['image']) for x, y in zip(actual, cameras)), 'Hook did not capture consumed cached frame'
         native_current = render(sim)
         maxdiff = max(int(np.abs(x.astype(int) - y.astype(int)).max()) for x, y in zip(actual, native_current))
         assert maxdiff == 0, ('cached production observation differs from render', maxdiff)
@@ -160,6 +198,10 @@ def main(args):
         row = dict(native={}, model_input={}, model_specs=specs,
                    aba_exact=True, integration_state_exact=True,
                    cached_observation_maxdiff=maxdiff, hidden_marker_maxdiff=hidden_max,
+                   camera_time=float(cameras[0]['data'].time), query_time=float(sim.data.time),
+                   camera_delay_seconds=float(sim.data.time-cameras[0]['data'].time),
+                   camera_views_same_state=True,
+                   camera_qpos_sha256=sha(cameras[0]['data'].qpos),
                    cloth_world=np.asarray(sim.data.body_xpos[bid]).tolist())
         for j, view in enumerate(['main', 'wrist']):
             row['native'][view] = measure_three({k: v[j] for k, v in images.items()})
@@ -217,6 +259,8 @@ def main(args):
             row['action_chunk_sha256'] = sha(actions)
             self.rows.append(row)
             self.nq += 1
+            if self.nq % 20 == 0:
+                print('QUERY', self.key, self.nq, flush=True)
             return result
 
     wrapper = PairedPolicy()

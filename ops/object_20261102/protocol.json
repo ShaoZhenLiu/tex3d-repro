@@ -1,5 +1,5 @@
 {
-  "version": "object-investigation-20261102-v1",
+  "version": "object-investigation-20261102-v2-cached-camera-state",
   "suite": "libero_object",
   "tasks": [0,1,2,3,4,5,6,7,8,9],
   "initials": [10,11,12],
@@ -21,6 +21,7 @@
   "marker_b_rgb": [0,255,0],
   "noise_seed": "2710000 + target_index*1000000 + task*10000 + initial*100 + query; excludes condition",
   "measure_on": "every actual policy query on Plain trajectories",
+  "camera_state": "Copy native MjData at each original camera sensor render; at policy queries render appearance counterfactuals using those cached copies, never advancing or forwarding live physics; require bitwise identity with actual policy images and equal exposure states across both views",
   "aggregation": "median across queries per episode, then median and IQR over 30 episodes per target",
   "geometry_control": "30 initial Object states; old ray-grid and production floor placement rendered at identical dynamic states; no actions",
   "video_cases": {"tasks": [0,4], "initial": 10},
