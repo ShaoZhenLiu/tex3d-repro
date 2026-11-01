@@ -1,0 +1,33 @@
+{
+  "engineering_feasible": true,
+  "source_strong_compression_gate_passed": false,
+  "source_greedy75_relative_fidelity": 0.04267128350922349,
+  "source_greedy75_action_energy_retention": 0.8631421540491971,
+  "greedy75_equals_one_shot_ranking": true,
+  "target_full_robot_failures": 4,
+  "target_greedy75_robot_failures": 2,
+  "target_visible75_robot_failures": 4,
+  "paired_cases": 12,
+  "changed_greedy_cases": [
+    {
+      "suite": "libero_spatial",
+      "task": 0,
+      "initial": 23,
+      "plain_robot_failure": 0,
+      "full_robot_failure": 1,
+      "greedy75_robot_failure": 0
+    },
+    {
+      "suite": "libero_object",
+      "task": 4,
+      "initial": 23,
+      "plain_robot_failure": 1,
+      "full_robot_failure": 1,
+      "greedy75_robot_failure": 0
+    }
+  ],
+  "interpretation": "Source fidelity did not reliably preserve target closed-loop outcomes. No support for upgrading this implementation to the paper main novelty.",
+  "recommendation": "Keep the diagnostic and boundary findings. Preserve the original method and main tables.",
+  "untested": "50%/25% target closed-loop performance; 8x8 masks; full-suite noninferiority; real hardware printing",
+  "not_claimed": "All possible surface compression fails; source fidelity is a necessary condition for attack; masks/greedy or triangle inequalities are new mathematics"
+}

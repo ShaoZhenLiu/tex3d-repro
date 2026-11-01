@@ -1,0 +1,30 @@
+{
+  "gpu_free_mib": {
+    "0": 24318,
+    "1": 48494,
+    "2": 17436,
+    "3": 20038,
+    "4": 48494,
+    "5": 17708,
+    "6": 48030,
+    "7": 48494
+  },
+  "host_available_gib": 202.94683074951172,
+  "commit": "65b7e26189ae4afc556074304cdc851c976aedff",
+  "protocol_sha256": "96730c06f99eb3e9f2fb877753908d864c92fedf55e8d5d9d8547bbf3c796068",
+  "utc_start": "2026-11-01T12:12:09Z",
+  "patch_owner": {
+    "initial": "patched",
+    "current": "patched"
+  },
+  "workers": [
+    {
+      "pid": 1667343,
+      "gpu": 6
+    },
+    {
+      "pid": 1667344,
+      "gpu": 7
+    }
+  ]
+}

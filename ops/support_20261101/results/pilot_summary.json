@@ -1,0 +1,305 @@
+{
+  "exploratory": true,
+  "episodes": 72,
+  "source_strong_compression_gate_passed": false,
+  "candidate": "75% retained surface, frozen before target queries",
+  "suites": {
+    "libero_spatial": {
+      "plain": {
+        "n": 6,
+        "robot_successes": 6,
+        "attack_failures_of_robot": 0,
+        "attack_rate": 0.0,
+        "attack_gain_vs_plain": 0.0,
+        "paired_attack_rate_difference_vs_full": -0.16666666666666666,
+        "improved_pairs": 0,
+        "degraded_pairs": 1,
+        "tied_pairs": 5,
+        "conservative_95_difference_interval": [
+          -1.0,
+          0.9422185774883115
+        ],
+        "zero_degradation_one_sided_95_upper": null
+      },
+      "full": {
+        "n": 6,
+        "robot_successes": 5,
+        "attack_failures_of_robot": 1,
+        "attack_rate": 0.16666666666666666,
+        "attack_gain_vs_plain": 0.16666666666666666,
+        "paired_attack_rate_difference_vs_full": 0.0,
+        "improved_pairs": 0,
+        "degraded_pairs": 0,
+        "tied_pairs": 6,
+        "conservative_95_difference_interval": [
+          -1.0,
+          1.0
+        ],
+        "zero_degradation_one_sided_95_upper": 0.39303776899708276
+      },
+      "greedy_12": {
+        "n": 6,
+        "robot_successes": 6,
+        "attack_failures_of_robot": 0,
+        "attack_rate": 0.0,
+        "attack_gain_vs_plain": 0.0,
+        "paired_attack_rate_difference_vs_full": -0.16666666666666666,
+        "improved_pairs": 0,
+        "degraded_pairs": 1,
+        "tied_pairs": 5,
+        "conservative_95_difference_interval": [
+          -1.0,
+          0.9422185774883115
+        ],
+        "zero_degradation_one_sided_95_upper": null
+      },
+      "visibility_12": {
+        "n": 6,
+        "robot_successes": 5,
+        "attack_failures_of_robot": 1,
+        "attack_rate": 0.16666666666666666,
+        "attack_gain_vs_plain": 0.16666666666666666,
+        "paired_attack_rate_difference_vs_full": 0.0,
+        "improved_pairs": 1,
+        "degraded_pairs": 1,
+        "tied_pairs": 4,
+        "conservative_95_difference_interval": [
+          -1.0,
+          1.0
+        ],
+        "zero_degradation_one_sided_95_upper": null
+      },
+      "random101_12": {
+        "n": 6,
+        "robot_successes": 6,
+        "attack_failures_of_robot": 0,
+        "attack_rate": 0.0,
+        "attack_gain_vs_plain": 0.0,
+        "paired_attack_rate_difference_vs_full": -0.16666666666666666,
+        "improved_pairs": 0,
+        "degraded_pairs": 1,
+        "tied_pairs": 5,
+        "conservative_95_difference_interval": [
+          -1.0,
+          0.9422185774883115
+        ],
+        "zero_degradation_one_sided_95_upper": null
+      },
+      "random102_12": {
+        "n": 6,
+        "robot_successes": 6,
+        "attack_failures_of_robot": 0,
+        "attack_rate": 0.0,
+        "attack_gain_vs_plain": 0.0,
+        "paired_attack_rate_difference_vs_full": -0.16666666666666666,
+        "improved_pairs": 0,
+        "degraded_pairs": 1,
+        "tied_pairs": 5,
+        "conservative_95_difference_interval": [
+          -1.0,
+          0.9422185774883115
+        ],
+        "zero_degradation_one_sided_95_upper": null
+      }
+    },
+    "libero_object": {
+      "plain": {
+        "n": 6,
+        "robot_successes": 5,
+        "attack_failures_of_robot": 1,
+        "attack_rate": 0.16666666666666666,
+        "attack_gain_vs_plain": 0.0,
+        "paired_attack_rate_difference_vs_full": -0.3333333333333333,
+        "improved_pairs": 0,
+        "degraded_pairs": 2,
+        "tied_pairs": 4,
+        "conservative_95_difference_interval": [
+          -1.0,
+          0.7755519108216449
+        ],
+        "zero_degradation_one_sided_95_upper": null
+      },
+      "full": {
+        "n": 6,
+        "robot_successes": 3,
+        "attack_failures_of_robot": 3,
+        "attack_rate": 0.5,
+        "attack_gain_vs_plain": 0.3333333333333333,
+        "paired_attack_rate_difference_vs_full": 0.0,
+        "improved_pairs": 0,
+        "degraded_pairs": 0,
+        "tied_pairs": 6,
+        "conservative_95_difference_interval": [
+          -1.0,
+          1.0
+        ],
+        "zero_degradation_one_sided_95_upper": 0.39303776899708276
+      },
+      "greedy_12": {
+        "n": 6,
+        "robot_successes": 4,
+        "attack_failures_of_robot": 2,
+        "attack_rate": 0.3333333333333333,
+        "attack_gain_vs_plain": 0.16666666666666666,
+        "paired_attack_rate_difference_vs_full": -0.16666666666666666,
+        "improved_pairs": 0,
+        "degraded_pairs": 1,
+        "tied_pairs": 5,
+        "conservative_95_difference_interval": [
+          -1.0,
+          0.9422185774883115
+        ],
+        "zero_degradation_one_sided_95_upper": null
+      },
+      "visibility_12": {
+        "n": 6,
+        "robot_successes": 3,
+        "attack_failures_of_robot": 3,
+        "attack_rate": 0.5,
+        "attack_gain_vs_plain": 0.3333333333333333,
+        "paired_attack_rate_difference_vs_full": 0.0,
+        "improved_pairs": 0,
+        "degraded_pairs": 0,
+        "tied_pairs": 6,
+        "conservative_95_difference_interval": [
+          -1.0,
+          1.0
+        ],
+        "zero_degradation_one_sided_95_upper": 0.39303776899708276
+      },
+      "random101_12": {
+        "n": 6,
+        "robot_successes": 3,
+        "attack_failures_of_robot": 3,
+        "attack_rate": 0.5,
+        "attack_gain_vs_plain": 0.3333333333333333,
+        "paired_attack_rate_difference_vs_full": 0.0,
+        "improved_pairs": 0,
+        "degraded_pairs": 0,
+        "tied_pairs": 6,
+        "conservative_95_difference_interval": [
+          -1.0,
+          1.0
+        ],
+        "zero_degradation_one_sided_95_upper": 0.39303776899708276
+      },
+      "random102_12": {
+        "n": 6,
+        "robot_successes": 4,
+        "attack_failures_of_robot": 2,
+        "attack_rate": 0.3333333333333333,
+        "attack_gain_vs_plain": 0.16666666666666666,
+        "paired_attack_rate_difference_vs_full": -0.16666666666666666,
+        "improved_pairs": 0,
+        "degraded_pairs": 1,
+        "tied_pairs": 5,
+        "conservative_95_difference_interval": [
+          -1.0,
+          0.9422185774883115
+        ],
+        "zero_degradation_one_sided_95_upper": null
+      }
+    },
+    "pooled_fixed_cases": {
+      "plain": {
+        "n": 12,
+        "robot_successes": 11,
+        "attack_failures_of_robot": 1,
+        "attack_rate": 0.08333333333333333,
+        "attack_gain_vs_plain": 0.0,
+        "paired_attack_rate_difference_vs_full": -0.25,
+        "improved_pairs": 0,
+        "degraded_pairs": 3,
+        "tied_pairs": 9,
+        "conservative_95_difference_interval": [
+          -1.0,
+          0.5341002756996854
+        ],
+        "zero_degradation_one_sided_95_upper": null
+      },
+      "full": {
+        "n": 12,
+        "robot_successes": 8,
+        "attack_failures_of_robot": 4,
+        "attack_rate": 0.3333333333333333,
+        "attack_gain_vs_plain": 0.25,
+        "paired_attack_rate_difference_vs_full": 0.0,
+        "improved_pairs": 0,
+        "degraded_pairs": 0,
+        "tied_pairs": 12,
+        "conservative_95_difference_interval": [
+          -0.7841002756996854,
+          0.7841002756996854
+        ],
+        "zero_degradation_one_sided_95_upper": 0.22092219194555585
+      },
+      "greedy_12": {
+        "n": 12,
+        "robot_successes": 10,
+        "attack_failures_of_robot": 2,
+        "attack_rate": 0.16666666666666666,
+        "attack_gain_vs_plain": 0.08333333333333333,
+        "paired_attack_rate_difference_vs_full": -0.16666666666666666,
+        "improved_pairs": 0,
+        "degraded_pairs": 2,
+        "tied_pairs": 10,
+        "conservative_95_difference_interval": [
+          -0.9507669423663521,
+          0.6174336090330188
+        ],
+        "zero_degradation_one_sided_95_upper": null
+      },
+      "visibility_12": {
+        "n": 12,
+        "robot_successes": 8,
+        "attack_failures_of_robot": 4,
+        "attack_rate": 0.3333333333333333,
+        "attack_gain_vs_plain": 0.25,
+        "paired_attack_rate_difference_vs_full": 0.0,
+        "improved_pairs": 1,
+        "degraded_pairs": 1,
+        "tied_pairs": 10,
+        "conservative_95_difference_interval": [
+          -0.7841002756996854,
+          0.7841002756996854
+        ],
+        "zero_degradation_one_sided_95_upper": null
+      },
+      "random101_12": {
+        "n": 12,
+        "robot_successes": 9,
+        "attack_failures_of_robot": 3,
+        "attack_rate": 0.25,
+        "attack_gain_vs_plain": 0.16666666666666666,
+        "paired_attack_rate_difference_vs_full": -0.08333333333333333,
+        "improved_pairs": 0,
+        "degraded_pairs": 1,
+        "tied_pairs": 11,
+        "conservative_95_difference_interval": [
+          -0.8674336090330188,
+          0.7007669423663521
+        ],
+        "zero_degradation_one_sided_95_upper": null
+      },
+      "random102_12": {
+        "n": 12,
+        "robot_successes": 10,
+        "attack_failures_of_robot": 2,
+        "attack_rate": 0.16666666666666666,
+        "attack_gain_vs_plain": 0.08333333333333333,
+        "paired_attack_rate_difference_vs_full": -0.16666666666666666,
+        "improved_pairs": 0,
+        "degraded_pairs": 2,
+        "tied_pairs": 10,
+        "conservative_95_difference_interval": [
+          -0.9507669423663521,
+          0.6174336090330188
+        ],
+        "zero_degradation_one_sided_95_upper": null
+      }
+    }
+  },
+  "limitations": "Six paired cases per suite; three tasks; not a noninferiority or full-suite estimate",
+  "max_repeat_action_difference": 0.0,
+  "mean_elapsed_seconds_per_episode": 31.937020775708284
+}

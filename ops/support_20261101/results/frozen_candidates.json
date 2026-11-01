@@ -1,0 +1,452 @@
+{
+  "candidates": [
+    {
+      "name": "full",
+      "family": "full",
+      "keep": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "name": "plain",
+      "family": "plain",
+      "keep": []
+    },
+    {
+      "name": "greedy_12",
+      "family": "greedy",
+      "keep": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        14
+      ]
+    },
+    {
+      "name": "ranking_12",
+      "family": "ranking",
+      "keep": [
+        5,
+        4,
+        9,
+        7,
+        10,
+        2,
+        6,
+        1,
+        3,
+        8,
+        0,
+        14
+      ]
+    },
+    {
+      "name": "visibility_12",
+      "family": "visibility",
+      "keep": [
+        5,
+        6,
+        10,
+        1,
+        3,
+        2,
+        7,
+        9,
+        14,
+        4,
+        13,
+        0
+      ]
+    },
+    {
+      "name": "random101_12",
+      "family": "random",
+      "seed": 101,
+      "keep": [
+        13,
+        2,
+        3,
+        12,
+        10,
+        5,
+        0,
+        14,
+        4,
+        8,
+        9,
+        7
+      ]
+    },
+    {
+      "name": "random102_12",
+      "family": "random",
+      "seed": 102,
+      "keep": [
+        7,
+        6,
+        5,
+        14,
+        11,
+        15,
+        4,
+        1,
+        10,
+        8,
+        9,
+        12
+      ]
+    },
+    {
+      "name": "random103_12",
+      "family": "random",
+      "seed": 103,
+      "keep": [
+        2,
+        12,
+        0,
+        8,
+        15,
+        10,
+        13,
+        4,
+        5,
+        1,
+        6,
+        14
+      ]
+    },
+    {
+      "name": "random104_12",
+      "family": "random",
+      "seed": 104,
+      "keep": [
+        15,
+        2,
+        7,
+        12,
+        13,
+        14,
+        3,
+        0,
+        4,
+        10,
+        8,
+        6
+      ]
+    },
+    {
+      "name": "random105_12",
+      "family": "random",
+      "seed": 105,
+      "keep": [
+        7,
+        3,
+        13,
+        2,
+        1,
+        14,
+        8,
+        12,
+        11,
+        10,
+        15,
+        4
+      ]
+    },
+    {
+      "name": "opacity_12",
+      "family": "opacity",
+      "opacity": 0.75
+    },
+    {
+      "name": "greedy_08",
+      "family": "greedy",
+      "keep": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "name": "ranking_08",
+      "family": "ranking",
+      "keep": [
+        5,
+        4,
+        9,
+        7,
+        10,
+        2,
+        6,
+        1
+      ]
+    },
+    {
+      "name": "visibility_08",
+      "family": "visibility",
+      "keep": [
+        5,
+        6,
+        10,
+        1,
+        3,
+        2,
+        7,
+        9
+      ]
+    },
+    {
+      "name": "random101_08",
+      "family": "random",
+      "seed": 101,
+      "keep": [
+        13,
+        2,
+        3,
+        12,
+        10,
+        5,
+        0,
+        14
+      ]
+    },
+    {
+      "name": "random102_08",
+      "family": "random",
+      "seed": 102,
+      "keep": [
+        7,
+        6,
+        5,
+        14,
+        11,
+        15,
+        4,
+        1
+      ]
+    },
+    {
+      "name": "random103_08",
+      "family": "random",
+      "seed": 103,
+      "keep": [
+        2,
+        12,
+        0,
+        8,
+        15,
+        10,
+        13,
+        4
+      ]
+    },
+    {
+      "name": "random104_08",
+      "family": "random",
+      "seed": 104,
+      "keep": [
+        15,
+        2,
+        7,
+        12,
+        13,
+        14,
+        3,
+        0
+      ]
+    },
+    {
+      "name": "random105_08",
+      "family": "random",
+      "seed": 105,
+      "keep": [
+        7,
+        3,
+        13,
+        2,
+        1,
+        14,
+        8,
+        12
+      ]
+    },
+    {
+      "name": "opacity_08",
+      "family": "opacity",
+      "opacity": 0.5
+    },
+    {
+      "name": "greedy_04",
+      "family": "greedy",
+      "keep": [
+        2,
+        4,
+        5,
+        7
+      ]
+    },
+    {
+      "name": "ranking_04",
+      "family": "ranking",
+      "keep": [
+        5,
+        4,
+        9,
+        7
+      ]
+    },
+    {
+      "name": "visibility_04",
+      "family": "visibility",
+      "keep": [
+        5,
+        6,
+        10,
+        1
+      ]
+    },
+    {
+      "name": "random101_04",
+      "family": "random",
+      "seed": 101,
+      "keep": [
+        13,
+        2,
+        3,
+        12
+      ]
+    },
+    {
+      "name": "random102_04",
+      "family": "random",
+      "seed": 102,
+      "keep": [
+        7,
+        6,
+        5,
+        14
+      ]
+    },
+    {
+      "name": "random103_04",
+      "family": "random",
+      "seed": 103,
+      "keep": [
+        2,
+        12,
+        0,
+        8
+      ]
+    },
+    {
+      "name": "random104_04",
+      "family": "random",
+      "seed": 104,
+      "keep": [
+        15,
+        2,
+        7,
+        12
+      ]
+    },
+    {
+      "name": "random105_04",
+      "family": "random",
+      "seed": 105,
+      "keep": [
+        7,
+        3,
+        13,
+        2
+      ]
+    },
+    {
+      "name": "opacity_04",
+      "family": "opacity",
+      "opacity": 0.25
+    }
+  ],
+  "fit_visibility": [
+    0.01596878985969388,
+    0.028164610570790817,
+    0.025714485012755105,
+    0.02791797871492347,
+    0.017575633769132654,
+    0.03175073740433673,
+    0.03111298230229592,
+    0.02339764030612245,
+    0.00964729153380102,
+    0.021777094626913265,
+    0.030964754065688774,
+    0.014819086814413265,
+    0.0024376694036989796,
+    0.01712845782844388,
+    0.019147600446428572,
+    0.015024613360969387
+  ],
+  "fit_loo_ranking": [
+    5,
+    4,
+    9,
+    7,
+    10,
+    2,
+    6,
+    1,
+    3,
+    8,
+    0,
+    14,
+    13,
+    15,
+    11,
+    12
+  ],
+  "fit_visibility_ranking": [
+    5,
+    6,
+    10,
+    1,
+    3,
+    2,
+    7,
+    9,
+    14,
+    4,
+    13,
+    0,
+    15,
+    11,
+    8,
+    12
+  ],
+  "source_validation_not_yet_opened": true
+}
