@@ -1,0 +1,25 @@
+{
+  "baseline_commit": "a2974ec2242d4966bbc425419aa6dcb0a7acde9e",
+  "purpose": "Audit Figure 1 and measure three distinct quantities at identical paused production Object states. No attack training, no closed-loop attack evaluation, no target gradients.",
+  "suite": "libero_object",
+  "tasks": [0, 4, 8],
+  "initials": [10, 11],
+  "settle_steps": 10,
+  "placement": "Production centroid floor placement, floor_mode=True, no fixed-floor variant",
+  "conditions": ["plain", "hidden", "refcloth", "marker_a", "marker_b"],
+  "marker_a_rgb": [255, 0, 255],
+  "marker_b_rgb": [0, 255, 0],
+  "geometric_proxy": "Native same-surface two-color marker support; explicitly not semantic segmentation",
+  "three_measurements": ["abs(marker_a-marker_b)", "abs(plain-hidden)", "abs(refcloth-plain)"],
+  "thresholds_rgb_0_255_units": [1, 5, 10, 20],
+  "stages": ["native oriented 256x256", "policy input_transform 224x224", "actual model _preprocess_observation(train=False), immediately before embed_prefix"],
+  "comparison": "Apply the real production image processing to each RGB condition first; compute differences afterwards. Do not resize an already-thresholded binary mask.",
+  "targets": {
+    "pi0": {"config": "pi0_libero", "checkpoint": "/data/shaozhen.liu/model/RLinf-Pi0-LIBERO-130-fullshot-SFT", "gpu": 1},
+    "pi05": {"config": "pi05_libero", "checkpoint": "/data/shaozhen.liu/model/RLinf-Pi05-LIBERO-130-fullshot-SFT", "gpu": 7}
+  },
+  "policy_execution": "Load unchanged policy solely to call its exact input_transform and actual model preprocessing. No sample_actions, infer, embed_prefix, image encoder or action head call.",
+  "checks": ["native plain A/A", "A-B-A restoration", "hidden marker_a equals hidden marker_b", "physics state unchanged during conditions", "identical proprioception and instruction", "actual masks and shapes of active/dummy cameras"],
+  "interpretation": "Six starting states per target cannot replace 60 Object full-rollout medians from Figure 1. Placement mismatch and contrast threshold undercount are separate hypotheses.",
+  "gpu4_used": false
+}
