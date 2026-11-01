@@ -1,0 +1,4084 @@
+{
+  "target": "pi0",
+  "protocol": {
+    "baseline_commit": "a2974ec2242d4966bbc425419aa6dcb0a7acde9e",
+    "purpose": "Audit Figure 1 and measure three distinct quantities at identical paused production Object states. No attack training, no closed-loop attack evaluation, no target gradients.",
+    "suite": "libero_object",
+    "tasks": [
+      0,
+      4,
+      8
+    ],
+    "initials": [
+      10,
+      11
+    ],
+    "settle_steps": 10,
+    "placement": "Production centroid floor placement, floor_mode=True, no fixed-floor variant",
+    "conditions": [
+      "plain",
+      "hidden",
+      "refcloth",
+      "marker_a",
+      "marker_b"
+    ],
+    "marker_a_rgb": [
+      255,
+      0,
+      255
+    ],
+    "marker_b_rgb": [
+      0,
+      255,
+      0
+    ],
+    "geometric_proxy": "Native same-surface two-color marker support; explicitly not semantic segmentation",
+    "three_measurements": [
+      "abs(marker_a-marker_b)",
+      "abs(plain-hidden)",
+      "abs(refcloth-plain)"
+    ],
+    "thresholds_rgb_0_255_units": [
+      1,
+      5,
+      10,
+      20
+    ],
+    "stages": [
+      "native oriented 256x256",
+      "policy input_transform 224x224",
+      "actual model _preprocess_observation(train=False), immediately before embed_prefix"
+    ],
+    "comparison": "Apply the real production image processing to each RGB condition first; compute differences afterwards. Do not resize an already-thresholded binary mask.",
+    "targets": {
+      "pi0": {
+        "config": "pi0_libero",
+        "checkpoint": "/data/shaozhen.liu/model/RLinf-Pi0-LIBERO-130-fullshot-SFT",
+        "gpu": 1
+      },
+      "pi05": {
+        "config": "pi05_libero",
+        "checkpoint": "/data/shaozhen.liu/model/RLinf-Pi05-LIBERO-130-fullshot-SFT",
+        "gpu": 7
+      }
+    },
+    "policy_execution": "Load unchanged policy solely to call its exact input_transform and actual model preprocessing. No sample_actions, infer, embed_prefix, image encoder or action head call.",
+    "checks": [
+      "native plain A/A",
+      "A-B-A restoration",
+      "hidden marker_a equals hidden marker_b",
+      "physics state unchanged during conditions",
+      "identical proprioception and instruction",
+      "actual masks and shapes of active/dummy cameras"
+    ],
+    "interpretation": "Six starting states per target cannot replace 60 Object full-rollout medians from Figure 1. Placement mismatch and contrast threshold undercount are separate hypotheses.",
+    "gpu4_used": false
+  },
+  "records": [
+    {
+      "task": 0,
+      "initial": 10,
+      "cloth_world": [
+        -0.05285050535445303,
+        -0.02961682701063046,
+        0.005
+      ],
+      "simulator_state_sha256": "7341fe34e69f19f5ed0d5fa65e3375f2d053253609bc3cea304c038f30de7236",
+      "hidden_marker_maxdiff": 0,
+      "aba_exact": true,
+      "native": {
+        "main": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.1400146484375,
+              "plain_hidden_fraction": 0.139801025390625,
+              "ref_plain_fraction": 0.1363983154296875,
+              "hidden_missed_marker_fraction": 0.0015257192676547515,
+              "ref_change_within_marker_fraction": 0.9741717523975588,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9984742807323452
+            },
+            "5": {
+              "marker_fraction": 0.1400146484375,
+              "plain_hidden_fraction": 0.133819580078125,
+              "ref_plain_fraction": 0.1269683837890625,
+              "hidden_missed_marker_fraction": 0.04424585876198779,
+              "ref_change_within_marker_fraction": 0.9068221447253705,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9557541412380122
+            },
+            "10": {
+              "marker_fraction": 0.1400146484375,
+              "plain_hidden_fraction": 0.118927001953125,
+              "ref_plain_fraction": 0.1192474365234375,
+              "hidden_missed_marker_fraction": 0.1506102877070619,
+              "ref_change_within_marker_fraction": 0.8516782911944202,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8493897122929381
+            },
+            "20": {
+              "marker_fraction": 0.1400146484375,
+              "plain_hidden_fraction": 0.029083251953125,
+              "ref_plain_fraction": 0.0969696044921875,
+              "hidden_missed_marker_fraction": 0.7922842197035745,
+              "ref_change_within_marker_fraction": 0.6925675675675675,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.20771578029642546
+            }
+          },
+          "rms_rgb255": {
+            "marker": 79.95442847225048,
+            "plain_hidden": 6.576997565200724,
+            "ref_plain": 10.89358697690101
+          },
+          "maxabs_rgb255": {
+            "marker": 243.0,
+            "plain_hidden": 170.0,
+            "ref_plain": 60.0
+          }
+        },
+        "wrist": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.5645294189453125,
+              "plain_hidden_fraction": 0.5641021728515625,
+              "ref_plain_fraction": 0.5640869140625,
+              "hidden_missed_marker_fraction": 0.0007568181203881396,
+              "ref_change_within_marker_fraction": 0.9992161526610266,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9992431818796118
+            },
+            "5": {
+              "marker_fraction": 0.5645294189453125,
+              "plain_hidden_fraction": 0.5517425537109375,
+              "ref_plain_fraction": 0.559417724609375,
+              "hidden_missed_marker_fraction": 0.022650485174473607,
+              "ref_change_within_marker_fraction": 0.9909452117739276,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9773495148255263
+            },
+            "10": {
+              "marker_fraction": 0.5645294189453125,
+              "plain_hidden_fraction": 0.50390625,
+              "ref_plain_fraction": 0.54541015625,
+              "hidden_missed_marker_fraction": 0.10738708543935994,
+              "ref_change_within_marker_fraction": 0.9661323891126308,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8926129145606401
+            },
+            "20": {
+              "marker_fraction": 0.5645294189453125,
+              "plain_hidden_fraction": 0.2623748779296875,
+              "ref_plain_fraction": 0.4850311279296875,
+              "hidden_missed_marker_fraction": 0.5352325864259264,
+              "ref_change_within_marker_fraction": 0.8591777711706354,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.4647674135740736
+            }
+          },
+          "rms_rgb255": {
+            "marker": 187.52960771552355,
+            "plain_hidden": 16.221368537864212,
+            "ref_plain": 28.65187705539029
+          },
+          "maxabs_rgb255": {
+            "marker": 255.0,
+            "plain_hidden": 203.0,
+            "ref_plain": 64.0
+          }
+        }
+      },
+      "input_transform": {
+        "base_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.14791932397959184,
+              "plain_hidden_fraction": 0.14457110969387754,
+              "ref_plain_fraction": 0.14130261479591838,
+              "hidden_missed_marker_fraction": 0.02263540824575586,
+              "ref_change_within_marker_fraction": 0.9552681218000539,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9773645917542442
+            },
+            "5": {
+              "marker_fraction": 0.1471221301020408,
+              "plain_hidden_fraction": 0.1346061862244898,
+              "ref_plain_fraction": 0.12848772321428573,
+              "hidden_missed_marker_fraction": 0.08507179626117584,
+              "ref_change_within_marker_fraction": 0.8733405581143322,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9149282037388242
+            },
+            "10": {
+              "marker_fraction": 0.14622528698979592,
+              "plain_hidden_fraction": 0.11800462372448979,
+              "ref_plain_fraction": 0.11981823979591837,
+              "hidden_missed_marker_fraction": 0.1929944118849666,
+              "ref_change_within_marker_fraction": 0.8194084775793922,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8070055881150334
+            },
+            "20": {
+              "marker_fraction": 0.14479033801020408,
+              "plain_hidden_fraction": 0.02770248724489796,
+              "ref_plain_fraction": 0.09534438775510204,
+              "hidden_missed_marker_fraction": 0.8086717136958018,
+              "ref_change_within_marker_fraction": 0.6584996558843772,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.1913282863041982
+            }
+          },
+          "rms_rgb255": {
+            "marker": 79.57055122992166,
+            "plain_hidden": 6.064513744380691,
+            "ref_plain": 10.600970100447329
+          },
+          "maxabs_rgb255": {
+            "marker": 242.0,
+            "plain_hidden": 144.0,
+            "ref_plain": 60.0
+          }
+        },
+        "left_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.5751355229591837,
+              "plain_hidden_fraction": 0.570930325255102,
+              "ref_plain_fraction": 0.5723852040816326,
+              "hidden_missed_marker_fraction": 0.007311664009979901,
+              "ref_change_within_marker_fraction": 0.9952179638228568,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.99268833599002
+            },
+            "5": {
+              "marker_fraction": 0.5746173469387755,
+              "plain_hidden_fraction": 0.5560028698979592,
+              "ref_plain_fraction": 0.5626992984693877,
+              "hidden_missed_marker_fraction": 0.032394561598224195,
+              "ref_change_within_marker_fraction": 0.9792591564927858,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9676054384017758
+            },
+            "10": {
+              "marker_fraction": 0.5731425382653061,
+              "plain_hidden_fraction": 0.5105428890306123,
+              "ref_plain_fraction": 0.5466956313775511,
+              "hidden_missed_marker_fraction": 0.10922178176507406,
+              "ref_change_within_marker_fraction": 0.9538563182418806,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.890778218234926
+            },
+            "20": {
+              "marker_fraction": 0.5693359375,
+              "plain_hidden_fraction": 0.2559789540816326,
+              "ref_plain_fraction": 0.48537149234693877,
+              "hidden_missed_marker_fraction": 0.5503903104981273,
+              "ref_change_within_marker_fraction": 0.8525221409318444,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.4496096895018728
+            }
+          },
+          "rms_rgb255": {
+            "marker": 187.1411931098774,
+            "plain_hidden": 15.273475409138367,
+            "ref_plain": 28.394713106643433
+          },
+          "maxabs_rgb255": {
+            "marker": 255.0,
+            "plain_hidden": 174.0,
+            "ref_plain": 64.0
+          }
+        },
+        "right_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "5": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "10": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "20": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            }
+          },
+          "rms_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          },
+          "maxabs_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          }
+        }
+      },
+      "model_input": {
+        "base_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.14791932397959184,
+              "plain_hidden_fraction": 0.14457110969387754,
+              "ref_plain_fraction": 0.14130261479591838,
+              "hidden_missed_marker_fraction": 0.02263540824575586,
+              "ref_change_within_marker_fraction": 0.9552681218000539,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9773645917542442
+            },
+            "5": {
+              "marker_fraction": 0.1471221301020408,
+              "plain_hidden_fraction": 0.1346061862244898,
+              "ref_plain_fraction": 0.12848772321428573,
+              "hidden_missed_marker_fraction": 0.08507179626117584,
+              "ref_change_within_marker_fraction": 0.8733405581143322,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9149282037388242
+            },
+            "10": {
+              "marker_fraction": 0.14622528698979592,
+              "plain_hidden_fraction": 0.11800462372448979,
+              "ref_plain_fraction": 0.11981823979591837,
+              "hidden_missed_marker_fraction": 0.1929944118849666,
+              "ref_change_within_marker_fraction": 0.8194084775793922,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8070055881150334
+            },
+            "20": {
+              "marker_fraction": 0.14479033801020408,
+              "plain_hidden_fraction": 0.02770248724489796,
+              "ref_plain_fraction": 0.09534438775510204,
+              "hidden_missed_marker_fraction": 0.8086717136958018,
+              "ref_change_within_marker_fraction": 0.6584996558843772,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.1913282863041982
+            }
+          },
+          "rms_rgb255": {
+            "marker": 79.57055721965112,
+            "plain_hidden": 6.064513649844237,
+            "ref_plain": 10.600970753390015
+          },
+          "maxabs_rgb255": {
+            "marker": 242.0000159740448,
+            "plain_hidden": 144.00000661611557,
+            "ref_plain": 59.99999642372131
+          }
+        },
+        "left_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.5751355229591837,
+              "plain_hidden_fraction": 0.570930325255102,
+              "ref_plain_fraction": 0.5723852040816326,
+              "hidden_missed_marker_fraction": 0.007311664009979901,
+              "ref_change_within_marker_fraction": 0.9952179638228568,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.99268833599002
+            },
+            "5": {
+              "marker_fraction": 0.5746173469387755,
+              "plain_hidden_fraction": 0.5560028698979592,
+              "ref_plain_fraction": 0.5626992984693877,
+              "hidden_missed_marker_fraction": 0.032394561598224195,
+              "ref_change_within_marker_fraction": 0.9792591564927858,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9676054384017758
+            },
+            "10": {
+              "marker_fraction": 0.5731425382653061,
+              "plain_hidden_fraction": 0.5105428890306123,
+              "ref_plain_fraction": 0.5466956313775511,
+              "hidden_missed_marker_fraction": 0.10922178176507406,
+              "ref_change_within_marker_fraction": 0.9538563182418806,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.890778218234926
+            },
+            "20": {
+              "marker_fraction": 0.5693359375,
+              "plain_hidden_fraction": 0.2559789540816326,
+              "ref_plain_fraction": 0.48537149234693877,
+              "hidden_missed_marker_fraction": 0.5503903104981273,
+              "ref_change_within_marker_fraction": 0.8525221409318444,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.4496096895018728
+            }
+          },
+          "rms_rgb255": {
+            "marker": 187.14119804839385,
+            "plain_hidden": 15.273481274295419,
+            "ref_plain": 28.394716389029977
+          },
+          "maxabs_rgb255": {
+            "marker": 255.0,
+            "plain_hidden": 174.00000482797623,
+            "ref_plain": 64.00001138448715
+          }
+        },
+        "right_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "5": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "10": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "20": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            }
+          },
+          "rms_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          },
+          "maxabs_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          }
+        }
+      },
+      "model_specs": {
+        "plain": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9529412984848022,
+            "normalized_tensor_sha256": "a5cede447744d35fdf1b8fea412f38ac48f75766987375575867391b9fc9842e"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.7098040580749512,
+            "normalized_tensor_sha256": "91e171fff6eca7f09e9092d318626bf6a3c0ae42f9c0cc061fcead7c66121d3b"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "refcloth": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9529412984848022,
+            "normalized_tensor_sha256": "627dea299ca1cca8dafd79ecfdcd1f7e9a66a729f0a1c273bdef50cc80cfd6be"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 1.0,
+            "normalized_tensor_sha256": "f7d92fe35839e5dcaa0ad228d8350c1d35acc0691630b31e41057dcee91d12c8"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "marker_a": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9529412984848022,
+            "normalized_tensor_sha256": "e1620c4d98114e88682ee4c1d3fbf474fd8b6530166ca794fbc388d5bddfd4c3"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 1.0,
+            "normalized_tensor_sha256": "ee9325e44f0f04782c1162c5e223d2928c58356d87a80fbbbaa7f9a6850ad42f"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "marker_b": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9529412984848022,
+            "normalized_tensor_sha256": "422550969ae4b17c37c12b3191aeb68501fea34a3927dabbfd736c8c8a30b5d3"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 1.0,
+            "normalized_tensor_sha256": "4762dee63f207f303c353b4aae61e482c31e3a1ca5a884c4611e90d05bb07011"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "hidden": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9529412984848022,
+            "normalized_tensor_sha256": "0d515695418d1e402c8ea9f1453b107f05585a453ea5e262d582c0e11f1ff924"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9450981616973877,
+            "normalized_tensor_sha256": "d6501e3f15bb14b2130b61a2c3f0ebb82de9ffe17c8beb03e41522cf6984cf67"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        }
+      }
+    },
+    {
+      "task": 0,
+      "initial": 11,
+      "cloth_world": [
+        -0.05063957149379434,
+        -0.03199833297690407,
+        0.005
+      ],
+      "simulator_state_sha256": "3ef73708c4f5bbec42a8dbc9684b3ac6a885c607180340e95574e0cf2ef3d738",
+      "hidden_marker_maxdiff": 0,
+      "aba_exact": true,
+      "native": {
+        "main": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.140380859375,
+              "plain_hidden_fraction": 0.1402740478515625,
+              "ref_plain_fraction": 0.13623046875,
+              "hidden_missed_marker_fraction": 0.0007608695652173913,
+              "ref_change_within_marker_fraction": 0.9704347826086956,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9992391304347826
+            },
+            "5": {
+              "marker_fraction": 0.140380859375,
+              "plain_hidden_fraction": 0.1328887939453125,
+              "ref_plain_fraction": 0.126983642578125,
+              "hidden_missed_marker_fraction": 0.05336956521739131,
+              "ref_change_within_marker_fraction": 0.9045652173913044,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9466304347826087
+            },
+            "10": {
+              "marker_fraction": 0.140380859375,
+              "plain_hidden_fraction": 0.1171112060546875,
+              "ref_plain_fraction": 0.1187896728515625,
+              "hidden_missed_marker_fraction": 0.16576086956521738,
+              "ref_change_within_marker_fraction": 0.846195652173913,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8342391304347826
+            },
+            "20": {
+              "marker_fraction": 0.140380859375,
+              "plain_hidden_fraction": 0.029571533203125,
+              "ref_plain_fraction": 0.0957183837890625,
+              "hidden_missed_marker_fraction": 0.7893478260869565,
+              "ref_change_within_marker_fraction": 0.6818478260869565,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.21065217391304347
+            }
+          },
+          "rms_rgb255": {
+            "marker": 79.7070545094612,
+            "plain_hidden": 6.590212290252793,
+            "ref_plain": 10.893223252349179
+          },
+          "maxabs_rgb255": {
+            "marker": 243.0,
+            "plain_hidden": 170.0,
+            "ref_plain": 60.0
+          }
+        },
+        "wrist": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.542572021484375,
+              "plain_hidden_fraction": 0.5417633056640625,
+              "ref_plain_fraction": 0.542236328125,
+              "hidden_missed_marker_fraction": 0.001490522526576298,
+              "ref_change_within_marker_fraction": 0.9993812925361382,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9985094774734237
+            },
+            "5": {
+              "marker_fraction": 0.542572021484375,
+              "plain_hidden_fraction": 0.5325927734375,
+              "ref_plain_fraction": 0.537811279296875,
+              "hidden_missed_marker_fraction": 0.018392485516620732,
+              "ref_change_within_marker_fraction": 0.9912256032397773,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9816075144833792
+            },
+            "10": {
+              "marker_fraction": 0.542572021484375,
+              "plain_hidden_fraction": 0.49005126953125,
+              "ref_plain_fraction": 0.5233154296875,
+              "hidden_missed_marker_fraction": 0.09679959502784184,
+              "ref_change_within_marker_fraction": 0.9645086900275606,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9032004049721581
+            },
+            "20": {
+              "marker_fraction": 0.542572021484375,
+              "plain_hidden_fraction": 0.258514404296875,
+              "ref_plain_fraction": 0.46685791015625,
+              "hidden_missed_marker_fraction": 0.5235390066932898,
+              "ref_change_within_marker_fraction": 0.8604533438326115,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.47646099330671016
+            }
+          },
+          "rms_rgb255": {
+            "marker": 183.776348385729,
+            "plain_hidden": 15.68555631919516,
+            "ref_plain": 28.018413574413668
+          },
+          "maxabs_rgb255": {
+            "marker": 255.0,
+            "plain_hidden": 203.0,
+            "ref_plain": 64.0
+          }
+        }
+      },
+      "input_transform": {
+        "base_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.14847735969387754,
+              "plain_hidden_fraction": 0.1434749681122449,
+              "ref_plain_fraction": 0.14016661352040816,
+              "hidden_missed_marker_fraction": 0.03369127516778524,
+              "ref_change_within_marker_fraction": 0.9440268456375839,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9663087248322147
+            },
+            "5": {
+              "marker_fraction": 0.1453483737244898,
+              "plain_hidden_fraction": 0.13498485331632654,
+              "ref_plain_fraction": 0.12820870535714285,
+              "hidden_missed_marker_fraction": 0.07130124777183601,
+              "ref_change_within_marker_fraction": 0.8820787056081174,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.928698752228164
+            },
+            "10": {
+              "marker_fraction": 0.14457110969387754,
+              "plain_hidden_fraction": 0.11559311224489796,
+              "ref_plain_fraction": 0.11866230867346939,
+              "hidden_missed_marker_fraction": 0.2004411359250069,
+              "ref_change_within_marker_fraction": 0.8207885304659498,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.7995588640749931
+            },
+            "20": {
+              "marker_fraction": 0.14343510841836735,
+              "plain_hidden_fraction": 0.028778698979591837,
+              "ref_plain_fraction": 0.09482621173469388,
+              "hidden_missed_marker_fraction": 0.799360844796443,
+              "ref_change_within_marker_fraction": 0.6611087953313881,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.20063915520355705
+            }
+          },
+          "rms_rgb255": {
+            "marker": 79.31831291552336,
+            "plain_hidden": 6.070180522109982,
+            "ref_plain": 10.598662146532625
+          },
+          "maxabs_rgb255": {
+            "marker": 243.0,
+            "plain_hidden": 144.0,
+            "ref_plain": 60.0
+          }
+        },
+        "left_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.5541892538265306,
+              "plain_hidden_fraction": 0.5493064413265306,
+              "ref_plain_fraction": 0.5510204081632653,
+              "hidden_missed_marker_fraction": 0.008810731110871363,
+              "ref_change_within_marker_fraction": 0.9942820153198835,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9911892688891286
+            },
+            "5": {
+              "marker_fraction": 0.5531130420918368,
+              "plain_hidden_fraction": 0.5335419323979592,
+              "ref_plain_fraction": 0.5414939413265306,
+              "hidden_missed_marker_fraction": 0.035383562137426584,
+              "ref_change_within_marker_fraction": 0.9789932619896948,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9646164378625735
+            },
+            "10": {
+              "marker_fraction": 0.5520766900510204,
+              "plain_hidden_fraction": 0.4910514987244898,
+              "ref_plain_fraction": 0.5256297831632653,
+              "hidden_missed_marker_fraction": 0.1105375257210931,
+              "ref_change_within_marker_fraction": 0.9520955922168874,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8894624742789069
+            },
+            "20": {
+              "marker_fraction": 0.5485092474489796,
+              "plain_hidden_fraction": 0.24954161352040816,
+              "ref_plain_fraction": 0.46639827806122447,
+              "hidden_missed_marker_fraction": 0.5450548651987501,
+              "ref_change_within_marker_fraction": 0.850301576920282,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.45494513480124993
+            }
+          },
+          "rms_rgb255": {
+            "marker": 183.35953086996176,
+            "plain_hidden": 14.689438918915556,
+            "ref_plain": 27.75665086421864
+          },
+          "maxabs_rgb255": {
+            "marker": 255.0,
+            "plain_hidden": 160.0,
+            "ref_plain": 64.0
+          }
+        },
+        "right_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "5": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "10": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "20": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            }
+          },
+          "rms_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          },
+          "maxabs_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          }
+        }
+      },
+      "model_input": {
+        "base_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.14847735969387754,
+              "plain_hidden_fraction": 0.1434749681122449,
+              "ref_plain_fraction": 0.14016661352040816,
+              "hidden_missed_marker_fraction": 0.03369127516778524,
+              "ref_change_within_marker_fraction": 0.9440268456375839,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9663087248322147
+            },
+            "5": {
+              "marker_fraction": 0.1453483737244898,
+              "plain_hidden_fraction": 0.13498485331632654,
+              "ref_plain_fraction": 0.12820870535714285,
+              "hidden_missed_marker_fraction": 0.07130124777183601,
+              "ref_change_within_marker_fraction": 0.8820787056081174,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.928698752228164
+            },
+            "10": {
+              "marker_fraction": 0.14457110969387754,
+              "plain_hidden_fraction": 0.11559311224489796,
+              "ref_plain_fraction": 0.11866230867346939,
+              "hidden_missed_marker_fraction": 0.2004411359250069,
+              "ref_change_within_marker_fraction": 0.8207885304659498,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.7995588640749931
+            },
+            "20": {
+              "marker_fraction": 0.14343510841836735,
+              "plain_hidden_fraction": 0.028778698979591837,
+              "ref_plain_fraction": 0.09482621173469388,
+              "hidden_missed_marker_fraction": 0.799360844796443,
+              "ref_change_within_marker_fraction": 0.6611087953313881,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.20063915520355705
+            }
+          },
+          "rms_rgb255": {
+            "marker": 79.31831884853679,
+            "plain_hidden": 6.070180395331717,
+            "ref_plain": 10.598662813530423
+          },
+          "maxabs_rgb255": {
+            "marker": 243.00001591444016,
+            "plain_hidden": 144.00000661611557,
+            "ref_plain": 59.99999642372131
+          }
+        },
+        "left_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.5541892538265306,
+              "plain_hidden_fraction": 0.5493064413265306,
+              "ref_plain_fraction": 0.5510204081632653,
+              "hidden_missed_marker_fraction": 0.008810731110871363,
+              "ref_change_within_marker_fraction": 0.9942820153198835,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9911892688891286
+            },
+            "5": {
+              "marker_fraction": 0.5531130420918368,
+              "plain_hidden_fraction": 0.5335419323979592,
+              "ref_plain_fraction": 0.5414939413265306,
+              "hidden_missed_marker_fraction": 0.035383562137426584,
+              "ref_change_within_marker_fraction": 0.9789932619896948,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9646164378625735
+            },
+            "10": {
+              "marker_fraction": 0.5520766900510204,
+              "plain_hidden_fraction": 0.4910514987244898,
+              "ref_plain_fraction": 0.5256297831632653,
+              "hidden_missed_marker_fraction": 0.1105375257210931,
+              "ref_change_within_marker_fraction": 0.9520955922168874,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8894624742789069
+            },
+            "20": {
+              "marker_fraction": 0.5485092474489796,
+              "plain_hidden_fraction": 0.24954161352040816,
+              "ref_plain_fraction": 0.46639827806122447,
+              "hidden_missed_marker_fraction": 0.5450548651987501,
+              "ref_change_within_marker_fraction": 0.850301576920282,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.45494513480124993
+            }
+          },
+          "rms_rgb255": {
+            "marker": 183.3595356771547,
+            "plain_hidden": 14.68944476602372,
+            "ref_plain": 27.75665413829092
+          },
+          "maxabs_rgb255": {
+            "marker": 255.0,
+            "plain_hidden": 160.00000566244125,
+            "ref_plain": 64.00001138448715
+          }
+        },
+        "right_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "5": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "10": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "20": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            }
+          },
+          "rms_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          },
+          "maxabs_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          }
+        }
+      },
+      "model_specs": {
+        "plain": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9529412984848022,
+            "normalized_tensor_sha256": "104cedc469e9126962c2fb79fc927556b119694a41f457d6e311524d77c5e3eb"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.7333334684371948,
+            "normalized_tensor_sha256": "7e387ca576d467a8112ec208a2f9e3914c3b064eb29068b7e5e1504f588f0303"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "refcloth": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9529412984848022,
+            "normalized_tensor_sha256": "c7aa8fee9c1deebfc8262f8cc8aca110a72fbef2d2cc7df619f64782fad274c8"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 1.0,
+            "normalized_tensor_sha256": "8eadf02f4fe91d391f85b6cae62859469439287a3a69d1ea20682504cf5ae50f"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "marker_a": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9529412984848022,
+            "normalized_tensor_sha256": "e36f5a5830b186b852c203d5d9d2680caecd34df130b93a89badc733b0f245b6"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 1.0,
+            "normalized_tensor_sha256": "438c29e15afad7726821d811c09ac7a07c582ff8a269a21b315949e6e6b54420"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "marker_b": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9529412984848022,
+            "normalized_tensor_sha256": "076f35b455095985070e2dea7298ff787e3106beae1d94e3441f93d93581f480"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 1.0,
+            "normalized_tensor_sha256": "a3fdffa8c713669e1318aa90813ec5251ceb4a20e84be4746af803fc6a280563"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "hidden": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9529412984848022,
+            "normalized_tensor_sha256": "2e7bf159d6f2f119db29b5f120632ff76f5c73c2da529c1ffde41becc3537e90"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9137256145477295,
+            "normalized_tensor_sha256": "5ed938bae231918982c6a20d224dd638757bd4b75446e9f1a78e381b4e0aa15c"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        }
+      }
+    },
+    {
+      "task": 4,
+      "initial": 10,
+      "cloth_world": [
+        -0.05299184497212242,
+        -0.028908977966452747,
+        0.005
+      ],
+      "simulator_state_sha256": "1ede9d710a8147f46bdd7032e417feabf0ffc735ff0b5227554d1ec118f37bec",
+      "hidden_marker_maxdiff": 0,
+      "aba_exact": true,
+      "native": {
+        "main": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.142791748046875,
+              "plain_hidden_fraction": 0.1425323486328125,
+              "ref_plain_fraction": 0.1392059326171875,
+              "hidden_missed_marker_fraction": 0.0018166274845052362,
+              "ref_change_within_marker_fraction": 0.9748877965377217,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9981833725154947
+            },
+            "5": {
+              "marker_fraction": 0.142791748046875,
+              "plain_hidden_fraction": 0.136444091796875,
+              "ref_plain_fraction": 0.1299285888671875,
+              "hidden_missed_marker_fraction": 0.04445394315024578,
+              "ref_change_within_marker_fraction": 0.9099166488565933,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9555460568497542
+            },
+            "10": {
+              "marker_fraction": 0.142791748046875,
+              "plain_hidden_fraction": 0.122467041015625,
+              "ref_plain_fraction": 0.1214447021484375,
+              "hidden_missed_marker_fraction": 0.1423381064329985,
+              "ref_change_within_marker_fraction": 0.8505022440692456,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8576618935670015
+            },
+            "20": {
+              "marker_fraction": 0.142791748046875,
+              "plain_hidden_fraction": 0.03216552734375,
+              "ref_plain_fraction": 0.09857177734375,
+              "hidden_missed_marker_fraction": 0.7747381919213507,
+              "ref_change_within_marker_fraction": 0.6903184441119897,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.2252618080786493
+            }
+          },
+          "rms_rgb255": {
+            "marker": 81.14964784431005,
+            "plain_hidden": 6.605616204864126,
+            "ref_plain": 11.071652177231442
+          },
+          "maxabs_rgb255": {
+            "marker": 243.0,
+            "plain_hidden": 168.0,
+            "ref_plain": 60.0
+          }
+        },
+        "wrist": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.5568084716796875,
+              "plain_hidden_fraction": 0.5562591552734375,
+              "ref_plain_fraction": 0.5562744140625,
+              "hidden_missed_marker_fraction": 0.000986544627442383,
+              "ref_change_within_marker_fraction": 0.9990408593899865,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9990134553725576
+            },
+            "5": {
+              "marker_fraction": 0.5568084716796875,
+              "plain_hidden_fraction": 0.5430145263671875,
+              "ref_plain_fraction": 0.5521240234375,
+              "hidden_missed_marker_fraction": 0.024773231755775397,
+              "ref_change_within_marker_fraction": 0.9915869666493108,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9752267682442246
+            },
+            "10": {
+              "marker_fraction": 0.5568084716796875,
+              "plain_hidden_fraction": 0.4955291748046875,
+              "ref_plain_fraction": 0.53729248046875,
+              "hidden_missed_marker_fraction": 0.11005453399468362,
+              "ref_change_within_marker_fraction": 0.9649502617083664,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8899454660053164
+            },
+            "20": {
+              "marker_fraction": 0.5568084716796875,
+              "plain_hidden_fraction": 0.249267578125,
+              "ref_plain_fraction": 0.4777069091796875,
+              "hidden_missed_marker_fraction": 0.5523279712805897,
+              "ref_change_within_marker_fraction": 0.8579375736482968,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.44767202871941025
+            }
+          },
+          "rms_rgb255": {
+            "marker": 186.25450956957155,
+            "plain_hidden": 15.658097920146242,
+            "ref_plain": 28.485346992552728
+          },
+          "maxabs_rgb255": {
+            "marker": 255.0,
+            "plain_hidden": 200.0,
+            "ref_plain": 64.0
+          }
+        }
+      },
+      "input_transform": {
+        "base_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.15086894132653061,
+              "plain_hidden_fraction": 0.14777981505102042,
+              "ref_plain_fraction": 0.14449139030612246,
+              "hidden_missed_marker_fraction": 0.02047556142668428,
+              "ref_change_within_marker_fraction": 0.9577278731836195,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9795244385733157
+            },
+            "5": {
+              "marker_fraction": 0.15021125637755103,
+              "plain_hidden_fraction": 0.13649952168367346,
+              "ref_plain_fraction": 0.1310985331632653,
+              "hidden_missed_marker_fraction": 0.09128300384768476,
+              "ref_change_within_marker_fraction": 0.8727610455088232,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9087169961523153
+            },
+            "10": {
+              "marker_fraction": 0.1493343431122449,
+              "plain_hidden_fraction": 0.12119339923469388,
+              "ref_plain_fraction": 0.12115353954081633,
+              "hidden_missed_marker_fraction": 0.18844254637661817,
+              "ref_change_within_marker_fraction": 0.8112905378353129,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8115574536233818
+            },
+            "20": {
+              "marker_fraction": 0.1482780612244898,
+              "plain_hidden_fraction": 0.030831473214285716,
+              "ref_plain_fraction": 0.09771603954081633,
+              "hidden_missed_marker_fraction": 0.7920698924731183,
+              "ref_change_within_marker_fraction": 0.6590053763440861,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.2079301075268817
+            }
+          },
+          "rms_rgb255": {
+            "marker": 80.7713391876253,
+            "plain_hidden": 6.154518861197855,
+            "ref_plain": 10.771374445282097
+          },
+          "maxabs_rgb255": {
+            "marker": 242.0,
+            "plain_hidden": 127.0,
+            "ref_plain": 60.0
+          }
+        },
+        "left_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.5699736926020408,
+              "plain_hidden_fraction": 0.5637555803571429,
+              "ref_plain_fraction": 0.5658482142857143,
+              "hidden_missed_marker_fraction": 0.010909472359173398,
+              "ref_change_within_marker_fraction": 0.9927619846847792,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9890905276408266
+            },
+            "5": {
+              "marker_fraction": 0.5684390943877551,
+              "plain_hidden_fraction": 0.5476323341836735,
+              "ref_plain_fraction": 0.5557238520408163,
+              "hidden_missed_marker_fraction": 0.03660332375008765,
+              "ref_change_within_marker_fraction": 0.9776313021527242,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9633966762499123
+            },
+            "10": {
+              "marker_fraction": 0.5666653380102041,
+              "plain_hidden_fraction": 0.5002989477040817,
+              "ref_plain_fraction": 0.5385443239795918,
+              "hidden_missed_marker_fraction": 0.11711743396757289,
+              "ref_change_within_marker_fraction": 0.9503745647662927,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8828825660324271
+            },
+            "20": {
+              "marker_fraction": 0.5627790178571429,
+              "plain_hidden_fraction": 0.24272560586734693,
+              "ref_plain_fraction": 0.47634327168367346,
+              "hidden_missed_marker_fraction": 0.568701749415681,
+              "ref_change_within_marker_fraction": 0.8464126354557688,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.431298250584319
+            }
+          },
+          "rms_rgb255": {
+            "marker": 185.87521664146482,
+            "plain_hidden": 14.80318593687868,
+            "ref_plain": 28.24106790004946
+          },
+          "maxabs_rgb255": {
+            "marker": 255.0,
+            "plain_hidden": 186.0,
+            "ref_plain": 64.0
+          }
+        },
+        "right_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "5": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "10": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "20": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            }
+          },
+          "rms_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          },
+          "maxabs_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          }
+        }
+      },
+      "model_input": {
+        "base_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.15086894132653061,
+              "plain_hidden_fraction": 0.14777981505102042,
+              "ref_plain_fraction": 0.14449139030612246,
+              "hidden_missed_marker_fraction": 0.02047556142668428,
+              "ref_change_within_marker_fraction": 0.9577278731836195,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9795244385733157
+            },
+            "5": {
+              "marker_fraction": 0.15021125637755103,
+              "plain_hidden_fraction": 0.13649952168367346,
+              "ref_plain_fraction": 0.1310985331632653,
+              "hidden_missed_marker_fraction": 0.09128300384768476,
+              "ref_change_within_marker_fraction": 0.8727610455088232,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9087169961523153
+            },
+            "10": {
+              "marker_fraction": 0.1493343431122449,
+              "plain_hidden_fraction": 0.12119339923469388,
+              "ref_plain_fraction": 0.12115353954081633,
+              "hidden_missed_marker_fraction": 0.18844254637661817,
+              "ref_change_within_marker_fraction": 0.8112905378353129,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8115574536233818
+            },
+            "20": {
+              "marker_fraction": 0.1482780612244898,
+              "plain_hidden_fraction": 0.030831473214285716,
+              "ref_plain_fraction": 0.09771603954081633,
+              "hidden_missed_marker_fraction": 0.7920698924731183,
+              "ref_change_within_marker_fraction": 0.6590053763440861,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.2079301075268817
+            }
+          },
+          "rms_rgb255": {
+            "marker": 80.77134533033578,
+            "plain_hidden": 6.154518734514441,
+            "ref_plain": 10.771375217747213
+          },
+          "maxabs_rgb255": {
+            "marker": 242.0000159740448,
+            "plain_hidden": 127.00000762939453,
+            "ref_plain": 59.99999642372131
+          }
+        },
+        "left_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.5699736926020408,
+              "plain_hidden_fraction": 0.5637555803571429,
+              "ref_plain_fraction": 0.5658482142857143,
+              "hidden_missed_marker_fraction": 0.010909472359173398,
+              "ref_change_within_marker_fraction": 0.9927619846847792,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9890905276408266
+            },
+            "5": {
+              "marker_fraction": 0.5684390943877551,
+              "plain_hidden_fraction": 0.5476323341836735,
+              "ref_plain_fraction": 0.5557238520408163,
+              "hidden_missed_marker_fraction": 0.03660332375008765,
+              "ref_change_within_marker_fraction": 0.9776313021527242,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9633966762499123
+            },
+            "10": {
+              "marker_fraction": 0.5666653380102041,
+              "plain_hidden_fraction": 0.5002989477040817,
+              "ref_plain_fraction": 0.5385443239795918,
+              "hidden_missed_marker_fraction": 0.11711743396757289,
+              "ref_change_within_marker_fraction": 0.9503745647662927,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8828825660324271
+            },
+            "20": {
+              "marker_fraction": 0.5627790178571429,
+              "plain_hidden_fraction": 0.24272560586734693,
+              "ref_plain_fraction": 0.47634327168367346,
+              "hidden_missed_marker_fraction": 0.568701749415681,
+              "ref_change_within_marker_fraction": 0.8464126354557688,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.431298250584319
+            }
+          },
+          "rms_rgb255": {
+            "marker": 185.87522127841459,
+            "plain_hidden": 14.80319193240045,
+            "ref_plain": 28.241071208884463
+          },
+          "maxabs_rgb255": {
+            "marker": 255.0,
+            "plain_hidden": 186.0000041127205,
+            "ref_plain": 64.00001138448715
+          }
+        },
+        "right_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "5": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "10": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "20": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            }
+          },
+          "rms_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          },
+          "maxabs_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          }
+        }
+      },
+      "model_specs": {
+        "plain": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9450981616973877,
+            "normalized_tensor_sha256": "aec4e4f4ecf554e51d80d6b286ed8df5e479c4ab3c3c903baecd11a9a37b849a"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.7176471948623657,
+            "normalized_tensor_sha256": "09a0279bbc55474eb2ef96c8f1b1f829097273aa852892aefbd601628e74eb10"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "refcloth": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9450981616973877,
+            "normalized_tensor_sha256": "0ba8e15d7ac7220d9bc5c8e126061cb838cd8832ba466419a50592d905feb766"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 1.0,
+            "normalized_tensor_sha256": "a21e1fd5e79c9ac7512400385e8684a0036166d9e600109a9281ddc16e6e016e"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "marker_a": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9450981616973877,
+            "normalized_tensor_sha256": "d7f2d621cb4274d67daeb8660699450545700a5a0ce8c2332a3ff72849ff7fba"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 1.0,
+            "normalized_tensor_sha256": "c3b0faf858d80b4f6ccc2262990210b1c69d5ff5d3857c5bc1659c505dae4cc2"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "marker_b": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9450981616973877,
+            "normalized_tensor_sha256": "2c5571707c08bf874e76bd15982818431fb178e562a6cdcaf911ba5f600e8290"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 1.0,
+            "normalized_tensor_sha256": "116fb2a0e1cd2c808b4059dd63dd7f4437c33318afe865fa1fdc057f3bcbf7b3"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "hidden": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9450981616973877,
+            "normalized_tensor_sha256": "c4ad6e30a6591005c7ff95f72c3f826a443978fe7d436996a374d73938119409"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9137256145477295,
+            "normalized_tensor_sha256": "104dff558518a22037f734dc085bc4da0e87761fb2f04ff94bb1cf8e20f270a3"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        }
+      }
+    },
+    {
+      "task": 4,
+      "initial": 11,
+      "cloth_world": [
+        -0.05513820534149802,
+        -0.03154135935819172,
+        0.005
+      ],
+      "simulator_state_sha256": "d78e62a3bdbe4a4f60d7467d616524ace415227926ad83aa266383ec432b5827",
+      "hidden_marker_maxdiff": 0,
+      "aba_exact": true,
+      "native": {
+        "main": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.141204833984375,
+              "plain_hidden_fraction": 0.141021728515625,
+              "ref_plain_fraction": 0.1374969482421875,
+              "hidden_missed_marker_fraction": 0.0012967365463583316,
+              "ref_change_within_marker_fraction": 0.9737410849362438,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9987032634536417
+            },
+            "5": {
+              "marker_fraction": 0.141204833984375,
+              "plain_hidden_fraction": 0.134490966796875,
+              "ref_plain_fraction": 0.1281280517578125,
+              "hidden_missed_marker_fraction": 0.04754700669980549,
+              "ref_change_within_marker_fraction": 0.9073913983142425,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9524529933001945
+            },
+            "10": {
+              "marker_fraction": 0.141204833984375,
+              "plain_hidden_fraction": 0.1206207275390625,
+              "ref_plain_fraction": 0.120086669921875,
+              "hidden_missed_marker_fraction": 0.1457748000864491,
+              "ref_change_within_marker_fraction": 0.8504430516533391,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.854225199913551
+            },
+            "20": {
+              "marker_fraction": 0.141204833984375,
+              "plain_hidden_fraction": 0.0318603515625,
+              "ref_plain_fraction": 0.0973663330078125,
+              "hidden_missed_marker_fraction": 0.7743678409336503,
+              "ref_change_within_marker_fraction": 0.6895396585260428,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.22563215906634967
+            }
+          },
+          "rms_rgb255": {
+            "marker": 80.62746354314214,
+            "plain_hidden": 6.730577948790103,
+            "ref_plain": 11.045968384974174
+          },
+          "maxabs_rgb255": {
+            "marker": 243.0,
+            "plain_hidden": 168.0,
+            "ref_plain": 60.0
+          }
+        },
+        "wrist": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.559051513671875,
+              "plain_hidden_fraction": 0.5580596923828125,
+              "ref_plain_fraction": 0.5585479736328125,
+              "hidden_missed_marker_fraction": 0.0017741143075495388,
+              "ref_change_within_marker_fraction": 0.9990992958130902,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9982258856924504
+            },
+            "5": {
+              "marker_fraction": 0.559051513671875,
+              "plain_hidden_fraction": 0.546173095703125,
+              "ref_plain_fraction": 0.55389404296875,
+              "hidden_missed_marker_fraction": 0.02303619193187401,
+              "ref_change_within_marker_fraction": 0.9907746056007424,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.976963808068126
+            },
+            "10": {
+              "marker_fraction": 0.559051513671875,
+              "plain_hidden_fraction": 0.501220703125,
+              "ref_plain_fraction": 0.539031982421875,
+              "hidden_missed_marker_fraction": 0.1034445111632731,
+              "ref_change_within_marker_fraction": 0.9641901850537693,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8965554888367269
+            },
+            "20": {
+              "marker_fraction": 0.559051513671875,
+              "plain_hidden_fraction": 0.2519378662109375,
+              "ref_plain_fraction": 0.48095703125,
+              "hidden_missed_marker_fraction": 0.5493476718161472,
+              "ref_change_within_marker_fraction": 0.8603089688301763,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.4506523281838528
+            }
+          },
+          "rms_rgb255": {
+            "marker": 186.64623433867075,
+            "plain_hidden": 15.770560110623828,
+            "ref_plain": 28.62618816191986
+          },
+          "maxabs_rgb255": {
+            "marker": 255.0,
+            "plain_hidden": 200.0,
+            "ref_plain": 64.0
+          }
+        }
+      },
+      "input_transform": {
+        "base_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.14899553571428573,
+              "plain_hidden_fraction": 0.14644451530612246,
+              "ref_plain_fraction": 0.14289700255102042,
+              "hidden_missed_marker_fraction": 0.017121455323702513,
+              "ref_change_within_marker_fraction": 0.9590690208667737,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9828785446762975
+            },
+            "5": {
+              "marker_fraction": 0.14839764030612246,
+              "plain_hidden_fraction": 0.13528380102040816,
+              "ref_plain_fraction": 0.13000239158163265,
+              "hidden_missed_marker_fraction": 0.08836959441310771,
+              "ref_change_within_marker_fraction": 0.87604082728982,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9116304055868923
+            },
+            "10": {
+              "marker_fraction": 0.14748086734693877,
+              "plain_hidden_fraction": 0.11874202806122448,
+              "ref_plain_fraction": 0.12027662627551021,
+              "hidden_missed_marker_fraction": 0.19486486486486487,
+              "ref_change_within_marker_fraction": 0.8155405405405406,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8051351351351351
+            },
+            "20": {
+              "marker_fraction": 0.14622528698979592,
+              "plain_hidden_fraction": 0.029894770408163265,
+              "ref_plain_fraction": 0.0956234056122449,
+              "hidden_missed_marker_fraction": 0.79555676707101,
+              "ref_change_within_marker_fraction": 0.6539457543955295,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.20444323292899005
+            }
+          },
+          "rms_rgb255": {
+            "marker": 80.15651488134351,
+            "plain_hidden": 6.204047695002896,
+            "ref_plain": 10.733151792761648
+          },
+          "maxabs_rgb255": {
+            "marker": 242.0,
+            "plain_hidden": 135.0,
+            "ref_plain": 60.0
+          }
+        },
+        "left_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.5725247130102041,
+              "plain_hidden_fraction": 0.5663066007653061,
+              "ref_plain_fraction": 0.5683195153061225,
+              "hidden_missed_marker_fraction": 0.010860862603125979,
+              "ref_change_within_marker_fraction": 0.9926549935600655,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.989139137396874
+            },
+            "5": {
+              "marker_fraction": 0.5710299744897959,
+              "plain_hidden_fraction": 0.5514987244897959,
+              "ref_plain_fraction": 0.5573979591836735,
+              "hidden_missed_marker_fraction": 0.034203546000279215,
+              "ref_change_within_marker_fraction": 0.9761273209549072,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9657964539997208
+            },
+            "10": {
+              "marker_fraction": 0.5692960778061225,
+              "plain_hidden_fraction": 0.5068160076530612,
+              "ref_plain_fraction": 0.5406768176020408,
+              "hidden_missed_marker_fraction": 0.10974969368107824,
+              "ref_change_within_marker_fraction": 0.9497286889550148,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8902503063189218
+            },
+            "20": {
+              "marker_fraction": 0.5652702487244898,
+              "plain_hidden_fraction": 0.2450374681122449,
+              "ref_plain_fraction": 0.48098692602040816,
+              "hidden_missed_marker_fraction": 0.5665127102210626,
+              "ref_change_within_marker_fraction": 0.8508972957726616,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.43348728977893736
+            }
+          },
+          "rms_rgb255": {
+            "marker": 186.24931343111254,
+            "plain_hidden": 14.839182299364595,
+            "ref_plain": 28.378222189422434
+          },
+          "maxabs_rgb255": {
+            "marker": 255.0,
+            "plain_hidden": 189.0,
+            "ref_plain": 64.0
+          }
+        },
+        "right_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "5": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "10": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "20": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            }
+          },
+          "rms_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          },
+          "maxabs_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          }
+        }
+      },
+      "model_input": {
+        "base_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.14899553571428573,
+              "plain_hidden_fraction": 0.14644451530612246,
+              "ref_plain_fraction": 0.14289700255102042,
+              "hidden_missed_marker_fraction": 0.017121455323702513,
+              "ref_change_within_marker_fraction": 0.9590690208667737,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9828785446762975
+            },
+            "5": {
+              "marker_fraction": 0.14839764030612246,
+              "plain_hidden_fraction": 0.13528380102040816,
+              "ref_plain_fraction": 0.13000239158163265,
+              "hidden_missed_marker_fraction": 0.08836959441310771,
+              "ref_change_within_marker_fraction": 0.87604082728982,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9116304055868923
+            },
+            "10": {
+              "marker_fraction": 0.14748086734693877,
+              "plain_hidden_fraction": 0.11874202806122448,
+              "ref_plain_fraction": 0.12027662627551021,
+              "hidden_missed_marker_fraction": 0.19486486486486487,
+              "ref_change_within_marker_fraction": 0.8155405405405406,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8051351351351351
+            },
+            "20": {
+              "marker_fraction": 0.14622528698979592,
+              "plain_hidden_fraction": 0.029894770408163265,
+              "ref_plain_fraction": 0.0956234056122449,
+              "hidden_missed_marker_fraction": 0.79555676707101,
+              "ref_change_within_marker_fraction": 0.6539457543955295,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.20444323292899005
+            }
+          },
+          "rms_rgb255": {
+            "marker": 80.15652094881375,
+            "plain_hidden": 6.204047573906955,
+            "ref_plain": 10.733152559089481
+          },
+          "maxabs_rgb255": {
+            "marker": 242.0000159740448,
+            "plain_hidden": 135.00000715255737,
+            "ref_plain": 59.99999642372131
+          }
+        },
+        "left_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.5725247130102041,
+              "plain_hidden_fraction": 0.5663066007653061,
+              "ref_plain_fraction": 0.5683195153061225,
+              "hidden_missed_marker_fraction": 0.010860862603125979,
+              "ref_change_within_marker_fraction": 0.9926549935600655,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.989139137396874
+            },
+            "5": {
+              "marker_fraction": 0.5710299744897959,
+              "plain_hidden_fraction": 0.5514987244897959,
+              "ref_plain_fraction": 0.5573979591836735,
+              "hidden_missed_marker_fraction": 0.034203546000279215,
+              "ref_change_within_marker_fraction": 0.9761273209549072,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9657964539997208
+            },
+            "10": {
+              "marker_fraction": 0.5692960778061225,
+              "plain_hidden_fraction": 0.5068160076530612,
+              "ref_plain_fraction": 0.5406768176020408,
+              "hidden_missed_marker_fraction": 0.10974969368107824,
+              "ref_change_within_marker_fraction": 0.9497286889550148,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8902503063189218
+            },
+            "20": {
+              "marker_fraction": 0.5652702487244898,
+              "plain_hidden_fraction": 0.2450374681122449,
+              "ref_plain_fraction": 0.48098692602040816,
+              "hidden_missed_marker_fraction": 0.5665127102210626,
+              "ref_change_within_marker_fraction": 0.8508972957726616,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.43348728977893736
+            }
+          },
+          "rms_rgb255": {
+            "marker": 186.2493181363734,
+            "plain_hidden": 14.839188326617212,
+            "ref_plain": 28.378225494263244
+          },
+          "maxabs_rgb255": {
+            "marker": 255.0,
+            "plain_hidden": 189.00001913309097,
+            "ref_plain": 64.00001138448715
+          }
+        },
+        "right_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "5": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "10": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "20": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            }
+          },
+          "rms_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          },
+          "maxabs_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          }
+        }
+      },
+      "model_specs": {
+        "plain": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9607844352722168,
+            "normalized_tensor_sha256": "67f179e91e97764ed41837b77f717c67a8305a32cdf53329c7654bb6d9633856"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.6941177845001221,
+            "normalized_tensor_sha256": "ac5f599e1a655c26b83b14b059e7590381d144aa7fa6ef0ec90749449f47c830"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "refcloth": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9607844352722168,
+            "normalized_tensor_sha256": "ba3bfc2db110fc485b024e687c4896823ab804e8052bfa3d1f352f339717a521"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 1.0,
+            "normalized_tensor_sha256": "96625c2f2e825cfb2608c993d25aaca675e1037f849c50343bc20791b289b4e6"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "marker_a": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9607844352722168,
+            "normalized_tensor_sha256": "7345115602b8f2e10454f672449d151789ce2f14111c39cb83ab830f0b7ea308"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 1.0,
+            "normalized_tensor_sha256": "6d295d587aa091abe05e7ce0e88e47f21fd05c1e926e2ce4010dc42fcdf0e2d7"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "marker_b": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9607844352722168,
+            "normalized_tensor_sha256": "19f4d883a34d2c669e75b635fd5e094a42f800f6160406e31455db80a4203acf"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 1.0,
+            "normalized_tensor_sha256": "c2541bf67ed4bbb8a91b8d134a6465e1d1b869e15ed7a1b0e4056bb31c8d658f"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "hidden": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9607844352722168,
+            "normalized_tensor_sha256": "8c9b4c37ac9561dc12f85ae3093ad7db1463c1b30503f86893a39f14b71e598f"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9450981616973877,
+            "normalized_tensor_sha256": "37c2f4cbf7b95cddd22a16d844b9107e27e31d5836286fdaa0602b471699446a"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        }
+      }
+    },
+    {
+      "task": 8,
+      "initial": 10,
+      "cloth_world": [
+        -0.045935207310784626,
+        -0.030780819121866684,
+        0.005
+      ],
+      "simulator_state_sha256": "a1bb4f5c5b4c0225d28a990a9f3d5aa508d81182f4d930bd264cfeafe0901d66",
+      "hidden_marker_maxdiff": 0,
+      "aba_exact": true,
+      "native": {
+        "main": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.136566162109375,
+              "plain_hidden_fraction": 0.1363372802734375,
+              "ref_plain_fraction": 0.1323394775390625,
+              "hidden_missed_marker_fraction": 0.0016759776536312849,
+              "ref_change_within_marker_fraction": 0.969050279329609,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9983240223463687
+            },
+            "5": {
+              "marker_fraction": 0.136566162109375,
+              "plain_hidden_fraction": 0.129119873046875,
+              "ref_plain_fraction": 0.1228485107421875,
+              "hidden_missed_marker_fraction": 0.05452513966480447,
+              "ref_change_within_marker_fraction": 0.8995530726256983,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9454748603351956
+            },
+            "10": {
+              "marker_fraction": 0.136566162109375,
+              "plain_hidden_fraction": 0.114471435546875,
+              "ref_plain_fraction": 0.1142730712890625,
+              "hidden_missed_marker_fraction": 0.1617877094972067,
+              "ref_change_within_marker_fraction": 0.8367597765363128,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8382122905027933
+            },
+            "20": {
+              "marker_fraction": 0.136566162109375,
+              "plain_hidden_fraction": 0.0294952392578125,
+              "ref_plain_fraction": 0.092254638671875,
+              "hidden_missed_marker_fraction": 0.784022346368715,
+              "ref_change_within_marker_fraction": 0.6755307262569833,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.2159776536312849
+            }
+          },
+          "rms_rgb255": {
+            "marker": 79.15208292164496,
+            "plain_hidden": 6.405784329492882,
+            "ref_plain": 10.761536551316103
+          },
+          "maxabs_rgb255": {
+            "marker": 243.0,
+            "plain_hidden": 166.0,
+            "ref_plain": 60.0
+          }
+        },
+        "wrist": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.5030364990234375,
+              "plain_hidden_fraction": 0.5027923583984375,
+              "ref_plain_fraction": 0.502471923828125,
+              "hidden_missed_marker_fraction": 0.000485333818667152,
+              "ref_change_within_marker_fraction": 0.9988776655443322,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9995146661813329
+            },
+            "5": {
+              "marker_fraction": 0.5030364990234375,
+              "plain_hidden_fraction": 0.49188232421875,
+              "ref_plain_fraction": 0.498046875,
+              "hidden_missed_marker_fraction": 0.022173688840355508,
+              "ref_change_within_marker_fraction": 0.99008099008099,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9778263111596445
+            },
+            "10": {
+              "marker_fraction": 0.5030364990234375,
+              "plain_hidden_fraction": 0.452178955078125,
+              "ref_plain_fraction": 0.4827880859375,
+              "hidden_missed_marker_fraction": 0.1011011011011011,
+              "ref_change_within_marker_fraction": 0.9597476264142931,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8988988988988988
+            },
+            "20": {
+              "marker_fraction": 0.5030364990234375,
+              "plain_hidden_fraction": 0.233062744140625,
+              "ref_plain_fraction": 0.4296417236328125,
+              "hidden_missed_marker_fraction": 0.53668820335487,
+              "ref_change_within_marker_fraction": 0.8540965207631874,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.46331179664513
+            }
+          },
+          "rms_rgb255": {
+            "marker": 177.32421624020174,
+            "plain_hidden": 14.364103128965075,
+            "ref_plain": 26.65771900107912
+          },
+          "maxabs_rgb255": {
+            "marker": 255.0,
+            "plain_hidden": 180.0,
+            "ref_plain": 64.0
+          }
+        }
+      },
+      "input_transform": {
+        "base_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.1433155293367347,
+              "plain_hidden_fraction": 0.14024633290816327,
+              "ref_plain_fraction": 0.13667889030612246,
+              "hidden_missed_marker_fraction": 0.021415658461966348,
+              "ref_change_within_marker_fraction": 0.9536921151439299,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9785843415380336
+            },
+            "5": {
+              "marker_fraction": 0.14253826530612246,
+              "plain_hidden_fraction": 0.1302216198979592,
+              "ref_plain_fraction": 0.12390385841836735,
+              "hidden_missed_marker_fraction": 0.08640939597315436,
+              "ref_change_within_marker_fraction": 0.8692673378076062,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9135906040268457
+            },
+            "10": {
+              "marker_fraction": 0.1414421237244898,
+              "plain_hidden_fraction": 0.11312181122448979,
+              "ref_plain_fraction": 0.11411830357142858,
+              "hidden_missed_marker_fraction": 0.20022544737212908,
+              "ref_change_within_marker_fraction": 0.8068197830069044,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.7997745526278709
+            },
+            "20": {
+              "marker_fraction": 0.1402861926020408,
+              "plain_hidden_fraction": 0.028260522959183673,
+              "ref_plain_fraction": 0.09048150510204081,
+              "hidden_missed_marker_fraction": 0.7985509305299048,
+              "ref_change_within_marker_fraction": 0.6449779798266799,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.2014490694700952
+            }
+          },
+          "rms_rgb255": {
+            "marker": 78.73093349624435,
+            "plain_hidden": 5.878434844974948,
+            "ref_plain": 10.467512491584598
+          },
+          "maxabs_rgb255": {
+            "marker": 243.0,
+            "plain_hidden": 121.0,
+            "ref_plain": 60.0
+          }
+        },
+        "left_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.5156648596938775,
+              "plain_hidden_fraction": 0.5092075892857143,
+              "ref_plain_fraction": 0.5125358737244898,
+              "hidden_missed_marker_fraction": 0.012522223081085259,
+              "ref_change_within_marker_fraction": 0.9939321326428074,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9874777769189147
+            },
+            "5": {
+              "marker_fraction": 0.5145089285714286,
+              "plain_hidden_fraction": 0.4955556441326531,
+              "ref_plain_fraction": 0.5019730548469388,
+              "hidden_missed_marker_fraction": 0.03683762008057019,
+              "ref_change_within_marker_fraction": 0.9756352649519677,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9631623799194298
+            },
+            "10": {
+              "marker_fraction": 0.5132732780612245,
+              "plain_hidden_fraction": 0.4586854272959184,
+              "ref_plain_fraction": 0.4856704400510204,
+              "hidden_missed_marker_fraction": 0.10635241127591831,
+              "ref_change_within_marker_fraction": 0.9462219461054594,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8936475887240817
+            },
+            "20": {
+              "marker_fraction": 0.5092075892857143,
+              "plain_hidden_fraction": 0.22263632015306123,
+              "ref_plain_fraction": 0.4282924107142857,
+              "hidden_missed_marker_fraction": 0.5627788649706458,
+              "ref_change_within_marker_fraction": 0.8410958904109589,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.4372211350293542
+            }
+          },
+          "rms_rgb255": {
+            "marker": 176.8955470656092,
+            "plain_hidden": 13.54403858086398,
+            "ref_plain": 26.386138715744874
+          },
+          "maxabs_rgb255": {
+            "marker": 255.0,
+            "plain_hidden": 126.0,
+            "ref_plain": 64.0
+          }
+        },
+        "right_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "5": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "10": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "20": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            }
+          },
+          "rms_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          },
+          "maxabs_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          }
+        }
+      },
+      "model_input": {
+        "base_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.1433155293367347,
+              "plain_hidden_fraction": 0.14024633290816327,
+              "ref_plain_fraction": 0.13667889030612246,
+              "hidden_missed_marker_fraction": 0.021415658461966348,
+              "ref_change_within_marker_fraction": 0.9536921151439299,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9785843415380336
+            },
+            "5": {
+              "marker_fraction": 0.14253826530612246,
+              "plain_hidden_fraction": 0.1302216198979592,
+              "ref_plain_fraction": 0.12390385841836735,
+              "hidden_missed_marker_fraction": 0.08640939597315436,
+              "ref_change_within_marker_fraction": 0.8692673378076062,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9135906040268457
+            },
+            "10": {
+              "marker_fraction": 0.1414421237244898,
+              "plain_hidden_fraction": 0.11312181122448979,
+              "ref_plain_fraction": 0.11411830357142858,
+              "hidden_missed_marker_fraction": 0.20022544737212908,
+              "ref_change_within_marker_fraction": 0.8068197830069044,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.7997745526278709
+            },
+            "20": {
+              "marker_fraction": 0.1402861926020408,
+              "plain_hidden_fraction": 0.028260522959183673,
+              "ref_plain_fraction": 0.09048150510204081,
+              "hidden_missed_marker_fraction": 0.7985509305299048,
+              "ref_change_within_marker_fraction": 0.6449779798266799,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.2014490694700952
+            }
+          },
+          "rms_rgb255": {
+            "marker": 78.73093944106915,
+            "plain_hidden": 5.87843473760981,
+            "ref_plain": 10.467513200599146
+          },
+          "maxabs_rgb255": {
+            "marker": 243.00001591444016,
+            "plain_hidden": 121.0000079870224,
+            "ref_plain": 59.99999642372131
+          }
+        },
+        "left_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.5156648596938775,
+              "plain_hidden_fraction": 0.5092075892857143,
+              "ref_plain_fraction": 0.5125358737244898,
+              "hidden_missed_marker_fraction": 0.012522223081085259,
+              "ref_change_within_marker_fraction": 0.9939321326428074,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9874777769189147
+            },
+            "5": {
+              "marker_fraction": 0.5145089285714286,
+              "plain_hidden_fraction": 0.4955556441326531,
+              "ref_plain_fraction": 0.5019730548469388,
+              "hidden_missed_marker_fraction": 0.03683762008057019,
+              "ref_change_within_marker_fraction": 0.9756352649519677,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9631623799194298
+            },
+            "10": {
+              "marker_fraction": 0.5132732780612245,
+              "plain_hidden_fraction": 0.4586854272959184,
+              "ref_plain_fraction": 0.4856704400510204,
+              "hidden_missed_marker_fraction": 0.10635241127591831,
+              "ref_change_within_marker_fraction": 0.9462219461054594,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8936475887240817
+            },
+            "20": {
+              "marker_fraction": 0.5092075892857143,
+              "plain_hidden_fraction": 0.22263632015306123,
+              "ref_plain_fraction": 0.4282924107142857,
+              "hidden_missed_marker_fraction": 0.5627788649706458,
+              "ref_change_within_marker_fraction": 0.8410958904109589,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.4372211350293542
+            }
+          },
+          "rms_rgb255": {
+            "marker": 176.8955511357186,
+            "plain_hidden": 13.54404457282474,
+            "ref_plain": 26.386141892385144
+          },
+          "maxabs_rgb255": {
+            "marker": 255.0,
+            "plain_hidden": 126.00000768899918,
+            "ref_plain": 64.00001138448715
+          }
+        },
+        "right_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "5": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "10": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "20": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            }
+          },
+          "rms_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          },
+          "maxabs_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          }
+        }
+      },
+      "model_specs": {
+        "plain": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9529412984848022,
+            "normalized_tensor_sha256": "76d6046f8c64dd15aa4b8bc913a18af8e021cee5c5f8f391bada8f00ddbf3d8f"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9686275720596313,
+            "normalized_tensor_sha256": "342500df676b1df9143d6e47e82795cf57d87425d76f6a09533b52de910cff3b"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "refcloth": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9529412984848022,
+            "normalized_tensor_sha256": "6863c6107a3326b97a3618c3ff07f64def3c64bae8a46d5e342cdaab8a07a42f"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 1.0,
+            "normalized_tensor_sha256": "c4431d91435b6ff02a2545265cea44e941df504364a543aba332f4a286a54454"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "marker_a": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9529412984848022,
+            "normalized_tensor_sha256": "7d5fc911f7be7b2548699038333af45b0155da23d46739b881288a4851ba79ee"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 1.0,
+            "normalized_tensor_sha256": "cd1dd67cdb2ab202111cb809a5506f39eefa34caa736683a910b098c366b51fe"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "marker_b": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9529412984848022,
+            "normalized_tensor_sha256": "59a4a50e8399f4487e90f1a20b867fc186dc617891068d1b4f20162ec19ccc49"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 1.0,
+            "normalized_tensor_sha256": "839e6be1eb0487954897b16ca3a9ddf26a8088e271ca8884dadbc949cb1c9c11"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "hidden": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9529412984848022,
+            "normalized_tensor_sha256": "4c0cac72397c54ec06894db45d34eaf7207a30c1029fe629ed3bc4e4cd9a52d9"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9686275720596313,
+            "normalized_tensor_sha256": "a77e6c3360f4cd18160438db97e48e54082ec51339ec8845d8770ff2c8f22122"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        }
+      }
+    },
+    {
+      "task": 8,
+      "initial": 11,
+      "cloth_world": [
+        -0.0547250419583867,
+        -0.02850006216254681,
+        0.005
+      ],
+      "simulator_state_sha256": "38d7a9cc6ec0cf0dc47e8ced4f29add047c068013e190506dcfef107ce40cdcc",
+      "hidden_marker_maxdiff": 0,
+      "aba_exact": true,
+      "native": {
+        "main": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.1336669921875,
+              "plain_hidden_fraction": 0.13330078125,
+              "ref_plain_fraction": 0.1295166015625,
+              "hidden_missed_marker_fraction": 0.0027397260273972603,
+              "ref_change_within_marker_fraction": 0.9689497716894977,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9972602739726028
+            },
+            "5": {
+              "marker_fraction": 0.1336669921875,
+              "plain_hidden_fraction": 0.1242218017578125,
+              "ref_plain_fraction": 0.1198577880859375,
+              "hidden_missed_marker_fraction": 0.07066210045662101,
+              "ref_change_within_marker_fraction": 0.896689497716895,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.929337899543379
+            },
+            "10": {
+              "marker_fraction": 0.1336669921875,
+              "plain_hidden_fraction": 0.110504150390625,
+              "ref_plain_fraction": 0.111083984375,
+              "hidden_missed_marker_fraction": 0.17328767123287672,
+              "ref_change_within_marker_fraction": 0.8310502283105022,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8267123287671233
+            },
+            "20": {
+              "marker_fraction": 0.1336669921875,
+              "plain_hidden_fraction": 0.0281829833984375,
+              "ref_plain_fraction": 0.089385986328125,
+              "hidden_missed_marker_fraction": 0.7891552511415525,
+              "ref_change_within_marker_fraction": 0.6687214611872146,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.21084474885844748
+            }
+          },
+          "rms_rgb255": {
+            "marker": 77.86633892687102,
+            "plain_hidden": 6.26779124673359,
+            "ref_plain": 10.595299231453374
+          },
+          "maxabs_rgb255": {
+            "marker": 243.0,
+            "plain_hidden": 166.0,
+            "ref_plain": 60.0
+          }
+        },
+        "wrist": {
+          "shape": [
+            256,
+            256,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.5824127197265625,
+              "plain_hidden_fraction": 0.5818328857421875,
+              "ref_plain_fraction": 0.581695556640625,
+              "hidden_missed_marker_fraction": 0.0009955723230894182,
+              "ref_change_within_marker_fraction": 0.9987686342319684,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9990044276769106
+            },
+            "5": {
+              "marker_fraction": 0.5824127197265625,
+              "plain_hidden_fraction": 0.5692291259765625,
+              "ref_plain_fraction": 0.5773468017578125,
+              "hidden_missed_marker_fraction": 0.02263617071445414,
+              "ref_change_within_marker_fraction": 0.9913018418087978,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9773638292855459
+            },
+            "10": {
+              "marker_fraction": 0.5824127197265625,
+              "plain_hidden_fraction": 0.519073486328125,
+              "ref_plain_fraction": 0.5631866455078125,
+              "hidden_missed_marker_fraction": 0.10875317666168881,
+              "ref_change_within_marker_fraction": 0.9669889177080877,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8912468233383112
+            },
+            "20": {
+              "marker_fraction": 0.5824127197265625,
+              "plain_hidden_fraction": 0.2631683349609375,
+              "ref_plain_fraction": 0.501373291015625,
+              "hidden_missed_marker_fraction": 0.5481411616757054,
+              "ref_change_within_marker_fraction": 0.8608556682124237,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.4518588383242946
+            }
+          },
+          "rms_rgb255": {
+            "marker": 190.67552958521162,
+            "plain_hidden": 15.788808169700344,
+            "ref_plain": 29.15870464822975
+          },
+          "maxabs_rgb255": {
+            "marker": 255.0,
+            "plain_hidden": 196.0,
+            "ref_plain": 64.0
+          }
+        }
+      },
+      "input_transform": {
+        "base_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.14209980867346939,
+              "plain_hidden_fraction": 0.13659917091836735,
+              "ref_plain_fraction": 0.13438695790816327,
+              "hidden_missed_marker_fraction": 0.03870967741935484,
+              "ref_change_within_marker_fraction": 0.9457223001402525,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9612903225806452
+            },
+            "5": {
+              "marker_fraction": 0.1413624043367347,
+              "plain_hidden_fraction": 0.12629544005102042,
+              "ref_plain_fraction": 0.1214126275510204,
+              "hidden_missed_marker_fraction": 0.10658395601297053,
+              "ref_change_within_marker_fraction": 0.8588749471309742,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8934160439870295
+            },
+            "10": {
+              "marker_fraction": 0.13813376913265307,
+              "plain_hidden_fraction": 0.10919563137755102,
+              "ref_plain_fraction": 0.11150749362244898,
+              "hidden_missed_marker_fraction": 0.2094935795700476,
+              "ref_change_within_marker_fraction": 0.8072428221035925,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.7905064204299523
+            },
+            "20": {
+              "marker_fraction": 0.1368781887755102,
+              "plain_hidden_fraction": 0.02672592474489796,
+              "ref_plain_fraction": 0.08749202806122448,
+              "hidden_missed_marker_fraction": 0.8047466511357018,
+              "ref_change_within_marker_fraction": 0.6391962725684334,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.19525334886429818
+            }
+          },
+          "rms_rgb255": {
+            "marker": 77.3968487420916,
+            "plain_hidden": 5.752469037890404,
+            "ref_plain": 10.28957976514091
+          },
+          "maxabs_rgb255": {
+            "marker": 242.0,
+            "plain_hidden": 108.0,
+            "ref_plain": 60.0
+          }
+        },
+        "left_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.5948860012755102,
+              "plain_hidden_fraction": 0.5883091517857143,
+              "ref_plain_fraction": 0.5913783482142857,
+              "hidden_missed_marker_fraction": 0.011055646755335187,
+              "ref_change_within_marker_fraction": 0.9941036550638213,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9889443532446648
+            },
+            "5": {
+              "marker_fraction": 0.5936503507653061,
+              "plain_hidden_fraction": 0.5708306760204082,
+              "ref_plain_fraction": 0.5807955994897959,
+              "hidden_missed_marker_fraction": 0.038439587739617954,
+              "ref_change_within_marker_fraction": 0.9783462584348877,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.961560412260382
+            },
+            "10": {
+              "marker_fraction": 0.5923349808673469,
+              "plain_hidden_fraction": 0.5204878826530612,
+              "ref_plain_fraction": 0.5638751594387755,
+              "hidden_missed_marker_fraction": 0.12129470744591367,
+              "ref_change_within_marker_fraction": 0.9519531644291915,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8787052925540864
+            },
+            "20": {
+              "marker_fraction": 0.587890625,
+              "plain_hidden_fraction": 0.2540656887755102,
+              "ref_plain_fraction": 0.5008370535714286,
+              "hidden_missed_marker_fraction": 0.5678351074649128,
+              "ref_change_within_marker_fraction": 0.851922164214523,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.4321648925350871
+            }
+          },
+          "rms_rgb255": {
+            "marker": 190.33346587316828,
+            "plain_hidden": 14.953934722690086,
+            "ref_plain": 28.917565467735734
+          },
+          "maxabs_rgb255": {
+            "marker": 255.0,
+            "plain_hidden": 154.0,
+            "ref_plain": 64.0
+          }
+        },
+        "right_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "5": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "10": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "20": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            }
+          },
+          "rms_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          },
+          "maxabs_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          }
+        }
+      },
+      "model_input": {
+        "base_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.14209980867346939,
+              "plain_hidden_fraction": 0.13659917091836735,
+              "ref_plain_fraction": 0.13438695790816327,
+              "hidden_missed_marker_fraction": 0.03870967741935484,
+              "ref_change_within_marker_fraction": 0.9457223001402525,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9612903225806452
+            },
+            "5": {
+              "marker_fraction": 0.1413624043367347,
+              "plain_hidden_fraction": 0.12629544005102042,
+              "ref_plain_fraction": 0.1214126275510204,
+              "hidden_missed_marker_fraction": 0.10658395601297053,
+              "ref_change_within_marker_fraction": 0.8588749471309742,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8934160439870295
+            },
+            "10": {
+              "marker_fraction": 0.13813376913265307,
+              "plain_hidden_fraction": 0.10919563137755102,
+              "ref_plain_fraction": 0.11150749362244898,
+              "hidden_missed_marker_fraction": 0.2094935795700476,
+              "ref_change_within_marker_fraction": 0.8072428221035925,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.7905064204299523
+            },
+            "20": {
+              "marker_fraction": 0.1368781887755102,
+              "plain_hidden_fraction": 0.02672592474489796,
+              "ref_plain_fraction": 0.08749202806122448,
+              "hidden_missed_marker_fraction": 0.8047466511357018,
+              "ref_change_within_marker_fraction": 0.6391962725684334,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.19525334886429818
+            }
+          },
+          "rms_rgb255": {
+            "marker": 77.39685458020037,
+            "plain_hidden": 5.7524689220105945,
+            "ref_plain": 10.289580421401647
+          },
+          "maxabs_rgb255": {
+            "marker": 242.0000159740448,
+            "plain_hidden": 108.00000876188278,
+            "ref_plain": 59.99999642372131
+          }
+        },
+        "left_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.5948860012755102,
+              "plain_hidden_fraction": 0.5883091517857143,
+              "ref_plain_fraction": 0.5913783482142857,
+              "hidden_missed_marker_fraction": 0.011055646755335187,
+              "ref_change_within_marker_fraction": 0.9941036550638213,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.9889443532446648
+            },
+            "5": {
+              "marker_fraction": 0.5936503507653061,
+              "plain_hidden_fraction": 0.5708306760204082,
+              "ref_plain_fraction": 0.5807955994897959,
+              "hidden_missed_marker_fraction": 0.038439587739617954,
+              "ref_change_within_marker_fraction": 0.9783462584348877,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.961560412260382
+            },
+            "10": {
+              "marker_fraction": 0.5923349808673469,
+              "plain_hidden_fraction": 0.5204878826530612,
+              "ref_plain_fraction": 0.5638751594387755,
+              "hidden_missed_marker_fraction": 0.12129470744591367,
+              "ref_change_within_marker_fraction": 0.9519531644291915,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.8787052925540864
+            },
+            "20": {
+              "marker_fraction": 0.587890625,
+              "plain_hidden_fraction": 0.2540656887755102,
+              "ref_plain_fraction": 0.5008370535714286,
+              "hidden_missed_marker_fraction": 0.5678351074649128,
+              "ref_change_within_marker_fraction": 0.851922164214523,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": 0.4321648925350871
+            }
+          },
+          "rms_rgb255": {
+            "marker": 190.3334708540555,
+            "plain_hidden": 14.95394088352582,
+            "ref_plain": 28.917568804405636
+          },
+          "maxabs_rgb255": {
+            "marker": 255.0,
+            "plain_hidden": 154.00000602006912,
+            "ref_plain": 64.00001138448715
+          }
+        },
+        "right_wrist_0_rgb": {
+          "shape": [
+            224,
+            224,
+            3
+          ],
+          "thresholds": {
+            "1": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "5": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "10": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            },
+            "20": {
+              "marker_fraction": 0.0,
+              "plain_hidden_fraction": 0.0,
+              "ref_plain_fraction": 0.0,
+              "hidden_missed_marker_fraction": null,
+              "ref_change_within_marker_fraction": null,
+              "hidden_outside_marker_fraction": 0.0,
+              "marker_hidden_iou": null
+            }
+          },
+          "rms_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          },
+          "maxabs_rgb255": {
+            "marker": 0.0,
+            "plain_hidden": 0.0,
+            "ref_plain": 0.0
+          }
+        }
+      },
+      "model_specs": {
+        "plain": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.992156982421875,
+            "normalized_tensor_sha256": "0ebabcec84332e0c389fe380f81899ad26f229ee49300d5f77a286d1b4b09714"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.6941177845001221,
+            "normalized_tensor_sha256": "3b849b924d0801bfb1b40d84e63a81ea881f0c5c6a25f18add200a1071fa7d16"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "refcloth": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.992156982421875,
+            "normalized_tensor_sha256": "0dc7a2b4e6fb22c90ee7f981df1af64d9e67476749debef13849e6137a32549c"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 1.0,
+            "normalized_tensor_sha256": "be1d48e236aa8b0cd26f0a1091afd60459095a483d013522c5dec981e7eb934b"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "marker_a": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.992156982421875,
+            "normalized_tensor_sha256": "d683b3527d39b1caa21906f6ead7d3a6e68ac668df56c9254041b568ccbeae05"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 1.0,
+            "normalized_tensor_sha256": "0c33d940ff68f4a2cd5bbb9cf6e1a776bd4cda41d577567946e2a204650b2971"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "marker_b": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.992156982421875,
+            "normalized_tensor_sha256": "72f11e1615046f4576389c544ed0ba37e6f1f81acf4c2e93d9dcdaaccf68524a"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 1.0,
+            "normalized_tensor_sha256": "0ba034698960871c93ae748d8ce561f9da21ca86352671a06b941c34065051fa"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        },
+        "hidden": {
+          "base_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.992156982421875,
+            "normalized_tensor_sha256": "537c184735670b27e93b46a5bd35349653cbea42d88caae09b1b581b6085a104"
+          },
+          "left_wrist_0_rgb": {
+            "active": true,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": 0.9137256145477295,
+            "normalized_tensor_sha256": "c157005c4dae5558d8f697acc17f40281ad522c5ad9e1a16ad67ec41df236b63"
+          },
+          "right_wrist_0_rgb": {
+            "active": false,
+            "tensor_shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "dtype": "torch.float32",
+            "min": -1.0,
+            "max": -1.0,
+            "normalized_tensor_sha256": "811b0abfb7b806545700b3a1b9513d4ff52fd7da3ac337ae9ca69772f74e8415"
+          }
+        }
+      }
+    }
+  ],
+  "completed": true,
+  "actions_computed": false,
+  "model_weights_trained": false,
+  "target_gradients_used": false,
+  "protocol_sha256": "481391d05135905f56fd9435c9fb8fbf77eb274076aa575f514e2939525d08aa",
+  "commit": "6bb2092d15081bfac1633f604c426b756ca0ceb4",
+  "pipeline_sources": {
+    "/data/shaozhen.liu/code/tex3d/pi/attack_pi0_cloth.py": "f6502f9fc420b491d89c156a83d0cda2125bd752e90acf4c29dcd85fdbea645f",
+    "/data/shaozhen.liu/code/tex3d/pi/attack_pi0.py": "4abd24b641bd4067c2dc48621824548d2c84e90c1f46ca67d362c1c75304cf38",
+    "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/policies/policy.py": "a2ac5236e23b11d0f5a840d4a8fef148d89dba921d5452ec5dfcd5a6ffa46f20",
+    "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/models_pytorch/pi0_pytorch.py": "0c7b9f1de02ed886da49035e3fa1b38efea46eb6209489cb4f594f777f97b70c",
+    "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/models/model.py": "0d74bc1d8f4623ac3d8e543710b8bf75f9b95e588a3ebf6127c659e001385cff",
+    "/data/shaozhen.liu/envs/tex3d-pi0/lib/python3.11/site-packages/openpi/models_pytorch/preprocessing_pytorch.py": "6a44e91be2d7a724c6140d2cc98ed0a631b8d38bbb29f63b380a0a19f903bbf6"
+  },
+  "peak_cuda_bytes": 14541778432
+}
