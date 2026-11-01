@@ -95,7 +95,8 @@ def main(repo,out,protocol_path):
             log=open(out/('worker%d.log'%i),'w')
             logs.append(log)
             proc=subprocess.Popen([py,str(Path(__file__).parent/'worker.py'),'--repo',str(repo),
-                '--out',str(out),'--id',str(i),'--protocol',str(protocol_path)],cwd=repo,
+                '--out',str(out),'--id',str(i),'--protocol',str(protocol_path)],
+                cwd='/data/shaozhen.liu/code/tex3d-ws/g7',
                 env=environment(repo,gpu),stdout=log,stderr=subprocess.STDOUT,stdin=subprocess.DEVNULL)
             procs.append(proc)
         audit['workers']=[dict(pid=x.pid,gpu=g) for x,g in zip(procs,gpus)]

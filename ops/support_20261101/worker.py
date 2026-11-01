@@ -21,6 +21,8 @@ def main(repo,out,worker_id,protocol):
     torch.manual_seed(7)
     np.random.seed(7)
     runtime=NativeRuntime(repo,protocol['gpus']['fraction_per_worker'],out)
+    base_path=Path(runtime.A.M.CLOTH_T0)
+    assert __import__('hashlib').sha256(base_path.read_bytes()).hexdigest()==protocol['base_texture_sha256']
     grid=protocol['grid']
     fit_tasks=[[0,1],[2,8]][worker_id]
     val_tasks=[[0,1,5,6],[2,8,7,9]][worker_id]

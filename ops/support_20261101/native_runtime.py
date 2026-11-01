@@ -13,6 +13,10 @@ class NativeState:
     def __init__(self, runtime, env, desc, task, initial, step, obs, tex_id):
         self.r, self.env, self.sim = runtime, env, env.env.sim
         self.tex_id = tex_id
+        # mj_step can leave derived visual kinematics at a preceding stage.
+        # Canonicalize BEFORE caching pixels, rather than only after restore.
+        self.sim.forward()
+        obs = env.env._get_observations(force_update=True)
         self.snapshot = self.sim.get_state().flatten().copy()
         self.key = 't%d_i%d_s%03d' % (task, initial, step)
         self.meta = dict(key=self.key, task=task, initial=initial, step=step, description=desc,
