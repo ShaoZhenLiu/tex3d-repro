@@ -82,7 +82,7 @@ def main(root,delivery):
         pilot=json.loads(pilot_file.read_text(encoding='utf-8'))
         pooled=pilot['suites']['pooled_fixed_cases']
         conclusion=('工程方案可运行，但本轮不支持作为主创新点：50%/25% 区域未通过源侧保真门槛；75% 虽在源侧较保真，'
-                    '目标闭环中完整纹理使机器人失败 {0}/12 次，动作选区为 {1}/12 次，可见面积选区为 {2}/12 次。'
+                    '目标闭环中完整纹理条件下机器人失败 {0}/12 次，动作选区为 {1}/12 次，可见面积选区为 {2}/12 次。'
                     '动作选区在 2 对回合中变弱，没有变强的配对。小样本不能给出精确总体降幅，也不能据此声称性能维持。').format(
                         pooled['full']['attack_failures_of_robot'],pooled['greedy_12']['attack_failures_of_robot'],
                         pooled['visibility_12']['attack_failures_of_robot'])
@@ -112,7 +112,7 @@ def main(root,delivery):
         pilot_section='''<h2>额外的 75% 区域目标闭环试验</h2><p>这一部分在看过源侧结果后另行登记：50%/25% 的原门槛未通过，而 75% 满足保真和对照要求，故增加探索性试验。它没有被重标成“通过原门槛”。所有掩码在查询任何目标策略前冻结；此后没有修改掩码、任务、噪声或候选条件。</p>
 <p>π0.5，Spatial/Object 各 3 个任务 × 2 个初始状态 × 6 种纹理，共 72 回合；10 步去噪、5 步重规划、400 步上限。包括源侧保真优于动作选区的 random102。Object 使用生产质心铺布，不使用 fixed-floor 变体。按 suite/task/initial/query-index 显式传入同一噪声，并核对重复推理与上传。</p>
 <table><tr><th>套件</th><th>纹理</th><th>机器人失败/回合数</th><th>相对完整纹理的攻击率差</th><th>变弱的配对</th><th>变强的配对</th></tr>'''+prows+'''</table>
-<p><img src="figures/target_pilot.png"></p><p>机器人失败才计作表中的攻击结果；异常、纹理上传错误不计作攻击成功。每套件只有 6 对回合，3 个任务，不能证明统计非劣效，也不能代表完整 suite。pilot_summary.json 给出配对差值及独立回合假设下的保守 Hoeffding 区间；若 6 对均未出现变弱，也不能排除较大的真实退化概率。原论文主表没有被替换。</p>
+<p><img src="figures/target_pilot.png"></p><p>机器人失败才计作表中的攻击结果；失败次数包含底布条件已经出现的自然失败，不能将全部失败因果归因于纹理。异常、纹理上传错误不计作攻击成功。每套件只有 6 对回合，3 个任务，不能证明统计非劣效，也不能代表完整 suite。pilot_summary.json 给出配对差值及独立回合假设下的保守 Hoeffding 区间；若 6 对均未出现变弱，也不能排除较大的真实退化概率。原论文主表没有被替换。</p>
 <p><strong>该试验不支持“源侧动作保真选区可靠地保持目标攻击”的主张。</strong>源侧动作选区不优于目标闭环中的可见面积选区，也没有优于所有固定随机对照。可见面积选区的合并失败次数虽与完整纹理相同，Spatial 中仍有 1 对变弱、1 对变强，不能解释为逐回合无损。50% 和 25% 版本未做目标闭环；源动作变化下降不能据此当作它们闭环攻击失效的证据。</p>'''
     geometry_section=''
     geo_file=delivery/'results'/'geometry'/'geometry.json'
