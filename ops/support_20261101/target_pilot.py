@@ -16,7 +16,7 @@ import torch
 from PIL import Image
 
 
-def main(repo,source,out,suite_name,protocol_path):
+def main(repo,source,out,suite_name,protocol_path,tasks=None,resume_file=None):
     import attack_pi0_cloth as APC
     import attack_pi0 as BASE
     from libero.libero import benchmark
@@ -51,11 +51,18 @@ def main(repo,source,out,suite_name,protocol_path):
     shape=(cfg.action_horizon,cfg.action_dim)
     suite=benchmark.get_benchmark_dict()[suite_name]()
     suite_index=protocol['suites'].index(suite_name)
+    previous=[]
+    if resume_file is not None and resume_file.exists():
+        old=json.loads(resume_file.read_text())
+        assert old['frozen_manifest_sha256']==hashlib.sha256((source/'texture_manifest.json').read_bytes()).hexdigest()
+        assert old['protocol_sha256']==hashlib.sha256(protocol_path.read_bytes()).hexdigest()
+        previous=[r for r in old['records'] if tasks is None or r['task'] in tasks]
     report=dict(suite=suite_name,protocol=protocol,
         protocol_sha256=hashlib.sha256(protocol_path.read_bytes()).hexdigest(),
         frozen_manifest_sha256=hashlib.sha256((source/'texture_manifest.json').read_bytes()).hexdigest(),
         commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=repo,text=True).strip(),
-        records=[],completed=False,noise_shape=list(shape),target_driven_selection=False,
+        records=previous,completed=False,noise_shape=list(shape),target_driven_selection=False,
+        resumed_records=len(previous),resume_file=str(resume_file),
         limitations='Exploratory 6 paired episodes per suite; no noninferiority/physical hardware claim')
     (out/'registered.json').write_text(json.dumps(report,indent=2))
     class PairedPolicy:
@@ -78,12 +85,15 @@ def main(repo,source,out,suite_name,protocol_path):
             return result
     paired=PairedPolicy()
     # Same episode keys/noises across conditions. Order is fixed in advance.
-    for task_id in protocol['tasks']:
+    done_keys={(r['task'],r['initial'],r['condition']) for r in previous}
+    for task_id in (protocol['tasks'] if tasks is None else tasks):
         task=suite.get_task(task_id)
         inits=suite.get_task_init_states(task_id)
         for initial in protocol['initials']:
-            common_hashes=None
+            common_hashes=next((r['noise_sha256'] for r in previous if r['task']==task_id and r['initial']==initial),None)
             for condition in protocol['conditions']:
+                if (task_id,initial,condition) in done_keys:
+                    continue
                 paired.reset(task_id,initial)
                 t0=time.monotonic()
                 injected_before=len(injection_audit)
@@ -114,4 +124,7 @@ if __name__=='__main__':
     ap.add_argument('--out',type=Path,required=True)
     ap.add_argument('--suite',required=True)
     ap.add_argument('--protocol',type=Path,required=True)
-    a=ap.parse_args();main(a.repo,a.source,a.out,a.suite,a.protocol)
+    ap.add_argument('--tasks',default=None)
+    ap.add_argument('--resume-file',type=Path,default=None)
+    a=ap.parse_args();main(a.repo,a.source,a.out,a.suite,a.protocol,
+        None if a.tasks is None else [int(x) for x in a.tasks.split(',')],a.resume_file)
