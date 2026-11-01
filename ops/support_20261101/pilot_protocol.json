@@ -1,0 +1,23 @@
+{
+  "status": "Registered after source-only screening and before any target query",
+  "reason": "The 50%/25% surface source gate failed. The 75% candidate meets all predeclared fidelity/control criteria except the half-or-less area ambition. This separate pilot is exploratory, not a passed original gate.",
+  "scope": "No new mask search or target-driven revision; unchanged static tablecloth deployment and manipulation tasks",
+  "checkpoint": "/data/shaozhen.liu/model/RLinf-Pi05-LIBERO-130-fullshot-SFT",
+  "model_config": "pi05_libero",
+  "num_denoise": 10,
+  "suites": ["libero_spatial", "libero_object"],
+  "tasks": [0, 4, 8],
+  "initials": [22, 23],
+  "conditions": ["plain", "full", "greedy_12", "visibility_12", "random101_12", "random102_12"],
+  "episodes": 72,
+  "max_steps": 400,
+  "settle_steps": 10,
+  "replan_steps": 5,
+  "noise": "Explicit float32 normal arrays passed as policy.infer(noise=...). Same suite/task/initial/query-index noise across all conditions; first query A/A checked at maxdiff <=1e-6. Seed=710000+suite_index*10000000+task*10000+initial*100+query_index.",
+  "geometry": "Production centroid placement for Object via floor_mode=True; standard table alignment for Spatial. No fixed-floor variant.",
+  "controls": "Two fixed random masks, including seed102 which has better source fidelity than greedy75; visibility mask; full frozen teacher; plain cloth",
+  "reporting": "Attack outcome means robot failure. Per-suite paired counts, discordances and conservative intervals. Six paired trials per suite cannot establish noninferiority; no substitution of old main-table results.",
+  "mask_revision_allowed": false,
+  "gpus": [6, 7],
+  "forbidden_gpu": 4
+}
