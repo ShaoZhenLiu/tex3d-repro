@@ -1,0 +1,29 @@
+{
+  "version": "object-investigation-20261102-v1",
+  "suite": "libero_object",
+  "tasks": [0,1,2,3,4,5,6,7,8,9],
+  "initials": [10,11,12],
+  "conditions": ["plain", "refcloth"],
+  "targets": {
+    "pi0": {"checkpoint": "/data/shaozhen.liu/model/RLinf-Pi0-LIBERO-130-fullshot-SFT", "config": "pi0_libero"},
+    "pi05": {"checkpoint": "/data/shaozhen.liu/model/RLinf-Pi05-LIBERO-130-fullshot-SFT", "config": "pi05_libero"}
+  },
+  "texture": "experiments/pi0_cloth/oft_cloth/train_20261021_224922_tvfix-mr/Universal_Cloth_OV.png",
+  "surface_mode": "legacy",
+  "floor_mode": true,
+  "settle_steps": 10,
+  "max_steps": 400,
+  "replan_steps": 5,
+  "num_denoise": 10,
+  "thresholds_rgb255": [1,5,10,20],
+  "primary_threshold": 10,
+  "marker_a_rgb": [255,0,255],
+  "marker_b_rgb": [0,255,0],
+  "noise_seed": "2710000 + target_index*1000000 + task*10000 + initial*100 + query; excludes condition",
+  "measure_on": "every actual policy query on Plain trajectories",
+  "aggregation": "median across queries per episode, then median and IQR over 30 episodes per target",
+  "geometry_control": "30 initial Object states; old ray-grid and production floor placement rendered at identical dynamic states; no actions",
+  "video_cases": {"tasks": [0,4], "initial": 10},
+  "scope": "Frozen full RefCloth only; no training, target gradients, mask selection or task changes",
+  "limitations": "30 paired cases per target, three initial states per task; simulator-only; explicit paired noise differs from the archived main-table randomness; marker contrast is a geometric visibility proxy, not semantic segmentation"
+}
