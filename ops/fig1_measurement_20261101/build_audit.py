@@ -136,7 +136,7 @@ def main(root,paper):
         dest=proposal/rel;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_text(text,encoding='utf-8')
         original=(paper/rel).read_text(encoding='utf-8')
         patch+=difflib.unified_diff(original.splitlines(True),text.splitlines(True),fromfile='a/'+rel,tofile='b/'+rel)
-    (proposal/'figure1_correction.patch').write_text(''.join(patch),encoding='utf-8')
+    (proposal/'figure1_correction.patch').write_bytes(''.join(patch).encode('utf-8'))
     # Corrected exposure panel uses only the existing, retained 180 rollouts.
     with (paper/'data/four_stages/exposure_summary_verified.csv').open(encoding='utf-8') as f:old_rows=list(csv.DictReader(f))
     fig,ax=plt.subplots(figsize=(3.35,1.55));suites=['spatial','goal','long'];xpos=np.arange(3)
@@ -158,7 +158,7 @@ def main(root,paper):
     page='''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>图一测量口径核对</title><style>body{max-width:1100px;margin:40px auto;padding:0 24px;font:16px/1.8 "Microsoft YaHei",sans-serif;color:#26383e}h1{font-size:27px}h2{font-size:21px;margin-top:32px}table{border-collapse:collapse;width:100%;font-size:14px}th,td{border:1px solid #d7e0e4;padding:9px;text-align:left}th{background:#edf3f5}img{max-width:100%}.note{border-left:4px solid #26727a;background:#edf5f5;padding:16px}</style>
 <h1>图一与近期汇报：测量口径核对</h1><p>2026-11-01 · 仅测量校准，无新攻击训练、无目标动作或梯度。</p>
 <p class="note"><strong>确实没有对齐。</strong>图一(a)是旧仪表化完整轨迹的 Plain／hidden 差分支持；图一(b)是源模型跨渲染路径的特征偏移；近期报告主要测颜色标记及 RefCloth／Plain 图像变化。原图中的 Object 约 1.5%／腕相机 0 数据还使用了与正式部署不同的铺布分支，不能继续支撑当前部署“低暴露但强攻击”的解释。</p>
-<h2>分别测了什么</h2><table><tr><th>材料</th><th>对象与比较</th><th>处理域与统计</th></tr><tr><td>当前图一(a)</td><td>Plain − cloth-hidden，阈值10</td><td>256×256 原生主相机；240条完整轨迹，回合中位数再取中位数；非最终模型输入</td></tr><tr><td>当前图一(b)</td><td>同一素色布：可微渲染与原生渲染的源特征差</td><td>32个 Spatial 源状态；特征偏移，不是 RefCloth−Plain 像素差</td></tr><tr><td>近期目标几何检查 geometry_audit.py</td><td>颜色标记可见率与 RefCloth−Plain</td><td>起始状态；native/raw 256图像；没有 hidden 对照，也没有完整的最终目标模型输入覆盖率。更早的生产路径报告已有224图像RMS，本次补齐三种覆盖率。</td></tr><tr><td>本次补测</td><td>两色标记、Plain−hidden、RefCloth−Plain</td><td>相同暂停状态、双相机，逐条件经过真实输入处理后比较；6个独立几何状态，两种策略配置</td></tr></table>
+<h2>分别测了什么</h2><table><tr><th>材料</th><th>对象与比较</th><th>处理域与统计</th></tr><tr><td>当前图一(a)</td><td>Plain − cloth-hidden，阈值10</td><td>256×256 原生主相机；240条完整轨迹，回合中位数再取中位数；非最终模型输入</td></tr><tr><td>当前图一(b)</td><td>同一素色布：可微渲染与原生渲染的源特征差</td><td>32个 Spatial 源状态；特征偏移，不是 RefCloth−Plain 像素差</td></tr><tr><td>近期目标几何检查 geometry_audit.py</td><td>颜色标记可见率与 RefCloth−Plain</td><td>起始状态；native/raw 256图像；没有 hidden 对照，也没有完整的最终目标模型输入覆盖率。更早的生产路径报告已有224图像RMS，本次补齐三种覆盖率。</td></tr><tr><td>本次补测</td><td>两色标记、Plain−hidden、RefCloth−Plain</td><td>相同暂停状态、双相机，逐条件经过真实输入处理后比较；6个固定场景状态，两种策略配置</td></tr></table>
 <h2>旧 Object 数值的问题</h2><p>归档仪表化代码 setup_episode 调用 align_cloth_to_table(env)，遗漏 floor_mode=True；正式 run_eval 对 Object 则显式走 floor_mode=True。无 table_top 时，旧默认分支可能把布对齐到射线找到的物体高台。例如原先同一 t0/i10 被放到约 (−0.6,0,0.371)，正式部署则为约 (−0.053,−0.030,0.005)。这首先是协议不一致，不能只归因于 RGB 阈值。旧字段 target-name 身份修正没有检查或修复这个问题。</p>
 <p>当前 PDF 已直接核对：第一页确实显示 240 轨迹图；第二页及附录仍保留约1.5%和零腕相机解释。此次发现定位于暴露仪表化；正式攻击评测代码有 Object 铺布分支，本核查没有据此推翻主成功率表。</p>
 <h2>同状态补测结果</h2><p>Object任务0/4/8，初态10/11，等待10步后暂停，使用正式质心贴地铺布。以下是6个状态的中位数，所有支持都采用同一“最大RGB通道差 &gt;10”口径；标记支持是颜色标记定义的几何代理，不是语义分割真值。两个策略得到逐像素相同的输入图像，不能将其当作12个独立状态。</p>
