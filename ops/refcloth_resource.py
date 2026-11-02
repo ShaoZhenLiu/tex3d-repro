@@ -70,6 +70,11 @@ def register(pid, script, kind, gpu, budget, label, root, phase='loading', start
                  started=started or time.time(), token=token)
     with locked():
         entries = read(BASE / 'jobs.json', {})
+        previous = entries.get(token)
+        if previous and matches(previous):
+            entry['phase'] = previous['phase']
+            if 'ready_at' in previous:
+                entry['ready_at'] = previous['ready_at']
         entries[token] = entry
         write(BASE / 'jobs.json', entries)
     return token
@@ -194,20 +199,20 @@ def _pressure(s, field, mode):
     return s.get(field, {}).get(mode, {}).get('avg10', 0.)
 
 
-def admission_reasons(s):
+def admission_reasons(s, cold_gib=24):
     reasons = []
     if s['available'] < 50 * GIB:
         reasons.append('host_memory_below_50GiB')
-    if s['headroom'] is not None and s['headroom'] < 24 * GIB:
-        reasons.append('ancestor_headroom_below_24GiB')
+    if s['headroom'] is not None and s['headroom'] < cold_gib * GIB:
+        reasons.append('ancestor_headroom_below_%dGiB' % cold_gib)
     for field, mode, limit in [('memory_psi', 'full', 1.), ('memory_psi', 'some', 2.)]:
         if _pressure(s, field, mode) >= limit:
             reasons.append('%s_%s_high' % (field, mode))
     if any(s[k] is None for k in ['iowait_percent', 'io_mib_s', 'swap_mib_s']):
         reasons.append('waiting_for_resource_counter_interval')
-    if io_stalled(s):
-        reasons.append('sustained_IO_wait')
-    if (s.get('io_mib_s') or 0) >= 512. and (s.get('iowait_percent') or 0) >= 10.:
+    if io_stalled(s) and (s.get('iowait_percent') or 0) >= 50.:
+        reasons.append('extreme_IO_wait')
+    if (s.get('io_mib_s') or 0) >= 1024. and (s.get('iowait_percent') or 0) >= 50.:
         reasons.append('high_IO_throughput_with_CPU_wait')
     if (s.get('swap_mib_s') or 0) >= 1.:
         reasons.append('active_swap')
@@ -248,11 +253,11 @@ def should_pause(entry, s):
     return io_stalled(s) and progress_age(entry, s['time']) >= grace
 
 
-def can_launch():
+def can_launch(cold_gib=24):
     status = read(BASE / 'health.json', {})
     if time.time() - status.get('time', 0) > 25:
         return False, ['health_monitor_missing_or_stale']
-    reasons = list(status['admission_reasons'])
+    reasons = admission_reasons(status, cold_gib=cold_gib)
     if not status.get('healthy_since') or time.time() - status['healthy_since'] < 60:
         reasons.append('waiting_for_60s_stable_health')
     entries = active()
@@ -303,7 +308,9 @@ def monitor():
     previous = None; healthy_since = None; severe_since = None; last_stop = 0.
     while True:
         s = snapshot(previous); previous = s
-        reasons = admission_reasons(s)
+        # Source loaders peak below 6GiB RSS in the measured frozen recipe;
+        # reserve 10GiB for them. Evaluation keeps its separate 24GiB check.
+        reasons = admission_reasons(s, cold_gib=10)
         healthy_since = (healthy_since or s['time']) if not reasons else None
         severe_since = (severe_since or s['time']) if severe(s) else None
         entries = active()

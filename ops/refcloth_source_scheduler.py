@@ -80,7 +80,7 @@ def main(study, a):
             del active[name]
         fcntl.flock(lock, fcntl.LOCK_EX)
         try:
-            allowed, reasons = guard.can_launch()
+            allowed, reasons = guard.can_launch(cold_gib=10)
             if pending and allowed:
                 job = pending[0]; seed, mode = job
                 choices = sorted(gpus, key=lambda g: (g != preferred.get(job), sum(v['gpu'] == g for v in active.values()), gpus.index(g)))

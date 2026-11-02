@@ -46,8 +46,17 @@ class Admission(unittest.TestCase):
         s=healthy();self.assertFalse(g.admission_reasons(s));self.assertFalse(g.severe(s))
         s['io_psi']={'full':{'avg10':50.}}
         self.assertFalse(g.admission_reasons(s));self.assertFalse(g.severe(s))
-        s['iowait_percent']=25.
+        s['iowait_percent']=55.
         self.assertTrue(g.admission_reasons(s));self.assertTrue(g.severe(s))
+
+    def test_moderate_global_IO_wait_allows_memory_safe_launch(self):
+        s=healthy();s['io_psi']={'full':{'avg10':65.}};s['iowait_percent']=25.;s['io_mib_s']=8.
+        self.assertFalse(g.admission_reasons(s))
+
+    def test_source_and_target_use_separate_cold_memory_reserves(self):
+        s=healthy();s['headroom']=15*g.GIB
+        self.assertFalse(g.admission_reasons(s,cold_gib=10))
+        self.assertIn('ancestor_headroom_below_24GiB',g.admission_reasons(s,cold_gib=24))
 
     def test_active_loading_is_not_stopped_for_global_IO_PSI(self):
         s=healthy();s['io_psi']={'full':{'avg10':60.}};s['iowait_percent']=25.
@@ -104,6 +113,8 @@ class Ownership(unittest.TestCase):
             with tempfile.TemporaryDirectory() as temp,patch.object(g,'BASE',Path(temp)):
                 token=g.register(child.pid,marker,'test',0,0,'harmless_test',temp)
                 entry=g.read(Path(temp)/'jobs.json')[token]
+                g.register(child.pid,marker,'test',0,0,'harmless_test',temp,phase='warm')
+                self.assertEqual(g.read(Path(temp)/'jobs.json')[token]['phase'],'loading')
                 self.assertTrue(g.stop_entry(entry,15))
                 self.assertEqual(child.wait(timeout=3),-15)
                 self.assertFalse(g.matches(entry))

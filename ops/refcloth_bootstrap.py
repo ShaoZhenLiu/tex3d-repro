@@ -61,7 +61,9 @@ def main(a):
                   ('stability','eval_controller.py'),('coupling','eval_controller.py')]
         for study,script in commands:
             path=R/'ops'/('%s_20261102'%study)/script
-            cmd=[sys.executable,str(path),'--resume']
+            python=('/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python'
+                    if study=='coupling' and script=='eval_controller.py' else sys.executable)
+            cmd=[python,str(path),'--resume']
             if script=='train_controller.py':cmd+=['--node',a.node]
             log=open(guard.BASE/('%s_%s.log'%(study,script)),'ab',buffering=0)
             proc=subprocess.Popen(cmd,cwd=R,stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
