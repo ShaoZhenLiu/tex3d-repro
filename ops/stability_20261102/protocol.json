@@ -1,0 +1,67 @@
+{
+  "version": "reference-stability-20261102-v1",
+  "parent_commit": "c14d6d997ff26e92846cabb8b5d168d1f0806680",
+  "new_training_seeds": [10, 11, 12],
+  "existing_seeds": [7, 8, 9],
+  "references": ["native", "mr"],
+  "training": {
+    "entry": "openvla-oft/experiments/robot/libero/attack_oft_cloth_ablate.py",
+    "iterations": 5000,
+    "batch": 8,
+    "task_pool": [0, 2, 6, 8],
+    "observations": 296,
+    "source": "OpenVLA-OFT Spatial 150K",
+    "uv": "one full-precision UV draw shared across batch and both views",
+    "pairing": "Identical seeded initialization and pregenerated frame/UV stream within each reference pair; references are the sole training-factor contrast",
+    "initialization_std": 0.01,
+    "step_size": 0.05,
+    "epsilon": 0.25098039215686274,
+    "lambda_feature": 10.0,
+    "lambda_amplitude": 0.1,
+    "lambda_tv": 0.1,
+    "export": "final iteration 4999 only; no target-based checkpoint selection",
+    "precision": "original bfloat16 source path; record software and GPU architecture for every pair"
+  },
+  "evaluation": {
+    "target": "pi05",
+    "config": "pi05_libero",
+    "checkpoint": "/data/shaozhen.liu/model/RLinf-Pi05-LIBERO-130-fullshot-SFT",
+    "suites": ["spatial", "object"],
+    "tasks": [0,1,2,3,4,5,6,7,8,9],
+    "initials": [10,11,12,13,14,15,16,17,18,19],
+    "max_steps": 400,
+    "settle_steps": 10,
+    "replan_steps": 5,
+    "num_denoise": 10,
+    "surface_mode": "legacy",
+    "floor_mode": "true only on Object, exactly the production deployment",
+    "noise": "seed=6810000 + suite_index*1000000 + task*10000 + initial*100 + query; excludes texture, training seed, reference and worker",
+    "pairing": "Paired task/initial state and consumed query noise; each episode evolves freely after initialization",
+    "existing_textures": "Re-evaluate all six existing seed-7/8/9 textures under the new common-noise protocol; never merge old independent-noise outcomes into the new block",
+    "plain": "One shared 200-episode Plain control, independently repeat first keyed episode per worker to validate reproducibility",
+    "planned_episodes": 2600
+  },
+  "primary_estimand": "For each training seed, mean of Native-success minus Matched-success over 100 paired Spatial and 100 paired Object episodes (pp); positive favors matched reference",
+  "statistics": {
+    "unit": "trained reference pair, not individual evaluation episodes",
+    "primary": "mean paired difference, sample SD, Student-t 95% CI, exact two-sided seed-level sign-flip test over six predeclared seed pairs",
+    "robustness": "all seed values; median and range; leave-one-seed-out mean; suite-specific differences; new-only and existing-only blocks; hardware provenance",
+    "secondary": "suite-specific seed-level means and intervals; optional per-seed exact McNemar tests with Holm across twelve seed-by-suite contrasts; no method selection from p-values",
+    "failed_jobs": "Record as infrastructure errors and rerun the same seed/configuration; never count as robot failures or replace with a different seed"
+  },
+  "reporting": "Keep every planned seed and outcome. Do not suppress unfavorable seeds or use their omission to support stability. Individual seed identifiers may be confined to reproducibility data, but counts and distributions must describe the full experiment.",
+  "frozen_renderer_exception": {
+    "authorized_by_user": true,
+    "decision": "Keep the existing recipe for reference-only replication; do not recalibrate the renderer or change cached references",
+    "main_view_gate": "zero export, visibility, foreground preservation, and PSNR >=25 dB pass",
+    "wrist_view": "Known photometric gap retained and measured; not asserted to pass the 25-dB gate"
+  },
+  "resources": {
+    "4090_forbidden_gpu": 4,
+    "4090_share_authorized": true,
+    "09_share_authorized_gpus": [1,2],
+    "reserve_other_cards": "Do not use 4090 GPUs 2,3,4 for this study",
+    "host_memory_floor_GB": 20,
+    "no_environment_install_or_shared_asset_changes": true
+  }
+}

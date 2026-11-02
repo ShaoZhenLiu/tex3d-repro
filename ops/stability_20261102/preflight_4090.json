@@ -1,0 +1,104 @@
+{
+  "passed": true,
+  "source": "existing frozen renderer and pool",
+  "pool_sha256": "d03d68591b9b820385d14be44758aefd95c2a63b8d68fc0926413a2eb1b04a93",
+  "reference_cache_sha256": "7ab459156068e23cd338bc33e100fb1113a3a367d8b020a80cdaf7cdb7249856",
+  "zero_export_maxdiff": 0,
+  "visibility_photometry": [
+    {
+      "task": 0,
+      "views": {
+        "main": {
+          "visible_fraction": 0.255340576171875,
+          "cloth_psnr_db": 26.257113821920655,
+          "foreground_maxdiff": 0.0,
+          "reference_path": "stored native-Plain processor RGB at 224; inverse SigLIP normalization"
+        },
+        "wrist": {
+          "visible_fraction": 0.425933837890625,
+          "cloth_psnr_db": 13.393973428404243,
+          "foreground_maxdiff": 0.0,
+          "reference_path": "stored native-Plain wrist RGB at 256"
+        }
+      }
+    },
+    {
+      "task": 2,
+      "views": {
+        "main": {
+          "visible_fraction": 0.2434234619140625,
+          "cloth_psnr_db": 26.39691693342117,
+          "foreground_maxdiff": 0.0,
+          "reference_path": "stored native-Plain processor RGB at 224; inverse SigLIP normalization"
+        },
+        "wrist": {
+          "visible_fraction": 0.35040283203125,
+          "cloth_psnr_db": 13.43728086627701,
+          "foreground_maxdiff": 0.0,
+          "reference_path": "stored native-Plain wrist RGB at 256"
+        }
+      }
+    },
+    {
+      "task": 6,
+      "views": {
+        "main": {
+          "visible_fraction": 0.2303466796875,
+          "cloth_psnr_db": 28.969461051587917,
+          "foreground_maxdiff": 0.0,
+          "reference_path": "stored native-Plain processor RGB at 224; inverse SigLIP normalization"
+        },
+        "wrist": {
+          "visible_fraction": 0.4179229736328125,
+          "cloth_psnr_db": 13.400042708470878,
+          "foreground_maxdiff": 0.0,
+          "reference_path": "stored native-Plain wrist RGB at 256"
+        }
+      }
+    },
+    {
+      "task": 8,
+      "views": {
+        "main": {
+          "visible_fraction": 0.2540283203125,
+          "cloth_psnr_db": 26.52806036100346,
+          "foreground_maxdiff": 0.0,
+          "reference_path": "stored native-Plain processor RGB at 224; inverse SigLIP normalization"
+        },
+        "wrist": {
+          "visible_fraction": 0.4210357666015625,
+          "cloth_psnr_db": 13.39905563867363,
+          "foreground_maxdiff": 0.0,
+          "reference_path": "stored native-Plain wrist RGB at 256"
+        }
+      }
+    }
+  ],
+  "streams": [
+    {
+      "seed": 10,
+      "text_sha256": "8c8969e412b4bc189f7a065417c40255d669ed411338c1c77c191deb39eb2007",
+      "uv_sha256": "6d15c651e6b32e97533b8a6d0061839f0a0c7b85d988163e03f5e21b759501ed",
+      "rows": 40000
+    },
+    {
+      "seed": 11,
+      "text_sha256": "5ef320207d2911e390dae20c2e22a9fa4db7ba9b1948ba827701ccbbe170e033",
+      "uv_sha256": "88c5056ec47c67dfb661f4a584a86656625edd9e66a7506e9bf581ce49105a4f",
+      "rows": 40000
+    },
+    {
+      "seed": 12,
+      "text_sha256": "c3c131befa879541e105a65343b6849b477e9919dbd1c1f472cb28eab46f34a2",
+      "uv_sha256": "61385dc48f2096ac06e5d99efcc790f38a01bad8a9be977b99a51d9c78a4ad69",
+      "rows": 40000
+    }
+  ],
+  "pytorch": "2.2.0+cu121",
+  "cuda": "12.1",
+  "device": "NVIDIA GeForce RTX 4090",
+  "peak_cuda_bytes": 28623360,
+  "gate_scope": "Original main-view smoke passes; wrist photometry is an explicit user-authorized frozen-recipe exception",
+  "frozen_wrist_gap_authorized": true,
+  "all_view_photometric_gate_passed": false
+}
