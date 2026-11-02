@@ -5,6 +5,7 @@ import os
 import re
 import subprocess
 import time
+import fcntl
 from pathlib import Path
 
 
@@ -42,7 +43,9 @@ def main(a):
                 return 0 if (X/'arms'/self.name/'completed.json').exists() else 1
         for name,v in prior['active'].items():
             active[name]=dict(proc=ExistingProcess(v['pid'],name),gpu=v['gpu'],job=tuple(v['job']),start=v['start'])
+    budget_lock=(R/('experiments/refcloth_gpu_budget_'+a.node+'.lock')).open('a')
     while pending or active:
+        fcntl.flock(budget_lock,fcntl.LOCK_EX)
         primary=json.loads((P/('train_status_'+a.node+'.json')).read_text())
         free={int(row.split(',')[0]):int(row.split(',')[1]) for row in subprocess.check_output(
             ['nvidia-smi','--query-gpu=index,memory.free','--format=csv,noheader,nounits'],universal_newlines=True).splitlines()}
@@ -58,8 +61,8 @@ def main(a):
                 for v in primary['active'].values() if v['job'][2]==gpu and alive(v['pid']))
             reserve+=sum(max(0,required-mem_by_pid.get(v['proc'].pid,0)) for v in active.values() if v['gpu']==gpu)
             if a.node=='4090':
-                path=P/'eval_controller_status.json'
-                if path.exists():
+                for path in [P/'eval_controller_status.json',X/'eval_controller_status.json']:
+                    if not path.exists() or (path.parent/'eval_controller_done.json').exists():continue
                     for name,pid in json.loads(path.read_text())['active'].items():
                         if int(re.match(r'gpu(\d+)',name).group(1))==gpu and alive(pid):
                             reserve+=max(0,(21900 if name in ['gpu7a','gpu7b','gpu1','gpu5'] else 17000)-mem_by_pid.get(pid,0))
@@ -87,6 +90,7 @@ def main(a):
         write(X/('train_status_'+a.node+'.json'),dict(node=a.node,pending=pending,
             active={name:dict(pid=v['proc'].pid,gpu=v['gpu'],job=v['job'],start=v['start']) for name,v in active.items()},
             finished=finished,failed=failed,allowed_gpus=gpus,required_mib=required,updated=time.time()))
+        fcntl.flock(budget_lock,fcntl.LOCK_UN)
         if pending or active:time.sleep(10)
     write(X/('train_done_'+a.node+'.json'),dict(completed=not failed,finished=finished,failed=failed))
 

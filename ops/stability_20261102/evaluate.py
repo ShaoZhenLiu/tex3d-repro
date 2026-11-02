@@ -144,6 +144,7 @@ def main(a):
                 jid=job['id'];claim=claims/(jid+'.json')
                 if (complete/(jid+'.json')).exists():continue
                 if any(name not in manifest for name in job['conditions']):continue
+                if any(not (outcomes/name).exists() for name in job.get('requires_existing',[])):continue
                 if claim.exists():
                     existing=json.loads(claim.read_text())
                     status=Path('/proc/%d/status'%existing['pid'])
@@ -161,11 +162,11 @@ def main(a):
             conditions=list(chosen['conditions'])
             if (initial+chosen['task'])%2:conditions.reverse()
             pair=[episode(chosen['suite'],chosen['task'],initial,c) for c in conditions]
-            if len(pair)==2:
-                if pair[0]['trajectory'] and pair[1]['trajectory']:
-                    assert pair[0]['trajectory'][0]['proprio_sha256']==pair[1]['trajectory'][0]['proprio_sha256']
-                else:assert not pair[0]['trajectory'] and not pair[1]['trajectory'] and pair[0]['robot_success'] and pair[1]['robot_success']
-                assert all(x['noise_sha256']==y['noise_sha256'] for x,y in zip(pair[0]['trajectory'],pair[1]['trajectory']))
+            for other in pair[1:]:
+                if pair[0]['trajectory'] and other['trajectory']:
+                    assert pair[0]['trajectory'][0]['proprio_sha256']==other['trajectory'][0]['proprio_sha256']
+                else:assert not pair[0]['trajectory'] and not other['trajectory'] and pair[0]['robot_success'] and other['robot_success']
+                assert all(x['noise_sha256']==y['noise_sha256'] for x,y in zip(pair[0]['trajectory'],other['trajectory']))
             rows.extend(dict(condition=x['condition'],initial=initial,robot_success=x['robot_success']) for x in pair)
         write(complete/(chosen['id']+'.json'),dict(completed=True,job=chosen,outcomes=rows,worker=a.worker))
         done.append(chosen['id'])

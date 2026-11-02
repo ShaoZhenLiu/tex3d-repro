@@ -7,6 +7,7 @@ import shutil
 import subprocess
 import time
 import re
+import fcntl
 from pathlib import Path
 
 
@@ -57,7 +58,9 @@ def main(a):
                 return 0 if (X/'evaluation/workers'/self.name/'completed.json').exists() else 1
         for name,pid in prior['active'].items():
             active[name]=ExistingProcess(pid,name);launched.add(name)
+    budget_lock=(R/'experiments/refcloth_gpu_budget_4090.lock').open('a')
     while True:
+        fcntl.flock(budget_lock,fcntl.LOCK_EX)
         publish()
         complete=len(list((X/'evaluation/completed').glob('*.json')))
         if complete==140:break
@@ -121,6 +124,7 @@ def main(a):
         write(X/'eval_controller_status.json',dict(completed_bundles=complete,total_bundles=140,
             active={str(g):p.pid for g,p in active.items()},failed=failed,updated=time.time()))
         if not active and failed:raise RuntimeError('All workers failed; inspect before retrying same registered jobs')
+        fcntl.flock(budget_lock,fcntl.LOCK_UN)
         time.sleep(15)
     write(X/'eval_controller_done.json',dict(completed=True,bundles=140,episodes=2600,failed_attempts=failed))
 
