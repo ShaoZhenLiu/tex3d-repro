@@ -48,12 +48,18 @@ def main(a):
     a.out.mkdir(parents=True,exist_ok=True)
     manifest=json.loads((a.root/'texture_manifest.json').read_text())
     assert len(manifest)==13
+    assert len({v['sha256'] for v in manifest.values()})==13
+    for item in manifest.values():
+        assert hashlib.sha256((a.root/item['path']).read_bytes()).hexdigest()==item['sha256']
     rows=[];raw={}
     for path in paths:
         obj=json.loads(path.read_text());assert obj['completed']
         suite,task,initial,condition=[obj[k] for k in ['suite','task','initial','condition']]
         assert suite in ['spatial','object'] and task in range(10) and initial in range(10,20)
         assert obj['texture_sha256']==manifest[condition]['sha256']
+        assert obj['queries']==len(obj['trajectory']) and obj['native_uploads']>=1
+        assert [z['query'] for z in obj['trajectory']]==list(range(obj['queries']))
+        assert all(np.asarray(z['actions']).shape==(5,7) and np.isfinite(z['actions']).all() for z in obj['trajectory'])
         key=(suite,task,initial,condition);assert key not in raw
         raw[key]=obj
         rows.append(dict(suite=suite,task=task,initial=initial,condition=condition,
@@ -61,6 +67,29 @@ def main(a):
     frame=pd.DataFrame(rows)
     assert set(frame.groupby('condition').size().values)=={200}
     assert set(frame.groupby(['condition','suite']).size().values)=={100}
+    workers={}
+    for name in sorted(frame.worker.unique()):
+        calibration=json.loads((a.root/'evaluation/workers'/name/'calibration.json').read_text())
+        assert calibration['passed'] and calibration['trajectory_exact']
+        workers[name]=calibration
+    input_changes=[]
+    for condition in sorted(set(frame.condition)-{'plain'}):
+        main_changed=wrist_changed=comparable=0
+        for suite in ['spatial','object']:
+            for task in range(10):
+                for initial in range(10,20):
+                    p=raw[(suite,task,initial,'plain')]['trajectory']
+                    t=raw[(suite,task,initial,condition)]['trajectory']
+                    if p and t:
+                        assert p[0]['proprio_sha256']==t[0]['proprio_sha256']
+                        comparable+=1
+                        main_changed+=p[0]['main_sha256']!=t[0]['main_sha256']
+                        wrist_changed+=p[0]['wrist_sha256']!=t[0]['wrist_sha256']
+                    else:assert not p and not t
+                    assert all(x['noise_sha256']==y['noise_sha256'] for x,y in zip(p,t))
+        assert main_changed+wrist_changed>0
+        input_changes.append(dict(condition=condition,comparable_initial_queries=comparable,
+            main_changed=main_changed,wrist_changed=wrist_changed))
     paired=[]
     for seed in [7,8,9,10,11,12]:
         for suite in ['spatial','object']:
@@ -102,6 +131,8 @@ def main(a):
         checks.append(dict(seed=seed,initialization_exact=True,sampling_stream_exact=True,
             device_families=[x['gpu_name'] for x in arm],runner_hashes=[x['runner_sha256'] for x in arm]))
     result['new_pair_integrity']=checks
+    result['worker_calibrations']=workers
+    result['initial_input_changes']=input_changes
     frame.to_csv(str(a.out/'episode_outcomes.csv'),index=False)
     table.to_csv(str(a.out/'paired_suite_results.csv'),index=False)
     seed_means.to_csv(str(a.out/'seed_means.csv'),index=False)
