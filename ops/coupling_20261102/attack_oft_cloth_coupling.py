@@ -27,6 +27,7 @@
 """
 import argparse
 import hashlib
+import json
 import os
 import random
 import re
@@ -351,6 +352,28 @@ def train(args):
                 adv_rgb=comp, model_input_size=model_input_size,
                 siglip_mean=sm, siglip_std=ss, dino_mean=dm, dino_std=ds,
                 wrist_tensor=adv_wrist_t).to(torch.bfloat16)
+            validation = None
+            validation_path = os.path.join(out_dir, 'camera_control_validation.json')
+            if it == 0 and not os.path.exists(validation_path):
+                validation = {'mode': view_mode, 'global_frame': gids[fi],
+                              'processed_shape': list(pv.shape)}
+                assert pv.shape[1] == 12
+                if plain_images is not None:
+                    clean_pair = plain_images[gids[fi]]
+                    clean_pv = base._compose_oft_pixel_values(
+                        adv_rgb=clean_pair['main'].to(device), model_input_size=model_input_size,
+                        siglip_mean=sm, siglip_std=ss, dino_mean=dm, dino_std=ds,
+                        wrist_tensor=clean_pair['wrist'].to(device)).to(torch.bfloat16)
+                    untouched = slice(6, 12) if view_mode == 'main' else slice(0, 6)
+                    changed = slice(0, 6) if view_mode == 'main' else slice(6, 12)
+                    validation['untouched_camera_processed_exact'] = bool(torch.equal(pv[:, untouched], clean_pv[:, untouched]))
+                    validation['optimized_camera_processed_changed'] = not torch.equal(pv[:, changed], clean_pv[:, changed])
+                    assert validation['untouched_camera_processed_exact']
+                elif independent_wrist_uv is not None:
+                    validation['wrist_uv_independent_draw'] = not torch.equal(uv_a, wrist_uv_a)
+                    assert validation['wrist_uv_independent_draw']
+                else:
+                    validation['wrist_uv_shared_draw'] = True
             with base.autocast(dtype=torch.bfloat16):
                 _, adv_hidden = model.predict_action(
                     input_ids=fr["text_inputs"]["input_ids"],
@@ -374,6 +397,10 @@ def train(args):
             attack_sum += attack.item()
             feat_val = attack_feat.item()
             (attack / args.batch).backward(inputs=backward_inputs)
+            if validation is not None:
+                validation['attack_texture_gradient_norm'] = float(param.grad.norm())
+                validation['passed'] = True
+                with open(validation_path, 'w') as f:json.dump(validation, f, indent=2)
         tex = renderer.texture_tensor()
         ref = F.mse_loss(tex, t0_tex)
         tv = M.spatial_tv_nhwc(tex - t0_tex)

@@ -70,6 +70,8 @@ def main(a):
             ['nvidia-smi','--query-gpu=index,memory.free','--format=csv,noheader,nounits'],text=True).splitlines()}
         mem={row.split(':')[0]:int(row.split()[1]) for row in Path('/proc/meminfo').read_text().splitlines()}
         ram=mem['MemAvailable']/1024**2
+        coupling_path=R/'experiments/refcloth_coupling/20261102/train_status_4090.json'
+        coupling=json.loads(coupling_path.read_text()) if coupling_path.exists() else None
         slots=[(7,'gpu7a',.44),(7,'gpu7b',.44),(0,'gpu0',.31),
                (1,'gpu1',.44),(5,'gpu5',.44),(6,'gpu6',.31),
                (0,'gpu0b',.31),(1,'gpu1b',.31),(5,'gpu5b',.31),(6,'gpu6b',.31)]
@@ -79,6 +81,11 @@ def main(a):
                 if source.get('gradient_mode')!='texture_only':continue
                 remainder=sum(max(0,23000-memory_by_pid.get(item['pid'],0)) for item in source['active'].values() if item['job'][2]==gpu)
                 if any(job[2]==gpu for job in source['pending']):continue
+            if coupling is not None:
+                on_card=[v for v in coupling['active'].values() if v['gpu']==gpu]
+                remainder+=sum(max(0,23000-memory_by_pid.get(v['pid'],0)) for v in on_card)
+                if coupling['pending'] and not on_card and gpu not in reserved:
+                    remainder+=23000
             # A loading worker may still occupy only a CUDA context while its
             # checkpoint is on CPU. Reserve its eventual full budget now.
             for other,proc in active.items():
