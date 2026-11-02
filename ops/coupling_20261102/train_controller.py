@@ -32,12 +32,22 @@ def main(a):
         gpus=[6,0,1,5,7];limit=2;required=23000;fraction=.44
     active={};finished=[];failed=[];last=0.
     (X/'logs').mkdir(exist_ok=True);(X/'arms').mkdir(exist_ok=True)
+    if a.resume:
+        prior=json.loads((X/('train_status_'+a.node+'.json')).read_text())
+        pending=[tuple(j) for j in prior['pending']];finished=prior['finished'];failed=prior['failed']
+        class ExistingProcess:
+            def __init__(self,pid,name):self.pid=pid;self.name=name
+            def poll(self):
+                if alive(self.pid):return None
+                return 0 if (X/'arms'/self.name/'completed.json').exists() else 1
+        for name,v in prior['active'].items():
+            active[name]=dict(proc=ExistingProcess(v['pid'],name),gpu=v['gpu'],job=tuple(v['job']),start=v['start'])
     while pending or active:
         primary=json.loads((P/('train_status_'+a.node+'.json')).read_text())
         free={int(row.split(',')[0]):int(row.split(',')[1]) for row in subprocess.check_output(
-            ['nvidia-smi','--query-gpu=index,memory.free','--format=csv,noheader,nounits'],text=True).splitlines()}
+            ['nvidia-smi','--query-gpu=index,memory.free','--format=csv,noheader,nounits'],universal_newlines=True).splitlines()}
         mem_by_pid={int(row.split(',')[0]):int(row.split(',')[1]) for row in subprocess.check_output(
-            ['nvidia-smi','--query-compute-apps=pid,used_memory','--format=csv,noheader,nounits'],text=True).splitlines() if row.split(',')[1].strip().isdigit()}
+            ['nvidia-smi','--query-compute-apps=pid,used_memory','--format=csv,noheader,nounits'],universal_newlines=True).splitlines() if row.split(',')[1].strip().isdigit()}
         ram=int(next(s.split()[1] for s in Path('/proc/meminfo').read_text().splitlines() if s.startswith('MemAvailable:')))/1024**2
         counts={g:sum(v['gpu']==g for v in active.values()) for g in gpus}
         candidates=[]
@@ -82,4 +92,5 @@ def main(a):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--node',choices=['4090','09'],required=True);main(p.parse_args())
+    p=argparse.ArgumentParser();p.add_argument('--node',choices=['4090','09'],required=True)
+    p.add_argument('--resume',action='store_true');main(p.parse_args())
