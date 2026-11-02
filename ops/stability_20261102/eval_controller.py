@@ -69,17 +69,23 @@ def main(a):
             ['nvidia-smi','--query-gpu=index,memory.free','--format=csv,noheader,nounits'],text=True).splitlines()}
         mem={row.split(':')[0]:int(row.split()[1]) for row in Path('/proc/meminfo').read_text().splitlines()}
         ram=mem['MemAvailable']/1024**2
-        for gpu,name in [(7,'gpu7a'),(7,'gpu7b'),(0,'gpu0'),(1,'gpu1'),(5,'gpu5'),(6,'gpu6')]:
+        slots=[(7,'gpu7a',.44),(7,'gpu7b',.44),(0,'gpu0',.31),
+               (1,'gpu1',.44),(5,'gpu5',.44),(6,'gpu6',.31),
+               (0,'gpu0b',.31),(1,'gpu1b',.31),(5,'gpu5b',.31),(6,'gpu6b',.31)]
+        for gpu,name,fraction in slots:
             remainder=0
             if gpu in reserved:
                 if source.get('gradient_mode')!='texture_only':continue
                 remainder=sum(max(0,23000-memory_by_pid.get(item['pid'],0)) for item in source['active'].values() if item['job'][2]==gpu)
                 if any(job[2]==gpu for job in source['pending']):continue
-            # CPU checkpoint conversion removes the temporary GPU copy.  The
-            # worker's .44 allocator cap is 21,621 MiB on this 49,140-MiB card;
-            # admit only above that cap plus 279 MiB, retaining the separate
-            # 23,000-MiB reserve for the active source worker.
-            if name in launched or free[gpu]-remainder<21900 or ram<50 or time.monotonic()-last<90:continue
+            # Full-trajectory low-memory smoke: 14,789 MB peak allocated,
+            # 15,089 MB reserved; .31 cap passed clean and adversarial cases.
+            # Include CUDA/MuJoCo context overhead and the separate source
+            # reserve. A second worker on these cards waits for source exit.
+            required=17000 if fraction==.31 else 21900
+            if name in launched or free[gpu]-remainder<required or ram<50 or time.monotonic()-last<90:continue
+            if fraction==.31:
+                assert json.loads((X/'evaluation/workers/lowmem_smoke6/smoke_passed.json').read_text())['passed']
             env=os.environ.copy();env.update(CUDA_VISIBLE_DEVICES=str(gpu),MUJOCO_EGL_DEVICE_ID=str(gpu),
                 MUJOCO_GL='egl',PYOPENGL_PLATFORM='egl',OMP_NUM_THREADS='2',MKL_NUM_THREADS='2',MAX_JOBS='2',
                 HF_HUB_OFFLINE='1',TOKENIZERS_PARALLELISM='false',PYTHONUNBUFFERED='1',WANDB_MODE='disabled',
@@ -88,7 +94,7 @@ def main(a):
                 OPENPI_DATA_HOME='/data/shaozhen.liu/.cache/openpi',MPLCONFIGDIR='/tmp/refcloth_stability_mpl',
                 PYTHONPATH=':'.join([str(R),str(R/'pi'),str(O),'/data/shaozhen.liu/code/tex3d-deps/taming-transformers']))
             command=['/data/shaozhen.liu/envs/tex3d-pi0-mj330/bin/python',str(O/'evaluate.py'),
-                     '--repo',str(R),'--root',str(X),'--worker',name]
+                     '--repo',str(R),'--root',str(X),'--worker',name,'--memory-fraction',str(fraction)]
             proc=subprocess.Popen(command,cwd=R,env=env,stdin=subprocess.DEVNULL,
                 stdout=open(X/('evaluation_'+name+'.log'),'a'),stderr=subprocess.STDOUT,start_new_session=True)
             active[name]=proc;launched.add(name);last=time.monotonic()
