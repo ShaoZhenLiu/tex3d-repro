@@ -11,7 +11,8 @@
     "lambda_feature": 10.0, "lambda_amplitude": 0.1, "lambda_tv": 0.1,
     "gradient_request": "texture only, as numerically validated in the reference study",
     "renderer": "same frozen renderer; inherited user-authorized wrist-photometry exception; no recalibration",
-    "export": "final iteration 4999 only"
+    "export": "final iteration 4999 only",
+    "hardware_pairing": "All seed-10 and seed-11 controls use RTX4090; all seed-12 controls use A100, matching the source GPU family of each shared-control texture."
   },
   "arms": {
     "uv_ind": "One shared texture; original main-camera UV stream; independent auxiliary wrist UV stream with identical marginals, one draw per batch. Same initialization, observation stream, parameters, source calls and deployment as shared control.",

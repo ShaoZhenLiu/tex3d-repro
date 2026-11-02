@@ -26,9 +26,9 @@ def alive(pid):
 def main(a):
     assert json.loads((X/'prepared.json').read_text())['passed']
     if a.node=='09':
-        pending=[(10,'uv_ind'),(10,'main'),(10,'wrist')];gpus=[2,1];limit=1;required=24000;fraction=.27
+        pending=[(12,'uv_ind'),(12,'main'),(12,'wrist')];gpus=[2,1];limit=1;required=24000;fraction=.27
     else:
-        pending=[(11,'uv_ind'),(12,'uv_ind'),(11,'main'),(11,'wrist'),(12,'main'),(12,'wrist')]
+        pending=[(10,'uv_ind'),(11,'uv_ind'),(10,'main'),(10,'wrist'),(11,'main'),(11,'wrist')]
         gpus=[6,0,1,5,7];limit=2;required=23000;fraction=.44
     active={};finished=[];failed=[];last=0.
     (X/'logs').mkdir(exist_ok=True);(X/'arms').mkdir(exist_ok=True)
