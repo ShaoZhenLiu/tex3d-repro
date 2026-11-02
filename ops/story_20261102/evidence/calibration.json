@@ -1,0 +1,46 @@
+{
+  "completed": true,
+  "passed": true,
+  "records": [
+    {
+      "state": "t0_i21_s010",
+      "hook_on_off_maxdiff": 0.0,
+      "original_saved_action_maxdiff": 0.0
+    },
+    {
+      "state": "t0_i21_s050",
+      "hook_on_off_maxdiff": 0.0,
+      "original_saved_action_maxdiff": 0.0
+    },
+    {
+      "state": "t2_i21_s010",
+      "hook_on_off_maxdiff": 0.0,
+      "original_saved_action_maxdiff": 0.0
+    },
+    {
+      "state": "t2_i21_s050",
+      "hook_on_off_maxdiff": 0.0,
+      "original_saved_action_maxdiff": 0.0
+    },
+    {
+      "state": "t6_i21_s010",
+      "hook_on_off_maxdiff": 0.0,
+      "original_saved_action_maxdiff": 0.0
+    },
+    {
+      "state": "t6_i21_s050",
+      "hook_on_off_maxdiff": 0.0,
+      "original_saved_action_maxdiff": 0.0
+    },
+    {
+      "state": "t8_i21_s010",
+      "hook_on_off_maxdiff": 0.0,
+      "original_saved_action_maxdiff": 0.0
+    },
+    {
+      "state": "t8_i21_s050",
+      "hook_on_off_maxdiff": 0.0,
+      "original_saved_action_maxdiff": 0.0
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "states": 8,
+  "conditions": 9,
+  "source": "OpenVLA-OFT Spatial",
+  "suite": "Spatial",
+  "tasks": [
+    0,
+    2,
+    6,
+    8
+  ],
+  "initial": 21,
+  "steps": [
+    10,
+    50
+  ],
+  "calibration_passed": true,
+  "maximum_relative_attention_output_rms": 0.0017327278619632125,
+  "attention_density_medians": {
+    "plain": [
+      0.678451806306839,
+      0.3759178966283798
+    ],
+    "random101": [
+      0.7747951149940491,
+      0.5833357721567154
+    ],
+    "random102": [
+      0.7846515476703644,
+      0.6930423378944397
+    ],
+    "random103": [
+      0.7750377655029297,
+      0.5566727221012115
+    ],
+    "native_ref": [
+      1.4667363166809082,
+      0.6923185288906097
+    ],
+    "no_uv": [
+      0.8836598694324493,
+      0.5164227783679962
+    ],
+    "refcloth": [
+      1.2712287306785583,
+      0.7048304080963135
+    ]
+  },
+  "refcloth_above_mean_random_state_counts": {
+    "main": 8,
+    "wrist": 7
+  },
+  "intervention_step_means": {
+    "10": {
+      "full_pose_action_rms": 0.12602955508310765,
+      "main_only_pose_action_rms": 0.0286001431640731,
+      "wrist_only_pose_action_rms": 0.11597340678458877,
+      "main_symmetric_projection_share": 0.15008520175858728,
+      "wrist_symmetric_projection_share": 0.8499147982414127,
+      "interaction_pose_action_rms": 0.019074379020411474
+    },
+    "50": {
+      "full_pose_action_rms": 0.07681281781574772,
+      "main_only_pose_action_rms": 0.05123615566763905,
+      "wrist_only_pose_action_rms": 0.051652639540988865,
+      "main_symmetric_projection_share": 0.5975074093006689,
+      "wrist_symmetric_projection_share": 0.4024925906993311,
+      "interaction_pose_action_rms": 0.024586099940679756
+    }
+  },
+  "semantic_gripper_recognition_tested": false,
+  "interpretation": "Frozen-source input interventions show state-dependent view contributions. Attention is an association, not a semantic localization test."
+}

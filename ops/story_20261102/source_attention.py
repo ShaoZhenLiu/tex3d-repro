@@ -6,6 +6,7 @@ import json
 import math
 import os
 import subprocess
+from types import SimpleNamespace
 from pathlib import Path
 import numpy as np
 import torch
@@ -99,6 +100,27 @@ def main(a):
         weights,spec=attention()
         return result,weights,spec
 
+    if a.calibration_root is not None:
+        calibration=[]
+        for worker in ['worker0','worker1']:
+            original_data=json.loads((a.calibration_root/worker/'results.json').read_text())
+            for row in original_data['records']:
+                folder=a.calibration_root/worker/row['key']
+                pair=tuple(np.array(Image.open(folder/('plain_'+v+'.png')).convert('RGB')) for v in ['main','wrist'])
+                state=SimpleNamespace(inputs=runtime.A.make_inputs(ctx,pair[0],row['description']),proprio=np.array(row['proprio']))
+                with torch.no_grad():on,_,_=action(pair,state)
+                att.forward=original;ctx.model._regression_or_discrete_prediction=method
+                with torch.no_grad():
+                    h=ctx.hidden_from_arrays(pair[0],pair[1],state.inputs,state.proprio)
+                    off=ctx.ah.predict_action(h.reshape(1,56,4096).to(next(ctx.ah.parameters()).dtype)).float()[0].cpu().numpy()
+                att.forward=trace_attention;ctx.model._regression_or_discrete_prediction=trace
+                diff=float(np.max(np.abs(on-off)))
+                previous=float(np.max(np.abs(on-np.asarray(row['conditions']['plain']['action']))))
+                assert diff==0 and previous==0,(row['key'],diff,previous)
+                calibration.append(dict(state=row['key'],hook_on_off_maxdiff=diff,original_saved_action_maxdiff=previous))
+        write(dict(completed=True,passed=True,records=calibration),a.out/'calibration.json')
+        runtime.close_states();return
+
     try:
         states=runtime.collect(a.tasks,21,[10,50])
         for state in states:
@@ -150,4 +172,5 @@ def main(a):
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--repo',type=Path,required=True);p.add_argument('--assets',type=Path,required=True)
     p.add_argument('--out',type=Path,required=True);p.add_argument('--tasks',type=lambda s:[int(v) for v in s.split(',')],required=True)
+    p.add_argument('--calibration-root',type=Path)
     main(p.parse_args())
