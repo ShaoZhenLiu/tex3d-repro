@@ -142,8 +142,8 @@ def main(a):
                 if any(name not in manifest for name in job['conditions']):continue
                 if claim.exists():
                     existing=json.loads(claim.read_text())
-                    try:os.kill(existing['pid'],0);continue
-                    except ProcessLookupError:pass
+                    status=Path('/proc/%d/status'%existing['pid'])
+                    if status.exists() and not any(row.startswith('State:') and row.split()[1]=='Z' for row in status.read_text().splitlines()):continue
                 write(claim,dict(pid=os.getpid(),worker=a.worker,time=time.time()))
                 chosen=job;break
             fcntl.flock(f,fcntl.LOCK_UN)
