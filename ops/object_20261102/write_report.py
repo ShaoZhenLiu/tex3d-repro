@@ -40,7 +40,15 @@ def main():
             rows.append([t,label]+[stat(z['t10__'+m]) for m in ['marker_fraction','plain_hidden_fraction','ref_plain_fraction']])
     parts.append(table(['策略','真实模型输入 224×224','双色标记可见范围','|Plain−hidden|','|RefCloth−Plain|'],rows))
     parts.append('<p>原生 256×256 图像先走策略相同的双轴翻转与官方双线性缩放路径，再经过实际模型的预处理，最后在 224×224 RGB 等价尺度上作差。阈值为 max<sub>c</sub>|ΔI| &gt; 10（0–255）。先取每条轨迹全部策略查询的中位数，再对 30 条轨迹取中位数和四分位区间；方括号不是置信区间。未启用的第三路占位相机不计入。</p>')
+    parts.append('<p>两个模型共享相同的 30 个任务—初态键；此后各自闭环动作形成不同轨迹。所有统计分策略报告，没有把两个模型合并成 60 个独立物理初态。</p>')
     parts.append('<img src="figures/model_input_three_measures.png" alt="真实模型输入三种测量">')
+    rows=[]
+    for t in ['pi0','pi05']:
+        for view,label in [('base_0_rgb','主相机'),('left_wrist_0_rgb','腕部相机')]:
+            z=s['exposure'][t]['model_input'][view]
+            rows.append([t,label]+[stat(z['t10__'+m+'__query_fraction_gt_1pct']) for m in ['marker_fraction','plain_hidden_fraction','ref_plain_fraction']])
+    parts.append(table(['策略','相机','标记范围 >1% 的查询比例','Plain−hidden >1% 的查询比例','Ref−Plain >1% 的查询比例'],rows))
+    parts.append('<p>上表描述整个回合内有多少查询仍有可见变化；与前表的单帧面积占比是两个不同的量，同样先按回合计算，再对 30 回合汇总。</p>')
     rows=[]
     for t in ['pi0','pi05']:
         for view,label in [('base_0_rgb','主相机'),('left_wrist_0_rgb','腕部相机')]:
@@ -58,7 +66,7 @@ def main():
             z=place['native'][view][mode]
             rows.append([label,title]+[stat(z[m]) for m in ['marker_fraction','plain_hidden_fraction','ref_plain_fraction']])
     parts.append(table(['原生相机','30 个相同动态初态','双色标记','Plain−hidden','RefCloth−Plain'],rows))
-    parts.append('<p>旧仪表程序缺少 Object 的 floor_mode=True。30 个初态中，旧路径有 %d 个被射线网格移到高平台，%d 个留在偏离操作区的默认贴地位置；正式路径全部位于物体附近、离地 0.005 米。这里只改变布的模型位置，没有执行策略动作，也没有把初态统计冒充完整轨迹。</p>'%(place['old_ray_platform_count'],place['old_static_floor_count']))
+    parts.append('<p>此处 LIBERO-Object 为地面操作场景，正式评测使用贴地分支。旧仪表程序缺少 Object 的 floor_mode=True。30 个初态中，旧路径有 %d 个被射线网格移到高平台，%d 个留在偏离操作区的默认贴地位置；正式路径全部位于物体附近、离地 0.005 米。这里只改变布的模型位置，没有执行策略动作，也没有把初态统计冒充完整轨迹。</p>'%(place['old_ray_platform_count'],place['old_static_floor_count']))
     parts.append('<img src="figures/geometry_initial_state_comparison.png" alt="同状态位置对照">')
     parts.append('<p>图示固定为 task 0 / init 10；热图采用同一色标。正式攻击评测原先已有 Object 贴地分支，因此旧暴露统计的问题不会自动推翻主表攻击结果。</p>')
     parts.append('<h2>与旧图一完全相同口径的原生差分统计</h2>')
@@ -103,6 +111,8 @@ def main():
                 assert path.exists(),path
                 parts.append('<div><p>'+key+'</p><video controls preload="metadata" src="'+path.relative_to(ROOT).as_posix()+'"></video></div>')
     parts.append('</div>')
+    parts.append('<p>固定案例中的定性观察：π0.5 的 task 0 指令要求取 alphabet soup，RefCloth 回合却将绿色瓶子放入篮子；task 4 要求取 ketchup，RefCloth 回合却将牛奶盒放入篮子。对应 Plain 回合完成了目标任务。π0 的 task 0 两条件都成功，task 4 两条件都失败，后者不计入攻击诱发失败。这两段 π0.5 视频提示存在目标物体选择混淆，但没有对全部失败回合进行类型标注，不能据此报告整体混淆比例或断言内部视觉机制。</p>')
+    parts.append('<img src="figures/pi0_video_contact_sheet.png" alt="π0 预先指定视频帧"><img src="figures/pi05_video_contact_sheet.png" alt="π0.5 预先指定视频帧">')
     parts.append('<h2>论文应如何处理</h2>')
     parts.append('<p>应修正图一 Object 暴露点、补充材料对应表格和“小可见范围仍有显著攻击”的 Object 解释。应把“几何可见范围”“Plain 与背景的对比差分”“真正注入纹理导致的输入差分”分开命名。若采用本轮三种测量作新图，清楚写明是 60 条 Object 完整轨迹、实际模型输入，不能沿用旧 240 条全套件统计的图注。</p>')
     parts.append('<p>本轮直接检验的是原任务中的静态场景纹理攻击：固定原纹理在正式铺布下的净效果。它没有增加新算法，也没有把任务改成新的攻击设定。主论文原文件已核对哈希，未被本轮改写。</p>')

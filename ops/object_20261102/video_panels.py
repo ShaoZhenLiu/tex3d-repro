@@ -2,6 +2,7 @@
 import argparse
 import json
 import subprocess
+from fractions import Fraction
 from pathlib import Path
 import numpy as np
 from PIL import Image
@@ -25,9 +26,12 @@ def main(root):
             record=json.loads((folder/(key+'.json')).read_text())
             info=json.loads(subprocess.check_output(['ffprobe','-v','error','-show_format','-show_streams','-of','json',str(video)],text=True))
             duration=float(info['format']['duration'])
-            row=dict(key=key,robot_success=record['robot_success'],duration=duration,frames=[])
+            stream=next(x for x in info['streams'] if x['codec_type']=='video')
+            fps=float(Fraction(stream['avg_frame_rate']))
+            last_frame_time=(int(stream['nb_frames'])-1)/fps
+            row=dict(key=key,robot_success=record['robot_success'],duration=duration,last_frame_time=last_frame_time,frames=[])
             for j,fraction in enumerate([0.,.5,.97]):
-                stamp=duration*fraction
+                stamp=last_frame_time*fraction
                 path=out/('%s_f%d.png'%(key,j))
                 subprocess.run(['ffmpeg','-v','error','-y','-ss','%.6f'%stamp,'-i',str(video),'-frames:v','1','-threads','1',str(path)],check=True)
                 assert path.exists()
@@ -37,7 +41,7 @@ def main(root):
                 if j==0:axes[i,j].set_ylabel('Task %d / %s\n%s'%(task,condition,'SUCCESS' if record['robot_success'] else 'FAILURE'),fontsize=10)
                 row['frames'].append(dict(time_seconds=stamp,fraction=fraction,path=str(path.relative_to(root))))
             metadata.append(row)
-        fig.suptitle(target+': all predeclared qualitative cases (init 10)\nEach frame: main camera (left), wrist camera (right); fixed 0%, 50%, 97% of duration',fontsize=12)
+        fig.suptitle(target+': all predeclared qualitative cases (init 10)\nEach frame: main camera (left), wrist camera (right); fixed 0%, 50%, 97% of available frame-time span',fontsize=12)
         fig.tight_layout();fig.savefig(str(figures/(target+'_video_contact_sheet.png')),dpi=160);plt.close(fig)
     (root/'video_frame_manifest.json').write_text(json.dumps(metadata,indent=2))
 
