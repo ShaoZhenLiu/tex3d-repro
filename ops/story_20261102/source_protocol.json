@@ -1,0 +1,14 @@
+{
+  "purpose": "Explore source action-token attention and two-view action dependence; do not assume a phantom-gripper semantic mechanism",
+  "source": "OpenVLA-OFT Spatial, original 150K checkpoint and deterministic L1 action head",
+  "suite": "libero_spatial",
+  "tasks": [0,2,6,8],
+  "initial": 21,
+  "steps": [10,50],
+  "conditions": ["plain","refcloth","native_ref","no_uv","random101","random102","random103","main_only","wrist_only"],
+  "attention": "Reconstruct final-layer action-query attention from the actual rotated FlashAttention inputs; verify output reconstruction relative RMS <0.01; leave the policy forward unchanged",
+  "action_check": "Original and hook-instrumented source actions must be bitwise equal",
+  "roi": "Two-color native cloth marker, source bilinear RGB resize before thresholding, then average visible fraction per 14x14 visual patch",
+  "normalization": "Report absolute per-view/cloth attention probability and area-normalized density; action responses use first five normalized pose-action steps",
+  "scope": "Eight fixed-state diagnostics; no attack retraining, no target gradients, no claim of semantic attention hijacking from heatmaps"
+}
