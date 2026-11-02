@@ -271,7 +271,7 @@ def should_pause(entry, s):
     return io_stalled(s) and progress_age(entry, s['time']) >= grace
 
 
-def can_launch(cold_gib=24):
+def can_launch(cold_gib=24, max_models=None):
     status = read(BASE / 'health.json', {})
     if time.time() - status.get('time', 0) > 25:
         return False, ['health_monitor_missing_or_stale']
@@ -281,7 +281,7 @@ def can_launch(cold_gib=24):
     entries = active()
     if any(e['phase'] == 'loading' for e in entries):
         reasons.append('another_model_loading')
-    limit = 2 if 'zgc-33-9' in os.uname().nodename else 5
+    limit = max_models if max_models is not None else (2 if 'zgc-33-9' in os.uname().nodename else 5)
     if len(entries) >= limit:
         reasons.append('managed_model_count_limit')
     return not reasons, reasons

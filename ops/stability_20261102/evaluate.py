@@ -27,7 +27,7 @@ def write(path,value):
 
 
 def main(a):
-    assert os.environ['CUDA_VISIBLE_DEVICES'] in ['0','1','5','6','7']
+    assert os.environ['CUDA_VISIBLE_DEVICES'] in ['0','1','3','5','6','7']
     torch.set_num_threads(2);torch.manual_seed(7)
     torch.cuda.set_per_process_memory_fraction(a.memory_fraction,0)
     import attack_pi0_cloth as A

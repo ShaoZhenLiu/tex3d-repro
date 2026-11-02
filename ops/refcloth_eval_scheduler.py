@@ -26,6 +26,8 @@ def claim_alive(path):
 
 def main(study, publish, a):
     coupling = study == 'coupling'
+    if a.share_gpu3 and (not coupling or not os.uname().nodename.endswith('-41')):
+        raise ValueError('The shared GPU 3 option is for camera evaluation on host 41')
     x = C if coupling else P
     total = 180 if coupling else 140
     assert guard.read(P / 'evaluation/workers/lowmem_smoke6/smoke_passed.json')['passed']
@@ -43,7 +45,8 @@ def main(study, publish, a):
                 and str(x) in current['cmd'] and '--worker ' + name in current['cmd']):
             continue
         gpu = int(name.split('gpu')[1].split('_')[0][0])
-        token = guard.register(pid, SCRIPT, 'eval', gpu, 17000, study + ':' + name, x, phase='warm')
+        budget = 19000 if gpu == 3 else 17000
+        token = guard.register(pid, SCRIPT, 'eval', gpu, budget, study + ':' + name, x, phase='warm')
         actors[name] = dict(pid=pid, ticks=current['ticks'], proc=None, token=token, gpu=gpu)
     budget_lock = (R / 'experiments/refcloth_gpu_budget_4090.lock').open('a')
     jobs = guard.read(x / 'evaluation/jobs.json')
@@ -71,18 +74,25 @@ def main(study, publish, a):
             del actors[name]
         fcntl.flock(budget_lock, fcntl.LOCK_EX)
         try:
-            allowed, reasons = guard.can_launch()
+            allowed, reasons = guard.can_launch(max_models=6 if a.share_gpu3 else None)
             source_pending = any(guard.read(root / 'train_status_4090.json', {}).get('pending') for root in [P, C])
             loading = sum(e['kind'] == 'eval' and e['phase'] == 'loading' and e['root'] == str(x) for e in guard.active())
             if ready and len(ready) > loading and allowed:
+                entries = guard.active()
+                normal_workers = sum(e['gpu'] != 3 for e in entries)
+                gpus = [0, 1, 5, 6, 7] if normal_workers < 5 else []
+                if a.share_gpu3 and not any(e['gpu'] == 3 for e in entries):
+                    gpus.append(3)
                 candidates = []
-                for gpu in [0, 1, 5, 6, 7]:
-                    source_here = any(e['kind'] == 'source' and e['gpu'] == gpu for e in guard.active())
-                    reserve = 23000 if source_pending and not source_here else 0
-                    if guard.gpu_headroom(gpu) - reserve >= 17000:
+                for gpu in gpus:
+                    source_here = any(e['kind'] == 'source' and e['gpu'] == gpu for e in entries)
+                    reserve = 23000 if gpu != 3 and source_pending and not source_here else 0
+                    budget = 19000 if gpu == 3 else 17000
+                    if guard.gpu_headroom(gpu) - reserve >= budget:
                         candidates.append(gpu)
                 if candidates:
-                    gpu = min(candidates, key=lambda g: sum(e['gpu'] == g for e in guard.active()))
+                    gpu = min(candidates, key=lambda g: sum(e['gpu'] == g for e in entries))
+                    budget = 19000 if gpu == 3 else 17000
                     name = 'gpu%d_%s_%d' % (gpu, study, int(time.time()))
                     env = os.environ.copy()
                     env.update(CUDA_VISIBLE_DEVICES=str(gpu), MUJOCO_EGL_DEVICE_ID=str(gpu),
@@ -98,7 +108,7 @@ def main(study, publish, a):
                     proc = subprocess.Popen(cmd, cwd=R, env=env, stdin=subprocess.DEVNULL,
                         stdout=open(x / ('evaluation_' + name + '.log'), 'a'), stderr=subprocess.STDOUT,
                         start_new_session=True)
-                    token = guard.register(proc.pid, SCRIPT, 'eval', gpu, 17000, study + ':' + name, x)
+                    token = guard.register(proc.pid, SCRIPT, 'eval', gpu, budget, study + ':' + name, x)
                     actors[name] = dict(pid=proc.pid, ticks=guard.identity(proc.pid)['ticks'],
                                         gpu=gpu, token=token, proc=proc)
                     print('EVAL_LAUNCH', name, proc.pid, flush=True)
@@ -116,4 +126,6 @@ def main(study, publish, a):
 
 def entry(study, publish):
     p = argparse.ArgumentParser(); p.add_argument('--resume', action='store_true')
+    p.add_argument('--share-gpu3', action='store_true',
+                   help='Allow one extra camera worker on host 41 GPU 3 with at least 19000 MiB free')
     main(study, publish, p.parse_args())
