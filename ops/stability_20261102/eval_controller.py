@@ -75,7 +75,11 @@ def main(a):
                 if source.get('gradient_mode')!='texture_only':continue
                 remainder=sum(max(0,23000-memory_by_pid.get(item['pid'],0)) for item in source['active'].values() if item['job'][2]==gpu)
                 if any(job[2]==gpu for job in source['pending']):continue
-            if name in launched or free[gpu]-remainder<22000 or ram<50 or time.monotonic()-last<90:continue
+            # CPU checkpoint conversion removes the temporary GPU copy.  The
+            # worker's .44 allocator cap is 21,621 MiB on this 49,140-MiB card;
+            # admit only above that cap plus 279 MiB, retaining the separate
+            # 23,000-MiB reserve for the active source worker.
+            if name in launched or free[gpu]-remainder<21900 or ram<50 or time.monotonic()-last<90:continue
             env=os.environ.copy();env.update(CUDA_VISIBLE_DEVICES=str(gpu),MUJOCO_EGL_DEVICE_ID=str(gpu),
                 MUJOCO_GL='egl',PYOPENGL_PLATFORM='egl',OMP_NUM_THREADS='2',MKL_NUM_THREADS='2',MAX_JOBS='2',
                 HF_HUB_OFFLINE='1',TOKENIZERS_PARALLELISM='false',PYTHONUNBUFFERED='1',WANDB_MODE='disabled',
