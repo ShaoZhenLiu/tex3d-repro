@@ -1,0 +1,49 @@
+{
+  "version": "coupling-20261102-v1",
+  "authorized": "User explicitly requested both UV synchronization and independently trained camera textures followed by one-cloth deployment",
+  "seeds": [10, 11, 12],
+  "shared_control": "Reuse the three matched-reference final textures from the ongoing reference study; no texture selection",
+  "training": {
+    "iterations": 5000, "batch": 8, "frame_visits_per_arm": 40000,
+    "source": "OpenVLA-OFT Spatial 150K", "pool_frames": 296,
+    "task_pool": [0, 2, 6, 8], "reference": "same-path Plain action-token features",
+    "initialization_std": 0.01, "step_size": 0.05, "epsilon": 0.25098039215686274,
+    "lambda_feature": 10.0, "lambda_amplitude": 0.1, "lambda_tv": 0.1,
+    "gradient_request": "texture only, as numerically validated in the reference study",
+    "renderer": "same frozen renderer; inherited user-authorized wrist-photometry exception; no recalibration",
+    "export": "final iteration 4999 only"
+  },
+  "arms": {
+    "uv_ind": "One shared texture; original main-camera UV stream; independent auxiliary wrist UV stream with identical marginals, one draw per batch. Same initialization, observation stream, parameters, source calls and deployment as shared control.",
+    "main": "Optimize one texture through the main view only; wrist receives a float32 cached same-path Plain rendering. Full 5000-update budget and original frame/UV stream.",
+    "wrist": "Optimize a separate texture through the wrist view only; main receives a float32 cached same-path Plain rendering. Full 5000-update budget and original frame/UV stream."
+  },
+  "independent_pair_budget": "Two textures and two complete training arms per seed: twice the parameters and source forward calls of shared training. This is an explicitly more generous independent-training baseline.",
+  "composition": {
+    "raw": "Pointwise UV-space Euclidean consensus Tbar=(Tm+Tw)/2, followed by fixed nearest-integer PNG export. This minimizes the sum of squared texture-space distances on the shared-texture diagonal, not rendered-image error.",
+    "primary": "Scale the mean perturbation about the fixed Plain RGB, clip to the original per-pixel epsilon and valid RGB range, and choose scale by source-texture RMS only to match the corresponding shared texture's exported RMS. Fixed bisection and nearest export; no target feedback.",
+    "unreachable": "Report the attainable RMS and retain the maximum-amplitude bounded consensus; never describe it as matched if the target RMS is infeasible.",
+    "record": ["raw consensus RMS", "scaled RMS", "scale", "UV texture-space disagreement RMS", "projection residual", "PNG hashes"]
+  },
+  "evaluation": {
+    "target": "pi05", "suites": ["spatial", "object"], "tasks": [0,1,2,3,4,5,6,7,8,9],
+    "initials": [10,11,12,13,14,15,16,17,18,19],
+    "protocol": "Identical native rendering, production Object placement, 400 actions, 10 settling steps, replan 5, denoise 10 and query-indexed Gaussian noise as reference-stability study",
+    "reuse": "Reuse 200 Plain and 600 shared matched-reference episodes by exact texture and protocol identity; do not rerun or select them",
+    "new_episodes": 1800, "analysis_episodes_including_reuse": 2600,
+    "conditions_per_seed": ["shared", "uv_ind", "consensus_raw", "consensus_rms"]
+  },
+  "analysis": {
+    "primary_contrasts": ["shared vs uv_ind", "shared vs consensus_rms"],
+    "secondary": "shared vs consensus_raw",
+    "training_units": "Three complete predeclared seed pairs; report all per-seed, per-suite and averaged differences, sample SD, t intervals and exact sign flips. Three pairs cannot yield a two-sided exact sign-flip p below 0.25; do not claim population-level significance from episode counts.",
+    "episode_tests": "Conditional frozen-texture comparisons: exact paired McNemar with Holm across 12 primary contrast-by-seed-by-suite tests; raw-consensus six tests are a separate secondary family.",
+    "scope": "Shared rendering is a subset of independently specified camera appearances. No claim of universal optimal-source-loss superiority, no claim that a UV-only contrast isolates all parameter-sharing effects.",
+    "selection": "Keep every planned seed and final texture, regardless of outcomes. A negative or mixed comparison does not establish an advantage."
+  },
+  "resources": {
+    "4090_allowed": [0,1,5,6,7], "4090_forbidden": [4],
+    "09_allowed": [1,2], "host_ram_floor_gib": 50,
+    "no_shared_environment_or_scene_asset_changes": true
+  }
+}
