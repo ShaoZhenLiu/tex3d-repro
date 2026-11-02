@@ -1,5 +1,5 @@
 {
-  "version": "reference-stability-20261102-v1",
+  "version": "reference-stability-20261102-v2-texture-gradient-request",
   "parent_commit": "c14d6d997ff26e92846cabb8b5d168d1f0806680",
   "new_training_seeds": [10, 11, 12],
   "existing_seeds": [7, 8, 9],
@@ -20,7 +20,8 @@
     "lambda_amplitude": 0.1,
     "lambda_tv": 0.1,
     "export": "final iteration 4999 only; no target-based checkpoint selection",
-    "precision": "original bfloat16 source path; record software and GPU architecture for every pair"
+    "precision": "original bfloat16 source path; record software and GPU architecture for every pair",
+    "gradient_request": "Request gradients only for the optimized texture, preserving source network requires-grad flags and all forwards; same scalar objective, sampler and sign update. Validated against repeated full backpropagation on held-out seed-11 frames. Numerical, not bitwise, agreement because the original backward itself is nondeterministic. All final new runs use this mode from initialization."
   },
   "evaluation": {
     "target": "pi05",

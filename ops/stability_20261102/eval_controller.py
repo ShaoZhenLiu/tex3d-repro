@@ -1,5 +1,6 @@
 """Publish completed textures and schedule persistent native evaluation workers."""
 import json
+import argparse
 import hashlib
 import os
 import shutil
@@ -41,9 +42,20 @@ def publish():
             assert left['sampling_log_sha256']==right['sampling_log_sha256']
 
 
-def main():
+def main(a):
     assert json.loads((X/'evaluation/workers/smoke7/smoke_passed.json').read_text())['passed']
     active={};launched=set();failed=[];last=0.
+    if a.resume:
+        prior=json.loads((X/'eval_controller_status.json').read_text())
+        failed=prior['failed']
+        class ExistingProcess:
+            def __init__(self,pid,name):self.pid=pid;self.name=name
+            def poll(self):
+                p=Path('/proc/%d/status'%self.pid)
+                if p.exists() and not any(row.startswith('State:') and 'Z' in row.split()[1] for row in p.read_text().splitlines()):return None
+                return 0 if (X/'evaluation/workers'/self.name/'completed.json').exists() else 1
+        for name,pid in prior['active'].items():
+            active[name]=ExistingProcess(pid,name);launched.add(name)
     while True:
         publish()
         complete=len(list((X/'evaluation/completed').glob('*.json')))
@@ -51,16 +63,24 @@ def main():
         source=json.loads((X/'train_status_4090.json').read_text())
         reserved={item['job'][2] for item in source['active'].values()}
         reserved.update(job[2] for job in source['pending'])
+        compute_apps=subprocess.check_output(['nvidia-smi','--query-compute-apps=pid,used_memory','--format=csv,noheader,nounits'],text=True)
+        memory_by_pid={int(row.split(',')[0]):int(row.split(',')[1]) for row in compute_apps.splitlines() if row.split(',')[1].strip().isdigit()}
         free={int(row.split(',')[0]):int(row.split(',')[1]) for row in subprocess.check_output(
             ['nvidia-smi','--query-gpu=index,memory.free','--format=csv,noheader,nounits'],text=True).splitlines()}
         mem={row.split(':')[0]:int(row.split()[1]) for row in Path('/proc/meminfo').read_text().splitlines()}
         ram=mem['MemAvailable']/1024**2
         for gpu,name in [(7,'gpu7a'),(7,'gpu7b'),(0,'gpu0'),(1,'gpu1'),(5,'gpu5'),(6,'gpu6')]:
-            if name in launched or gpu in reserved or free[gpu]<25000 or ram<50 or time.monotonic()-last<60:continue
+            remainder=0
+            if gpu in reserved:
+                if source.get('gradient_mode')!='texture_only':continue
+                remainder=sum(max(0,23000-memory_by_pid.get(item['pid'],0)) for item in source['active'].values() if item['job'][2]==gpu)
+                if any(job[2]==gpu for job in source['pending']):continue
+            if name in launched or free[gpu]-remainder<22000 or ram<50 or time.monotonic()-last<90:continue
             env=os.environ.copy();env.update(CUDA_VISIBLE_DEVICES=str(gpu),MUJOCO_EGL_DEVICE_ID=str(gpu),
                 MUJOCO_GL='egl',PYOPENGL_PLATFORM='egl',OMP_NUM_THREADS='2',MKL_NUM_THREADS='2',MAX_JOBS='2',
                 HF_HUB_OFFLINE='1',TOKENIZERS_PARALLELISM='false',PYTHONUNBUFFERED='1',WANDB_MODE='disabled',
                 USE_TF='0',TF_CPP_MIN_LOG_LEVEL='2',TORCHDYNAMO_DISABLE='1',REFCLOTH_SURFACE_MODE='legacy',
+                JAX_PLATFORMS='cpu',XLA_PYTHON_CLIENT_PREALLOCATE='false',
                 OPENPI_DATA_HOME='/data/shaozhen.liu/.cache/openpi',MPLCONFIGDIR='/tmp/refcloth_stability_mpl',
                 PYTHONPATH=':'.join([str(R),str(R/'pi'),str(O),'/data/shaozhen.liu/code/tex3d-deps/taming-transformers']))
             command=['/data/shaozhen.liu/envs/tex3d-pi0-mj330/bin/python',str(O/'evaluate.py'),
@@ -81,4 +101,5 @@ def main():
     write(X/'eval_controller_done.json',dict(completed=True,bundles=140,episodes=2600,failed_attempts=failed))
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    p=argparse.ArgumentParser();p.add_argument('--resume',action='store_true');main(p.parse_args())

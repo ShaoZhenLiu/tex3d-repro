@@ -240,6 +240,7 @@ def train(args):
             loc[tid] += 1
 
     param = renderer.adv_noise
+    backward_inputs = (param,) if getattr(args, "texture_only_grad", False) else None
     resume_from = 0
     if getattr(args, "resume_dir", ""):
         import glob as _glob
@@ -353,11 +354,11 @@ def train(args):
                       + args.alpha_feature * attack_feat)
             attack_sum += attack.item()
             feat_val = attack_feat.item()
-            (attack / args.batch).backward()
+            (attack / args.batch).backward(inputs=backward_inputs)
         tex = renderer.texture_tensor()
         ref = F.mse_loss(tex, t0_tex)
         tv = M.spatial_tv_nhwc(tex - t0_tex)
-        (args.lambda_ref * ref + args.lambda_tv * tv).backward()
+        (args.lambda_ref * ref + args.lambda_tv * tv).backward(inputs=backward_inputs)
         with torch.no_grad():
             param.sub_(args.attack_lr * param.grad.sign())
             param.clamp_(-5.0, 5.0)
@@ -431,6 +432,7 @@ def main():
     p.add_argument("--seed", type=int, default=7)
     p.add_argument("--checkpoint-every", type=int, default=625)
     p.add_argument("--ckpt-step-suffix", action="store_true")
+    p.add_argument("--texture-only-grad", action="store_true", help="Compute gradients only for the optimized texture; leave frozen network flags and forwards unchanged")
     p.add_argument("--resume-dir", default="",
                    help="断点续训：从该目录最近 it*.pt 恢复 θ 并续跑（重启容错）")
     args = ap.parse_args()

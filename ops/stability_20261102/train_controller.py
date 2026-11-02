@@ -31,9 +31,9 @@ def main(a):
     assert json.loads((ROOT/'streams/prepared.json').read_text())['passed']
     if a.node=='09':
         assert json.loads((ROOT/'streams/preflight_09.json').read_text())['passed']
-        jobs=[(12,'native',1),(12,'mr',2)];fraction=.50
+        jobs=[(12,'native',1),(12,'mr',2)];fraction=.285;required=26000
     else:
-        jobs=[(10,'native',0),(10,'mr',6),(11,'native',1),(11,'mr',5)];fraction=.78
+        jobs=[(10,'native',0),(10,'mr',6),(11,'native',1),(11,'mr',5)];fraction=.51;required=28000
     assert all(g!=4 for _,_,g in jobs)
     pending=list(jobs);active={};finished=[];failed=[];last_launch=0.
     if a.resume:
@@ -52,11 +52,11 @@ def main(a):
         if pending and time.monotonic()-last_launch>=60:
             seed,ref,gpu=pending[0]
             free,ram=resources()
-            if a.node=='09' and free[gpu]<40000:
-                occupied={v['job'][2] for v in active.values()}
-                eligible=[g for g in [1,2] if g not in occupied and free[g]>=40000]
+            if a.node=='09' and free[gpu]<required:
+                counts={g:sum(v['job'][2]==g for v in active.values()) for g in [1,2]}
+                eligible=[g for g in [2,1] if counts[g]<2 and free[g]>=required]
                 if eligible:gpu=eligible[0]
-            if free[gpu]>=40000 and ram>=50:
+            if free[gpu]>=required and ram>=50:
                 name='s%d_%s'%(seed,ref)
                 env=os.environ.copy();env.update(CUDA_VISIBLE_DEVICES=str(gpu),MUJOCO_EGL_DEVICE_ID=str(gpu),
                     MUJOCO_GL='egl',PYOPENGL_PLATFORM='egl',OMP_NUM_THREADS='2',MKL_NUM_THREADS='2',
@@ -83,7 +83,7 @@ def main(a):
             del active[name]
         write(ROOT/('train_status_'+a.node+'.json'),dict(node=a.node,pending=pending,
             active={n:dict(pid=v['proc'].pid,job=v['job'],start=v['start']) for n,v in active.items()},
-            finished=finished,failed=failed,updated=time.time()))
+            finished=finished,failed=failed,gradient_mode='texture_only',updated=time.time()))
         if pending or active:time.sleep(10)
     write(ROOT/('train_done_'+a.node+'.json'),dict(completed=not failed,finished=finished,failed=failed))
     if failed:raise SystemExit(1)

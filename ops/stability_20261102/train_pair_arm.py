@@ -27,6 +27,8 @@ def main(a):
     np.random.seed(a.seed)
     prepared=json.loads((a.root/'streams/prepared.json').read_text())
     assert prepared['passed']
+    validation=json.loads((a.repo/'ops/stability_20261102/gradient_validation_holdout.json').read_text())
+    assert validation['passed'] and validation['seed']==11
     assert prepared.get('all_view_photometric_gate_passed',False) or (
         a.allow_frozen_wrist_gap and prepared.get('frozen_wrist_gap_authorized',False))
     record=next(r for r in prepared['streams'] if r['seed']==a.seed)
@@ -42,7 +44,7 @@ def main(a):
         ref_switch=0,stream='replay',stream_file=str(stream),uv='on',filter_task=None,
         iters=5000,batch=8,attack_lr=.05,epsilon=64/255,init_std=.01,
         lambda_ref=.1,lambda_tv=.1,alpha_action=0.,alpha_feature=10.,
-        seed=a.seed,checkpoint_every=625,ckpt_step_suffix=True,resume_dir='')
+        seed=a.seed,checkpoint_every=625,ckpt_step_suffix=True,resume_dir='',texture_only_grad=True)
     out=a.root/'arms'/('s%d_%s'%(a.seed,a.ref))
     out.mkdir(parents=True,exist_ok=True)
     assert not (out/'completed.json').exists()

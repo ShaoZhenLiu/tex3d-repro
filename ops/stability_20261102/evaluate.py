@@ -14,6 +14,8 @@ import numpy as np
 import torch
 from PIL import Image
 
+ENTRY_SHA256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+
 
 def sha(a):
     return hashlib.sha256(np.ascontiguousarray(a).tobytes()).hexdigest()
@@ -35,7 +37,18 @@ def main(a):
     assert A.patch_status()=='patched' and os.environ.get('REFCLOTH_SURFACE_MODE','legacy')=='legacy'
     assert mujoco.__version__=='3.3.0'
     p=protocol['evaluation']
+    # Convert the checkpoint to float32 on CPU before its single GPU transfer.
+    # This avoids a second GPU-sized weight copy during .float().
+    original_create=A.policy_config.create_trained_policy
+    assert 'pytorch_device' in inspect.signature(original_create).parameters
+    def create_cpu(*args,**kwargs):
+        kwargs['pytorch_device']='cpu'
+        return original_create(*args,**kwargs)
+    A.policy_config.create_trained_policy=create_cpu
     policy=A.load_policy(p['checkpoint'],model_config=p['config'],num_denoise=p['num_denoise'])
+    assert hasattr(policy,'_pytorch_device')
+    policy._model.to('cuda');policy._pytorch_device='cuda'
+    A.policy_config.create_trained_policy=original_create
     policy._model.eval().requires_grad_(False)
     cfg=A.training_config.get_config(p['config']).model
     noise_shape=(cfg.action_horizon,cfg.action_dim)
@@ -84,7 +97,7 @@ def main(a):
         task_obj=suites[suite].get_task(task);state=suites[suite].get_task_init_states(task)[initial]
         success=A.evaluate_native(paired,task_obj,state,image,max_steps=400,num_steps_wait=10,
             replan_steps=5,floor_mode=(suite=='object'))
-        assert paired.rows and current['uploads']>before
+        assert (paired.rows or success) and current['uploads']>before
         data=dict(completed=True,suite=suite,task=task,initial=initial,condition=condition,
             training_seed=meta.get('seed'),reference=meta.get('reference'),texture_sha256=meta['sha256'],
             robot_success=bool(success),queries=len(paired.rows),elapsed_seconds=time.monotonic()-start,
@@ -97,11 +110,16 @@ def main(a):
     cal0=episode('spatial',0,10,'plain',True)
     cal1=episode('spatial',0,10,'plain',True)
     assert cal0['robot_success']==cal1['robot_success'] and cal0['trajectory']==cal1['trajectory']
+    baseline=outcomes/'spatial_t0_i10_plain.json'
+    if baseline.exists():
+        old=json.loads(baseline.read_text())
+        assert old['robot_success']==cal0['robot_success'] and old['trajectory']==cal0['trajectory'], 'CPU checkpoint-loading path changed the reference rollout'
     write(worker/'calibration.json',dict(passed=True,queries=cal0['queries'],trajectory_exact=True))
     registration=dict(worker=a.worker,protocol_sha256=hashlib.sha256((a.repo/'ops/stability_20261102/protocol.json').read_bytes()).hexdigest(),
         checkpoint=p['checkpoint'],noise_shape=noise_shape,mujoco=mujoco.__version__,pytorch=torch.__version__,
         gpu_name=torch.cuda.get_device_name(),host=os.uname().nodename,
         source_hashes={str(Path(inspect.getfile(v))):hashlib.sha256(Path(inspect.getfile(v)).read_bytes()).hexdigest() for v in [A,B,type(policy),type(policy._model)]},
+        entry_sha256=ENTRY_SHA256,cpu_checkpoint_conversion=True,
         commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=a.repo,text=True).strip())
     write(worker/'registered.json',registration)
     if a.smoke:
@@ -140,7 +158,9 @@ def main(a):
             if (initial+chosen['task'])%2:conditions.reverse()
             pair=[episode(chosen['suite'],chosen['task'],initial,c) for c in conditions]
             if len(pair)==2:
-                assert pair[0]['trajectory'][0]['proprio_sha256']==pair[1]['trajectory'][0]['proprio_sha256']
+                if pair[0]['trajectory'] and pair[1]['trajectory']:
+                    assert pair[0]['trajectory'][0]['proprio_sha256']==pair[1]['trajectory'][0]['proprio_sha256']
+                else:assert not pair[0]['trajectory'] and not pair[1]['trajectory'] and pair[0]['robot_success'] and pair[1]['robot_success']
                 assert all(x['noise_sha256']==y['noise_sha256'] for x,y in zip(pair[0]['trajectory'],pair[1]['trajectory']))
             rows.extend(dict(condition=x['condition'],initial=initial,robot_success=x['robot_success']) for x in pair)
         write(complete/(chosen['id']+'.json'),dict(completed=True,job=chosen,outcomes=rows,worker=a.worker))
