@@ -36,11 +36,26 @@ def main(a):
         jobs=[(10,'native',0),(10,'mr',6),(11,'native',1),(11,'mr',5)];fraction=.78
     assert all(g!=4 for _,_,g in jobs)
     pending=list(jobs);active={};finished=[];failed=[];last_launch=0.
+    if a.resume:
+        prior=json.loads((ROOT/('train_status_'+a.node+'.json')).read_text())
+        pending=[tuple(j) for j in prior['pending']];finished=prior['finished'];failed=prior['failed']
+        class ExistingProcess:
+            def __init__(self,pid,result):self.pid=pid;self.result=result
+            def poll(self):
+                try:os.kill(self.pid,0);return None
+                except ProcessLookupError:return 0 if self.result.exists() else 1
+        for name,info in prior['active'].items():
+            active[name]=dict(proc=ExistingProcess(info['pid'],ROOT/'arms'/name/'completed.json'),
+                              job=tuple(info['job']),start=info['start'])
     (ROOT/'logs').mkdir(exist_ok=True)
     while pending or active:
         if pending and time.monotonic()-last_launch>=60:
             seed,ref,gpu=pending[0]
             free,ram=resources()
+            if a.node=='09' and free[gpu]<40000:
+                occupied={v['job'][2] for v in active.values()}
+                eligible=[g for g in [1,2] if g not in occupied and free[g]>=40000]
+                if eligible:gpu=eligible[0]
             if free[gpu]>=40000 and ram>=50:
                 name='s%d_%s'%(seed,ref)
                 env=os.environ.copy();env.update(CUDA_VISIBLE_DEVICES=str(gpu),MUJOCO_EGL_DEVICE_ID=str(gpu),
@@ -75,5 +90,5 @@ def main(a):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--node',choices=['4090','09'],required=True)
+    p=argparse.ArgumentParser();p.add_argument('--node',choices=['4090','09'],required=True);p.add_argument('--resume',action='store_true')
     main(p.parse_args())
