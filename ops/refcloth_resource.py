@@ -200,21 +200,52 @@ def admission_reasons(s):
         reasons.append('host_memory_below_50GiB')
     if s['headroom'] is not None and s['headroom'] < 24 * GIB:
         reasons.append('ancestor_headroom_below_24GiB')
-    for field, mode, limit in [('memory_psi', 'full', 1.), ('memory_psi', 'some', 2.),
-                               ('io_psi', 'full', 5.), ('io_psi', 'some', 10.)]:
+    for field, mode, limit in [('memory_psi', 'full', 1.), ('memory_psi', 'some', 2.)]:
         if _pressure(s, field, mode) >= limit:
             reasons.append('%s_%s_high' % (field, mode))
-    for field, limit in [('iowait_percent', 10.), ('io_mib_s', 128.), ('swap_mib_s', 1.)]:
-        if s[field] is None or s[field] >= limit:
-            reasons.append('%s_unsettled' % field)
+    if any(s[k] is None for k in ['iowait_percent', 'io_mib_s', 'swap_mib_s']):
+        reasons.append('waiting_for_resource_counter_interval')
+    if io_stalled(s):
+        reasons.append('sustained_IO_wait')
+    if (s.get('io_mib_s') or 0) >= 512. and (s.get('iowait_percent') or 0) >= 10.:
+        reasons.append('high_IO_throughput_with_CPU_wait')
+    if (s.get('swap_mib_s') or 0) >= 1.:
+        reasons.append('active_swap')
     return reasons
 
 
+def io_stalled(s):
+    # Global IO PSI alone can be high during normal cold model loading while
+    # this worker is making progress. Require substantial CPU IO wait too.
+    return (_pressure(s, 'io_psi', 'full') >= 30.
+            and (s.get('iowait_percent') or 0) >= 20.)
+
+
+def memory_critical(s):
+    return s['available'] < 10 * GIB or _pressure(s, 'memory_psi', 'full') >= 10.
+
+
 def severe(s):
-    return (s['available'] < 10 * GIB
-            or _pressure(s, 'memory_psi', 'full') >= 10.
-            or _pressure(s, 'io_psi', 'full') >= 30.
-            or (s.get('iowait_percent') or 0) >= 25.)
+    return memory_critical(s) or io_stalled(s)
+
+
+def progress_age(entry, now):
+    root = Path(entry['root']); name = entry['label'].split(':', 1)[1]
+    path = root / ('logs/' + name + '.log' if entry['kind'] == 'source'
+                   else 'evaluation_' + name + '.log')
+    latest = max(entry['started'], entry.get('ready_at', 0))
+    try:
+        latest = max(latest, path.stat().st_mtime)
+    except OSError:
+        pass
+    return max(0., now - latest)
+
+
+def should_pause(entry, s):
+    if memory_critical(s):
+        return True
+    grace = 600 if entry['phase'] == 'loading' else 300
+    return io_stalled(s) and progress_age(entry, s['time']) >= grace
 
 
 def can_launch():
@@ -283,7 +314,7 @@ def monitor():
                 if stopped and s['time'] - stopped['time'] >= 45 and not stopped.get('kill_sent'):
                     stopped['kill_sent'] = stop_entry(entry, signal.SIGKILL)
             if severe_since and s['time'] - severe_since >= 30 and s['time'] - last_stop >= 30:
-                candidates = [e for e in entries if e['token'] not in stops]
+                candidates = [e for e in entries if e['token'] not in stops and should_pause(e, s)]
                 if candidates:
                     entry = max(candidates, key=lambda e: (e['phase'] == 'loading', e['started']))
                     record = dict(entry, time=s['time'], reason='sustained_resource_pressure', health=s)

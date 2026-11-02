@@ -45,7 +45,27 @@ class Admission(unittest.TestCase):
     def test_healthy_then_pressure(self):
         s=healthy();self.assertFalse(g.admission_reasons(s));self.assertFalse(g.severe(s))
         s['io_psi']={'full':{'avg10':50.}}
+        self.assertFalse(g.admission_reasons(s));self.assertFalse(g.severe(s))
+        s['iowait_percent']=25.
         self.assertTrue(g.admission_reasons(s));self.assertTrue(g.severe(s))
+
+    def test_active_loading_is_not_stopped_for_global_IO_PSI(self):
+        s=healthy();s['io_psi']={'full':{'avg10':60.}};s['iowait_percent']=25.
+        entry=dict(root='/missing',label='stability:s10_native',kind='source',phase='loading',started=s['time']-120)
+        self.assertFalse(g.should_pause(entry,s))
+        entry['started']=s['time']-601
+        self.assertTrue(g.should_pause(entry,s))
+        entry['started']=s['time'];s['memory_psi']={'full':{'avg10':20.}}
+        self.assertTrue(g.should_pause(entry,s))
+
+    def test_recent_training_output_prevents_IO_only_pause(self):
+        with tempfile.TemporaryDirectory() as temp:
+            r=Path(temp);(r/'logs').mkdir();p=r/'logs/s10_native.log';p.write_text('update completed\n')
+            s=healthy();s['io_psi']={'full':{'avg10':70.}};s['iowait_percent']=30.
+            entry=dict(root=str(r),label='stability:s10_native',kind='source',phase='warm',started=s['time']-1000)
+            self.assertFalse(g.should_pause(entry,s))
+            os.utime(str(p),(s['time']-301,s['time']-301))
+            self.assertTrue(g.should_pause(entry,s))
 
     def test_one_cold_load_and_stable_window(self):
         s=dict(healthy(),admission_reasons=[],healthy_since=time.time()-70)
