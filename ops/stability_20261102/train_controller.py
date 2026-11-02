@@ -31,9 +31,9 @@ def main(a):
     assert json.loads((ROOT/'streams/prepared.json').read_text())['passed']
     if a.node=='09':
         assert json.loads((ROOT/'streams/preflight_09.json').read_text())['passed']
-        jobs=[(12,'native',1),(12,'mr',2)];fraction=.37
+        jobs=[(12,'native',1),(12,'mr',2)];fraction=.50
     else:
-        jobs=[(10,'native',0),(10,'mr',6),(11,'native',1),(11,'mr',5)];fraction=.62
+        jobs=[(10,'native',0),(10,'mr',6),(11,'native',1),(11,'mr',5)];fraction=.78
     assert all(g!=4 for _,_,g in jobs)
     pending=list(jobs);active={};finished=[];failed=[];last_launch=0.
     (ROOT/'logs').mkdir(exist_ok=True)
@@ -41,7 +41,7 @@ def main(a):
         if pending and time.monotonic()-last_launch>=60:
             seed,ref,gpu=pending[0]
             free,ram=resources()
-            if free[gpu]>=34000 and ram>=50:
+            if free[gpu]>=40000 and ram>=50:
                 name='s%d_%s'%(seed,ref)
                 env=os.environ.copy();env.update(CUDA_VISIBLE_DEVICES=str(gpu),MUJOCO_EGL_DEVICE_ID=str(gpu),
                     MUJOCO_GL='egl',PYOPENGL_PLATFORM='egl',OMP_NUM_THREADS='2',MKL_NUM_THREADS='2',

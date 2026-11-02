@@ -84,7 +84,7 @@ def main(a):
     result=dict(passed=bool(modes),validated_modes=modes,paired_updates=2,batch=8,references=outcomes,
         interpretation='Network parameter requires-grad flags and all forward computations are preserved; unused model gradients are pruned or immediately released.')
     (out/'equivalence.json').write_text(json.dumps(result,indent=2))
-    print('EQUIVALENCE_PASSED '+json.dumps(result),flush=True)
+    print('EQUIVALENCE_RESULT '+json.dumps(result),flush=True)
 
 
 if __name__=='__main__':
