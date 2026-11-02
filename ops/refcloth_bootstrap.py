@@ -26,6 +26,8 @@ def main(a):
     except BlockingIOError:return
     expected=guard.read(a.manifest)
     assert expected['commit']==a.commit and expected['files']
+    if expected.get('bundle'):
+        assert hashlib.sha256(Path(expected['bundle']).read_bytes()).hexdigest()==expected['bundle_sha256']
     last_reason=None
     while True:
         allowed,reasons=guard.can_launch()
@@ -38,7 +40,7 @@ def main(a):
             assert hashlib.sha256((R/relative).read_bytes()).hexdigest()==digest,relative
         try:
             if git('rev-parse','HEAD').strip()!=a.commit:
-                print(git('fetch','lab','reference-stability-20261102'),flush=True)
+                print(git('fetch',expected.get('bundle') or 'lab','reference-stability-20261102'),flush=True)
                 # Only our reviewed files may enter the index. Their bytes must
                 # equal the incoming commit before a fast-forward is attempted.
                 for relative,digest in expected['files'].items():

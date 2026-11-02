@@ -93,6 +93,25 @@ class Ownership(unittest.TestCase):
 
 
 class Recovery(unittest.TestCase):
+    def test_offline_bundle_fast_forward_with_identical_staged_edits(self):
+        def git(cwd,*args):
+            return subprocess.check_output(['git','-c','user.name=RefClothTest',
+                '-c','user.email=refcloth-test@localhost','-c','commit.gpgsign=false',
+                '-c','core.autocrlf=false']+list(args),cwd=cwd,universal_newlines=True,stderr=subprocess.STDOUT)
+        with tempfile.TemporaryDirectory(dir='/dev/shm') as temp:
+            r=Path(temp);a=r/'author';a.mkdir();b=r/'receiver';bundle=r/'recovery.bundle'
+            git(a,'init');git(a,'symbolic-ref','HEAD','refs/heads/recovery_test')
+            (a/'old.py').write_text('old\n');git(a,'add','old.py');git(a,'commit','-m','base')
+            base=git(a,'rev-parse','HEAD').strip();git(r,'clone',str(a),str(b))
+            for root in [a,b]:
+                (root/'old.py').write_text('new\n');(root/'new.py').write_text('new entry\n')
+                git(root,'add','--','old.py','new.py')
+            git(a,'commit','-m','reviewed recovery');head=git(a,'rev-parse','HEAD').strip()
+            git(a,'bundle','create',str(bundle),base+'..recovery_test')
+            git(b,'fetch',str(bundle),'recovery_test');git(b,'merge','--ff-only',head)
+            self.assertEqual(git(b,'rev-parse','HEAD').strip(),head)
+            self.assertEqual(git(b,'status','--porcelain').strip(),'')
+
     def test_prefix_is_truncated_at_checkpoint_and_tail_is_preserved(self):
         with tempfile.TemporaryDirectory() as temp:
             r=Path(temp);p=r/'train_20261102_120000_test';p.mkdir()
