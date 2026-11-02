@@ -71,7 +71,7 @@ Seed & Native & Matched & Native & Matched & $\Delta G$\\
     detail+='\\bottomrule\n\\end{tabular}\n\\end{table}\n'
     (a.out/'reference_seed_detail.tex').write_text(detail)
     d=result['primary'];lo,hi=d['ci95'];p=d['exact_two_sided_sign_flip_p']
-    primary=('Across six paired replications, the mean matched-reference advantage is '
+    primary=('Across six paired replications, the mean difference $G_M-G_N$ is '
         '$%.2f$ pp (seed-level 95\\%% $t$ interval $[%.2f,%.2f]$; exact two-sided '
         'sign-flip $p=%.4f$). The six paired differences range from $%.1f$ to $%.1f$ pp. '
         'Full paired outcomes and the evaluation protocol are in \\cref{supp:training_seeds}.\n')%(d['mean'],lo,hi,p,d['minimum'],d['maximum'])

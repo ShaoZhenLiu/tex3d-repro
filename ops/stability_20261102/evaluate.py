@@ -126,6 +126,9 @@ def main(a):
         for condition in ['s7_native','s7_mr']:
             row=episode('spatial',0,10,condition,True)
             assert row['trajectory'][0]['main_sha256']!=cal0['trajectory'][0]['main_sha256']
+            if a.compare_existing_smoke:
+                original=json.loads((outcomes/('spatial_t0_i10_'+condition+'.json')).read_text())
+                assert row['robot_success']==original['robot_success'] and row['trajectory']==original['trajectory'], 'Cross-device attack trajectory differs'
         write(worker/'smoke_passed.json',dict(passed=True,plain_trajectory_identity=True,
             adversarial_main_input_changed=True,peak_cuda_bytes=torch.cuda.max_memory_allocated(),
             peak_reserved_bytes=torch.cuda.max_memory_reserved(),memory_fraction=a.memory_fraction))
@@ -174,4 +177,5 @@ if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--repo',type=Path,required=True);p.add_argument('--root',type=Path,required=True)
     p.add_argument('--worker',required=True);p.add_argument('--smoke',action='store_true')
     p.add_argument('--memory-fraction',type=float,default=.44)
+    p.add_argument('--compare-existing-smoke',action='store_true')
     main(p.parse_args())
