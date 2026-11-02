@@ -131,6 +131,11 @@ def main(a):
         checks.append(dict(seed=seed,initialization_exact=True,sampling_stream_exact=True,
             device_families=[x['gpu_name'] for x in arm],runner_hashes=[x['runner_sha256'] for x in arm]))
     result['new_pair_integrity']=checks
+    prior=json.loads((a.root/'existing_stream_reconstruction.json').read_text())
+    assert set(prior)=={'7','8','9'}
+    assert all(v['rows_per_arm']==40000 and v['textual_stream_equal'] for v in prior.values())
+    assert all(prior[str(seed)]['full_precision_uv_equal'] and prior[str(seed)]['initialization_exact'] for seed in [8,9])
+    result['existing_pair_integrity']=prior
     result['worker_calibrations']=workers
     result['initial_input_changes']=input_changes
     frame.to_csv(str(a.out/'episode_outcomes.csv'),index=False)

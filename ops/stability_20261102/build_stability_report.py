@@ -8,6 +8,7 @@ import pandas as pd
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from PIL import Image
 
 
 def pm(mean,sd):
@@ -99,6 +100,27 @@ Seed & Native & Matched & Native & Matched & $\Delta G$\\
     right.grid(axis='x',alpha=.15);fig.subplots_adjust(wspace=.65,left=.09,right=.98,bottom=.2,top=.86)
     for ext in ['pdf','png']:fig.savefig(str(a.out/('reference_seed_pairs.'+ext)),dpi=260,bbox_inches='tight',pad_inches=.035)
     plt.close(fig)
+    if a.root:
+        manifest=json.loads((a.root/'texture_manifest.json').read_text())
+        base=np.asarray(Image.open(a.root/manifest['plain']['path']).convert('RGB')).astype(float)
+        fig,axes=plt.subplots(2,6,figsize=(8.6,3.0))
+        texture_stats=[]
+        for col,seed in enumerate(seeds.seed):
+            for row,reference in enumerate(['native','mr']):
+                key='s%d_%s'%(seed,reference)
+                rgb=np.asarray(Image.open(a.root/manifest[key]['path']).convert('RGB'))
+                delta=rgb.astype(float)-base
+                tv=float(np.abs(np.diff(delta,axis=0)).mean()+np.abs(np.diff(delta,axis=1)).mean())
+                texture_stats.append(dict(seed=int(seed),reference=reference,
+                    rms=float(np.sqrt(np.mean(delta**2))),linf=float(np.abs(delta).max()),spatial_tv=tv))
+                ax=axes[row,col];ax.imshow(rgb);ax.set_xticks([]);ax.set_yticks([])
+                if row==0:ax.set_title('Seed %d'%seed)
+                if col==0:ax.set_ylabel('Native' if row==0 else 'Matched')
+                for spine in ax.spines.values():spine.set_visible(False)
+        fig.subplots_adjust(wspace=.04,hspace=.06,left=.05,right=.995,top=.9,bottom=.015)
+        for ext in ['pdf','png']:fig.savefig(str(a.out/('reference_all_textures.'+ext)),dpi=220,bbox_inches='tight',pad_inches=.035)
+        plt.close(fig)
+        pd.DataFrame(texture_stats).to_csv(str(a.out/'texture_statistics.csv'),index=False)
     lines=[
         '# RefCloth：六组成对复验结果',
         '',
@@ -139,4 +161,5 @@ Seed & Native & Matched & Native & Matched & $\Delta G$\\
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--analysis',type=Path,required=True)
-    p.add_argument('--out',type=Path,required=True);main(p.parse_args())
+    p.add_argument('--out',type=Path,required=True);p.add_argument('--root',type=Path)
+    main(p.parse_args())
