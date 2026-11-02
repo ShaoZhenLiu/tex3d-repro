@@ -1,0 +1,297 @@
+{
+  "passed": true,
+  "seed": 11,
+  "aggregate": {
+    "native": {
+      "repeat_mean_relative_l2": 0.0038134486343943614,
+      "optimized_mean_relative_l2": 0.0038461477590043566,
+      "repeat_mean_weighted_sign": 6.211483513022624e-06,
+      "optimized_mean_weighted_sign": 1.111573428463291e-05,
+      "maximum_optimized_relative_l2": 0.01065928116440773,
+      "maximum_optimized_weighted_sign": 5.6578603107482195e-05
+    },
+    "mr": {
+      "repeat_mean_relative_l2": 0.003621237773431337,
+      "optimized_mean_relative_l2": 0.003678958633208465,
+      "repeat_mean_weighted_sign": 3.6578790826426023e-06,
+      "optimized_mean_weighted_sign": 3.280676857286835e-06,
+      "maximum_optimized_relative_l2": 0.012961596250534058,
+      "maximum_optimized_weighted_sign": 1.860715747170616e-05
+    }
+  },
+  "comparisons": [
+    {
+      "reference": "native",
+      "repeat": {
+        "relative_l2": 0.010430828668177128,
+        "sign_disagreement": 0.002448729705065489,
+        "weighted_sign_disagreement": 1.0648571333149448e-05,
+        "bitwise_equal": false
+      },
+      "inputs_only": {
+        "relative_l2": 0.01065928116440773,
+        "sign_disagreement": 0.004897459410130978,
+        "weighted_sign_disagreement": 2.7457703254185617e-05,
+        "bitwise_equal": false
+      }
+    },
+    {
+      "reference": "native",
+      "repeat": {
+        "relative_l2": 0.007392685394734144,
+        "sign_disagreement": 0.002754820976406336,
+        "weighted_sign_disagreement": 3.670301157399081e-05,
+        "bitwise_equal": false
+      },
+      "inputs_only": {
+        "relative_l2": 0.007703599985688925,
+        "sign_disagreement": 0.003367003286257386,
+        "weighted_sign_disagreement": 5.6578603107482195e-05,
+        "bitwise_equal": false
+      }
+    },
+    {
+      "reference": "native",
+      "repeat": {
+        "relative_l2": 0.004318011924624443,
+        "sign_disagreement": 0.0009182736393995583,
+        "weighted_sign_disagreement": 3.017793233084376e-06,
+        "bitwise_equal": false
+      },
+      "inputs_only": {
+        "relative_l2": 0.004387551918625832,
+        "sign_disagreement": 0.0009182736393995583,
+        "weighted_sign_disagreement": 4.232799255987629e-06,
+        "bitwise_equal": false
+      }
+    },
+    {
+      "reference": "native",
+      "repeat": {
+        "relative_l2": 0.00399426743388176,
+        "sign_disagreement": 0.0015304561238735914,
+        "weighted_sign_disagreement": 3.1833317279961193e-06,
+        "bitwise_equal": false
+      },
+      "inputs_only": {
+        "relative_l2": 0.003954250365495682,
+        "sign_disagreement": 0.0009182736393995583,
+        "weighted_sign_disagreement": 2.8629453936446225e-06,
+        "bitwise_equal": false
+      }
+    },
+    {
+      "reference": "native",
+      "repeat": {
+        "relative_l2": 0.0013617351651191711,
+        "sign_disagreement": 0.0003060912131331861,
+        "weighted_sign_disagreement": 1.385874611514737e-06,
+        "bitwise_equal": false
+      },
+      "inputs_only": {
+        "relative_l2": 0.0014217686839401722,
+        "sign_disagreement": 0.0003060912131331861,
+        "weighted_sign_disagreement": 1.385874611514737e-06,
+        "bitwise_equal": false
+      }
+    },
+    {
+      "reference": "native",
+      "repeat": {
+        "relative_l2": 0.0030369239393621683,
+        "sign_disagreement": 0.0006121824262663722,
+        "weighted_sign_disagreement": 2.6583004242297648e-08,
+        "bitwise_equal": false
+      },
+      "inputs_only": {
+        "relative_l2": 0.0029710056260228157,
+        "sign_disagreement": 0.0009182736393995583,
+        "weighted_sign_disagreement": 6.408390163414879e-06,
+        "bitwise_equal": false
+      }
+    },
+    {
+      "reference": "native",
+      "repeat": {
+        "relative_l2": 0.0028471341356635094,
+        "sign_disagreement": 0.0006121824262663722,
+        "weighted_sign_disagreement": 9.381861332258268e-07,
+        "bitwise_equal": false
+      },
+      "inputs_only": {
+        "relative_l2": 0.002594409277662635,
+        "sign_disagreement": 0.0018365472787991166,
+        "weighted_sign_disagreement": 1.1152927754665143e-06,
+        "bitwise_equal": false
+      }
+    },
+    {
+      "reference": "native",
+      "repeat": {
+        "relative_l2": 0.0009394504595547915,
+        "sign_disagreement": 0.0,
+        "weighted_sign_disagreement": 0.0,
+        "bitwise_equal": false
+      },
+      "inputs_only": {
+        "relative_l2": 0.0009234613389708102,
+        "sign_disagreement": 0.0,
+        "weighted_sign_disagreement": 0.0,
+        "bitwise_equal": false
+      }
+    },
+    {
+      "reference": "native",
+      "repeat": {
+        "relative_l2": 5.88432136350292e-10,
+        "sign_disagreement": 0.0,
+        "weighted_sign_disagreement": 0.0,
+        "bitwise_equal": false
+      },
+      "inputs_only": {
+        "relative_l2": 1.4702246087239246e-09,
+        "sign_disagreement": 0.0,
+        "weighted_sign_disagreement": 0.0,
+        "bitwise_equal": false
+      }
+    },
+    {
+      "reference": "mr",
+      "repeat": {
+        "relative_l2": 0.01388967502862215,
+        "sign_disagreement": 0.003979185596108437,
+        "weighted_sign_disagreement": 2.9550777981057763e-05,
+        "bitwise_equal": false
+      },
+      "inputs_only": {
+        "relative_l2": 0.012961596250534058,
+        "sign_disagreement": 0.002448729705065489,
+        "weighted_sign_disagreement": 8.189517757273279e-06,
+        "bitwise_equal": false
+      }
+    },
+    {
+      "reference": "mr",
+      "repeat": {
+        "relative_l2": 0.009948990307748318,
+        "sign_disagreement": 0.0012243648525327444,
+        "weighted_sign_disagreement": 2.703892505451222e-06,
+        "bitwise_equal": false
+      },
+      "inputs_only": {
+        "relative_l2": 0.011051475070416927,
+        "sign_disagreement": 0.002448729705065489,
+        "weighted_sign_disagreement": 1.860715747170616e-05,
+        "bitwise_equal": false
+      }
+    },
+    {
+      "reference": "mr",
+      "repeat": {
+        "relative_l2": 0.001998474821448326,
+        "sign_disagreement": 0.0,
+        "weighted_sign_disagreement": 0.0,
+        "bitwise_equal": false
+      },
+      "inputs_only": {
+        "relative_l2": 0.00214528851211071,
+        "sign_disagreement": 0.0006121824262663722,
+        "weighted_sign_disagreement": 2.3550937839900143e-06,
+        "bitwise_equal": false
+      }
+    },
+    {
+      "reference": "mr",
+      "repeat": {
+        "relative_l2": 0.003774044569581747,
+        "sign_disagreement": 0.0,
+        "weighted_sign_disagreement": 0.0,
+        "bitwise_equal": false
+      },
+      "inputs_only": {
+        "relative_l2": 0.0038954499177634716,
+        "sign_disagreement": 0.0,
+        "weighted_sign_disagreement": 0.0,
+        "bitwise_equal": false
+      }
+    },
+    {
+      "reference": "mr",
+      "repeat": {
+        "relative_l2": 0.0006248000427149236,
+        "sign_disagreement": 0.0,
+        "weighted_sign_disagreement": 0.0,
+        "bitwise_equal": false
+      },
+      "inputs_only": {
+        "relative_l2": 0.0006504168850369751,
+        "sign_disagreement": 0.0,
+        "weighted_sign_disagreement": 0.0,
+        "bitwise_equal": false
+      }
+    },
+    {
+      "reference": "mr",
+      "repeat": {
+        "relative_l2": 0.0011010131565853953,
+        "sign_disagreement": 0.0003060912131331861,
+        "weighted_sign_disagreement": 2.3611135269163697e-09,
+        "bitwise_equal": false
+      },
+      "inputs_only": {
+        "relative_l2": 0.001117398263886571,
+        "sign_disagreement": 0.0003060912131331861,
+        "weighted_sign_disagreement": 1.4162544914597675e-08,
+        "bitwise_equal": false
+      }
+    },
+    {
+      "reference": "mr",
+      "repeat": {
+        "relative_l2": 0.0008127345936372876,
+        "sign_disagreement": 0.0003060912131331861,
+        "weighted_sign_disagreement": 3.6016015769746446e-07,
+        "bitwise_equal": false
+      },
+      "inputs_only": {
+        "relative_l2": 0.0008032118203118443,
+        "sign_disagreement": 0.0003060912131331861,
+        "weighted_sign_disagreement": 3.6016015769746446e-07,
+        "bitwise_equal": false
+      }
+    },
+    {
+      "reference": "mr",
+      "repeat": {
+        "relative_l2": 0.0004413992282934487,
+        "sign_disagreement": 0.0003060912131331861,
+        "weighted_sign_disagreement": 3.03719986050055e-07,
+        "bitwise_equal": false
+      },
+      "inputs_only": {
+        "relative_l2": 0.0004857852472923696,
+        "sign_disagreement": 0.0,
+        "weighted_sign_disagreement": 0.0,
+        "bitwise_equal": false
+      }
+    },
+    {
+      "reference": "mr",
+      "repeat": {
+        "relative_l2": 8.212250435235546e-09,
+        "sign_disagreement": 0.0,
+        "weighted_sign_disagreement": 0.0,
+        "bitwise_equal": false
+      },
+      "inputs_only": {
+        "relative_l2": 5.731523256002902e-09,
+        "sign_disagreement": 0.0,
+        "weighted_sign_disagreement": 0.0,
+        "bitwise_equal": false
+      }
+    }
+  ],
+  "all_bitwise_equal": false,
+  "peak_cuda_bytes": 35335953408,
+  "scope": "Same renderer parameters and same model-forward tape; compare full, repeated-full, and texture-only backward requests"
+}
