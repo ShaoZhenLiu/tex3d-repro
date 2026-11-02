@@ -11,6 +11,9 @@ from pathlib import Path
 import numpy as np
 import torch
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import refcloth_resource as guard
+from refcloth_resume import select_checkpoint, consolidate
 
 def sha(p):
     h=hashlib.sha256()
@@ -20,6 +23,8 @@ def sha(p):
 
 
 def main(a):
+    guard.install_pause_handler()
+    assert json.loads((a.repo/'ops/refcloth_mmap_validation.json').read_text())['passed']
     assert os.environ['CUDA_VISIBLE_DEVICES'] != '4'
     torch.set_num_threads(2)
     torch.cuda.set_per_process_memory_fraction(a.memory_fraction, 0)
@@ -36,39 +41,53 @@ def main(a):
     assert sha(stream)==record['text_sha256']
     assert sha(stream.with_name(stream.stem+'_full.pt'))==record['uv_sha256']
     sys.path.insert(0,str(a.repo/'openvla-oft/experiments/robot/libero'))
-    import attack_oft_cloth_ablate as R
+    import importlib.util
+    source=a.repo/'ops/stability_20261102/attack_oft_cloth_ablate.py'
+    spec=importlib.util.spec_from_file_location('refcloth_stability_runner',str(source))
+    R=importlib.util.module_from_spec(spec);spec.loader.exec_module(R)
     assert R.M.TR.patch_status()=='patched'
     R.OUT_ROOT=str(a.root/'training')
     Path(R.OUT_ROOT).mkdir(parents=True,exist_ok=True)
-    options=argparse.Namespace(tag='stability_s%d_%s'%(a.seed,a.ref),ref=a.ref,
+    tag='stability_s%d_%s'%(a.seed,a.ref)
+    checkpoint=select_checkpoint(R.OUT_ROOT, tag)
+    options=argparse.Namespace(tag=tag,ref=a.ref,
         ref_switch=0,stream='replay',stream_file=str(stream),uv='on',filter_task=None,
         iters=5000,batch=8,attack_lr=.05,epsilon=64/255,init_std=.01,
         lambda_ref=.1,lambda_tv=.1,alpha_action=0.,alpha_feature=10.,
-        seed=a.seed,checkpoint_every=625,ckpt_step_suffix=True,resume_dir='',texture_only_grad=True)
+        seed=a.seed,checkpoint_every=625,ckpt_step_suffix=True,
+        resume_dir=str(checkpoint.parent) if checkpoint else '',
+        resume_checkpoint=str(checkpoint) if checkpoint else '',texture_only_grad=True)
     out=a.root/'arms'/('s%d_%s'%(a.seed,a.ref))
     out.mkdir(parents=True,exist_ok=True)
     assert not (out/'completed.json').exists()
     registration=dict(seed=a.seed,reference=a.ref,training_options=vars(options),
-        stream=record,commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=a.repo,text=True).strip(),
+        stream=record,commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=a.repo,universal_newlines=True).strip(),
         host=os.uname().nodename,gpu=os.environ['CUDA_VISIBLE_DEVICES'],
         gpu_name=torch.cuda.get_device_name(),pytorch=torch.__version__,cuda=torch.version.cuda,
         runner_sha256=sha(Path(R.__file__)),protocol_sha256=sha(a.repo/'ops/stability_20261102/protocol.json'),
         frozen_renderer_gap_explicitly_authorized=a.allow_frozen_wrist_gap)
+    (out/'registrations').mkdir(exist_ok=True)
+    if (out/'registered.json').exists():
+        (out/'registrations'/('prior_%d.json'%time.time_ns())).write_bytes((out/'registered.json').read_bytes())
+    (out/'registrations'/('%d.json'%time.time_ns())).write_text(json.dumps(registration,indent=2))
     (out/'registered.json').write_text(json.dumps(registration,indent=2))
     start=time.monotonic()
-    R.train(options)
+    R.resource_ready=guard.mark_ready;R.pause_requested=guard.pause_requested
+    if not checkpoint or checkpoint.name!='Ep0_Cloth_Delta_OV_it04999.pt':R.train(options)
+    if guard.pause_requested():raise SystemExit(75)
     candidates=[p for p in sorted(Path(R.OUT_ROOT).glob('train_*_'+options.tag))
                 if (p/'gradient_log.txt').exists() and '[ckpt-final] it04999' in (p/'gradient_log.txt').read_text()]
     assert len(candidates)==1,candidates
     trained=candidates[0]
     assert '[ckpt-final] it04999' in (trained/'gradient_log.txt').read_text()
-    assert len([x for x in (trained/'sampling_log.txt').read_text().splitlines() if not x.startswith('#')])==40000
+    recovery=consolidate(trained,stream)
     theta=torch.load(trained/'theta_init.pt',map_location='cpu',weights_only=False)
     result=dict(registration,completed=True,iterations=5000,frame_visits=40000,
         directory=str(trained),texture=str(trained/'Universal_Cloth_OV.png'),
         texture_sha256=sha(trained/'Universal_Cloth_OV.png'),theta_init_sha256=hashlib.sha256(theta.numpy().tobytes()).hexdigest(),
         sampling_log_sha256=sha(trained/'sampling_log.txt'),elapsed_seconds=time.monotonic()-start,
-        peak_cuda_bytes=torch.cuda.max_memory_allocated())
+        peak_cuda_bytes=torch.cuda.max_memory_allocated(),resume_provenance=recovery,
+        immutable_cache_mmap=True)
     (out/'completed.json').write_text(json.dumps(result,indent=2))
     print('ARM_COMPLETED '+json.dumps(result),flush=True)
 

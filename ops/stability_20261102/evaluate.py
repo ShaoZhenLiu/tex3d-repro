@@ -7,6 +7,7 @@ import inspect
 import json
 import os
 import subprocess
+import sys
 import time
 from pathlib import Path
 
@@ -48,6 +49,13 @@ def main(a):
     policy=A.load_policy(p['checkpoint'],model_config=p['config'],num_denoise=p['num_denoise'])
     assert hasattr(policy,'_pytorch_device')
     policy._model.to('cuda');policy._pytorch_device='cuda'
+    # Release unused CPU conversion buffers; model parameters are already on CUDA.
+    import gc,ctypes
+    gc.collect()
+    ctypes.CDLL(None).malloc_trim(0)
+    sys.path.insert(0,str(a.repo/'ops'))
+    import refcloth_resource as guard
+    guard.mark_ready()
     A.policy_config.create_trained_policy=original_create
     policy._model.eval().requires_grad_(False)
     cfg=A.training_config.get_config(p['config']).model
@@ -148,8 +156,9 @@ def main(a):
                 if claim.exists():
                     existing=json.loads(claim.read_text())
                     status=Path('/proc/%d/status'%existing['pid'])
-                    if status.exists() and not any(row.startswith('State:') and row.split()[1]=='Z' for row in status.read_text().splitlines()):continue
-                write(claim,dict(pid=os.getpid(),worker=a.worker,time=time.time()))
+                    current_process=guard.identity(existing['pid'])
+                    if current_process and current_process['uid']==os.getuid() and str(Path(__file__).resolve()) in current_process['cmd'] and current_process['ticks']==existing.get('ticks',current_process['ticks']):continue
+                write(claim,dict(pid=os.getpid(),ticks=guard.identity(os.getpid())['ticks'],worker=a.worker,time=time.time()))
                 chosen=job;break
             fcntl.flock(f,fcntl.LOCK_UN)
         if chosen is None:

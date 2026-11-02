@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "host": "zgc-33-9",
+  "pytorch": "2.2.0+cu121",
+  "results": [
+    {
+      "path": "/data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/r0f_pool.pt",
+      "exact_all_leaves": true,
+      "counts": {
+        "tensors": 3848,
+        "numpy_arrays": 296,
+        "bytes": 1346043808
+      },
+      "seconds": 4.216214179992676
+    },
+    {
+      "path": "/data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/mr_plain_cache.pt",
+      "exact_all_leaves": true,
+      "counts": {
+        "tensors": 296,
+        "numpy_arrays": 0,
+        "bytes": 271581184
+      },
+      "seconds": 0.528104305267334
+    },
+    {
+      "path": "/data/shaozhen.liu/code/tex3d/experiments/refcloth_coupling/20261102/plain_image_cache.pt",
+      "exact_all_leaves": true,
+      "counts": {
+        "tensors": 592,
+        "numpy_arrays": 0,
+        "bytes": 465567744
+      },
+      "seconds": 3.2694058418273926
+    }
+  ]
+}

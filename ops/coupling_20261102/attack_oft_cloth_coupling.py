@@ -49,6 +49,8 @@ MR_CACHE = "/data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth/mr_pla
 OUT_ROOT = "/data/shaozhen.liu/code/tex3d/experiments/pi0_cloth/oft_cloth"
 POOL_SHA = "d03d68591b9b820385d14be44758aefd95c2a63b8d68fc0926413a2eb1b04a93"
 CACHE_SHA = "7ab459156068e23cd338bc33e100fb1113a3a367d8b020a80cdaf7cdb7249856"
+resource_ready = lambda: None
+pause_requested = lambda: False
 
 
 def sha256(path):
@@ -134,7 +136,7 @@ def load_full_uv(path_pt, iters):
 def cmd_genstream(args):
     """在（可过滤的）活动帧表上预生成生产式流：random 消耗顺序与生产循环一致。"""
     random.seed(args.seed)
-    pool = torch.load(POOL, map_location="cpu", weights_only=False)
+    pool = torch.load(POOL, map_location="cpu", weights_only=False, mmap=True)
     act, gids = active_frames(pool, args.filter_task)
     n = len(act)
     print("[genstream] 活动帧 %d（filter_task=%s）" % (n, args.filter_task))
@@ -174,7 +176,7 @@ def train(args):
         M._build_action_modules(cfg, model)
     sm, ss, dm, ds = M._norm_consts(device)
 
-    pool = torch.load(POOL, map_location="cpu", weights_only=False)
+    pool = torch.load(POOL, map_location="cpu", weights_only=False, mmap=True)
     act, gids = active_frames(pool, args.filter_task)
     n_active = len(act)
     print(f"[pool] 活动帧 {n_active}"
@@ -184,7 +186,7 @@ def train(args):
     mr_hidden = None
     if args.ref == "mr" or args.ref_switch > 0:
         assert sha256(MR_CACHE) == CACHE_SHA
-        full = torch.load(MR_CACHE, map_location="cpu", weights_only=False)["hidden"]
+        full = torch.load(MR_CACHE, map_location="cpu", weights_only=False, mmap=True)["hidden"]
         assert len(full) == 296
         # 按全局 ID 取子集：active[i] ↔ full[gids[i]]
         mr_hidden = [full[g] for g in gids]
@@ -196,7 +198,7 @@ def train(args):
     plain_images = None
     if view_mode != 'both':
         assert args.ref == 'mr'
-        plain_images = torch.load(args.plain_image_cache, map_location='cpu', weights_only=False)['frames']
+        plain_images = torch.load(args.plain_image_cache, map_location='cpu', weights_only=False, mmap=True)['frames']
         assert len(plain_images) == 296
     independent_wrist_uv = None
     if getattr(args, 'wrist_uv_file', ''):
@@ -262,7 +264,8 @@ def train(args):
                        key=lambda x: int(re.search(r"_it(\d+)\.pt$",
                                                    x).group(1)))
         assert cands, "resume-dir 无步数 checkpoint"
-        last = cands[-1]
+        last = getattr(args, 'resume_checkpoint', '') or cands[-1]
+        assert os.path.dirname(last) == args.resume_dir
         it_saved = int(re.search(r"_it(\d+)\.pt$", last).group(1))
         with torch.no_grad():
             param.copy_(torch.load(last, map_location=device,
@@ -276,6 +279,7 @@ def train(args):
                    "  (uv 六零=恒等哨兵：uv_xform=None)\n")
     print(f"[train] {args.iters} iters × bs{args.batch}，ref={args.ref}，"
           f"stream={args.stream}，uv={args.uv}，开始")
+    resource_ready()
     t_start = time.time()
 
     def save_ckpt(it, final=False):
@@ -354,7 +358,7 @@ def train(args):
                 wrist_tensor=adv_wrist_t).to(torch.bfloat16)
             validation = None
             validation_path = os.path.join(out_dir, 'camera_control_validation.json')
-            if it == 0 and not os.path.exists(validation_path):
+            if it == resume_from and not os.path.exists(validation_path):
                 validation = {'mode': view_mode, 'global_frame': gids[fi],
                               'processed_shape': list(pv.shape)}
                 assert pv.shape[1] == 12
@@ -421,6 +425,12 @@ def train(args):
                 f.write(line + "\n")
         if (it + 1) % args.checkpoint_every == 0 or it == args.iters - 1:
             save_ckpt(it, final=(it == args.iters - 1))
+        if pause_requested():
+            if (it + 1) % args.checkpoint_every and it != args.iters - 1:
+                save_ckpt(it)
+            samp_log.close()
+            print('[resource-pause] saved full theta at it%05d' % it, flush=True)
+            return
     samp_log.close()
     if stream is None:
         fresh_uv_full = [((u.numpy() if hasattr(u, "numpy") else u)
