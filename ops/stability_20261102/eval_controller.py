@@ -1,0 +1,84 @@
+"""Publish completed textures and schedule persistent native evaluation workers."""
+import json
+import hashlib
+import os
+import shutil
+import subprocess
+import time
+from pathlib import Path
+
+
+R=Path('/data/shaozhen.liu/code/tex3d')
+X=R/'experiments/refcloth_stability/20261102'
+O=R/'ops/stability_20261102'
+
+
+def write(path,value):
+    temp=path.with_suffix('.tmp');temp.write_text(json.dumps(value,indent=2));temp.replace(path)
+
+
+def publish():
+    path=X/'texture_manifest.json';manifest=json.loads(path.read_text());changed=False
+    for seed in [10,11,12]:
+        for ref in ['native','mr']:
+            name='s%d_%s'%(seed,ref);meta=X/'arms'/name/'completed.json'
+            if name in manifest or not meta.exists():continue
+            info=json.loads(meta.read_text());assert info['completed'] and info['iterations']==5000
+            source=Path(info['texture']);dest=X/'frozen'/(name+'.png')
+            if not source.exists():source=dest  # A100 results are transferred with their original provenance.
+            if not source.exists():continue
+            assert hashlib.sha256(source.read_bytes()).hexdigest()==info['texture_sha256']
+            if source!=dest:shutil.copy2(source,dest)
+            manifest[name]=dict(path=str(dest.relative_to(X)),sha256=info['texture_sha256'],
+                seed=seed,reference=ref,training_metadata=str(meta.relative_to(X)),frozen_existing=False)
+            changed=True;print('PUBLISHED',name,flush=True)
+    if changed:write(path,manifest)
+    for seed in [10,11,12]:
+        pair=[X/'arms'/('s%d_%s'%(seed,ref))/'completed.json' for ref in ['native','mr']]
+        if all(p.exists() for p in pair):
+            left,right=[json.loads(p.read_text()) for p in pair]
+            assert left['theta_init_sha256']==right['theta_init_sha256']
+            assert left['sampling_log_sha256']==right['sampling_log_sha256']
+
+
+def main():
+    assert json.loads((X/'evaluation/workers/smoke7/smoke_passed.json').read_text())['passed']
+    active={};launched=set();failed=[];last=0.
+    while True:
+        publish()
+        complete=len(list((X/'evaluation/completed').glob('*.json')))
+        if complete==140:break
+        source=json.loads((X/'train_status_4090.json').read_text())
+        reserved={item['job'][2] for item in source['active'].values()}
+        reserved.update(job[2] for job in source['pending'])
+        free={int(row.split(',')[0]):int(row.split(',')[1]) for row in subprocess.check_output(
+            ['nvidia-smi','--query-gpu=index,memory.free','--format=csv,noheader,nounits'],text=True).splitlines()}
+        mem={row.split(':')[0]:int(row.split()[1]) for row in Path('/proc/meminfo').read_text().splitlines()}
+        ram=mem['MemAvailable']/1024**2
+        for gpu,name in [(7,'gpu7a'),(7,'gpu7b'),(0,'gpu0'),(1,'gpu1'),(5,'gpu5'),(6,'gpu6')]:
+            if name in launched or gpu in reserved or free[gpu]<25000 or ram<50 or time.monotonic()-last<60:continue
+            env=os.environ.copy();env.update(CUDA_VISIBLE_DEVICES=str(gpu),MUJOCO_EGL_DEVICE_ID=str(gpu),
+                MUJOCO_GL='egl',PYOPENGL_PLATFORM='egl',OMP_NUM_THREADS='2',MKL_NUM_THREADS='2',MAX_JOBS='2',
+                HF_HUB_OFFLINE='1',TOKENIZERS_PARALLELISM='false',PYTHONUNBUFFERED='1',WANDB_MODE='disabled',
+                USE_TF='0',TF_CPP_MIN_LOG_LEVEL='2',TORCHDYNAMO_DISABLE='1',REFCLOTH_SURFACE_MODE='legacy',
+                OPENPI_DATA_HOME='/data/shaozhen.liu/.cache/openpi',MPLCONFIGDIR='/tmp/refcloth_stability_mpl',
+                PYTHONPATH=':'.join([str(R),str(R/'pi'),str(O),'/data/shaozhen.liu/code/tex3d-deps/taming-transformers']))
+            command=['/data/shaozhen.liu/envs/tex3d-pi0-mj330/bin/python',str(O/'evaluate.py'),
+                     '--repo',str(R),'--root',str(X),'--worker',name]
+            proc=subprocess.Popen(command,cwd=R,env=env,stdin=subprocess.DEVNULL,
+                stdout=open(X/('evaluation_'+name+'.log'),'a'),stderr=subprocess.STDOUT,start_new_session=True)
+            active[name]=proc;launched.add(name);last=time.monotonic()
+            print('EVAL_LAUNCH',name,proc.pid,flush=True)
+        for name,proc in list(active.items()):
+            code=proc.poll()
+            if code is None:continue
+            if code!=0:failed.append(dict(worker=name,exit_code=code));print('EVAL_INFRASTRUCTURE_ERROR',name,code,flush=True)
+            del active[name]
+        write(X/'eval_controller_status.json',dict(completed_bundles=complete,total_bundles=140,
+            active={str(g):p.pid for g,p in active.items()},failed=failed,updated=time.time()))
+        if not active and failed:raise RuntimeError('All workers failed; inspect before retrying same registered jobs')
+        time.sleep(15)
+    write(X/'eval_controller_done.json',dict(completed=True,bundles=140,episodes=2600,failed_attempts=failed))
+
+
+if __name__=='__main__':main()
