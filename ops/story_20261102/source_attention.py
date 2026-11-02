@@ -31,16 +31,22 @@ def main(a):
                ('random101','random_cloth_s101'),('random102','random_cloth_s102'),('random103','random_cloth_s103')]}
     assert np.array_equal(textures['plain'],runtime.base) and np.array_equal(textures['refcloth'],runtime.full)
     att=ctx.model.language_model.model.layers[-1].self_attn
-    assert hasattr(att,'_flash_attention_forward')
-    original=att._flash_attention_forward
     captured={}
-    def capture(q,k,v,mask,query_length,*args,**kwargs):
-        result=original(q,k,v,mask,query_length,*args,**kwargs)
-        captured.update(q=q.detach().clone(),k=k.detach().clone(),v=v.detach().clone(),
-                        output=result.detach().clone(),mask=None if mask is None else mask.detach().clone(),
-                        length=int(query_length),dropout=kwargs.get('dropout',0.),scale=kwargs.get('softmax_scale'))
-        return result
-    att._flash_attention_forward=capture
+    original=att.forward
+    assert 'Sdpa' in type(att).__name__,type(att).__name__
+    def trace_attention(*args,**kwargs):
+        kernel=F.scaled_dot_product_attention
+        def capture(q,k,v,attn_mask=None,dropout_p=0.,is_causal=False,**kw):
+            result=kernel(q,k,v,attn_mask=attn_mask,dropout_p=dropout_p,is_causal=is_causal,**kw)
+            captured.update(q=q.detach().transpose(1,2).clone(),k=k.detach().transpose(1,2).clone(),
+                v=v.detach().transpose(1,2).clone(),output=result.detach().transpose(1,2).clone(),
+                mask=None if attn_mask is None else attn_mask.detach().clone(),
+                length=int(q.shape[-2]),dropout=dropout_p,scale=kw.get('scale'),causal=bool(is_causal))
+            return result
+        F.scaled_dot_product_attention=capture
+        try:return original(*args,**kwargs)
+        finally:F.scaled_dot_product_attention=kernel
+    att.forward=trace_attention
     method=ctx.model._regression_or_discrete_prediction
     signature=inspect.signature(method)
     def trace(*args,**kwargs):
@@ -50,7 +56,7 @@ def main(a):
     ctx.model._regression_or_discrete_prediction=trace
     (a.out/'attention_implementation.txt').write_text(inspect.getsource(original))
     report=dict(completed=False,tasks=a.tasks,initial=21,steps=[10,50],source_only=True,
-        attention='Last language-model layer; mean over heads and 56 action-token queries; raw visual-key probabilities',
+        attention='Last language-model SDPA layer; mean over heads and 56 action-token queries; raw visual-key probabilities',
         intervention='Counterfactual main/wrist inputs at frozen physical states; no texture training or closed-loop evaluation',
         semantic_mechanism_tested=False,records=[],commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=a.repo,text=True).strip(),
         texture_sha256={k:sha(v) for k,v in textures.items()},gpu=os.environ['CUDA_VISIBLE_DEVICES'])
@@ -66,19 +72,22 @@ def main(a):
         k=k.repeat_interleave(factor,dim=1);v=v.repeat_interleave(factor,dim=1)
         logits=q@k.transpose(-1,-2)
         logits*=captured['scale'] if captured['scale'] is not None else 1/math.sqrt(q.shape[-1])
-        causal=bool(att.is_causal) and (not att._flash_attn_uses_top_left_mask or captured['length']!=1)
+        causal=captured['causal']
         if causal:
             keypos=torch.arange(k.shape[-2],device=k.device)[None,:]
             querypos=torch.arange(begin,end,device=k.device)[:,None]
             logits.masked_fill_((keypos>querypos)[None,None],float('-inf'))
         mask=captured['mask']
         if mask is not None:
-            assert mask.ndim==2 and bool(mask.all()),'Padding requires separate reconstruction validation'
+            assert mask.ndim==4,mask.shape
+            mask=mask if mask.shape[-2]==1 else mask[...,begin:end,:]
+            if mask.dtype==torch.bool:logits.masked_fill_(~mask,float('-inf'))
+            else:logits+=mask.float()
         weights=logits.softmax(dim=-1)
         reconstruction=(weights@v).transpose(1,2)
         actual=captured['output'][:,begin:end].float()
         relative=float(torch.linalg.vector_norm(reconstruction-actual)/torch.linalg.vector_norm(actual))
-        assert relative<.01,('Attention reconstruction differs from FlashAttention output',relative)
+        assert relative<.01,('Attention reconstruction differs from SDPA output',relative)
         visual=weights[0,:,:,1:513].mean(dim=(0,1)).reshape(2,16,16).cpu().numpy()
         return visual,dict(relative_output_reconstruction_rms=relative,causal=causal,
                            action_token_start=begin,visual_tokens=512,action_queries=56)
