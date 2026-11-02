@@ -144,9 +144,22 @@ def memory_groups(proc='/proc/self/cgroup', v2root='/sys/fs/cgroup', v1root='/sy
                 hard = _number(node / 'memory.limit_in_bytes')
             limits = [v for v in [high, hard] if v is not None and v < 2 ** 60]
             if used is not None:
+                cache_credit = 0
+                if version == 2:
+                    try:
+                        stat = {r.split()[0]: int(r.split()[1]) for r in (node / 'memory.stat').read_text().splitlines()}
+                        # Credit only half of clean, unmapped file cache. Dirty,
+                        # writeback and mapped working pages receive no credit.
+                        clean = max(0, stat.get('file', 0) - stat.get('file_mapped', 0)
+                                    - stat.get('file_dirty', 0) - stat.get('file_writeback', 0))
+                        cache_credit = clean // 2
+                    except OSError:
+                        pass
+                headroom = min(limits) - used if limits else None
                 groups.append(dict(path=str(node), version=version, used=used,
                                    high=high, hard=hard,
-                                   headroom=min(limits) - used if limits else None))
+                                   headroom=headroom, cache_credit=cache_credit,
+                                   effective_headroom=headroom + cache_credit if headroom is not None else None))
             if node == mount:
                 break
             node = node.parent
@@ -182,9 +195,11 @@ def snapshot(previous=None):
            for r in Path('/proc/meminfo').read_text().splitlines()}
     groups = memory_groups()
     headrooms = [g['headroom'] for g in groups if g['headroom'] is not None]
+    effective = [g['effective_headroom'] for g in groups if g['effective_headroom'] is not None]
     counters = _counters()
     out = dict(time=now, available=mem['MemAvailable'], groups=groups,
                headroom=min(headrooms) if headrooms else None,
+               effective_headroom=min(effective) if effective else None,
                memory_psi=_psi('memory'), io_psi=_psi('io'), counters=counters,
                iowait_percent=None, io_mib_s=None, swap_mib_s=None)
     if previous and now > previous['time'] and previous.get('counters'):
@@ -203,7 +218,10 @@ def admission_reasons(s, cold_gib=24):
     reasons = []
     if s['available'] < 50 * GIB:
         reasons.append('host_memory_below_50GiB')
-    if s['headroom'] is not None and s['headroom'] < cold_gib * GIB:
+    headroom = s.get('effective_headroom')
+    if headroom is None:
+        headroom = s['headroom']
+    if headroom is not None and headroom < cold_gib * GIB:
         reasons.append('ancestor_headroom_below_%dGiB' % cold_gib)
     for field, mode, limit in [('memory_psi', 'full', 1.), ('memory_psi', 'some', 2.)]:
         if _pressure(s, field, mode) >= limit:

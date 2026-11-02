@@ -42,6 +42,29 @@ class Admission(unittest.TestCase):
                 (q/'memory.soft_limit_in_bytes').write_text(str(2**63-4096))
             self.assertTrue(all(v['headroom'] is None for v in g.memory_groups(r/'cgroup',v1root=r)))
 
+    def test_clean_unmapped_cache_can_support_a_launch_at_the_soft_limit(self):
+        with tempfile.TemporaryDirectory() as temp:
+            r=Path(temp);p=r/'user.slice';p.mkdir()
+            (r/'cgroup').write_text('0::/user.slice\n')
+            for name,value in [('memory.current',100*g.GIB),('memory.high',100*g.GIB),('memory.max',112*g.GIB)]:
+                (p/name).write_text(str(value))
+            (p/'memory.stat').write_text('anon %d\nfile %d\nfile_mapped %d\nfile_dirty %d\nfile_writeback %d\n'%(36*g.GIB,64*g.GIB,8*g.GIB,4*g.GIB,4*g.GIB))
+            groups=g.memory_groups(r/'cgroup',r);group=next(v for v in groups if v['path']==str(p))
+            self.assertEqual(group['headroom'],0);self.assertEqual(group['cache_credit'],24*g.GIB)
+            s=healthy();s.update(headroom=0,effective_headroom=group['effective_headroom'])
+            self.assertFalse(g.admission_reasons(s,cold_gib=24))
+
+    def test_anonymous_or_dirty_mapped_memory_cannot_be_borrowed(self):
+        with tempfile.TemporaryDirectory() as temp:
+            r=Path(temp);p=r/'user.slice';p.mkdir();(r/'cgroup').write_text('0::/user.slice\n')
+            for name,value in [('memory.current',100*g.GIB),('memory.high',100*g.GIB),('memory.max',112*g.GIB)]:
+                (p/name).write_text(str(value))
+            (p/'memory.stat').write_text('anon %d\nfile %d\nfile_mapped %d\nfile_dirty %d\nfile_writeback 0\n'%(96*g.GIB,4*g.GIB,2*g.GIB,2*g.GIB))
+            group=next(v for v in g.memory_groups(r/'cgroup',r) if v['path']==str(p))
+            self.assertEqual(group['cache_credit'],0)
+            s=healthy();s.update(headroom=0,effective_headroom=group['effective_headroom'])
+            self.assertIn('ancestor_headroom_below_10GiB',g.admission_reasons(s,cold_gib=10))
+
     def test_healthy_then_pressure(self):
         s=healthy();self.assertFalse(g.admission_reasons(s));self.assertFalse(g.severe(s))
         s['io_psi']={'full':{'avg10':50.}}
