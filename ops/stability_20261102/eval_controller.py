@@ -6,6 +6,7 @@ import os
 import shutil
 import subprocess
 import time
+import re
 from pathlib import Path
 
 
@@ -78,6 +79,12 @@ def main(a):
                 if source.get('gradient_mode')!='texture_only':continue
                 remainder=sum(max(0,23000-memory_by_pid.get(item['pid'],0)) for item in source['active'].values() if item['job'][2]==gpu)
                 if any(job[2]==gpu for job in source['pending']):continue
+            # A loading worker may still occupy only a CUDA context while its
+            # checkpoint is on CPU. Reserve its eventual full budget now.
+            for other,proc in active.items():
+                if int(re.match(r'gpu(\d+)',other).group(1))!=gpu:continue
+                budget=next(17000 if f==.31 else 21900 for g,n,f in slots if n==other)
+                remainder+=max(0,budget-memory_by_pid.get(proc.pid,0))
             # Full-trajectory low-memory smoke: 14,789 MB peak allocated,
             # 15,089 MB reserved; .31 cap passed clean and adversarial cases.
             # Include CUDA/MuJoCo context overhead and the separate source
