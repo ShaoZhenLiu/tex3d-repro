@@ -28,7 +28,7 @@ def write(path,value):
 def main(a):
     assert os.environ['CUDA_VISIBLE_DEVICES'] in ['0','1','5','6','7']
     torch.set_num_threads(2);torch.manual_seed(7)
-    torch.cuda.set_per_process_memory_fraction(.44,0)
+    torch.cuda.set_per_process_memory_fraction(a.memory_fraction,0)
     import attack_pi0_cloth as A
     import attack_pi0 as B
     import mujoco
@@ -119,7 +119,7 @@ def main(a):
         checkpoint=p['checkpoint'],noise_shape=noise_shape,mujoco=mujoco.__version__,pytorch=torch.__version__,
         gpu_name=torch.cuda.get_device_name(),host=os.uname().nodename,
         source_hashes={str(Path(inspect.getfile(v))):hashlib.sha256(Path(inspect.getfile(v)).read_bytes()).hexdigest() for v in [A,B,type(policy),type(policy._model)]},
-        entry_sha256=ENTRY_SHA256,cpu_checkpoint_conversion=True,
+        entry_sha256=ENTRY_SHA256,cpu_checkpoint_conversion=True,memory_fraction=a.memory_fraction,
         commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=a.repo,text=True).strip())
     write(worker/'registered.json',registration)
     if a.smoke:
@@ -127,7 +127,8 @@ def main(a):
             row=episode('spatial',0,10,condition,True)
             assert row['trajectory'][0]['main_sha256']!=cal0['trajectory'][0]['main_sha256']
         write(worker/'smoke_passed.json',dict(passed=True,plain_trajectory_identity=True,
-                                            adversarial_main_input_changed=True))
+            adversarial_main_input_changed=True,peak_cuda_bytes=torch.cuda.max_memory_allocated(),
+            peak_reserved_bytes=torch.cuda.max_memory_reserved(),memory_fraction=a.memory_fraction))
         return
     lock=a.root/'evaluation/queue.lock';jobs=json.loads((a.root/'evaluation/jobs.json').read_text())
     done=[]
@@ -172,4 +173,5 @@ def main(a):
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--repo',type=Path,required=True);p.add_argument('--root',type=Path,required=True)
     p.add_argument('--worker',required=True);p.add_argument('--smoke',action='store_true')
+    p.add_argument('--memory-fraction',type=float,default=.44)
     main(p.parse_args())
