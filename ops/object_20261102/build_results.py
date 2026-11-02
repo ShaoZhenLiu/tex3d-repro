@@ -218,7 +218,7 @@ def figures(root,s,plain,query_rows):
     from matplotlib.ticker import PercentFormatter
     plt.rcParams.update({'font.family':'DejaVu Sans','font.size':10,'pdf.fonttype':42,'ps.fonttype':42})
     colors=['#526d82','#cd8b38','#b63c50']
-    fig,axes=plt.subplots(1,2,figsize=(10,3.6),sharey=False)
+    fig,axes=plt.subplots(1,2,figsize=(10,3.6),sharey=True)
     for ax,view,title in zip(axes,VIEWS['model_input'],['Main camera (224 x 224)','Wrist camera (224 x 224)']):
         for j,metric in enumerate(METRICS[:3]):
             stats=[s['exposure'][t]['model_input'][view]['t10__'+metric] for t in TARGETS]
@@ -230,9 +230,10 @@ def figures(root,s,plain,query_rows):
         ax.set_xticks(range(2));ax.set_xticklabels([r'$\pi_0$',r'$\pi_{0.5}$']);ax.set_title(title)
         ax.yaxis.set_major_formatter(PercentFormatter(1));ax.set_ylabel('Changed pixel fraction')
         ax.grid(axis='y',alpha=.2);ax.set_axisbelow(True)
-    axes[0].legend(fontsize=8,frameon=False,loc='upper left')
+    handles,labels=axes[0].get_legend_handles_labels()
+    fig.legend(handles,labels,ncol=3,fontsize=9,frameon=False,loc='lower center',bbox_to_anchor=(.5,0.))
     fig.suptitle('Correct Object placement: 30 Plain trajectories per target\nEpisode medians, then median / IQR; RGB threshold > 10')
-    fig.tight_layout();fig.savefig(str(root/'figures/model_input_three_measures.png'),dpi=180)
+    fig.tight_layout(rect=(0,.08,1,.88));fig.savefig(str(root/'figures/model_input_three_measures.png'),dpi=180)
     fig.savefig(str(root/'figures/model_input_three_measures.pdf'));plt.close(fig)
     fig,axes=plt.subplots(1,2,figsize=(9,3.5))
     for ax,target in zip(axes,TARGETS):
