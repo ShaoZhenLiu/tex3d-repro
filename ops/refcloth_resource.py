@@ -281,7 +281,7 @@ def can_launch(cold_gib=24):
     entries = active()
     if any(e['phase'] == 'loading' for e in entries):
         reasons.append('another_model_loading')
-    limit = 2 if 'zgc-33-9' in os.uname().nodename else 4
+    limit = 2 if 'zgc-33-9' in os.uname().nodename else 5
     if len(entries) >= limit:
         reasons.append('managed_model_count_limit')
     return not reasons, reasons
