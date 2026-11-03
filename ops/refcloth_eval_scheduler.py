@@ -24,10 +24,27 @@ def claim_alive(path):
                 and (claim.get('ticks') is None or current['ticks'] == claim['ticks']))
 
 
+def register_started_worker(proc, gpu, budget, label, root):
+    # The environment wrapper can be between exec calls when Popen returns.
+    deadline = time.monotonic() + 10
+    while True:
+        try:
+            return guard.register(proc.pid, SCRIPT, 'eval', gpu, budget, label, root)
+        except AssertionError:
+            code = proc.poll()
+            if code is not None:
+                raise RuntimeError('Evaluation worker exited before registration: %s (%d)' % (label, code))
+            if time.monotonic() >= deadline:
+                proc.terminate()
+                raise RuntimeError('Evaluation worker command did not become visible: ' + label)
+            time.sleep(.05)
+
+
 def main(study, publish, a):
     coupling = study == 'coupling'
-    if a.share_gpu3 and (not coupling or not os.uname().nodename.endswith('-41')):
-        raise ValueError('The shared GPU 3 option is for camera evaluation on host 41')
+    if (a.share_gpu3 or a.gpus) and (not coupling or not os.uname().nodename.endswith('-41')):
+        raise ValueError('GPU selection options are for camera evaluation on host 41')
+    selected_gpus = list(dict.fromkeys(a.gpus)) if a.gpus else None
     x = C if coupling else P
     total = 180 if coupling else 140
     assert guard.read(P / 'evaluation/workers/lowmem_smoke6/smoke_passed.json')['passed']
@@ -45,6 +62,8 @@ def main(study, publish, a):
                 and str(x) in current['cmd'] and '--worker ' + name in current['cmd']):
             continue
         gpu = int(name.split('gpu')[1].split('_')[0][0])
+        if selected_gpus is not None and gpu not in selected_gpus:
+            raise RuntimeError('Pause the out-of-scope worker before resuming: ' + name)
         budget = 19000 if gpu == 3 else 17000
         token = guard.register(pid, SCRIPT, 'eval', gpu, budget, study + ':' + name, x, phase='warm')
         actors[name] = dict(pid=pid, ticks=current['ticks'], proc=None, token=token, gpu=gpu)
@@ -79,10 +98,13 @@ def main(study, publish, a):
             loading = sum(e['kind'] == 'eval' and e['phase'] == 'loading' and e['root'] == str(x) for e in guard.active())
             if ready and len(ready) > loading and allowed:
                 entries = guard.active()
-                normal_workers = sum(e['gpu'] != 3 for e in entries)
-                gpus = [0, 1, 5, 6, 7] if normal_workers < 5 else []
-                if a.share_gpu3 and not any(e['gpu'] == 3 for e in entries):
-                    gpus.append(3)
+                if selected_gpus is not None:
+                    gpus = selected_gpus
+                else:
+                    normal_workers = sum(e['gpu'] != 3 for e in entries)
+                    gpus = [0, 1, 5, 6, 7] if normal_workers < 5 else []
+                    if a.share_gpu3 and not any(e['gpu'] == 3 for e in entries):
+                        gpus.append(3)
                 candidates = []
                 for gpu in gpus:
                     source_here = any(e['kind'] == 'source' and e['gpu'] == gpu for e in entries)
@@ -108,13 +130,15 @@ def main(study, publish, a):
                     proc = subprocess.Popen(cmd, cwd=R, env=env, stdin=subprocess.DEVNULL,
                         stdout=open(x / ('evaluation_' + name + '.log'), 'a'), stderr=subprocess.STDOUT,
                         start_new_session=True)
-                    token = guard.register(proc.pid, SCRIPT, 'eval', gpu, budget, study + ':' + name, x)
+                    token = register_started_worker(proc, gpu, budget, study + ':' + name, x)
                     actors[name] = dict(pid=proc.pid, ticks=guard.identity(proc.pid)['ticks'],
                                         gpu=gpu, token=token, proc=proc)
                     print('EVAL_LAUNCH', name, proc.pid, flush=True)
             guard.write(x / 'eval_controller_status.json', dict(active={n: e['pid'] for n, e in actors.items()},
                 failed=failed, resource_pauses=holds, completed_bundles=completed, total_bundles=total,
-                available_bundles=len(ready), admission_wait=reasons, updated=time.time()))
+                available_bundles=len(ready), admission_wait=reasons,
+                allowed_gpus=selected_gpus or ([0, 1, 3, 5, 6, 7] if a.share_gpu3 else [0, 1, 5, 6, 7]),
+                updated=time.time()))
         finally:
             fcntl.flock(budget_lock, fcntl.LOCK_UN)
         time.sleep(15)
@@ -126,6 +150,9 @@ def main(study, publish, a):
 
 def entry(study, publish):
     p = argparse.ArgumentParser(); p.add_argument('--resume', action='store_true')
-    p.add_argument('--share-gpu3', action='store_true',
-                   help='Allow one extra camera worker on host 41 GPU 3 with at least 19000 MiB free')
+    gpu_options = p.add_mutually_exclusive_group()
+    gpu_options.add_argument('--share-gpu3', action='store_true',
+                             help='Allow one extra camera worker on host 41 GPU 3 with at least 19000 MiB free')
+    gpu_options.add_argument('--gpus', type=int, nargs='+', choices=[0, 1, 2, 3, 5, 6, 7],
+                             help='Limit camera evaluation to the listed physical GPUs on host 41')
     main(study, publish, p.parse_args())
