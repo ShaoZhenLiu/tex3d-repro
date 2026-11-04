@@ -37,6 +37,7 @@ def main(study, a, *, root=None, jobs_override=None, gpus_override=None):
     if gpus_override is not None:
         gpus = gpus_override
     required = 24000 if a.node == '09' else 23000
+    model_limit = len(gpus) if root is not None and a.node == '09' else None
     singleton = (guard.BASE / ('%s_source.lock' % study))
     singleton.parent.mkdir(exist_ok=True)
     owner = singleton.open('a')
@@ -86,13 +87,15 @@ def main(study, a, *, root=None, jobs_override=None, gpus_override=None):
             del active[name]
         fcntl.flock(lock, fcntl.LOCK_EX)
         try:
-            allowed, reasons = guard.can_launch(cold_gib=10)
+            allowed, reasons = guard.can_launch(cold_gib=10, max_models=model_limit)
             if pending and allowed:
                 job = pending[0]; seed, mode = job
                 choices = sorted(gpus, key=lambda g: (g != preferred.get(job), sum(v['gpu'] == g for v in active.values()), gpus.index(g)))
                 choices = [g for g in choices if guard.gpu_headroom(g) >= required
                            and (root is None or not any(e['gpu'] == g and e['kind'] == 'source'
                                                         for e in guard.active()))]
+                if not choices:
+                    reasons.append('no_eligible_gpu')
                 if choices:
                     gpu = choices[0]; name = 's%d_%s' % job
                     env = os.environ.copy()
@@ -131,7 +134,8 @@ def main(study, a, *, root=None, jobs_override=None, gpus_override=None):
                 active={name: dict(pid=v['pid'], gpu=v['gpu'], job=list(v['job']) if coupling else list(v['job']) + [v['gpu']],
                                   start=v['start']) for name, v in active.items()},
                 finished=finished, failed=failed, resource_pauses=holds, allowed_gpus=gpus,
-                required_mib=required, gradient_mode='texture_only', admission_wait=reasons,
+                required_mib=required, model_limit=model_limit,
+                gradient_mode='texture_only', admission_wait=reasons,
                 updated=time.time()))
         finally:
             fcntl.flock(lock, fcntl.LOCK_UN)
