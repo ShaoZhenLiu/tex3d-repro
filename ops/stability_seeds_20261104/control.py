@@ -22,7 +22,7 @@ OLD = REPO / 'experiments/refcloth_stability/20261102'
 PROTOCOL_PATH = HERE / 'protocol.json'
 PROTOCOL = guard.read(PROTOCOL_PATH)
 SEEDS = PROTOCOL['new_training_seeds']
-SCOPE = {'4090': [0, 1, 2, 3], '09': [1, 2]}
+SCOPE = {'4090': [0, 1, 2, 3], '09': [0, 1, 2, 3]}
 BASELINE = REPO / 'ops/stability_20261102'
 
 
