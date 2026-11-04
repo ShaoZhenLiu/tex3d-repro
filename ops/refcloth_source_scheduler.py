@@ -14,7 +14,8 @@ R = Path('/data/shaozhen.liu/code/tex3d')
 PYTHON = '/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python'
 
 
-def main(study, a, *, root=None, jobs_override=None, gpus_override=None):
+def main(study, a, *, root=None, jobs_override=None, gpus_override=None,
+         gpu_required_mib=None, model_limit=None):
     coupling = study == 'coupling'
     x = R / ('experiments/refcloth_coupling/20261102' if coupling else 'experiments/refcloth_stability/20261102')
     ops = R / ('ops/coupling_20261102' if coupling else 'ops/stability_20261102')
@@ -38,7 +39,10 @@ def main(study, a, *, root=None, jobs_override=None, gpus_override=None):
         gpus = gpus_override
     required = 24000 if a.node == '09' else 23000
     share_source_gpu = root is not None and a.node == '09'
-    model_limit = len(gpus) if share_source_gpu else None
+    if model_limit is None and share_source_gpu:
+        model_limit = len(gpus)
+    required_by_gpu = dict.fromkeys(gpus, required)
+    required_by_gpu.update(gpu_required_mib or {})
     singleton = (guard.BASE / ('%s_source.lock' % study))
     singleton.parent.mkdir(exist_ok=True)
     owner = singleton.open('a')
@@ -60,7 +64,7 @@ def main(study, a, *, root=None, jobs_override=None, gpus_override=None):
                 and str(x) in current['cmd'] and '--seed %d' % job[0] in current['cmd']
                 and ('--mode ' if coupling else '--ref ') + job[1] in current['cmd']):
             gpu = old.get('gpu', old['job'][2] if len(old['job']) == 3 else None)
-            token = guard.register(old['pid'], script, 'source', gpu, required,
+            token = guard.register(old['pid'], script, 'source', gpu, required_by_gpu.get(gpu, required),
                                    study + ':' + name, x, phase='warm', started=old['start'])
             active[name] = dict(pid=old['pid'], proc=None, gpu=gpu, job=job,
                                 start=old['start'], token=token, ticks=current['ticks'])
@@ -92,7 +96,7 @@ def main(study, a, *, root=None, jobs_override=None, gpus_override=None):
             if pending and allowed:
                 job = pending[0]; seed, mode = job
                 choices = sorted(gpus, key=lambda g: (g != preferred.get(job), sum(v['gpu'] == g for v in active.values()), gpus.index(g)))
-                choices = [g for g in choices if guard.gpu_headroom(g) >= required
+                choices = [g for g in choices if guard.gpu_headroom(g) >= required_by_gpu[g]
                            and (root is None or share_source_gpu or not any(e['gpu'] == g and e['kind'] == 'source'
                                                         for e in guard.active()))]
                 if not choices:
@@ -116,7 +120,7 @@ def main(study, a, *, root=None, jobs_override=None, gpus_override=None):
                     deadline = time.monotonic() + 10
                     while True:
                         try:
-                            token = guard.register(proc.pid, script, 'source', gpu, required, study + ':' + name, x)
+                            token = guard.register(proc.pid, script, 'source', gpu, required_by_gpu[gpu], study + ':' + name, x)
                             break
                         except AssertionError:
                             if proc.poll() is not None:
@@ -135,7 +139,7 @@ def main(study, a, *, root=None, jobs_override=None, gpus_override=None):
                 active={name: dict(pid=v['pid'], gpu=v['gpu'], job=list(v['job']) if coupling else list(v['job']) + [v['gpu']],
                                   start=v['start']) for name, v in active.items()},
                 finished=finished, failed=failed, resource_pauses=holds, allowed_gpus=gpus,
-                required_mib=required, model_limit=model_limit,
+                required_mib=required, required_mib_by_gpu=required_by_gpu, model_limit=model_limit,
                 gradient_mode='texture_only', admission_wait=reasons,
                 updated=time.time()))
         finally:

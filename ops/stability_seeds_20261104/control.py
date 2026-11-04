@@ -157,9 +157,14 @@ def main(args):
     elif args.stage == 'source':
         prepare_file = guard.read(ROOT / 'streams/prepared.json', {})
         assert prepare_file.get('passed')
-        args.seeds = args.seeds or SEEDS
-        jobs = [(seed, ref) for seed in args.seeds for ref in ['native', 'mr']]
-        source.main(NAME, args, root=ROOT, jobs_override=jobs, gpus_override=SCOPE[args.node])
+        plan = guard.read(PROTOCOL_PATH.with_name('source_plan.json'), {}).get(args.node, {})
+        seeds = plan.get('seeds', SEEDS)
+        if args.seeds and not set(args.seeds) <= set(seeds):
+            raise ValueError('Source seeds must be assigned to this host')
+        jobs = [(seed, ref) for seed in (args.seeds or seeds) for ref in ['native', 'mr']]
+        source.main(NAME, args, root=ROOT, jobs_override=jobs, gpus_override=SCOPE[args.node],
+                    gpu_required_mib={int(gpu): mib for gpu, mib in plan.get('gpu_required_mib', {}).items()},
+                    model_limit=plan.get('model_limit'))
     elif args.stage == 'eval':
         assert args.node == '4090'
         initialize_evaluation()

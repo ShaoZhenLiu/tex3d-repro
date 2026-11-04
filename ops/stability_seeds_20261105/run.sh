@@ -7,6 +7,7 @@ test "$(git rev-parse HEAD)" = "$2"
 root="$PWD/experiments/refcloth_stability/20261105"
 controller="$PWD/ops/stability_seeds_20261104/control.py"
 protocol="$PWD/ops/stability_seeds_20261105/protocol.json"
+source_plan="$PWD/ops/stability_seeds_20261105/source_plan.json"
 mkdir -p "$root"
 exec 9>"$root/supervisor.lock"
 flock -n 9 || exit 0
@@ -16,11 +17,11 @@ mkdir -p "$guard"
 if ! pgrep -u "$USER" -f 'refcloth_resourc[e].py monitor' >/dev/null; then
     nohup setsid python3 -u ops/refcloth_resource.py monitor >>"$guard/monitor.log" 2>&1 </dev/null 9>&- &
 fi
-seeds=$(python3 - "$protocol" "$node" <<'PY'
+seeds=$(python3 - "$source_plan" "$node" <<'PY'
 import json,sys
 with open(sys.argv[1]) as file:
-    plan=json.load(file)['random_assignment']
-print(' '.join(map(str,plan['host_41' if sys.argv[2]=='4090' else 'host_09'])))
+    seeds=json.load(file)[sys.argv[2]]['seeds']
+print(' '.join(map(str,seeds)))
 PY
 )
 read -r -a assigned <<<"$seeds"
