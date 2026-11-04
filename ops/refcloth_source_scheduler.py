@@ -37,7 +37,8 @@ def main(study, a, *, root=None, jobs_override=None, gpus_override=None):
     if gpus_override is not None:
         gpus = gpus_override
     required = 24000 if a.node == '09' else 23000
-    model_limit = len(gpus) if root is not None and a.node == '09' else None
+    share_source_gpu = root is not None and a.node == '09'
+    model_limit = len(gpus) if share_source_gpu else None
     singleton = (guard.BASE / ('%s_source.lock' % study))
     singleton.parent.mkdir(exist_ok=True)
     owner = singleton.open('a')
@@ -92,7 +93,7 @@ def main(study, a, *, root=None, jobs_override=None, gpus_override=None):
                 job = pending[0]; seed, mode = job
                 choices = sorted(gpus, key=lambda g: (g != preferred.get(job), sum(v['gpu'] == g for v in active.values()), gpus.index(g)))
                 choices = [g for g in choices if guard.gpu_headroom(g) >= required
-                           and (root is None or not any(e['gpu'] == g and e['kind'] == 'source'
+                           and (root is None or share_source_gpu or not any(e['gpu'] == g and e['kind'] == 'source'
                                                         for e in guard.active()))]
                 if not choices:
                     reasons.append('no_eligible_gpu')
