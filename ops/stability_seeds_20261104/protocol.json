@@ -1,0 +1,116 @@
+{
+  "version": "reference-stability-followup-20261104",
+  "parent_commit": "042dde1702b781900436144d0103ff8c36d72d9b",
+  "new_training_seeds": [
+    66,
+    88,
+    99,
+    42
+  ],
+  "existing_seeds": [],
+  "references": [
+    "native",
+    "mr"
+  ],
+  "training": {
+    "entry": "openvla-oft/experiments/robot/libero/attack_oft_cloth_ablate.py",
+    "iterations": 5000,
+    "batch": 8,
+    "task_pool": [
+      0,
+      2,
+      6,
+      8
+    ],
+    "observations": 296,
+    "source": "OpenVLA-OFT Spatial 150K",
+    "uv": "one full-precision UV draw shared across batch and both views",
+    "pairing": "Identical seeded initialization and pregenerated frame/UV stream within each reference pair; references are the sole training-factor contrast",
+    "initialization_std": 0.01,
+    "step_size": 0.05,
+    "epsilon": 0.25098039215686274,
+    "lambda_feature": 10.0,
+    "lambda_amplitude": 0.1,
+    "lambda_tv": 0.1,
+    "export": "final iteration 4999 only; no target-based checkpoint selection",
+    "precision": "original bfloat16 source path; record software and GPU architecture for every pair",
+    "gradient_request": "Request gradients only for the optimized texture, preserving source network requires-grad flags and all forwards; same scalar objective, sampler and sign update. Validated against repeated full backpropagation on held-out seed-11 frames. Numerical, not bitwise, agreement because the original backward itself is nondeterministic. All final new runs use this mode from initialization."
+  },
+  "evaluation": {
+    "target": "pi05",
+    "config": "pi05_libero",
+    "checkpoint": "/data/shaozhen.liu/model/RLinf-Pi05-LIBERO-130-fullshot-SFT",
+    "suites": [
+      "spatial",
+      "object"
+    ],
+    "tasks": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "initials": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "max_steps": 400,
+    "settle_steps": 10,
+    "replan_steps": 5,
+    "num_denoise": 10,
+    "surface_mode": "legacy",
+    "floor_mode": "true only on Object, exactly the production deployment",
+    "noise": "seed=6810000 + suite_index*1000000 + task*10000 + initial*100 + query; excludes texture, training seed, reference and worker",
+    "pairing": "Paired task/initial state and consumed query noise; each episode evolves freely after initialization",
+    "existing_textures": "No prior trained texture is reused.",
+    "plain": "Reuse all 200 validated original paired Plain episodes after exact worker calibration.",
+    "planned_episodes": 1800,
+    "new_episodes": 1600
+  },
+  "primary_estimand": "For each training seed, mean of Native-success minus Matched-success over 100 paired Spatial and 100 paired Object episodes (pp); positive favors matched reference",
+  "statistics": {
+    "unit": "trained reference pair, not individual evaluation episodes",
+    "primary": "Report all four paired seeds and their mean, sample SD, t interval and exact sign-flip test; also pool with the previous six using equal per-seed weights.",
+    "robustness": "Report the follow-up separately and the pooled result; preserve historical training and hardware provenance.",
+    "secondary": "Per-seed and suite exact McNemar, Holm across eight planned contrasts.",
+    "failed_jobs": "Record as infrastructure errors and rerun the same seed/configuration; never count as robot failures or replace with a different seed"
+  },
+  "reporting": "Keep every planned seed and outcome. Do not suppress unfavorable seeds or use their omission to support stability. Individual seed identifiers may be confined to reproducibility data, but counts and distributions must describe the full experiment.",
+  "frozen_renderer_exception": {
+    "authorized_by_user": true,
+    "decision": "Keep the existing recipe for reference-only replication; do not recalibrate the renderer or change cached references",
+    "main_view_gate": "zero export, visibility, foreground preservation, and PSNR >=25 dB pass",
+    "wrist_view": "Known photometric gap retained and measured; not asserted to pass the 25-dB gate"
+  },
+  "resources": {
+    "4090_forbidden_gpu": 4,
+    "4090_share_authorized": true,
+    "09_share_authorized_gpus": [
+      1,
+      2
+    ],
+    "reserve_other_cards": "Keep the prior GPU 0-3 scope on 41; GPU 4 prohibited.",
+    "host_memory_floor_GB": 50,
+    "no_environment_install_or_shared_asset_changes": true,
+    "allowed_4090_gpus": [
+      0,
+      1,
+      2,
+      3
+    ]
+  }
+}

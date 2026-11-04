@@ -14,11 +14,12 @@ R = Path('/data/shaozhen.liu/code/tex3d')
 PYTHON = '/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python'
 
 
-def main(study, a):
+def main(study, a, *, root=None, jobs_override=None, gpus_override=None):
     coupling = study == 'coupling'
     x = R / ('experiments/refcloth_coupling/20261102' if coupling else 'experiments/refcloth_stability/20261102')
     ops = R / ('ops/coupling_20261102' if coupling else 'ops/stability_20261102')
     script = ops / ('train_arm.py' if coupling else 'train_pair_arm.py')
+    x = root if root is not None else x
     status = x / ('train_status_%s.json' % a.node)
     if coupling:
         jobs = [(12, m) for m in ['uv_ind', 'main', 'wrist']] if a.node == '09' else [
@@ -30,6 +31,11 @@ def main(study, a):
         preferred = {(10, 'native'): 0, (10, 'mr'): 6, (11, 'native'): 1, (11, 'mr'): 5}
         fraction = .285 if a.node == '09' else .51
     gpus = [2, 1] if a.node == '09' else [0, 1, 5, 6, 7]
+    if jobs_override is not None:
+        jobs = jobs_override
+        preferred = {}
+    if gpus_override is not None:
+        gpus = gpus_override
     required = 24000 if a.node == '09' else 23000
     singleton = (guard.BASE / ('%s_source.lock' % study))
     singleton.parent.mkdir(exist_ok=True)
@@ -84,7 +90,9 @@ def main(study, a):
             if pending and allowed:
                 job = pending[0]; seed, mode = job
                 choices = sorted(gpus, key=lambda g: (g != preferred.get(job), sum(v['gpu'] == g for v in active.values()), gpus.index(g)))
-                choices = [g for g in choices if guard.gpu_headroom(g) >= required]
+                choices = [g for g in choices if guard.gpu_headroom(g) >= required
+                           and (root is None or not any(e['gpu'] == g and e['kind'] == 'source'
+                                                        for e in guard.active()))]
                 if choices:
                     gpu = choices[0]; name = 's%d_%s' % job
                     env = os.environ.copy()
@@ -101,7 +109,18 @@ def main(study, a):
                     proc = subprocess.Popen(cmd, cwd='/data/shaozhen.liu/code/tex3d-ws/g7', env=env,
                         stdin=subprocess.DEVNULL, stdout=open(x / 'logs' / (name + '.log'), 'a'),
                         stderr=subprocess.STDOUT, start_new_session=True)
-                    token = guard.register(proc.pid, script, 'source', gpu, required, study + ':' + name, x)
+                    deadline = time.monotonic() + 10
+                    while True:
+                        try:
+                            token = guard.register(proc.pid, script, 'source', gpu, required, study + ':' + name, x)
+                            break
+                        except AssertionError:
+                            if proc.poll() is not None:
+                                raise RuntimeError('Source process exited before registration: ' + name)
+                            if time.monotonic() >= deadline:
+                                proc.terminate()
+                                raise RuntimeError('Source process command did not become visible: ' + name)
+                            time.sleep(.05)
                     active[name] = dict(proc=proc, pid=proc.pid, ticks=guard.identity(proc.pid)['ticks'],
                                         gpu=gpu, job=job, start=time.time(), token=token)
                     pending.pop(0)

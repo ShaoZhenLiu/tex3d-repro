@@ -40,13 +40,12 @@ def register_started_worker(proc, gpu, budget, label, root):
             time.sleep(.05)
 
 
-def main(study, publish, a):
+def main(study, publish, a, *, root=None):
     coupling = study == 'coupling'
-    if (a.share_gpu3 or a.gpus) and (not coupling or not os.uname().nodename.endswith('-41')):
+    if (a.share_gpu3 or a.gpus) and ((not coupling and root is None) or not os.uname().nodename.endswith('-41')):
         raise ValueError('GPU selection options are for camera evaluation on host 41')
     selected_gpus = list(dict.fromkeys(a.gpus)) if a.gpus else None
-    x = C if coupling else P
-    total = 180 if coupling else 140
+    x = root if root is not None else (C if coupling else P)
     assert guard.read(P / 'evaluation/workers/lowmem_smoke6/smoke_passed.json')['passed']
     singleton = guard.BASE / (study + '_eval.lock'); singleton.parent.mkdir(exist_ok=True)
     owner = singleton.open('a')
@@ -69,6 +68,8 @@ def main(study, publish, a):
         actors[name] = dict(pid=pid, ticks=current['ticks'], proc=None, token=token, gpu=gpu)
     budget_lock = (R / 'experiments/refcloth_gpu_budget_4090.lock').open('a')
     jobs = guard.read(x / 'evaluation/jobs.json')
+    total = len(jobs)
+    assert total > 0
     while True:
         publish()
         completed = len(list((x / 'evaluation/completed').glob('*.json')))
@@ -94,7 +95,7 @@ def main(study, publish, a):
         fcntl.flock(budget_lock, fcntl.LOCK_EX)
         try:
             allowed, reasons = guard.can_launch(max_models=6 if a.share_gpu3 else None)
-            source_pending = any(guard.read(root / 'train_status_4090.json', {}).get('pending') for root in [P, C])
+            source_pending = any(guard.read(path / 'train_status_4090.json', {}).get('pending') for path in [P, C, x])
             loading = sum(e['kind'] == 'eval' and e['phase'] == 'loading' and e['root'] == str(x) for e in guard.active())
             if ready and len(ready) > loading and allowed:
                 entries = guard.active()
@@ -142,9 +143,11 @@ def main(study, publish, a):
         finally:
             fcntl.flock(budget_lock, fcntl.LOCK_UN)
         time.sleep(15)
-    result = dict(completed=True, bundles=total, episodes=2600, failed_attempts=failed, resource_pauses=holds)
+    result = dict(completed=True, bundles=total, episodes=sum(10 * len(job['conditions']) for job in jobs), failed_attempts=failed, resource_pauses=holds)
     if coupling:
         result.update(new_episodes=1800, reused_episodes=800)
+    elif root is not None:
+        result.update(new_episodes=result['episodes'] - 200, reused_episodes=200)
     guard.write(x / 'eval_controller_done.json', result)
 
 

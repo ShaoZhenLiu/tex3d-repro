@@ -96,7 +96,7 @@ if __name__=='__main__':
     p=argparse.ArgumentParser()
     p.add_argument('--repo',type=Path,required=True)
     p.add_argument('--root',type=Path,required=True)
-    p.add_argument('--seed',type=int,choices=[10,11,12],required=True)
+    p.add_argument('--seed',type=int,required=True)
     p.add_argument('--ref',choices=['native','mr'],required=True)
     p.add_argument('--memory-fraction',type=float,default=.78)
     p.add_argument('--allow-frozen-wrist-gap',action='store_true')
