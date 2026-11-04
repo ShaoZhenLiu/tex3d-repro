@@ -102,7 +102,8 @@ def initialize_evaluation():
             for seed in SEEDS:
                 jobs.append(dict(id='%s_t%d_s%d' % (suite, task, seed), suite=suite, task=task,
                     conditions=['s%d_native' % seed, 's%d_mr' % seed], requires_existing=plain_keys))
-    assert len(jobs) == 100 and sum(10 * len(job['conditions']) for job in jobs) == ep['planned_episodes']
+    assert len(jobs) == len(ep['suites']) * len(ep['tasks']) * (1 + len(SEEDS))
+    assert sum(len(ep['initials']) * len(job['conditions']) for job in jobs) == ep['planned_episodes']
     for row in (ROOT / 'evaluation/episodes').glob('*_plain.json'):
         name = guard.read(row)['worker']
         rel = Path('evaluation/workers') / name / 'calibration.json'
@@ -171,5 +172,18 @@ if __name__ == '__main__':
     parser.add_argument('--stage', required=True, choices=['prepare', 'source', 'eval'])
     parser.add_argument('--node', required=True, choices=['4090', '09'])
     parser.add_argument('--resume', action='store_true')
-    parser.add_argument('--seeds', type=int, nargs='+', choices=SEEDS)
-    main(parser.parse_args())
+    parser.add_argument('--seeds', type=int, nargs='+')
+    parser.add_argument('--protocol', type=Path, default=PROTOCOL_PATH)
+    args = parser.parse_args()
+    PROTOCOL_PATH = args.protocol.resolve()
+    assert PROTOCOL_PATH.parent.parent == REPO / 'ops'
+    NAME = PROTOCOL_PATH.parent.name
+    prefix = 'stability_seeds_'
+    date = NAME[len(prefix):]
+    assert NAME.startswith(prefix) and date.isdigit() and len(date) == 8
+    ROOT = REPO / 'experiments/refcloth_stability' / date
+    PROTOCOL = guard.read(PROTOCOL_PATH)
+    SEEDS = PROTOCOL['new_training_seeds']
+    if args.seeds and (len(set(args.seeds)) != len(args.seeds) or not set(args.seeds) <= set(SEEDS)):
+        parser.error('--seeds must be a nonrepeating subset of the protocol seeds')
+    main(args)
