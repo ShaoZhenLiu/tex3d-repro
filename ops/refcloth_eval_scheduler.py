@@ -40,9 +40,9 @@ def register_started_worker(proc, gpu, budget, label, root):
             time.sleep(.05)
 
 
-def main(study, publish, a, *, root=None):
+def main(study, publish, a, *, root=None, node='4090', allow_stochastic_calibration=False):
     coupling = study == 'coupling'
-    if (a.share_gpu3 or a.gpus) and ((not coupling and root is None) or not os.uname().nodename.endswith('-41')):
+    if (a.share_gpu3 or a.gpus) and ((not coupling and root is None) or (node == '4090' and not os.uname().nodename.endswith('-41'))):
         raise ValueError('GPU selection options are for camera evaluation on host 41')
     selected_gpus = list(dict.fromkeys(a.gpus)) if a.gpus else None
     x = root if root is not None else (C if coupling else P)
@@ -63,16 +63,16 @@ def main(study, publish, a, *, root=None):
         gpu = int(name.split('gpu')[1].split('_')[0][0])
         if selected_gpus is not None and gpu not in selected_gpus:
             raise RuntimeError('Pause the out-of-scope worker before resuming: ' + name)
-        budget = 19000 if gpu == 3 else 17000
+        budget = 24000 if node == '09' else (19000 if gpu == 3 else 17000)
         token = guard.register(pid, SCRIPT, 'eval', gpu, budget, study + ':' + name, x, phase='warm')
         actors[name] = dict(pid=pid, ticks=current['ticks'], proc=None, token=token, gpu=gpu)
-    budget_lock = (R / 'experiments/refcloth_gpu_budget_4090.lock').open('a')
-    jobs = guard.read(x / 'evaluation/jobs.json')
+    budget_lock = (R / ('experiments/refcloth_gpu_budget_%s.lock' % node)).open('a')
+    jobs = [job for job in guard.read(x / 'evaluation/jobs.json') if job.get('node', '4090') == node]
     total = len(jobs)
     assert total > 0
     while True:
         publish()
-        completed = len(list((x / 'evaluation/completed').glob('*.json')))
+        completed = sum((x / 'evaluation/completed' / (job['id'] + '.json')).exists() for job in jobs)
         if completed == total:
             break
         manifest = guard.read(x / 'texture_manifest.json')
@@ -94,7 +94,7 @@ def main(study, publish, a, *, root=None):
             del actors[name]
         fcntl.flock(budget_lock, fcntl.LOCK_EX)
         try:
-            allowed, reasons = guard.can_launch(max_models=6 if a.share_gpu3 else None)
+            allowed, reasons = guard.can_launch(max_models=6 if node == '09' or a.share_gpu3 else None)
             source_pending = any(guard.read(path / 'train_status_4090.json', {}).get('pending') for path in [P, C, x])
             loading = sum(e['kind'] == 'eval' and e['phase'] == 'loading' and e['root'] == str(x) for e in guard.active())
             if ready and len(ready) > loading and allowed:
@@ -109,14 +109,14 @@ def main(study, publish, a, *, root=None):
                 candidates = []
                 for gpu in gpus:
                     source_here = any(e['kind'] == 'source' and e['gpu'] == gpu for e in entries)
-                    reserve = 23000 if gpu != 3 and source_pending and not source_here else 0
-                    budget = 19000 if gpu == 3 else 17000
+                    reserve = 23000 if node == '4090' and gpu != 3 and source_pending and not source_here else 0
+                    budget = 24000 if node == '09' else (19000 if gpu == 3 else 17000)
                     if guard.gpu_headroom(gpu) - reserve >= budget:
                         candidates.append(gpu)
                 if candidates:
                     gpu = min(candidates, key=lambda g: sum(e['gpu'] == g for e in entries))
-                    budget = 19000 if gpu == 3 else 17000
-                    name = 'gpu%d_%s_%d' % (gpu, study, int(time.time()))
+                    budget = 24000 if node == '09' else (19000 if gpu == 3 else 17000)
+                    name = 'gpu%d_%s_%s_%d' % (gpu, node, study, int(time.time()))
                     env = os.environ.copy()
                     env.update(CUDA_VISIBLE_DEVICES=str(gpu), MUJOCO_EGL_DEVICE_ID=str(gpu),
                         MUJOCO_GL='egl', PYOPENGL_PLATFORM='egl', OMP_NUM_THREADS='2', MKL_NUM_THREADS='2',
@@ -128,6 +128,9 @@ def main(study, publish, a, *, root=None):
                                            '/data/shaozhen.liu/code/tex3d-deps/taming-transformers']))
                     cmd = ['/data/shaozhen.liu/envs/tex3d-pi0-mj330/bin/python', str(SCRIPT), '--repo', str(R),
                            '--root', str(x), '--worker', name, '--memory-fraction', '.31']
+                    cmd += ['--node', node]
+                    if allow_stochastic_calibration:
+                        cmd.append('--allow-stochastic-calibration')
                     proc = subprocess.Popen(cmd, cwd=R, env=env, stdin=subprocess.DEVNULL,
                         stdout=open(x / ('evaluation_' + name + '.log'), 'a'), stderr=subprocess.STDOUT,
                         start_new_session=True)

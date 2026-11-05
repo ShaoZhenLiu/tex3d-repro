@@ -68,14 +68,23 @@ def main(a):
         key=(suite,task,initial,condition);assert key not in raw
         raw[key]=obj
         rows.append(dict(suite=suite,task=task,initial=initial,condition=condition,
-            success=int(obj['robot_success']),queries=obj['queries'],elapsed_seconds=obj['elapsed_seconds'],worker=obj['worker']))
+            success=int(obj['robot_success']),queries=obj['queries'],elapsed_seconds=obj['elapsed_seconds'],worker=obj['worker'],host=obj['host'],gpu=obj['gpu']))
     frame=pd.DataFrame(rows)
     assert set(frame.groupby('condition').size().values)=={200}
     assert set(frame.groupby(['condition','suite']).size().values)=={100}
     workers={}
     for name in sorted(frame.worker.unique()):
         calibration=json.loads((a.root/'evaluation/workers'/name/'calibration.json').read_text())
-        assert calibration['passed'] and calibration['trajectory_exact']
+        assert calibration['passed']
+        if calibration.get('mode') == 'success':
+            assert followup and a.followup_protocol
+            evaluation_plan=json.loads(a.followup_protocol.with_name('evaluation_plan.json').read_text())
+            assert evaluation_plan.get('user_authorized')
+            assert calibration.get('node') in evaluation_plan['allow_stochastic_calibration_nodes']
+            assert calibration.get('mode')=='success' and calibration.get('success_repeatable')
+            assert calibration.get('canonical_success')
+        else:
+            assert calibration['trajectory_exact']
         workers[name]=calibration
     input_changes=[]
     for condition in sorted(set(frame.condition)-{'plain'}):
@@ -96,7 +105,11 @@ def main(a):
         input_changes.append(dict(condition=condition,comparable_initial_queries=comparable,
             main_changed=main_changed,wrist_changed=wrist_changed))
     paired=[]
+    evaluation_hosts = {}
     for seed in seeds:
+        hosts = frame[frame.condition.isin(['s%d_native'%seed, 's%d_mr'%seed])].host.unique()
+        assert len(hosts)==1, (seed,hosts)
+        evaluation_hosts[str(seed)] = str(hosts[0])
         for suite in ['spatial','object']:
             plain=frame[(frame.condition=='plain')&(frame.suite==suite)].success.sum()
             n_success=m_success=b=c=0
@@ -104,6 +117,7 @@ def main(a):
                 for initial in range(10,20):
                     n=raw[(suite,task,initial,'s%d_native'%seed)]
                     m=raw[(suite,task,initial,'s%d_mr'%seed)]
+                    assert n['host']==m['host'],(seed,suite,task,initial)
                     nt,mt=n['trajectory'],m['trajectory']
                     if nt and mt:
                         assert nt[0]['proprio_sha256']==mt[0]['proprio_sha256']
@@ -145,6 +159,8 @@ def main(a):
         assert all(v['rows_per_arm']==40000 and v['textual_stream_equal'] for v in prior.values())
         assert all(prior[str(seed)]['full_precision_uv_equal'] and prior[str(seed)]['initialization_exact'] for seed in [8,9])
         result['existing_pair_integrity']=prior
+    result['evaluation_hosts']=evaluation_hosts
+    result['calibration_scope']='Canonical 4090 Plain baseline; exact-trajectory calibration on 4090 and user-authorized success calibration on 09.'
     result['worker_calibrations']=workers
     result['initial_input_changes']=input_changes
     frame.to_csv(str(a.out/'episode_outcomes.csv'),index=False)

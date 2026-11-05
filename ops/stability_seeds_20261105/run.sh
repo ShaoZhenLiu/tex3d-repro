@@ -56,6 +56,16 @@ fi
 run_source
 if [[ "$node" == 4090 ]]; then
     wait "$eval_pid"
+    until python3 - "$root" "$protocol" <<'PY'
+import json,sys
+from pathlib import Path
+root=Path(sys.argv[1])
+expected=json.load(open(sys.argv[2]))['evaluation']['planned_episodes']
+assert len(list((root/'evaluation/episodes').glob('*.json')))==expected
+PY
+    do
+        sleep 30
+    done
     analysis_python=/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python
     "$analysis_python" -u ops/stability_20261102/summarize.py --root "$root" --out "$root/analysis" --followup-protocol "$protocol" >>"$root/analysis.log" 2>&1 9>&-
 fi

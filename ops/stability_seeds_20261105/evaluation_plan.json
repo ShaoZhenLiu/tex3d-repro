@@ -1,0 +1,38 @@
+{
+  "version": "distributed-evaluation-20261105",
+  "seed_nodes": {
+    "55": "4090",
+    "19": "4090",
+    "3": "09",
+    "63": "09",
+    "51": "4090",
+    "52": "4090",
+    "36": "4090",
+    "58": "09"
+  },
+  "allow_stochastic_calibration_nodes": [
+    "09"
+  ],
+  "user_authorized": true,
+  "baseline": "All G values use the fixed canonical 4090 Plain benchmark. Native and Matched for each seed run on the same node.",
+  "migration": "Retain pre-migration seed-58 episodes in an archive and evaluate the entire seed on 09.",
+  "nodes": {
+    "4090": {
+      "gpus": [
+        1,
+        2,
+        3
+      ]
+    },
+    "09": {
+      "gpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "model_limit": 6,
+      "required_mib": 24000
+    }
+  }
+}

@@ -89,6 +89,7 @@ def initialize_evaluation():
         guard.write(manifest_path, dict(plain=old))
     jobs = []
     ep = PROTOCOL['evaluation']
+    evaluation_plan = guard.read(PROTOCOL_PATH.with_name('evaluation_plan.json'), {})
     for suite in ep['suites']:
         for task in ep['tasks']:
             plain_id = '%s_t%d_plain' % (suite, task)
@@ -101,7 +102,8 @@ def initialize_evaluation():
             jobs.append(dict(id=plain_id, suite=suite, task=task, conditions=['plain']))
             for seed in SEEDS:
                 jobs.append(dict(id='%s_t%d_s%d' % (suite, task, seed), suite=suite, task=task,
-                    conditions=['s%d_native' % seed, 's%d_mr' % seed], requires_existing=plain_keys))
+                    conditions=['s%d_native' % seed, 's%d_mr' % seed], requires_existing=plain_keys,
+                    node=evaluation_plan.get('seed_nodes', {}).get(str(seed), '4090')))
     assert len(jobs) == len(ep['suites']) * len(ep['tasks']) * (1 + len(SEEDS))
     assert sum(len(ep['initials']) * len(job['conditions']) for job in jobs) == ep['planned_episodes']
     for row in (ROOT / 'evaluation/episodes').glob('*_plain.json'):
@@ -166,11 +168,14 @@ def main(args):
                     gpu_required_mib={int(gpu): mib for gpu, mib in plan.get('gpu_required_mib', {}).items()},
                     model_limit=plan.get('model_limit'))
     elif args.stage == 'eval':
-        assert args.node == '4090'
         initialize_evaluation()
         plan = guard.read(PROTOCOL_PATH.with_name('source_plan.json'), {}).get(args.node, {})
         args.gpus, args.share_gpu3 = plan.get('evaluation_gpus', SCOPE[args.node]), False
-        evaluator.main(NAME, publish, args, root=ROOT)
+        evaluation_plan = guard.read(PROTOCOL_PATH.with_name('evaluation_plan.json'), {})
+        allow_stochastic = args.node in evaluation_plan.get('allow_stochastic_calibration_nodes', [])
+        assert not allow_stochastic or evaluation_plan.get('user_authorized')
+        evaluator.main(NAME, publish, args, root=ROOT, node=args.node,
+                       allow_stochastic_calibration=allow_stochastic)
 
 
 if __name__ == '__main__':

@@ -28,7 +28,7 @@ def write(path,value):
 
 def main(a):
     allowed_gpus = ['0', '1', '3', '5', '6', '7']
-    if os.uname().nodename.endswith('-41'):
+    if os.uname().nodename.endswith('-41') or getattr(a, 'node', '4090') == '09':
         allowed_gpus.append('2')
     assert os.environ['CUDA_VISIBLE_DEVICES'] in allowed_gpus
     torch.set_num_threads(2);torch.manual_seed(7)
@@ -120,12 +120,29 @@ def main(a):
     # Each freshly loaded model repeats an entire prescribed Plain trajectory.
     cal0=episode('spatial',0,10,'plain',True)
     cal1=episode('spatial',0,10,'plain',True)
-    assert cal0['robot_success']==cal1['robot_success'] and cal0['trajectory']==cal1['trajectory']
+    trajectory_exact = cal0['robot_success']==cal1['robot_success'] and cal0['trajectory']==cal1['trajectory']
+    success_repeatable = cal0['robot_success']==cal1['robot_success']
+    canonical_exact = True
+    canonical_success = True
     baseline=outcomes/'spatial_t0_i10_plain.json'
     if baseline.exists():
         old=json.loads(baseline.read_text())
-        assert old['robot_success']==cal0['robot_success'] and old['trajectory']==cal0['trajectory'], 'CPU checkpoint-loading path changed the reference rollout'
-    write(worker/'calibration.json',dict(passed=True,queries=cal0['queries'],trajectory_exact=True))
+        canonical_exact = old['robot_success']==cal0['robot_success'] and old['trajectory']==cal0['trajectory']
+        canonical_success = old['robot_success']==cal0['robot_success']
+    allow_stochastic = getattr(a, 'allow_stochastic_calibration', False)
+    if allow_stochastic:
+        assert getattr(a, 'node', '4090') == '09'
+        assert success_repeatable and canonical_success, 'Plain calibration outcomes differ'
+        assert all(x['noise_sha256']==y['noise_sha256']
+                   for x,y in zip(cal0['trajectory'],cal1['trajectory']))
+    else:
+        assert trajectory_exact, 'Repeated Plain trajectories differ'
+        assert canonical_exact, 'CPU checkpoint-loading path changed the reference rollout'
+    write(worker/'calibration.json',dict(passed=True,queries=cal0['queries'],
+        trajectory_exact=trajectory_exact,canonical_trajectory_exact=canonical_exact,
+        success_repeatable=success_repeatable,canonical_success=canonical_success,
+        node=getattr(a,'node','4090'),mode='success' if allow_stochastic else 'trajectory',
+        repeat_queries=[cal0['queries'],cal1['queries']]))
     registration=dict(worker=a.worker,protocol_sha256=hashlib.sha256((a.repo/'ops/stability_20261102/protocol.json').read_bytes()).hexdigest(),
         checkpoint=p['checkpoint'],noise_shape=noise_shape,mujoco=mujoco.__version__,pytorch=torch.__version__,
         gpu_name=torch.cuda.get_device_name(),host=os.uname().nodename,
@@ -144,7 +161,9 @@ def main(a):
             adversarial_main_input_changed=True,peak_cuda_bytes=torch.cuda.max_memory_allocated(),
             peak_reserved_bytes=torch.cuda.max_memory_reserved(),memory_fraction=a.memory_fraction))
         return
-    lock=a.root/'evaluation/queue.lock';jobs=json.loads((a.root/'evaluation/jobs.json').read_text())
+    lock=a.root/'evaluation/queue.lock'
+    jobs=json.loads((a.root/'evaluation/jobs.json').read_text())
+    jobs=[job for job in jobs if job.get('node','4090')==getattr(a,'node','4090')]
     done=[]
     while True:
         chosen=None
@@ -165,7 +184,7 @@ def main(a):
                 chosen=job;break
             fcntl.flock(f,fcntl.LOCK_UN)
         if chosen is None:
-            count=len(list(complete.glob('*.json')))
+            count=sum((complete/(job['id']+'.json')).exists() for job in jobs)
             write(worker/'status.json',dict(waiting=True,finished_bundles=count,total_bundles=len(jobs),updated=time.time()))
             if count==len(jobs):break
             time.sleep(15);continue
@@ -191,4 +210,6 @@ if __name__=='__main__':
     p.add_argument('--worker',required=True);p.add_argument('--smoke',action='store_true')
     p.add_argument('--memory-fraction',type=float,default=.44)
     p.add_argument('--compare-existing-smoke',action='store_true')
+    p.add_argument('--node',choices=['4090','09'],default='4090')
+    p.add_argument('--allow-stochastic-calibration',action='store_true')
     main(p.parse_args())
