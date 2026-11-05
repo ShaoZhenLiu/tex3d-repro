@@ -37,7 +37,8 @@ def main(a):
     import attack_pi0 as B
     import mujoco
     from libero.libero import benchmark
-    protocol=json.loads((a.repo/'ops/stability_20261102/protocol.json').read_text())
+    protocol_path=getattr(a, 'protocol', None) or (a.repo/'ops/stability_20261102/protocol.json')
+    protocol=json.loads(Path(protocol_path).read_text())
     assert A.patch_status()=='patched' and os.environ.get('REFCLOTH_SURFACE_MODE','legacy')=='legacy'
     assert mujoco.__version__=='3.3.0'
     p=protocol['evaluation']
@@ -114,6 +115,8 @@ def main(a):
             robot_success=bool(success),queries=len(paired.rows),elapsed_seconds=time.monotonic()-start,
             native_uploads=current['uploads']-before,trajectory=paired.rows,worker=a.worker,
             host=os.uname().nodename,gpu=os.environ['CUDA_VISIBLE_DEVICES'])
+        if p.get('target'):
+            data['target']=p['target']
         if not calibration:write(path,data)
         print('EPISODE',suite,task,initial,condition,int(success),len(paired.rows),flush=True)
         return data
@@ -142,8 +145,8 @@ def main(a):
         trajectory_exact=trajectory_exact,canonical_trajectory_exact=canonical_exact,
         success_repeatable=success_repeatable,canonical_success=canonical_success,
         node=getattr(a,'node','4090'),mode='success' if allow_stochastic else 'trajectory',
-        repeat_queries=[cal0['queries'],cal1['queries']]))
-    registration=dict(worker=a.worker,protocol_sha256=hashlib.sha256((a.repo/'ops/stability_20261102/protocol.json').read_bytes()).hexdigest(),
+        repeat_queries=[cal0['queries'],cal1['queries']],canonical_reference_available=baseline.exists()))
+    registration=dict(worker=a.worker,protocol_sha256=hashlib.sha256(Path(protocol_path).read_bytes()).hexdigest(),
         checkpoint=p['checkpoint'],noise_shape=noise_shape,mujoco=mujoco.__version__,pytorch=torch.__version__,
         gpu_name=torch.cuda.get_device_name(),host=os.uname().nodename,
         source_hashes={str(Path(inspect.getfile(v))):hashlib.sha256(Path(inspect.getfile(v)).read_bytes()).hexdigest() for v in [A,B,type(policy),type(policy._model)]},
@@ -210,4 +213,5 @@ if __name__=='__main__':
     p.add_argument('--compare-existing-smoke',action='store_true')
     p.add_argument('--node',choices=['4090','09'],default='4090')
     p.add_argument('--allow-stochastic-calibration',action='store_true')
+    p.add_argument('--protocol',type=Path,help='Evaluation protocol; defaults to the original reference study')
     main(p.parse_args())

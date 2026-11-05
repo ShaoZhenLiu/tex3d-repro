@@ -38,7 +38,8 @@ def register_started_worker(proc, gpu, budget, label, root):
             time.sleep(.05)
 
 
-def main(study, publish, a, *, root=None, node='4090', allow_stochastic_calibration=False):
+def main(study, publish, a, *, root=None, node='4090', allow_stochastic_calibration=False,
+         evaluation_protocol=None, reused_episode_count=None):
     coupling = study == 'coupling'
     if (a.share_gpu3 or a.gpus) and ((not coupling and root is None) or (node == '4090' and not os.uname().nodename.endswith('-41'))):
         raise ValueError('GPU selection options are for camera evaluation on host 41')
@@ -129,6 +130,8 @@ def main(study, publish, a, *, root=None, node='4090', allow_stochastic_calibrat
                     cmd += ['--node', node]
                     if allow_stochastic_calibration:
                         cmd.append('--allow-stochastic-calibration')
+                    if evaluation_protocol is not None:
+                        cmd += ['--protocol', str(evaluation_protocol)]
                     proc = subprocess.Popen(cmd, cwd=R, env=env, stdin=subprocess.DEVNULL,
                         stdout=open(x / ('evaluation_' + name + '.log'), 'a'), stderr=subprocess.STDOUT,
                         start_new_session=True)
@@ -148,7 +151,8 @@ def main(study, publish, a, *, root=None, node='4090', allow_stochastic_calibrat
     if coupling:
         result.update(new_episodes=1800, reused_episodes=800)
     elif root is not None:
-        result.update(new_episodes=result['episodes'] - 200, reused_episodes=200)
+        reused = 200 if reused_episode_count is None else reused_episode_count
+        result.update(new_episodes=result['episodes'] - reused, reused_episodes=reused)
     guard.write(x / 'eval_controller_done.json', result)
 
 

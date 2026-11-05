@@ -1,0 +1,164 @@
+{
+  "selected_at": "2026-11-05T15:47:32.040519+00:00",
+  "seeds": [
+    3,
+    12,
+    10
+  ],
+  "basis": "Post-hoc largest Native-minus-Matched mean G; all three also rank in the top five Native attack strengths among 18 pairs.",
+  "source_scores": [
+    {
+      "seed": "3",
+      "Native_G": "60.0",
+      "Matched_G": "34.0",
+      "delta_G": "-26.0"
+    },
+    {
+      "seed": "12",
+      "Native_G": "52.5",
+      "Matched_G": "29.0",
+      "delta_G": "-23.5"
+    },
+    {
+      "seed": "10",
+      "Native_G": "56.5",
+      "Matched_G": "40.5",
+      "delta_G": "-16.0"
+    },
+    {
+      "seed": "11",
+      "Native_G": "34.5",
+      "Matched_G": "22.5",
+      "delta_G": "-12.0"
+    },
+    {
+      "seed": "55",
+      "Native_G": "36.5",
+      "Matched_G": "24.5",
+      "delta_G": "-12.0"
+    },
+    {
+      "seed": "63",
+      "Native_G": "35.5",
+      "Matched_G": "26.5",
+      "delta_G": "-9.0"
+    },
+    {
+      "seed": "36",
+      "Native_G": "45.5",
+      "Matched_G": "37.5",
+      "delta_G": "-8.0"
+    },
+    {
+      "seed": "19",
+      "Native_G": "61.0",
+      "Matched_G": "56.0",
+      "delta_G": "-5.0"
+    },
+    {
+      "seed": "52",
+      "Native_G": "55.0",
+      "Matched_G": "52.0",
+      "delta_G": "-3.0"
+    },
+    {
+      "seed": "9",
+      "Native_G": "39.5",
+      "Matched_G": "39.5",
+      "delta_G": "0.0"
+    },
+    {
+      "seed": "51",
+      "Native_G": "47.0",
+      "Matched_G": "49.0",
+      "delta_G": "2.0"
+    },
+    {
+      "seed": "88",
+      "Native_G": "27.5",
+      "Matched_G": "31.5",
+      "delta_G": "4.0"
+    },
+    {
+      "seed": "42",
+      "Native_G": "24.5",
+      "Matched_G": "34.0",
+      "delta_G": "9.5"
+    },
+    {
+      "seed": "58",
+      "Native_G": "42.0",
+      "Matched_G": "52.0",
+      "delta_G": "10.0"
+    },
+    {
+      "seed": "99",
+      "Native_G": "35.0",
+      "Matched_G": "46.5",
+      "delta_G": "11.5"
+    },
+    {
+      "seed": "8",
+      "Native_G": "29.5",
+      "Matched_G": "52.5",
+      "delta_G": "23.0"
+    },
+    {
+      "seed": "66",
+      "Native_G": "28.0",
+      "Matched_G": "52.5",
+      "delta_G": "24.5"
+    },
+    {
+      "seed": "7",
+      "Native_G": "27.5",
+      "Matched_G": "54.5",
+      "delta_G": "27.0"
+    }
+  ],
+  "targets": [
+    "pi05",
+    "pi0"
+  ],
+  "suites": [
+    "spatial",
+    "object",
+    "goal",
+    "long"
+  ],
+  "episodes_per_target_suite_condition": 100,
+  "planned_episodes": 5600,
+  "planned_reused": 1000,
+  "planned_new": 4600,
+  "refs": [
+    "native",
+    "mr"
+  ],
+  "frozen_exports": true,
+  "source_parent_commit": "def71124c3b8f5f90741c5cb5741df0b34ab9605",
+  "placement": "Production legacy placement; floor only for Object.",
+  "inference_assignment": {
+    "pi05": "4090",
+    "pi0": "09"
+  },
+  "reuse_scope": "pi05 Spatial/Object: seeds 10 and 12 and Plain on 4090. Seed 3 is re-evaluated on 4090 rather than mixing its A100 outcomes.",
+  "reporting": "Report all three candidates and every suite/target, including reversals; do not mix per-suite textures or present post-hoc selection as random-seed stability.",
+  "resources": {
+    "4090": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "09": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "09_max_models": 6,
+    "shared_gpu_authorized": true,
+    "gpu4_forbidden_on_4090": true,
+    "host_memory_floor_GiB": 50
+  }
+}
