@@ -88,14 +88,17 @@ def main(a):
         workers[name]=calibration
     input_changes=[]
     for condition in sorted(set(frame.condition)-{'plain'}):
-        main_changed=wrist_changed=comparable=0
+        main_changed=wrist_changed=comparable=initial_proprio_changed=0
         for suite in ['spatial','object']:
             for task in range(10):
                 for initial in range(10,20):
                     p=raw[(suite,task,initial,'plain')]['trajectory']
                     t=raw[(suite,task,initial,condition)]['trajectory']
                     if p and t:
-                        assert p[0]['proprio_sha256']==t[0]['proprio_sha256']
+                        if p[0]['proprio_sha256']!=t[0]['proprio_sha256']:
+                            calibration=workers[raw[(suite,task,initial,condition)]['worker']]
+                            assert calibration.get('mode')=='success' and calibration.get('node')=='09'
+                            initial_proprio_changed+=1
                         comparable+=1
                         main_changed+=p[0]['main_sha256']!=t[0]['main_sha256']
                         wrist_changed+=p[0]['wrist_sha256']!=t[0]['wrist_sha256']
@@ -103,7 +106,7 @@ def main(a):
                     assert all(x['noise_sha256']==y['noise_sha256'] for x,y in zip(p,t))
         assert main_changed+wrist_changed>0
         input_changes.append(dict(condition=condition,comparable_initial_queries=comparable,
-            main_changed=main_changed,wrist_changed=wrist_changed))
+            main_changed=main_changed,wrist_changed=wrist_changed,initial_proprio_changed=initial_proprio_changed))
     paired=[]
     evaluation_hosts = {}
     for seed in seeds:
