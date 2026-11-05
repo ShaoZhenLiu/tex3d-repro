@@ -26,18 +26,34 @@ PY
 )
 read -r -a assigned <<<"$seeds"
 python3 -u "$controller" --protocol "$protocol" --stage prepare --node "$node" >>"$root/preparation.log" 2>&1 9>&-
-if [[ "$node" == 4090 ]]; then
-    python3 -u "$controller" --protocol "$protocol" --stage eval --node "$node" --resume >>"$root/eval_controller.log" 2>&1 9>&- &
-    eval_pid=$!
-fi
-python3 -u "$controller" --protocol "$protocol" --stage source --node "$node" --resume --seeds "${assigned[@]}" >>"$root/source_controller.log" 2>&1 9>&-
-python3 - "$root/train_done_$node.json" "${assigned[@]}" <<'PY'
+run_source() {
+    while true; do
+        if python3 -u "$controller" --protocol "$protocol" --stage source --node "$node" --resume --seeds "${assigned[@]}" >>"$root/source_controller.log" 2>&1 9>&- &&
+            python3 - "$root/train_done_$node.json" "${assigned[@]}" <<'PY'
 import json,sys
 with open(sys.argv[1]) as file:
     status=json.load(file)
 expected={'s%s_%s'%(seed,ref) for seed in sys.argv[2:] for ref in ('native','mr')}
 assert set(status['finished'])==expected,status
 PY
+        then
+            return 0
+        fi
+        printf 'SOURCE_RETRY %s\n' "$(date -Is)"
+        sleep 60
+    done
+}
+run_eval() {
+    until python3 -u "$controller" --protocol "$protocol" --stage eval --node "$node" --resume >>"$root/eval_controller.log" 2>&1 9>&-; do
+        printf 'EVAL_RETRY %s\n' "$(date -Is)"
+        sleep 60
+    done
+}
+if [[ "$node" == 4090 ]]; then
+    run_eval 9>&- &
+    eval_pid=$!
+fi
+run_source
 if [[ "$node" == 4090 ]]; then
     wait "$eval_pid"
     analysis_python=/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python

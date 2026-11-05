@@ -6,7 +6,17 @@
     ],
     "gpu_required_mib": {
       "3": 22500
-    }
+    },
+    "gpus": [
+      1,
+      2,
+      3
+    ],
+    "evaluation_gpus": [
+      1,
+      2,
+      3
+    ]
   },
   "09": {
     "seeds": [

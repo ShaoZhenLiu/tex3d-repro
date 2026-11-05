@@ -162,13 +162,14 @@ def main(args):
         if args.seeds and not set(args.seeds) <= set(seeds):
             raise ValueError('Source seeds must be assigned to this host')
         jobs = [(seed, ref) for seed in (args.seeds or seeds) for ref in ['native', 'mr']]
-        source.main(NAME, args, root=ROOT, jobs_override=jobs, gpus_override=SCOPE[args.node],
+        source.main(NAME, args, root=ROOT, jobs_override=jobs, gpus_override=plan.get('gpus', SCOPE[args.node]),
                     gpu_required_mib={int(gpu): mib for gpu, mib in plan.get('gpu_required_mib', {}).items()},
                     model_limit=plan.get('model_limit'))
     elif args.stage == 'eval':
         assert args.node == '4090'
         initialize_evaluation()
-        args.gpus, args.share_gpu3 = SCOPE[args.node], False
+        plan = guard.read(PROTOCOL_PATH.with_name('source_plan.json'), {}).get(args.node, {})
+        args.gpus, args.share_gpu3 = plan.get('evaluation_gpus', SCOPE[args.node]), False
         evaluator.main(NAME, publish, args, root=ROOT)
 
 
