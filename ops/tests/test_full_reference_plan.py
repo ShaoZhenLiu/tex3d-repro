@@ -5,9 +5,18 @@ import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from full_reference_20261105.common import HERE, compatible_reuse, jobs
+from refcloth_benchmark import create_suites
 
 
 class FullReferencePlan(unittest.TestCase):
+    def test_paper_long_label_resolves_to_libero_ten(self):
+        registry = {name: (lambda value=name: value) for name in
+                    ['libero_spatial', 'libero_object', 'libero_goal', 'libero_10']}
+        result = create_suites(registry, ['spatial', 'object', 'goal', 'long'])
+        self.assertEqual(result['long'], 'libero_10')
+        with self.assertRaisesRegex(KeyError, 'libero_10'):
+            create_suites({}, ['long'])
+
     def test_full_counts_unique_tasks_and_target_specific_assignment(self):
         for target, node in [('pi0', '09'), ('pi05', '4090')]:
             rows = jobs(target)

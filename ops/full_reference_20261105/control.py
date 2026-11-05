@@ -3,6 +3,8 @@ import argparse
 import os
 from pathlib import Path
 import sys
+import subprocess
+import time
 from types import SimpleNamespace
 
 from common import HERE, NODES, REPO, ROOT
@@ -19,10 +21,16 @@ if __name__ == '__main__':
     assert (os.uname().nodename.endswith('-41') if node == '4090' else os.uname().nodename == 'zgc-33-9')
     root = ROOT/'targets'/args.target
     reused = len(guard.read(root/'evaluation/reused_manifest.json'))
-    scheduler.main('full_reference_%s_20261105' % args.target, lambda: None,
-        SimpleNamespace(gpus=[0, 1, 2, 3], share_gpu3=False, resume=True),
-        root=root, node=node, allow_stochastic_calibration=(node == '09'),
-        evaluation_protocol=HERE/(args.target+'.json'), reused_episode_count=reused)
+    try:
+        scheduler.main('full_reference_%s_20261105' % args.target, lambda: None,
+            SimpleNamespace(gpus=[0, 1, 2, 3], share_gpu3=False, resume=True),
+            root=root, node=node, allow_stochastic_calibration=(node == '09'),
+            evaluation_protocol=HERE/(args.target+'.json'), reused_episode_count=reused)
+    except Exception as error:
+        guard.write(root/'controller_error.json', dict(type=type(error).__name__,
+            detail=str(error), commit=subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip(),
+            time=time.time()))
+        raise
     assert len(list((root/'evaluation/episodes').glob('*.json'))) == 2800
     guard.write(root/'complete.json', dict(completed=True, episodes=2800,
                 reused_episodes=reused, new_episodes=2800-reused, target=args.target))

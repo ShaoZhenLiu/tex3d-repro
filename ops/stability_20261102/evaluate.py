@@ -42,6 +42,9 @@ def main(a):
     assert A.patch_status()=='patched' and os.environ.get('REFCLOTH_SURFACE_MODE','legacy')=='legacy'
     assert mujoco.__version__=='3.3.0'
     p=protocol['evaluation']
+    from refcloth_benchmark import create_suites
+    # Validate all suite identifiers before the expensive checkpoint load.
+    suites=create_suites(benchmark.get_benchmark_dict(),p['suites'])
     # Convert the checkpoint to float32 on CPU before its single GPU transfer.
     # This avoids a second GPU-sized weight copy during .float().
     original_create=A.policy_config.create_trained_policy
@@ -68,7 +71,6 @@ def main(a):
     outcomes=a.root/'evaluation/episodes';outcomes.mkdir(parents=True,exist_ok=True)
     complete=a.root/'evaluation/completed';complete.mkdir(parents=True,exist_ok=True)
     claims=a.root/'evaluation/claims';claims.mkdir(parents=True,exist_ok=True)
-    suites={name:benchmark.get_benchmark_dict()['libero_'+name]() for name in p['suites']}
     current={};original_env=A._get_libero_env;original_inject=A.inject_mujoco_texture
     def remember(*args,**kwargs):
         env,desc=original_env(*args,**kwargs);current['env']=env;return env,desc
