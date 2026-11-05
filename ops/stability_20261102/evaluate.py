@@ -177,9 +177,7 @@ def main(a):
                 if any(not (outcomes/name).exists() for name in job.get('requires_existing',[])):continue
                 if claim.exists():
                     existing=json.loads(claim.read_text())
-                    status=Path('/proc/%d/status'%existing['pid'])
-                    current_process=guard.identity(existing['pid'])
-                    if current_process and current_process['uid']==os.getuid() and str(Path(__file__).resolve()) in current_process['cmd'] and current_process['ticks']==existing.get('ticks',current_process['ticks']):continue
+                    if guard.process_runs_script(existing['pid'], __file__, existing.get('ticks')):continue
                 write(claim,dict(pid=os.getpid(),ticks=guard.identity(os.getpid())['ticks'],worker=a.worker,time=time.time()))
                 chosen=job;break
             fcntl.flock(f,fcntl.LOCK_UN)

@@ -19,9 +19,7 @@ def claim_alive(path):
     claim = guard.read(path)
     if not claim:
         return False
-    current = guard.identity(claim['pid'])
-    return bool(current and current['uid'] == os.getuid() and str(SCRIPT) in current['cmd']
-                and (claim.get('ticks') is None or current['ticks'] == claim['ticks']))
+    return guard.process_runs_script(claim['pid'], SCRIPT, claim.get('ticks'))
 
 
 def register_started_worker(proc, gpu, budget, label, root):

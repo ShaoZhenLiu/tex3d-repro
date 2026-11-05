@@ -52,6 +52,30 @@ def identity(pid):
         return None
 
 
+def process_runs_script(pid, script, ticks=None):
+    """Match an owned live process across logical and resolved script paths."""
+    current = identity(pid)
+    if not current or current['uid'] != os.getuid():
+        return False
+    if ticks is not None and current['ticks'] != ticks:
+        return False
+    expected = Path(script).resolve()
+    try:
+        proc = Path('/proc/%d' % pid)
+        arguments = (proc / 'cmdline').read_bytes().decode(errors='replace').split('\0')
+        for argument in arguments:
+            candidate = Path(argument)
+            if candidate.name != expected.name:
+                continue
+            if not candidate.is_absolute():
+                candidate = (proc / 'cwd').resolve() / candidate
+            if candidate.resolve() == expected:
+                return True
+    except OSError:
+        pass
+    return False
+
+
 def matches(entry):
     current = identity(entry['pid'])
     return bool(current and current['uid'] == os.getuid() == entry['uid']

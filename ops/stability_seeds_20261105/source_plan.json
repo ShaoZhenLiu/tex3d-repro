@@ -13,6 +13,7 @@
       3
     ],
     "evaluation_gpus": [
+      0,
       1,
       2,
       3
