@@ -4,7 +4,7 @@ import sys
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from full_reference_20261105.common import HERE, compatible_reuse, jobs
+from full_reference_20261105.common import HERE, LONG_ROOT, compatible_reuse, jobs, long_jobs, evaluation_sources
 from refcloth_benchmark import create_suites
 
 
@@ -33,6 +33,20 @@ class FullReferencePlan(unittest.TestCase):
         self.assertFalse(compatible_reuse(old, dict(new, checkpoint='different-checkpoint')))
         self.assertFalse(compatible_reuse(old, dict(new, num_denoise=5)))
         self.assertFalse(compatible_reuse(old, dict(new, max_steps=300)))
+
+    def test_entire_long_block_is_isolated_on_09_with_original_noise_index(self):
+        rows = long_jobs()
+        self.assertEqual(len(rows), 40)
+        self.assertEqual(sum(10*len(j['conditions']) for j in rows), 700)
+        self.assertTrue(all(j['node'] == '09' and j['suite'] == 'long' for j in rows))
+        original = json.loads((HERE/'pi05.json').read_text())['evaluation']
+        rerun = json.loads((HERE/'pi05_long09.json').read_text())['evaluation']
+        self.assertTrue(compatible_reuse(original, rerun))
+        self.assertEqual(rerun['suites'].index('long'), 3)
+        sources = evaluation_sources('pi05', migrated=True)
+        self.assertEqual(sources[0][1], ['spatial', 'object', 'goal'])
+        self.assertEqual(sources[1], (LONG_ROOT, ['long'], '09'))
+        self.assertEqual([suite for _, suites, _ in sources for suite in suites], original['suites'])
 
 
 if __name__ == '__main__':

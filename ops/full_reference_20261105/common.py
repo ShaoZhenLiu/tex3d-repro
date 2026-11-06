@@ -6,6 +6,7 @@ from pathlib import Path
 REPO = Path('/data/shaozhen.liu/code/tex3d')
 HERE = Path(__file__).resolve().parent
 ROOT = REPO/'experiments/refcloth_full_reference/20261105'
+LONG_ROOT = ROOT/'segments/pi05_long_09'
 SEEDS = [3, 12, 10]
 SUITES = ['spatial', 'object', 'goal', 'long']
 INITIALS = list(range(10, 20))
@@ -47,3 +48,20 @@ def source_root(seed):
 
 def episode_name(suite, task, initial, condition):
     return '%s_t%d_i%d_%s.json' % (suite, task, initial, condition)
+
+
+def long_jobs():
+    return [dict(row, node='09') for row in jobs('pi05') if row['suite'] == 'long']
+
+
+def migration_enabled():
+    return (ROOT/'long_migration_20261106.json').is_file()
+
+
+def evaluation_sources(target, migrated=None):
+    if migrated is None:
+        migrated = migration_enabled()
+    if target == 'pi05' and migrated:
+        return [(ROOT/'targets/pi05', ['spatial', 'object', 'goal'], '4090'),
+                (LONG_ROOT, ['long'], '09')]
+    return [(ROOT/'targets'/target, SUITES, NODES[target])]

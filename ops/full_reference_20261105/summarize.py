@@ -7,7 +7,7 @@ import sys
 
 import numpy as np
 
-from common import HERE, INITIALS, ROOT, SEEDS, SUITES, episode_name, jobs, sha
+from common import HERE, INITIALS, LONG_ROOT, ROOT, SEEDS, SUITES, jobs, sha, evaluation_sources, long_jobs, migration_enabled
 
 
 def save_csv(path, rows):
@@ -25,52 +25,57 @@ def main():
     worker_records = {}
     reuse_total = 0
     for target in ['pi05', 'pi0']:
-        folder = ROOT/'targets'/target
-        protocol = json.loads((HERE/(target+'.json')).read_text())['evaluation']
-        manifest = json.loads((folder/'texture_manifest.json').read_text())
-        reused = json.loads((folder/'evaluation/reused_manifest.json').read_text())
-        reuse_total += len(reused)
-        for condition, info in manifest.items():
-            assert sha(folder/info['path']) == info['sha256']
-            assert texture_hashes.setdefault(condition, info['sha256']) == info['sha256']
-        files = list((folder/'evaluation/episodes').glob('*.json'))
-        assert len(files) == 2800
         records = {}
-        for file in files:
-            episode = json.loads(file.read_text())
-            suite, task, initial, condition = [episode[k] for k in ['suite', 'task', 'initial', 'condition']]
-            assert episode['completed'] and episode.get('target', target) == target
-            assert suite in SUITES and task in range(10) and initial in INITIALS and condition in manifest
-            assert episode['texture_sha256'] == manifest[condition]['sha256']
-            assert episode['queries'] == len(episode['trajectory']) and episode['native_uploads'] > 0
-            assert [r['query'] for r in episode['trajectory']] == list(range(episode['queries']))
-            for row in episode['trajectory']:
-                assert np.asarray(row['actions']).shape == (5, 7) and np.isfinite(row['actions']).all()
-            key = suite, task, initial, condition
-            assert key not in records
-            records[key] = episode
-            worker = folder/'evaluation/workers'/episode['worker']
-            registration = json.loads((worker/'registered.json').read_text())
-            calibration = json.loads((worker/'calibration.json').read_text())
-            assert registration['checkpoint'] == protocol['checkpoint'] and calibration['passed']
-            if target == 'pi05':
-                assert episode['host'].endswith('-41') and calibration['trajectory_exact']
-            else:
-                assert episode['host'] == 'zgc-33-9'
-                assert calibration.get('success_repeatable') and calibration.get('mode') == 'success'
-            worker_records[target+'/'+episode['worker']] = dict(registration=registration, calibration=calibration)
-            all_episodes.append(dict(target=target, suite=suite, task=task, initial=initial,
-                condition=condition, success=int(episode['robot_success']), queries=episode['queries'],
-                host=episode['host'], gpu=episode['gpu'], worker=episode['worker'], reused=file.name in reused))
-            if file.name in reused:
-                assert sha(file) == reused[file.name]['sha256']
-        for job in jobs(target):
-            done = json.loads((folder/'evaluation/completed'/(job['id']+'.json')).read_text())
-            assert done['completed'] and done['job'] == job
-            expected = {(initial, c) for initial in INITIALS for c in job['conditions']}
-            assert {(r['initial'], r['condition']) for r in done['outcomes']} == expected
-            for row in done['outcomes']:
-                assert row['robot_success'] == records[(job['suite'], job['task'], row['initial'], row['condition'])]['robot_success']
+        for folder, suites, node in evaluation_sources(target):
+            protocol_name = 'pi05_long09.json' if folder == LONG_ROOT else target+'.json'
+            protocol = json.loads((HERE/protocol_name).read_text())['evaluation']
+            manifest = json.loads((folder/'texture_manifest.json').read_text())
+            reused = json.loads((folder/'evaluation/reused_manifest.json').read_text())
+            reuse_total += len(reused)
+            for condition, info in manifest.items():
+                assert sha(folder/info['path']) == info['sha256']
+                assert texture_hashes.setdefault(condition, info['sha256']) == info['sha256']
+            files = [f for suite in suites for f in (folder/'evaluation/episodes').glob(suite+'_*.json')]
+            assert len(files) == 700*len(suites)
+            for file in files:
+                episode = json.loads(file.read_text())
+                suite, task, initial, condition = [episode[k] for k in ['suite', 'task', 'initial', 'condition']]
+                assert episode['completed'] and episode.get('target', target) == target
+                assert suite in suites and task in range(10) and initial in INITIALS and condition in manifest
+                assert episode['texture_sha256'] == manifest[condition]['sha256']
+                assert episode['queries'] == len(episode['trajectory']) and episode['native_uploads'] > 0
+                assert [r['query'] for r in episode['trajectory']] == list(range(episode['queries']))
+                for row in episode['trajectory']:
+                    assert np.asarray(row['actions']).shape == (5, 7) and np.isfinite(row['actions']).all()
+                key = suite, task, initial, condition
+                assert key not in records
+                records[key] = episode
+                worker = folder/'evaluation/workers'/episode['worker']
+                registration = json.loads((worker/'registered.json').read_text())
+                calibration = json.loads((worker/'calibration.json').read_text())
+                assert registration['checkpoint'] == protocol['checkpoint'] and calibration['passed']
+                if node == '4090':
+                    assert episode['host'].endswith('-41') and calibration['trajectory_exact']
+                else:
+                    assert episode['host'] == 'zgc-33-9'
+                    assert calibration.get('success_repeatable') and calibration.get('mode') == 'success'
+                worker_records[str(folder.relative_to(ROOT))+'/'+episode['worker']] = dict(registration=registration, calibration=calibration)
+                all_episodes.append(dict(target=target, suite=suite, task=task, initial=initial,
+                    condition=condition, success=int(episode['robot_success']), queries=episode['queries'],
+                    host=episode['host'], gpu=episode['gpu'], worker=episode['worker'], reused=file.name in reused))
+                if file.name in reused:
+                    assert sha(file) == reused[file.name]['sha256']
+            source_jobs = long_jobs() if folder == LONG_ROOT else jobs(target)
+            for job in source_jobs:
+                if job['suite'] not in suites:
+                    continue
+                done = json.loads((folder/'evaluation/completed'/(job['id']+'.json')).read_text())
+                assert done['completed'] and done['job'] == job
+                expected = {(initial, c) for initial in INITIALS for c in job['conditions']}
+                assert {(r['initial'], r['condition']) for r in done['outcomes']} == expected
+                for row in done['outcomes']:
+                    assert row['robot_success'] == records[(job['suite'], job['task'], row['initial'], row['condition'])]['robot_success']
+        assert len(records) == 2800
         for suite in SUITES:
             plain = sum(records[suite, task, initial, 'plain']['robot_success'] for task in range(10) for initial in INITIALS)
             for seed in SEEDS:
@@ -112,13 +117,17 @@ def main():
     result = dict(completed=True, episodes=5600, new_episodes=4600, reused_episodes=1000,
         seeds=SEEDS, targets=['pi05', 'pi0'], suites=SUITES, texture_hashes=texture_hashes,
         same_texture_across_all_conditions=True, paired_states_and_noise_validated=True,
-        evaluation_hosts={'pi05': '4090', 'pi0': '09'}, seed_means=seed_means,
+        evaluation_hosts={t: {s: node for _, suites, node in evaluation_sources(t) for s in suites}
+                          for t in ['pi05', 'pi0']}, seed_means=seed_means,
         selection='Post-hoc Native-favorable candidates from pi05 Spatial/Object; not random-seed evidence',
         worker_records=worker_records)
-    (out/'summary.json').write_text(json.dumps(result, indent=2), encoding='utf-8')
+    if migration_enabled():
+        result['migration'] = json.loads((ROOT/'long_migration_20261106.json').read_text())
     text = ['# Native 三候选完整基准复验', '',
         '选择 3、12、10，是因为它们在先前 π0.5-Spatial/Object 上具有最大的 Native 优势，且 Native 强度均位于十八组前五。此次为事后筛选候选的完整基准扩展，不作为随机种子稳定性证明。', '',
-        '六张 Native/Matched 冻结纹理均沿用原导出。π0.5 全部在 41 上评估，π0 全部在 09 上评估；每套件十个任务，各初始状态 10–19。每组共用任务状态与查询噪声。完整数据为 5,600 回合，其中新评测 4,600、精确复用 1,000。', '',
+        ('六张 Native/Matched 冻结纹理均沿用原导出。π0 全部在 09 评估；π0.5 的 Spatial/Object/Goal 在 41、Long 整套在 09 评估。41 上未完成的 Long 记录单独保留，不混入本表。' if migration_enabled() else
+         '六张 Native/Matched 冻结纹理均沿用原导出。π0.5 全部在 41 上评估，π0 全部在 09 上评估。')+
+        '每套件十个任务，各初始状态 10–19。每组共用任务状态与查询噪声。完整统计为 5,600 回合，其中新评测 4,600、精确复用 1,000。', '',
         'G 为相对同策略 Plain 的成功率净下降，越大攻击越强。Native 优势为 Native G − Matched G。', '',
         '| seed | 目标策略 | Native 平均 G | Matched 平均 G | Native 优势 |',
         '| ---: | --- | ---: | ---: | ---: |']
@@ -135,6 +144,7 @@ def main():
         if row['target'] == 'both':
             text.append('| {} | {:.2f} | {:.2f} |'.format(row['seed'], row['extended_conditions_Native_G'], row['extended_conditions_Matched_G']))
     (out/'Native三候选完整基准复验.md').write_text('\n'.join(text)+'\n', encoding='utf-8')
+    (out/'summary.json').write_text(json.dumps(result, indent=2), encoding='utf-8')
     print(json.dumps(dict(completed=True, episodes=5600, new=4600, reused=1000)))
 
 

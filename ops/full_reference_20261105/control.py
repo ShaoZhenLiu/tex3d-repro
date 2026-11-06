@@ -7,7 +7,7 @@ import subprocess
 import time
 from types import SimpleNamespace
 
-from common import HERE, NODES, REPO, ROOT
+from common import HERE, NODES, REPO, ROOT, migration_enabled
 sys.path.insert(0, str(REPO/'ops'))
 import refcloth_eval_scheduler as scheduler
 import refcloth_resource as guard
@@ -17,6 +17,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--target', choices=['pi0', 'pi05'], required=True)
     args = parser.parse_args()
+    if args.target == 'pi05' and migration_enabled():
+        raise RuntimeError('pi05 Long moved to long_control.py on 09; the 41 GPU controller is retired')
     node = NODES[args.target]
     assert (os.uname().nodename.endswith('-41') if node == '4090' else os.uname().nodename == 'zgc-33-9')
     root = ROOT/'targets'/args.target
