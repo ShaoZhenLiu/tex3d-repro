@@ -19,7 +19,8 @@ def main():
         scheduler.main('full_reference_pi05_long09_20261106', lambda: None,
             SimpleNamespace(gpus=[0, 1, 2, 3], share_gpu3=False, resume=True),
             root=LONG_ROOT, node='09', allow_stochastic_calibration=True,
-            evaluation_protocol=HERE/'pi05_long09.json', reused_episode_count=0)
+            evaluation_protocol=HERE/'pi05_long09.json', reused_episode_count=0,
+            memory_budget_mib=18000)
         assert len(list((LONG_ROOT/'evaluation/episodes').glob('*.json'))) == 700
         guard.write(LONG_ROOT/'complete.json', dict(completed=True, episodes=700,
                     new_episodes=700, reused_episodes=0, target='pi05', suites=['long'], node='09'))

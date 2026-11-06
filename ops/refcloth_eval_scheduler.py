@@ -39,11 +39,13 @@ def register_started_worker(proc, gpu, budget, label, root):
 
 
 def main(study, publish, a, *, root=None, node='4090', allow_stochastic_calibration=False,
-         evaluation_protocol=None, reused_episode_count=None):
+         evaluation_protocol=None, reused_episode_count=None, memory_budget_mib=None):
     coupling = study == 'coupling'
     if (a.share_gpu3 or a.gpus) and ((not coupling and root is None) or (node == '4090' and not os.uname().nodename.endswith('-41'))):
         raise ValueError('GPU selection options are for camera evaluation on host 41')
     selected_gpus = list(dict.fromkeys(a.gpus)) if a.gpus else None
+    def worker_budget(gpu):
+        return memory_budget_mib or (24000 if node == '09' else (19000 if gpu == 3 else 17000))
     x = root if root is not None else (C if coupling else P)
     assert guard.read(P / 'evaluation/workers/lowmem_smoke6/smoke_passed.json')['passed']
     singleton = guard.BASE / (study + '_eval.lock'); singleton.parent.mkdir(exist_ok=True)
@@ -62,7 +64,7 @@ def main(study, publish, a, *, root=None, node='4090', allow_stochastic_calibrat
         gpu = int(name.split('gpu')[1].split('_')[0][0])
         if selected_gpus is not None and gpu not in selected_gpus:
             raise RuntimeError('Pause the out-of-scope worker before resuming: ' + name)
-        budget = 24000 if node == '09' else (19000 if gpu == 3 else 17000)
+        budget = worker_budget(gpu)
         token = guard.register(pid, SCRIPT, 'eval', gpu, budget, study + ':' + name, x, phase='warm')
         actors[name] = dict(pid=pid, ticks=current['ticks'], proc=None, token=token, gpu=gpu)
     budget_lock = (R / ('experiments/refcloth_gpu_budget_%s.lock' % node)).open('a')
@@ -109,12 +111,12 @@ def main(study, publish, a, *, root=None, node='4090', allow_stochastic_calibrat
                 for gpu in gpus:
                     source_here = any(e['kind'] == 'source' and e['gpu'] == gpu for e in entries)
                     reserve = 23000 if node == '4090' and gpu != 3 and source_pending and not source_here else 0
-                    budget = 24000 if node == '09' else (19000 if gpu == 3 else 17000)
+                    budget = worker_budget(gpu)
                     if guard.gpu_headroom(gpu) - reserve >= budget:
                         candidates.append(gpu)
                 if candidates:
                     gpu = min(candidates, key=lambda g: sum(e['gpu'] == g for e in entries))
-                    budget = 24000 if node == '09' else (19000 if gpu == 3 else 17000)
+                    budget = worker_budget(gpu)
                     name = 'gpu%d_%s_%s_%d' % (gpu, node, study, int(time.time()))
                     env = os.environ.copy()
                     env.update(CUDA_VISIBLE_DEVICES=str(gpu), MUJOCO_EGL_DEVICE_ID=str(gpu),
