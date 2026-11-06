@@ -1,0 +1,64 @@
+{
+  "version": "reference-coverage-20261106-v1",
+  "evaluation": {
+    "target": "pi05",
+    "config": "pi05_libero",
+    "checkpoint": "/data/shaozhen.liu/model/RLinf-Pi05-LIBERO-130-fullshot-SFT",
+    "suites": [
+      "spatial",
+      "object",
+      "goal",
+      "long"
+    ],
+    "tasks": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "initials": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "max_steps": 400,
+    "settle_steps": 10,
+    "replan_steps": 5,
+    "num_denoise": 10,
+    "surface_mode": "legacy",
+    "floor_mode": "true only on Object, exactly the production deployment",
+    "noise": "seed=6810000 + suite_index*1000000 + task*10000 + initial*100 + query; excludes texture, training seed, reference and worker",
+    "pairing": "Paired task/initial state and consumed query noise; each episode evolves freely after initialization",
+    "existing_textures": "Six frozen final exports for source training seeds 3,12,10; never re-optimize.",
+    "plain": "Shared Plain block on the same inference host as all Native/MR cases in this suite",
+    "planned_episodes": 3700,
+    "calibration_reference": "calibration/reference_plain_spatial_t0_i10.json"
+  },
+  "node": "09",
+  "allowed_gpus": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "allow_stochastic_calibration": true,
+  "user_authorized": true,
+  "planned_reused_episodes": 700,
+  "actual_evaluated_suites": [
+    "long"
+  ],
+  "reporting": "Retain all 18 seeds and all four suites; suite-pair contrasts are exploratory, not preselected primary endpoints"
+}

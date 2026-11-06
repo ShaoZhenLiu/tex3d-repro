@@ -129,7 +129,7 @@ def main(a):
     success_repeatable = cal0['robot_success']==cal1['robot_success']
     canonical_exact = True
     canonical_success = True
-    baseline=outcomes/'spatial_t0_i10_plain.json'
+    baseline=a.root/p.get('calibration_reference','evaluation/episodes/spatial_t0_i10_plain.json')
     if baseline.exists():
         old=json.loads(baseline.read_text())
         canonical_exact = old['robot_success']==cal0['robot_success'] and old['trajectory']==cal0['trajectory']
