@@ -313,11 +313,17 @@ def can_launch(cold_gib=24, max_models=None):
 
 def gpu_headroom(gpu):
     free = {int(r.split(',')[0]): int(r.split(',')[1]) for r in subprocess.check_output(
-        ['nvidia-smi', '--query-gpu=index,memory.free', '--format=csv,noheader,nounits'], universal_newlines=True).splitlines()}
+        ['nvidia-smi', '--query-gpu=index,memory.free', '--format=csv,noheader,nounits'], universal_newlines=True, timeout=8).splitlines()}
     used = {int(r.split(',')[0]): int(r.split(',')[1]) for r in subprocess.check_output(
-        ['nvidia-smi', '--query-compute-apps=pid,used_memory', '--format=csv,noheader,nounits'], universal_newlines=True).splitlines()
+        ['nvidia-smi', '--query-compute-apps=pid,used_memory', '--format=csv,noheader,nounits'], universal_newlines=True, timeout=8).splitlines()
         if r.split(',')[1].strip().isdigit()}
     return free[gpu] - sum(max(0, e['budget'] - used.get(e['pid'], 0)) for e in active() if e['gpu'] == gpu)
+
+
+def cold_eval_cancellations(entries, headrooms):
+    """Withdraw only pending evaluation loads whose reserved VRAM disappeared."""
+    return [e for e in entries if e['kind'] == 'eval' and e['phase'] == 'loading'
+            and headrooms.get(e['gpu'], 0) < 0]
 
 
 def stop_entry(entry, sig):
@@ -356,8 +362,26 @@ def monitor():
         healthy_since = (healthy_since or s['time']) if not reasons else None
         severe_since = (severe_since or s['time']) if severe(s) else None
         entries = active()
+        headrooms = {}
+        for gpu in {e['gpu'] for e in entries if e['kind'] == 'eval' and e['phase'] == 'loading'}:
+            try:
+                headrooms[gpu] = gpu_headroom(gpu)
+            except (OSError, ValueError, KeyError, subprocess.SubprocessError):
+                # Missing telemetry is not evidence that a process should stop.
+                pass
         with locked():
             stops = read(BASE / 'stops.json', {})
+            latest = read(BASE / 'jobs.json', {})
+            for entry in cold_eval_cancellations(entries, headrooms):
+                current = latest.get(entry['token'], {})
+                if entry['token'] in stops or current.get('phase') != 'loading' or not matches(entry):
+                    continue
+                record = dict(entry, time=s['time'], reason='shared_gpu_headroom_lost_during_load',
+                              gpu_headroom_mib=headrooms[entry['gpu']])
+                stops[entry['token']] = record
+                write(BASE / 'stops.json', stops)
+                record['term_sent'] = stop_entry(entry, signal.SIGTERM)
+                print('GPU_LOADING_REQUEUED', entry['label'], entry['pid'], flush=True)
             for entry in entries:
                 stopped = stops.get(entry['token'])
                 if stopped and s['time'] - stopped['time'] >= 45 and not stopped.get('kill_sent'):
