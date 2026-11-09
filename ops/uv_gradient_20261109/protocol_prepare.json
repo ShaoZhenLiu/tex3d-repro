@@ -1,0 +1,10 @@
+{
+  "new_training_seeds": [
+    7,
+    8,
+    9
+  ],
+  "frozen_renderer_exception": {
+    "authorized_by_user": true
+  }
+}

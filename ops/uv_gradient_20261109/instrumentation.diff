@@ -1,0 +1,27 @@
+--- production/stability_20261102
++++ uv_gradient_20261109/trainer_probe.py
+@@ -50,6 +50,7 @@
+ CACHE_SHA = "7ab459156068e23cd338bc33e100fb1113a3a367d8b020a80cdaf7cdb7249856"
+ resource_ready = lambda: None
+ pause_requested = lambda: False
++measurement_callback = lambda state, updates: None
+ 
+ 
+ def sha256(path):
+@@ -268,6 +269,7 @@
+           f"stream={args.stream}，uv={args.uv}，开始")
+     resource_ready()
+     t_start = time.time()
++    measurement_callback(locals(), resume_from)
+ 
+     def save_ckpt(it, final=False):
+         suffix = f"_it{it:05d}" if args.ckpt_step_suffix else ""
+@@ -379,6 +381,8 @@
+                 f.write(line + "\n")
+         if (it + 1) % args.checkpoint_every == 0 or it == args.iters - 1:
+             save_ckpt(it, final=(it == args.iters - 1))
++        if (it + 1) % 500 == 0 or it == args.iters - 1:
++            measurement_callback(locals(), it + 1)
+         if pause_requested():
+             if (it + 1) % args.checkpoint_every and it != args.iters - 1:
+                 save_ckpt(it)

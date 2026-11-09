@@ -1,0 +1,8 @@
+{
+  "source": "ops/stability_20261102/attack_oft_cloth_ablate.py",
+  "source_sha256": "cb92dcb63db7e570680eb1d362b360b80f45d13553736b168c51089b386d43e0",
+  "target": "ops/uv_gradient_20261109/trainer_probe.py",
+  "target_sha256": "b8c629407c34df4b77894e3c0ccb07246b2c8d6b60fe812a10689321a3dff54f",
+  "replacement_count": 3,
+  "scope": "Three callback insertion sites; no training arithmetic or source forwards changed."
+}
