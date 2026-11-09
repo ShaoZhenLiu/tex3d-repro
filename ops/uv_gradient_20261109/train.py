@@ -16,6 +16,7 @@ from probe import callback_for
 def main(args):
     sys.path.insert(0,str(REPO/'ops'))
     import refcloth_resource as guard
+    from refcloth_resume import select_checkpoint
     guard.install_pause_handler()
     torch.set_num_threads(2);torch.cuda.set_per_process_memory_fraction(.61,0)
     torch.manual_seed(args.seed);np.random.seed(args.seed)
@@ -32,9 +33,24 @@ def main(args):
     assert not (output/'completed.json').exists()
     R.OUT_ROOT=str(ROOT/'training');(ROOT/'training').mkdir(exist_ok=True)
     # Numbered checkpoints are immutable, so every restart has explicit provenance.
-    checkpoints=sorted((ROOT/'training').glob('train_*_'+tag+'/Ep0_Cloth_Delta_OV_it*.pt'),
-        key=lambda p:int(p.stem.rsplit('_it',1)[1]))
-    latest=checkpoints[-1] if checkpoints else None
+    latest=select_checkpoint(ROOT/'training',tag)
+    while latest is not None:
+        try:
+            check=torch.load(latest,map_location='cpu',weights_only=False)
+            assert torch.is_tensor(check) and torch.isfinite(check).all() and check.abs().max()<=5.00001
+            del check
+            break
+        except Exception as error:
+            # Preserve the incomplete bytes, then recover an earlier fully logged checkpoint.
+            quarantine=latest.with_suffix('.pt.incomplete_%d'%time.time_ns())
+            latest.rename(quarantine)
+            write(output/'recovery'/('%d.json'%time.time_ns()),dict(incomplete=str(quarantine),error=str(error)))
+            latest=select_checkpoint(ROOT/'training',tag)
+    resume_updates=int(latest.stem.rsplit('_it',1)[1])+1 if latest else 0
+    later=[p for p in (output/'probes').glob('u*.json') if int(p.stem[1:])>resume_updates]
+    if later:
+        preserved=output/('probes_before_resume_%d'%time.time_ns());preserved.mkdir()
+        for path in later:path.rename(preserved/path.name)
     options=argparse.Namespace(tag=tag,ref='mr',ref_switch=0,stream='replay',stream_file=str(stream),
         uv=args.uv,filter_task=None,iters=5000,batch=8,attack_lr=.05,epsilon=64/255,init_std=.01,
         lambda_ref=.1,lambda_tv=.1,alpha_action=0.,alpha_feature=10.,seed=args.seed,
