@@ -99,6 +99,9 @@ def heldout():
     torch.save(dict(frames=bank_frames,uv=uvs,replicates=8,frames_per_replicate=4,counts=counts),final_bank)
     write(ROOT/'prepared/heldout.json',dict(completed=True,sha256=sha(output),
         counts=counts,provenance=provenance,probe_bank_sha256=sha(final_bank),time=time.time()))
+    # Reuse this already-loaded source model for the small historical diagnostic.
+    from legacy import run
+    run(ctx)
 
 
 def bank():
