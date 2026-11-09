@@ -42,9 +42,11 @@
     "allowed_gpus_41": [0, 1, 2, 3],
     "allowed_gpus_09": [0, 1, 2, 3],
     "share_authorized": true,
-    "gpu_budget_mib": 26000,
+    "gpu_budget_mib": 23000,
     "host_memory_floor_gib": 50,
-    "max_concurrent_models_41": 4,
+    "max_concurrent_models_41": 6,
+    "max_per_gpu_41": 2,
+    "sharing_basis": "Initial common probes measured 19.19 GiB peak allocated per model; 23,000 MiB reserves more than 3 GiB extra. Admit the second process only against live free VRAM and managed reservations.",
     "current_priority": "41; 09 presently has insufficient free VRAM",
     "resume": "Only same-arm numbered checkpoints and frozen streams; retain all prior output segments; never duplicate a live worker."
   },

@@ -52,13 +52,14 @@ def main():
                 else:pending.append((kind,seed,uv))
         reasons=[]
         if pending:
-            allowed,reasons=guard.can_launch(cold_gib=12,max_models=4)
+            allowed,reasons=guard.can_launch(cold_gib=12,max_models=6)
             if allowed:
                 lock=(REPO/'experiments/refcloth_gpu_budget_4090.lock').open('a')
                 with lock:
                     fcntl.flock(lock,fcntl.LOCK_EX)
-                    busy={item['gpu'] for item in active.values()}
-                    choices=[gpu for gpu in [0,1,2,3] if gpu not in busy and guard.gpu_headroom(gpu)>=26000]
+                    counts={gpu:sum(item['gpu']==gpu for item in active.values()) for gpu in [0,1,2,3]}
+                    choices=[gpu for gpu in [0,1,2,3] if counts[gpu]<2 and guard.gpu_headroom(gpu)>=23000]
+                    choices.sort(key=lambda gpu:(counts[gpu],-guard.gpu_headroom(gpu),gpu))
                     if choices:
                         kind,seed,uv=pending[0];gpu=choices[0]
                         name='heldout' if kind=='heldout' else 's%d_%s'%(seed,uv)
@@ -71,7 +72,7 @@ def main():
                         deadline=time.monotonic()+10
                         while True:
                             try:
-                                token=guard.register(proc.pid,script,'source',gpu,26000,'uvgradient:'+name,ROOT)
+                                token=guard.register(proc.pid,script,'source',gpu,23000,'uvgradient:'+name,ROOT)
                                 break
                             except AssertionError:
                                 if proc.poll() is not None or time.monotonic()>deadline:raise
@@ -80,7 +81,7 @@ def main():
                             job=[kind,seed,uv],start=time.time(),token=token)
                         procs[name]=proc
                         print('LAUNCH',name,proc.pid,'GPU',gpu,flush=True)
-                    else:reasons.append('no_gpu_with_26GiB_headroom')
+                    else:reasons.append('no_gpu_with_23000MiB_headroom')
         write(ROOT/'status.json',dict(active=active,pending=pending,finished=finished,failed=failed,
             retries=attempts,admission_wait=reasons,time=time.time()))
         if not active and not pending:
