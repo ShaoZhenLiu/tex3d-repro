@@ -1,5 +1,6 @@
 """Retain every predeclared pair and assemble mechanism evidence and its limits."""
 import csv
+import fcntl
 import itertools
 import json
 import math
@@ -32,6 +33,10 @@ def aggregate(values):
 
 
 def main():
+    lock=(ROOT/'summarize.lock').open('a')
+    try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+    except BlockingIOError:return
+    if read(ROOT/'accepted.json',{}).get('completed'):return
     destination=ROOT/'analysis';destination.mkdir(exist_ok=True)
     trajectories=[];pairs=[];heldout=[];final=[];registrations=[]
     for seed in [7,8,9]:
