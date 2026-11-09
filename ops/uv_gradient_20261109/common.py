@@ -106,7 +106,7 @@ class Context:
 
     def attach_heldout(self):
         import torch
-        data=torch.load(ROOT/'prepared/heldout.pt',map_location='cpu',weights_only=False,mmap=True)
+        data=torch.load(str(ROOT/'prepared/heldout.pt'),map_location='cpu',weights_only=False,mmap=True)
         self.frames.update(data['frames']);self.refs.update(data['reference_hidden'])
 
 
