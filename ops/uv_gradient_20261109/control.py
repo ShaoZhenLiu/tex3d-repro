@@ -85,6 +85,8 @@ def main():
             retries=attempts,admission_wait=reasons,time=time.time()))
         if not active and not pending:
             write(ROOT/'training_done.json',dict(completed=not failed,finished=finished,failed=failed,time=time.time()))
+            if not failed:
+                subprocess.run([PYTHON,str(OPS/'summarize.py')],cwd=REPO,env=env_for(0),check=True)
             return
         time.sleep(10)
 
