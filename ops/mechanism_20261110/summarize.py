@@ -58,9 +58,17 @@ def main():
     for index,row in enumerate(ordered):
         previous=max(previous,min(1.,(len(ordered)-index)*row['p']));row['p_holm']=previous
     per_task={str(t):{c:sum(lookup[(t,i,c)]['robot_success'] for i in p['initials']) for c in p['conditions']} for t in p['tasks']}
+    conditional=dict(
+        wrist_drop_given_plain_main_pp=successes['plain']-successes['wrist_only'],
+        wrist_drop_given_adversarial_main_pp=successes['main_only']-successes['both'],
+        main_drop_given_plain_wrist_pp=successes['plain']-successes['main_only'],
+        main_drop_given_adversarial_wrist_pp=successes['wrist_only']-successes['both'],
+        joint_extra_drop_pp=successes['main_only']+successes['wrist_only']-successes['plain']-successes['both'],
+        both_fail_main_only_success=sum(not b and m for b,m in zip(outcomes['both'],outcomes['main_only'])),
+        both_fail_wrist_only_success=sum(not b and w for b,w in zip(outcomes['both'],outcomes['wrist_only'])))
     summary=dict(completed=True,episodes=400,paired_keys=100,successes=successes,
         net_drop_pp={c:successes['plain']-successes[c] for c in p['conditions']},
-        contrasts=contrasts,per_task=per_task,protocol_sha256=sha(PROTOCOL),time=time.time())
+        contrasts=contrasts,per_task=per_task,conditional_camera_effects=conditional,protocol_sha256=sha(PROTOCOL),time=time.time())
     write(analysis/'closed_loop_summary.json',summary)
     report=['# 冻结 RefCloth 的目标策略相机干预实验','',
         'π₀.₅-Object，10 个任务 × 10 个初始状态；每个状态比较四个条件，共 400 回合。纹理、策略、部署几何和推理设置固定。',
@@ -70,6 +78,8 @@ def main():
     report.extend(['','| 配对比较 | 成功率差（前−后，pp） | 不一致回合（前成功/后成功） | 精确 p | Holm p |',
         '|---|---:|---:|---:|---:|'])
     for r in contrasts:report.append('| %s / %s | %+d | %d / %d | %.5g | %.5g |'%(r['first'],r['second'],r['success_difference_pp'],r['first_success_second_fail'],r['first_fail_second_success'],r['p'],r['p_holm']))
+    report.extend(['','描述性条件效应：腕路扰动在主视角为 Plain / RefCloth 时分别使成功率下降 %d / %d pp；主路扰动在腕视角为 Plain / RefCloth 时分别下降 %d / %d pp。'%(conditional['wrist_drop_given_plain_main_pp'],conditional['wrist_drop_given_adversarial_main_pp'],conditional['main_drop_given_plain_wrist_pp'],conditional['main_drop_given_adversarial_wrist_pp']),
+        '联合净下降超出两种单路净下降之和 %d pp。这是当前冻结纹理的成功率尺度输入交互，不用于推断哪种训练方式更优。'%conditional['joint_extra_drop_pp']])
     report.extend(['','Main-only/Wrist-only 是相机输入机制干预；它们的混合图像不表示一张物理桌布的独立部署。',
         'Plain 与 Both 已通过直接原生部署的完整轨迹逐查询一致性检查。显著性检验不用于宣布两条件等效。',
         '同目录保留所有任务、回合、输入 SHA、显式噪声 SHA、动作及实现校验。'])
