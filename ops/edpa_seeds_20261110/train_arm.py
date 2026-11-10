@@ -126,7 +126,7 @@ def main(a):
     replay=shared.parse_stream(str(stream),5000,8)
     full=torch.load(uv_path,map_location='cpu',weights_only=False)['uv']
     assert len(full)==5000
-    pool=torch.load(POOL,map_location='cpu',weights_only=False,mmap=True)
+    pool=torch.load(str(POOL),map_location='cpu',weights_only=False,mmap=True)
     frames,_=shared.active_frames(pool,None);assert len(frames)==296
     cfg=M.base.GenerateConfig(pretrained_checkpoint=M.CKPT,model_family='openvla')
     model=M.base.get_model(cfg);model.eval();M.base.check_unnorm_key(cfg,model)

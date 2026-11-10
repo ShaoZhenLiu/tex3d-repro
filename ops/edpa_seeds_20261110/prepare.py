@@ -28,7 +28,7 @@ def inputs():
     assert sha(POOL)==POOL_SHA
     for name in ['streams','arms','frozen','logs','baseline/episodes','evaluation/episodes','evaluation/completed','evaluation/workers','evaluation/claims']:
         (ROOT/name).mkdir(parents=True,exist_ok=True)
-    pool=torch.load(POOL,map_location='cpu',weights_only=False,mmap=True)
+    pool=torch.load(str(POOL),map_location='cpu',weights_only=False,mmap=True)
     active,_=shared.active_frames(pool,None);assert len(active)==296
     streams={}
     for seed in SEEDS:
