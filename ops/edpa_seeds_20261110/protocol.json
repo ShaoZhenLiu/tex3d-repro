@@ -1,0 +1,66 @@
+{
+  "version": "cloth-edpa-fixed-seeds-20261110-v1",
+  "parent_commit": "8cfa01190754ef77c2a6e91eb66392e155ceb9fa",
+  "seeds": [42, 7, 66, 88],
+  "training": {
+    "method": "Cloth-adapted EDPA, production spatial-TV formulation",
+    "iterations": 5000,
+    "batch": 8,
+    "tasks": [0, 2, 6, 8],
+    "observations": 296,
+    "learning_rate": 0.05,
+    "epsilon": 0.25098039215686274,
+    "initialization_std": 0.01,
+    "parameter_bounds": [-5, 5],
+    "alpha": 0.2,
+    "temperature": 0.07,
+    "ema_decay": 0.9,
+    "ema_warmup": 100,
+    "lambda_amplitude": 0.1,
+    "lambda_spatial_tv": 0.1,
+    "stream": "Replay existing paired frame indices and full-precision shared UV draws; seed 7 is checked against its original source log",
+    "loss": "Execute the exact loss AST extracted from the existing production EDPA-TV script, with unchanged source forwards",
+    "gradient": "Request only the texture gradient; validate against repeated full backward before admission",
+    "export": "Only update 5000; no intermediate target evaluation or checkpoint selection",
+    "recovery": "Same texture, EMA step and values, and exact replay offset from atomic checkpoints"
+  },
+  "evaluation": {
+    "target": "pi05",
+    "config": "pi05_libero",
+    "checkpoint": "/data/shaozhen.liu/model/RLinf-Pi05-LIBERO-130-fullshot-SFT",
+    "suites": ["spatial", "object", "goal", "long"],
+    "tasks": [0,1,2,3,4,5,6,7,8,9],
+    "initials": [10,11,12,13,14,15,16,17,18,19],
+    "max_steps": 400,
+    "settle_steps": 10,
+    "replan_steps": 5,
+    "num_denoise": 10,
+    "surface_mode": "legacy",
+    "noise": "6810000 + suite_index*1000000 + task*10000 + initial*100 + query",
+    "calibration_reference": "evaluation/episodes/spatial_t0_i10_plain.json",
+    "hardware": "Spatial/Object/Goal on 41; Long on 09, matching reused reference outcomes",
+    "planned_new_edpa_episodes": 1600,
+    "planned_reused_plain_episodes": 400,
+    "planned_reused_reference_episodes": 3200
+  },
+  "frozen_renderer_exception": {
+    "authorized_by_user": true,
+    "scope": "Previously authorized unchanged frozen recipe, including measured wrist photometric gap; main-view zero-export, visibility, foreground and PSNR checks retained"
+  },
+  "resources": {
+    "gpus": [0,1,2,3],
+    "gpu4_forbidden": true,
+    "share_authorized": true,
+    "host_available_floor_gib": 20,
+    "one_cold_model_load_at_a_time": true,
+    "max_managed_models_09": 6,
+    "never_stop_unrelated_processes": true
+  },
+  "reporting": {
+    "primary": "Each seed's equal-weight mean G across all four suites; G=Plain success rate minus attack success rate",
+    "summary": "Four-seed arithmetic mean and sample standard deviation (ddof=1) for all three methods",
+    "all_fixed_seeds_retained": true,
+    "interpretation": "Follow-up comparison on this fixed seed set, not a claim of random sampling from all previously evaluated runs",
+    "desired_ordering_is_not_an_acceptance_criterion": true
+  }
+}
