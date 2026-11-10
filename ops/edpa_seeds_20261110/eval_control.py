@@ -1,6 +1,8 @@
 """Use the established paired native evaluator as soon as an EDPA export exists."""
 import argparse
+import math
 import sys
+import time
 from types import SimpleNamespace
 from common import HERE,REPO,ROOT,SEEDS,read,write,sha
 sys.path.insert(0,str(REPO/'ops'))
@@ -25,11 +27,30 @@ def publish():
 
 
 def main(node):
-    scheduler.main('edpa_seeds_20261110',publish,
-        SimpleNamespace(gpus=[0,1,2,3],share_gpu3=False,resume=True),root=ROOT,node=node,
-        allow_stochastic_calibration=node=='09',evaluation_protocol=HERE/'protocol.json',
-        reused_episode_count=0,memory_budget_mib=18000 if node=='09' else None)
-    write(ROOT/('evaluation_done_'+node+'.json'),dict(completed=True))
+    # Reserve one eligible source slot while a measured-24GB arm is queued.
+    # Smaller free cards remain available for native inference. This wrapper
+    # affects this scheduler only, not the host monitor or source controller.
+    original_headroom=guard.gpu_headroom
+    def available_for_eval(gpu):
+        available=original_headroom(gpu)
+        if node=='4090' and read(ROOT/'source_status_4090.json',{}).get('pending'):
+            validation=read(ROOT/'gradient_validation.json',{})
+            if validation.get('passed'):
+                budget=math.ceil(max(validation['steady_peak_allocated_mib'],validation['steady_peak_reserved_mib'])+1536)
+                source_here=any(e['kind']=='source' and e['gpu']==gpu for e in guard.active())
+                if not source_here and available>=budget:available-=budget
+        return available
+    guard.gpu_headroom=available_for_eval
+    try:
+        scheduler.main('edpa_seeds_20261110',publish,
+            SimpleNamespace(gpus=[0,1,2,3],share_gpu3=False,resume=True),root=ROOT,node=node,
+            allow_stochastic_calibration=node=='09',evaluation_protocol=HERE/'protocol.json',
+            reused_episode_count=0,memory_budget_mib=18000 if node=='09' else None)
+        write(ROOT/('evaluation_done_'+node+'.json'),dict(completed=True))
+    except Exception as error:
+        write(ROOT/('evaluation_error_'+node+'.json'),dict(type=type(error).__name__,error=str(error),time=time.time()))
+        raise
+    finally:guard.gpu_headroom=original_headroom
 
 
 if __name__=='__main__':
