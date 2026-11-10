@@ -80,8 +80,32 @@ def build_loss(M,model,renderer,frames,uv,ema,code):
         lang_embed=lang_embed.float(),tmask=tmask,ema_step=ema['step'],ema_warmup=100,ema_decay=.9,
         ema_patch_v=ema['patch'],ema_align_v=ema['align'],renderer=renderer,t0_tex=renderer.orig_texture,
         args=SimpleNamespace(edpa_alpha=.2,lambda_ref=.1,lambda_tv=.1))
-    exec(code,scope)
+    exec(code,vars(M),scope)
     return scope
+
+
+def cpu_loss_check(M,code,loss_sha):
+    generator=torch.Generator(device='cpu').manual_seed(123)
+    parameter=torch.nn.Parameter(torch.randn((1,3,3,3),generator=generator)*.01)
+    class FakeRenderer:
+        orig_texture=torch.full((1,3,3,3),.5)
+        def texture_tensor(self):return self.orig_texture+.1*parameter.tanh()
+    clean=torch.randn((2,8,16),generator=generator)
+    direction=torch.randn((2,8,16),generator=generator)
+    ctx=dict(torch=torch,F=M.F,adv_embed=clean+parameter.mean()*direction,
+        clean_embed=clean,lang_embed=torch.randn((2,5,16),generator=generator),
+        tmask=torch.ones((2,5),dtype=torch.long),ema_step=0,ema_warmup=100,ema_decay=.9,
+        ema_patch_v=0.,ema_align_v=0.,renderer=FakeRenderer(),t0_tex=FakeRenderer.orig_texture,
+        args=SimpleNamespace(edpa_alpha=.2,lambda_ref=.1,lambda_tv=.1))
+    exec(code,vars(M),ctx)
+    ctx['objective'].backward(retain_graph=True);expected=parameter.grad.clone()
+    actual=torch.autograd.grad(ctx['objective'],parameter)[0]
+    assert torch.isfinite(actual).all() and actual.norm()>0
+    assert torch.allclose(actual,expected,atol=1e-7,rtol=1e-6)
+    assert abs(float(ctx['edpa_cost'])-1.)<1e-4
+    result=dict(passed=True,loss_ast_sha256=loss_sha,gradient_norm=float(actual.norm()),
+        requested_vs_backward_max_abs=float((actual-expected).abs().max()))
+    write(ROOT/'loss_cpu_validation.json',result);print('CPU_LOSS_VALIDATED '+json.dumps(result),flush=True)
 
 
 def validation(model,renderer,frames,uv,M,code,loss_sha):
@@ -126,6 +150,7 @@ def main(a):
     replay=shared.parse_stream(str(stream),5000,8)
     full=torch.load(uv_path,map_location='cpu',weights_only=False)['uv']
     assert len(full)==5000
+    code,loss_sha=exact_loss_code();cpu_loss_check(M,code,loss_sha)
     pool=torch.load(str(POOL),map_location='cpu',weights_only=False,mmap=True)
     frames,_=shared.active_frames(pool,None);assert len(frames)==296
     cfg=M.base.GenerateConfig(pretrained_checkpoint=M.CKPT,model_family='openvla')
@@ -135,7 +160,6 @@ def main(a):
     param=renderer.adv_noise
     theta_sha=hashlib.sha256(param.detach().cpu().numpy().tobytes()).hexdigest()
     if record.get('theta_init_sha256'):assert theta_sha==record['theta_init_sha256']
-    code,loss_sha=exact_loss_code()
     guard.mark_ready()
     def batch(it):
         return [frames[i] for i in replay[it]['frames']],torch.as_tensor(full[it],device='cuda')
