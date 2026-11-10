@@ -71,9 +71,9 @@ def main():
                 assert torch.equal(r0,r0_repeat),'Differentiable zero-texture A/A discrepancy'
                 zero_export=ctx.renderer.export_png()
                 assert np.array_equal(zero_export,runtime.base),'Zero export differs from original Plain pixels'
-                r0_png=synth(ctx.renderer.png_to_tex(runtime.base))
+                r0_png=synth(ctx.renderer.png_to_tex(runtime.base).to(ctx.device))
                 assert torch.equal(r0,r0_png),'PNG Plain and zero-theta source features differ'
-                r1_png=synth(ctx.renderer.png_to_tex(runtime.full))
+                r1_png=synth(ctx.renderer.png_to_tex(runtime.full).to(ctx.device))
                 ctx.load_theta(str(REPO/'experiments/pi0_cloth/oft_cloth/train_20261021_224922_tvfix-mr/Ep0_Cloth_Delta_OV.pt'))
                 assert np.array_equal(ctx.renderer.export_png(),runtime.full)
                 r1_float=synth()
