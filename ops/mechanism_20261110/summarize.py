@@ -3,6 +3,7 @@ import csv
 import itertools
 import math
 import os
+import subprocess
 import tarfile
 import time
 from common import HERE,ROOT,PROTOCOL,read,write,sha
@@ -66,6 +67,8 @@ def main():
         'Plain 与 Both 已通过直接原生部署的完整轨迹逐查询一致性检查。显著性检验不用于宣布两条件等效。',
         '同目录保留所有任务、回合、输入 SHA、显式噪声 SHA、动作及实现校验。'])
     (analysis/'目标策略相机干预实验报告.md').write_text('\n'.join(report)+'\n',encoding='utf-8')
+    env=os.environ.copy();env['CUDA_VISIBLE_DEVICES']=''
+    subprocess.run(['/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python',str(HERE/'plot_results.py')],env=env,check=True)
     archive=ROOT/'mechanism_complete.tar.gz'
     with tarfile.open(archive,'w:gz') as tar:
         for name in ['analysis','episodes','completed','workers','protocol.json','smoke_passed.json','run_manifest.json','fresh_feature_direction']:
