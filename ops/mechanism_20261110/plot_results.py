@@ -14,7 +14,7 @@ def main():
     font=REPO/'experiments/refcloth_uv_gradient/20261109/prepared/times.ttf'
     assert font.exists()
     font_manager.fontManager.addfont(str(font))
-    plt.rcParams.update({'font.family':'Times New Roman','font.size':11,'svg.fonttype':'none',
+    plt.rcParams.update({'font.family':'Times New Roman','font.size':11,'svg.fonttype':'none','mathtext.fontset':'stix',
         'pdf.fonttype':42,'axes.spines.top':False,'axes.spines.right':False})
     fresh=read(ROOT/'fresh_feature_direction/results.json')
     closed=read(ROOT/'analysis/closed_loop_summary.json')
@@ -32,10 +32,12 @@ def main():
             xx=[j+(i%8-3.5)*.018 for i in range(len(rows))]
             ax.scatter(xx,values,s=20,color=colors[j],alpha=.7,edgecolors='none',zorder=2)
             mean=float(np.mean(values));ax.plot([j-.2,j+.2],[mean,mean],color=colors[j],lw=3,zorder=3)
-            ax.annotate('%.3f'%mean,(j,mean),xytext=(0,8),textcoords='offset points',ha='center',fontweight='bold',color=colors[j])
+            ax.text(j+.25 if j==0 else j-.25,mean,'%.3f'%mean,
+                ha='left' if j==0 else 'right',va='center',fontweight='bold',color=colors[j],
+                bbox=dict(facecolor='white',edgecolor='none',alpha=.9,pad=1.5),zorder=4)
         ax.set_xticks([0,1],['Matched','Native ref.']);ax.set_xlim(-.4,1.4)
         ax.set_ylabel(ylabel);ax.set_title(title,loc='left',fontweight='bold',pad=16)
-        ax.grid(axis='y',alpha=.15);ax.text(.5,-.24,'32 fixed source states',transform=ax.transAxes,ha='center')
+        ax.grid(axis='y',alpha=.15);ax.text(.5,-.24,'Same frozen PNG; 32 source states',transform=ax.transAxes,ha='center')
     axes[0].set_ylim(0,1.06);axes[1].set_ylim(bottom=0)
     names=['plain','main_only','wrist_only','both'];labels=['Plain','Main only','Wrist only','Both']
     values=[closed['successes'][c] for c in names]

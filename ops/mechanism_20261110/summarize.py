@@ -87,7 +87,7 @@ def main():
     env=os.environ.copy();env['CUDA_VISIBLE_DEVICES']=''
     subprocess.run(['/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python',str(HERE/'plot_results.py')],env=env,check=True)
     archive=ROOT/'mechanism_complete.tar.gz'
-    with tarfile.open(archive,'w:gz') as tar:
+    with tarfile.open(archive,'w:gz',compresslevel=1) as tar:
         for name in ['analysis','episodes','completed','workers','protocol.json','smoke_passed.json','run_manifest.json','fresh_feature_direction']:
             tar.add(ROOT/name,arcname=name)
         for path in list((ROOT/'logs').glob('*.log'))+[ROOT/'source_direction.log',ROOT/'controller.log']+list(ROOT.glob('*_before_cuda_override_fix_*')):
