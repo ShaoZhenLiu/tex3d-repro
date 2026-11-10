@@ -1,0 +1,36 @@
+{
+  "version": "frozen-texture-mechanism-20261110-v1",
+  "baseline_commit": "cf25c826ff64375187d5e52db5e2da8fa2a193c3",
+  "feature_direction": {
+    "states": "All 32 archived Fig.1d Spatial states; tasks 0,2,6,8, eight states per task",
+    "texture": "mr8, original main-benchmark frozen RefCloth",
+    "primary_native_baseline": "same-state native Plain reinjection, f_n0_inj",
+    "secondary_native_baseline": "archived sensor observation, f_n0_obs",
+    "metrics": ["cos(d_M,d_star)", "cos(d_N,d_star)", "norm(r_theta)", "norm(r_theta)/norm(d_star)", "norm(e_theta)/norm(d_star)", "norm(d_M)/norm(d_star)", "norm(d_N)/norm(d_star)"],
+    "aggregation": "All state rows and equal-state means; task-wise means retained; no selection by outcome",
+    "reuse": "Recompute metrics from complete saved forward features after checking against original norm records and the deployed PNG pixels"
+  },
+  "closed_loop": {
+    "target": "pi05",
+    "checkpoint": "/data/shaozhen.liu/model/RLinf-Pi05-LIBERO-130-fullshot-SFT",
+    "config": "pi05_libero",
+    "suite": "libero_object",
+    "tasks": [0,1,2,3,4,5,6,7,8,9],
+    "initials": [10,11,12,13,14,15,16,17,18,19],
+    "conditions": ["plain", "main_only", "wrist_only", "both"],
+    "texture": "experiments/pi0_cloth/oft_cloth/train_20261021_224922_tvfix-mr/Universal_Cloth_OV.png",
+    "surface_mode": "legacy",
+    "floor_mode": true,
+    "settle_steps": 10,
+    "max_steps": 400,
+    "replan_steps": 5,
+    "num_denoise": 10,
+    "noise": "3710000 + task*10000 + initial*100 + query; explicit float32 normal, excludes condition and worker",
+    "pairing": "All four conditions for each task/initial key on one worker/GPU; equal initial state and query-index noise",
+    "condition_order": "Rotate the four conditions by (task*10+initial-10) modulo four",
+    "camera_intervention": "Use actual cached sensor-exposure MjData from each camera; rerender both appearances at that exposure state. Replace selected camera input(s) only, restore textures, GL state, physics and RNG before inference",
+    "gates": ["cached sensor render bitwise equals actual policy RGB", "both camera exposures have identical qpos/qvel/time", "counterfactual render preserves integration state", "A-B-A image and texture identity", "Plain and Both complete-trajectory parity against direct native deployment", "paired explicit noise"],
+    "analysis": "Success /100, net drop from contemporaneous Plain, all six paired exact McNemar contrasts with Holm correction; all task-level outcomes retained",
+    "scope": "Diagnostic camera-input intervention with a fixed texture; no training or target gradients; hybrid views are a mechanism intervention"
+  }
+}
