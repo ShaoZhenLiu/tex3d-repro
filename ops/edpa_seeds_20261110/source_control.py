@@ -84,8 +84,12 @@ def main(node):
                 allowed,reasons=guard.can_launch(cold_gib=10,max_models=6 if node=='09' else 5)
                 if allowed and pending:
                     if not validation.get('passed'):
-                        if node=='4090' and 'validation' not in active and guard.gpu_headroom(3)>=43000:
-                            e=launch(node,7,3,43000,True);active[e['name']]=e;print('LAUNCH_VALIDATION',e['pid'],flush=True)
+                        vgpus=[3] if node=='4090' else [0,1,2,3]
+                        candidates=[g for g in vgpus if guard.gpu_headroom(g)>=(43000 if node=='4090' else 32000)]
+                        if 'validation' not in active and candidates:
+                            gpu=max(candidates,key=guard.gpu_headroom)
+                            budget=min(43000,guard.gpu_headroom(gpu)-768)
+                            e=launch(node,7,gpu,budget,True);active[e['name']]=e;print('LAUNCH_VALIDATION',e['pid'],flush=True)
                         else:reasons.append('waiting_for_verified_production_gradient')
                     else:
                         peak=max(validation['steady_peak_allocated_mib'],validation['steady_peak_reserved_mib'])

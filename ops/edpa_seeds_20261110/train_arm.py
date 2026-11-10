@@ -149,7 +149,8 @@ def main(a):
         host=os.uname().nodename,gpu=os.environ['CUDA_VISIBLE_DEVICES'],gpu_name=torch.cuda.get_device_name(),
         pytorch=torch.__version__,cuda=torch.version.cuda,memory_fraction=a.memory_fraction,
         commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=REPO,universal_newlines=True).strip(),
-        gradient_mode='texture_only',pool_mmap=True,time=time.time())
+        gradient_mode='texture_only',gradient_validation_sha256=sha(ROOT/'gradient_validation.json'),
+        pool_mmap=True,time=time.time())
     write(out/'registrations'/('%d.json'%time.time_ns()),registration);write(out/'registered.json',registration)
     initial=0;ema=dict(step=0,patch=0.,align=0.);checkpoint=out/'checkpoint.pt'
     if checkpoint.exists():
