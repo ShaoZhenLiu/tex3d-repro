@@ -37,12 +37,16 @@ def inputs():
         if seed==7:
             legacy=REPO/'experiments/pi0_cloth/oft_cloth/train_20261021_224922_tvfix-mr/sampling_log.txt'
             copy(legacy,text);replay=shared.parse_stream(str(text),5000,8)
-            random.seed(seed);uvs=[]
+            random.seed(seed);uvs=[];maximum_log_error=0.
             for it in range(5000):
                 indices=[random.randrange(296) for _ in range(8)]
                 uv=shared.M.sample_uv_xform(True,'cpu').numpy()
                 assert indices==replay[it]['frames'],('legacy frame sequence',it)
-                assert np.allclose(uv,replay[it]['uv'],atol=5.1e-7,rtol=0),('legacy UV sequence',it)
+                # The archived six-decimal text was parsed as float32. Its
+                # decimal rounding plus float32 conversion can exceed 5e-7.
+                error=float(np.max(np.abs(uv-replay[it]['uv'])))
+                maximum_log_error=max(maximum_log_error,error)
+                assert error<=1e-6,('legacy UV sequence',it,error)
                 uvs.append(uv)
             if not full.exists():torch.save(dict(uv=uvs,seed=seed,n_active=296),full)
             loaded=torch.load(full,map_location='cpu',weights_only=False)['uv']
@@ -57,6 +61,7 @@ def inputs():
         streams[str(seed)]=dict(text_path=str(text.relative_to(ROOT)),uv_path=str(full.relative_to(ROOT)),
             text_sha256=sha(text),uv_sha256=sha(full),rows=40000,origin=origin,
             theta_init_sha256=existing.get('theta_init_sha256'))
+        if seed==7:streams[str(seed)]['maximum_archived_uv_log_error']=maximum_log_error
     plain=read(source_root(7)/'texture_manifest.json')['plain']
     copy(source_root(7)/plain['path'],ROOT/'frozen/plain.png')
     write(ROOT/'texture_manifest.json',dict(plain=dict(path='frozen/plain.png',sha256=plain['sha256'],reference='plain')))
