@@ -102,7 +102,7 @@ def inputs():
         protocol_sha256=sha(HERE/'protocol.json')))
     archive=ROOT/'bootstrap09.tar.gz'
     with tarfile.open(archive,'w:gz') as tar:
-        for name in ['streams','frozen','inputs.json','evaluation/jobs.json','evaluation/episodes','baseline/outcomes.csv','baseline/manifest.json']:
+        for name in ['streams','frozen','inputs.json','texture_manifest.json','evaluation/jobs.json','evaluation/episodes','baseline/outcomes.csv','baseline/manifest.json']:
             tar.add(ROOT/name,arcname=name)
     print(json.dumps(dict(passed=True,bootstrap=str(archive),sha256=sha(archive),bytes=archive.stat().st_size)),flush=True)
 

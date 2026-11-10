@@ -9,7 +9,12 @@ import refcloth_eval_scheduler as scheduler
 
 
 def publish():
-    manifest=read(ROOT/'texture_manifest.json')
+    manifest=read(ROOT/'texture_manifest.json') or {}
+    if 'plain' not in manifest:
+        plain=ROOT/'frozen/plain.png'
+        expected=read(ROOT/'evaluation/episodes/spatial_t0_i10_plain.json')['texture_sha256']
+        assert sha(plain)==expected
+        manifest['plain']=dict(path='frozen/plain.png',sha256=expected,reference='plain')
     for seed in SEEDS:
         e=read(ROOT/'arms'/('s%d_edpa'%seed)/'completed.json',{})
         if not e.get('completed'):continue
