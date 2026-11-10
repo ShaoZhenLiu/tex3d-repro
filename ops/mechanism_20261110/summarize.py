@@ -29,10 +29,17 @@ def main():
                 assert r['completed'] and r['condition']==condition and r['hook']
                 assert r['protocol_sha256']==sha(PROTOCOL)
                 assert all(q['measurement']['integration_exact'] and q['measurement']['cached_exposure_exact'] for q in r['trajectory'])
+                for q in r['trajectory']:
+                    m=q['measurement']
+                    expected_main=m['ref_main_sha256'] if condition in ['main_only','both'] else m['plain_main_sha256']
+                    expected_wrist=m['ref_wrist_sha256'] if condition in ['wrist_only','both'] else m['plain_wrist_sha256']
+                    assert q['main_sha256']==expected_main and q['wrist_sha256']==expected_wrist
                 lookup[(task,initial,condition)]=r;group.append(r)
                 rows.append({k:r[k] for k in ['task','initial','condition','robot_success','queries','elapsed_seconds','worker','gpu','host']})
             assert len({r['gpu'] for r in group})==1 and len({r['host'] for r in group})==1
             assert len({r['inputs']['texture_pixel_sha256'] for r in group})==1
+            for field in ['plain_main_sha256','plain_wrist_sha256','camera_qpos_sha256']:
+                assert len({r['trajectory'][0]['measurement'][field] for r in group})==1
             for r in group[1:]:
                 assert all(a['noise_sha256']==b['noise_sha256'] for a,b in zip(group[0]['trajectory'],r['trajectory']))
     assert len(rows)==400
@@ -75,7 +82,9 @@ def main():
             tar.add(ROOT/name,arcname=name)
         tar.add(HERE,arcname='source',filter=lambda item:None if '__pycache__' in item.name else item)
     write(ROOT/'accepted.json',dict(completed=True,episodes=400,archive=archive.name,
-        sha256=sha(archive),bytes=archive.stat().st_size,time=time.time()))
+        sha256=sha(archive),bytes=archive.stat().st_size,time=time.time(),
+        code_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=HERE,text=True).strip(),
+        inference_entry_sha256=sha(HERE/'evaluate.py'),summary_entry_sha256=sha(__file__)))
     print(summary,flush=True)
 
 
