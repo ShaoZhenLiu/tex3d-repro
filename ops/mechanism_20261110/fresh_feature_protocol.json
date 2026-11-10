@@ -1,0 +1,11 @@
+{
+  "purpose": "Independent confirmation after archived identical-Plain native features showed a nonzero repeat floor",
+  "source": "Frozen OpenVLA-OFT Spatial150K and original frozen RefCloth",
+  "states": {"tasks": [0,2,6,8], "initial": 0, "steps": [0,10,20,30,40,50,60,70]},
+  "collection": "Existing NativeRuntime.collect: ten initial no-op settling steps, then deterministic source actions; canonicalize and archive all 32 fresh simulator snapshots",
+  "relationship_to_archived_fig1d": "Same task/step grid, newly collected canonical states; do not label the new trajectories bitwise identical to the archive",
+  "primary": "The identical frozen exported PNG on differentiable and native paths",
+  "secondary": "Original floating theta on differentiable path versus frozen native PNG",
+  "controls": ["Native Plain A/A features bitwise equal", "Differentiable Plain A/A features bitwise equal", "Native A-B-A pixels exact", "Zero theta exports the same Plain PNG", "PNG round-trip matches the trained export", "Same state and model preprocessing for all four feature vectors"],
+  "scope": "Frozen-source forward-only diagnostic, no training, recalibration or target gradients"
+}

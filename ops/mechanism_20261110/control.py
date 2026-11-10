@@ -9,6 +9,22 @@ import refcloth_resource as guard
 
 PYTHON='/data/shaozhen.liu/envs/tex3d-pi0-mj330/bin/python'
 SCRIPT=HERE/'evaluate.py'
+SOURCE_SCRIPT=HERE/'source_direction.py'
+
+
+def launch_source(gpu):
+    env=os.environ.copy()
+    env.update(CUDA_VISIBLE_DEVICES=str(gpu),MUJOCO_EGL_DEVICE_ID=str(gpu),MUJOCO_GL='egl',
+        PYOPENGL_PLATFORM='egl',OMP_NUM_THREADS='2',MKL_NUM_THREADS='2',HF_HUB_OFFLINE='1',
+        TOKENIZERS_PARALLELISM='false',PYTHONUNBUFFERED='1',WANDB_MODE='disabled',USE_TF='0',
+        TORCHDYNAMO_DISABLE='1',PYTHONPATH=':'.join([str(HERE),str(REPO/'ops'),str(REPO),str(REPO/'openvla-oft')]))
+    with (ROOT/'source_direction.log').open('a') as log:
+        proc=subprocess.Popen(['/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python',str(SOURCE_SCRIPT)],
+            cwd='/data/shaozhen.liu/code/tex3d-ws/g7',env=env,stdin=subprocess.DEVNULL,stdout=log,
+            stderr=subprocess.STDOUT,start_new_session=True)
+    guard.register(proc.pid,SOURCE_SCRIPT,'source',gpu,23000,'source_direction',ROOT)
+    print('SOURCE_LAUNCH',proc.pid,gpu,flush=True)
+    return dict(worker='source_direction',pid=proc.pid,ticks=guard.identity(proc.pid)['ticks'],gpu=gpu,source=True)
 
 
 def launch(gpu,index,smoke=False):
@@ -44,20 +60,23 @@ def main(args):
         entry_sha256=sha(SCRIPT),allowed_gpus=[0,1,2,3],max_workers=8,per_gpu=2,started=time.time()))
     registry=[];index=0;failures=[]
     while True:
-        active=[e for e in guard.active() if e['script']==str(SCRIPT) and e['root']==str(ROOT)]
+        active=[e for e in guard.active() if e['script'] in [str(SCRIPT),str(SOURCE_SCRIPT)] and e['root']==str(ROOT)]
         known={e['pid'] for e in registry}
         for e in active:
-            if e['pid'] not in known:registry.append(dict(worker=e['label'],pid=e['pid'],ticks=e['ticks'],gpu=e['gpu']))
+            if e['pid'] not in known:registry.append(dict(worker=e['label'],pid=e['pid'],ticks=e['ticks'],gpu=e['gpu'],source=e['script']==str(SOURCE_SCRIPT)))
         for e in list(registry):
-            if e.get('exited') or guard.process_runs_script(e['pid'],SCRIPT,e['ticks']):continue
+            own_script=SOURCE_SCRIPT if e.get('source') else SCRIPT
+            if e.get('exited') or guard.process_runs_script(e['pid'],own_script,e['ticks']):continue
             e['exited']=time.time()
-            complete=read(ROOT/'workers'/e['worker']/'completed.json',{}).get('completed')
+            complete=read(ROOT/'fresh_feature_direction/results.json' if e.get('source') else ROOT/'workers'/e['worker']/'completed.json',{}).get('completed')
             if not complete:
                 resource=guard.resource_stopped(e['pid'],e['ticks'])
                 failures.append(dict(worker=e['worker'],resource_stop=resource,time=time.time()))
                 print('WORKER_EXIT',e['worker'],'resource',resource,flush=True)
         done=len(list((ROOT/'completed').glob('*.json')))
-        if done==100 and not active:
+        source_complete=read(ROOT/'fresh_feature_direction/results.json',{}).get('completed',False)
+        source_active=any(e['script']==str(SOURCE_SCRIPT) for e in active)
+        if done==100 and not active and source_complete:
             subprocess.run(['python3',str(HERE/'summarize.py')],cwd=REPO,check=True)
             write(ROOT/'controller_done.json',dict(completed=True,pairs=100,episodes=400,time=time.time()))
             return
@@ -68,6 +87,12 @@ def main(args):
         ok,reasons=guard.can_launch(cold_gib=24,max_models=8)
         gate=read(ROOT/'smoke_passed.json',{}).get('passed',False)
         gpu=None
+        if ok and not source_complete and not source_active:
+            choices=[g for g in range(4) if guard.gpu_headroom(g)>=23000]
+            if choices:
+                chosen=max(choices,key=guard.gpu_headroom)
+                registry.append(launch_source(chosen))
+                ok=False
         if ok and done<100 and (gate or not active):
             counts={g:sum(e['gpu']==g for e in active) for g in range(4)}
             choices=[g for g in range(4) if counts[g]<2 and guard.gpu_headroom(g)>=23000]
@@ -76,7 +101,7 @@ def main(args):
             while any(r['worker']=='w%02d_gpu%d'%(index,gpu) for r in registry):index+=1
             registry.append(launch(gpu,index,smoke=not gate));index+=1
         write(ROOT/'status.json',dict(time=time.time(),pairs_complete=done,episodes_complete=len(list((ROOT/'episodes').glob('*.json'))),
-            smoke_passed=gate,active=[dict(pid=e['pid'],worker=e['label'],gpu=e['gpu'],phase=e['phase']) for e in active],
+            smoke_passed=gate,source_completed=source_complete,active=[dict(pid=e['pid'],worker=e['label'],gpu=e['gpu'],phase=e['phase']) for e in active],
             admission_reasons=reasons,failures=failures,workers=registry))
         time.sleep(5)
 

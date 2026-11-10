@@ -68,7 +68,7 @@ def main():
     (analysis/'目标策略相机干预实验报告.md').write_text('\n'.join(report)+'\n',encoding='utf-8')
     archive=ROOT/'mechanism_complete.tar.gz'
     with tarfile.open(archive,'w:gz') as tar:
-        for name in ['analysis','episodes','completed','workers','protocol.json','smoke_passed.json','run_manifest.json']:
+        for name in ['analysis','episodes','completed','workers','protocol.json','smoke_passed.json','run_manifest.json','fresh_feature_direction']:
             tar.add(ROOT/name,arcname=name)
         tar.add(HERE,arcname='source',filter=lambda item:None if '__pycache__' in item.name else item)
     write(ROOT/'accepted.json',dict(completed=True,episodes=400,archive=archive.name,
