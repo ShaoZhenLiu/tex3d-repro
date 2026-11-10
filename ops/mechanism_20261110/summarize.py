@@ -90,6 +90,8 @@ def main():
     with tarfile.open(archive,'w:gz') as tar:
         for name in ['analysis','episodes','completed','workers','protocol.json','smoke_passed.json','run_manifest.json','fresh_feature_direction']:
             tar.add(ROOT/name,arcname=name)
+        for path in list((ROOT/'logs').glob('*.log'))+[ROOT/'source_direction.log',ROOT/'controller.log']+list(ROOT.glob('*_before_cuda_override_fix_*')):
+            if path.exists():tar.add(path,arcname='execution_records/'+path.name)
         tar.add(HERE,arcname='source',filter=lambda item:None if '__pycache__' in item.name else item)
     write(ROOT/'accepted.json',dict(completed=True,episodes=400,archive=archive.name,
         sha256=sha(archive),bytes=archive.stat().st_size,time=time.time(),
