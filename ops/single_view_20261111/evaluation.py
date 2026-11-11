@@ -14,8 +14,13 @@ EVAL_PROTOCOL = ROOT / 'evaluation_protocol.json'
 
 
 def existing_joint(seed):
-    prior = REPO / 'experiments/refcloth_stability' / ('20261102' if seed == 7 else '20261104')
     key = f's{seed}_mr'
+    imported = guard.read(ROOT / 'original_joint' / (key + '.json'))
+    if imported is not None:
+        assert imported['seed'] == seed and imported['reused_training']
+        assert sha(Path(imported['texture'])) == imported['texture_sha256']
+        return imported
+    prior = REPO / 'experiments/refcloth_stability' / ('20261102' if seed == 7 else '20261104')
     manifest = guard.read(prior / 'texture_manifest.json')
     entry = manifest[key]
     path = prior / entry['path']
@@ -24,6 +29,17 @@ def existing_joint(seed):
     return dict(receipt, completed=True, seed=seed, mode='mr', iterations=5000,
                 texture=str(path), texture_sha256=entry['sha256'], prior_study=str(prior),
                 reused_training=True, frozen_manifest=entry)
+
+
+def stage_joint(seeds):
+    for seed in seeds:
+        receipt = existing_joint(seed)
+        key = f's{seed}_mr'
+        target = ROOT / 'original_joint' / (key + '.png')
+        freeze(Path(receipt['texture']), target, receipt['texture_sha256'])
+        receipt['texture'] = str(target)
+        guard.write(target.with_suffix('.json'), receipt)
+        print('ORIGINAL_JOINT_READY', seed, receipt['texture_sha256'], flush=True)
 
 
 def prepare(node, original_joint):
@@ -122,7 +138,7 @@ def run(node, gpus):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('stage', choices=('prepare', 'run', 'publish'))
+    parser.add_argument('stage', choices=('prepare', 'run', 'publish', 'stage-original'))
     parser.add_argument('--node', choices=('4090', '09'), required=True)
     parser.add_argument('--original-joint', nargs='+', type=int, choices=SEEDS, default=[])
     parser.add_argument('--gpus', nargs='+', type=int, default=[])
@@ -132,5 +148,7 @@ if __name__ == '__main__':
     elif args.stage == 'run':
         assert args.gpus
         run(args.node, args.gpus)
+    elif args.stage == 'stage-original':
+        stage_joint(args.original_joint)
     else:
         publish()
