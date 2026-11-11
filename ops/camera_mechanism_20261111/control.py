@@ -26,6 +26,9 @@ def run_pilot(node, gpus, budget):
             process = None
             with lock_guard(lock):
                 ready, reasons = guard.can_launch(max_models=6 if node == '09' else 5)
+                if any(e['label'].startswith(STUDY + ':preflight_') for e in guard.active()):
+                    ready = False
+                    reasons.append('camera_preflight_running')
                 free = [(available(gpu), gpu) for gpu in gpus] if ready else []
                 eligible = [entry for entry in free if entry[0] >= budget]
                 if eligible:

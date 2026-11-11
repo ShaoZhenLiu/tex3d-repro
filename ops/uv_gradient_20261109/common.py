@@ -62,8 +62,7 @@ class Context:
             self.frames.setdefault(tid,[]).append(fr)
             self.refs.setdefault(tid,[]).append(state['mr_hidden'][fi])
 
-    def forward(self,frame,uv):
-        import torch
+    def render_views(self,frame,uv):
         R=self.R;fr=R.frame_to_dev(frame,'cuda')
         rgba,_=self.renderer.render(fr['mvp'],(256,256),model_rot=fr['rot'],uv_xform=uv)
         comp=(rgba.permute(0,3,1,2)*fr['seg']+fr['bg']*(1-fr['seg'])).clamp(0,1)
@@ -71,6 +70,11 @@ class Context:
         if fr.get('wrist_mvp') is not None and fr.get('wrist_bg') is not None:
             rgba,_=self.renderer.render(fr['wrist_mvp'],(256,256),model_rot=fr['rot'],uv_xform=uv)
             wrist=(rgba.permute(0,3,1,2)*fr['wrist_seg']+fr['wrist_bg']*(1-fr['wrist_seg'])).clamp(0,1)
+        return fr,comp,wrist
+
+    def hidden_from_views(self,fr,comp,wrist):
+        import torch
+        R=self.R
         pv=R.base._compose_oft_pixel_values(adv_rgb=comp,model_input_size=self.model_input_size,
             siglip_mean=self.sm,siglip_std=self.ss,dino_mean=self.dm,dino_std=self.ds,
             wrist_tensor=wrist).to(torch.bfloat16)
@@ -82,6 +86,9 @@ class Context:
                 noisy_action_projector=self.noisy_action_projector,
                 use_film=getattr(self.cfg,'use_film',False))
         return hidden.float()
+
+    def forward(self,frame,uv):
+        return self.hidden_from_views(*self.render_views(frame,uv))
 
     def gradient(self,task,indices,uv):
         import torch
