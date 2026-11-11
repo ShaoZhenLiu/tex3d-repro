@@ -67,13 +67,19 @@ def main(a):
     policy._model.eval().requires_grad_(False)
     cfg=A.training_config.get_config(p['config']).model
     noise_shape=(cfg.action_horizon,cfg.action_dim)
+    camera=None
+    if p.get('camera_diagnostic'):
+        from refcloth_camera_views import Diagnostic
+        camera=Diagnostic(A,mujoco,B,policy,a.root)
     worker=a.root/'evaluation/workers'/a.worker;worker.mkdir(parents=True,exist_ok=True)
     outcomes=a.root/'evaluation/episodes';outcomes.mkdir(parents=True,exist_ok=True)
     complete=a.root/'evaluation/completed';complete.mkdir(parents=True,exist_ok=True)
     claims=a.root/'evaluation/claims';claims.mkdir(parents=True,exist_ok=True)
     current={};original_env=A._get_libero_env;original_inject=A.inject_mujoco_texture
     def remember(*args,**kwargs):
-        env,desc=original_env(*args,**kwargs);current['env']=env;return env,desc
+        env,desc=original_env(*args,**kwargs);current['env']=env
+        if camera is not None:camera.attach(env)
+        return env,desc
     def inject(sim,tid,png):
         saved=original_inject(sim,tid,png)
         assert B._upload_mujoco_texture(sim,tid),'Native texture upload did not reach the renderer'
@@ -87,8 +93,12 @@ def main(a):
             q=len(self.rows)
             seed=6810000+p['suites'].index(self.suite)*1000000+self.task*10000+self.initial*100+q
             noise=np.random.default_rng(seed).standard_normal(noise_shape).astype(np.float32)
+            measurement=None
+            if camera is not None and camera.mode is not None:
+                raw,measurement=camera.intervene(raw,q)
             row=dict(query=q,noise_sha256=sha(noise),main_sha256=sha(raw['observation/image']),
                 wrist_sha256=sha(raw['observation/wrist_image']),proprio_sha256=sha(raw['observation/state']))
+            if measurement is not None:row['camera_measurement']=measurement
             with torch.no_grad():result=policy.infer(copy.deepcopy(raw),noise=noise.copy())
             actions=np.asarray(result['actions']);assert actions.ndim==2 and actions.shape[1]==7 and np.isfinite(actions).all()
             row.update(action_sha256=sha(actions),actions=actions[:5].tolist())
@@ -106,6 +116,7 @@ def main(a):
         if path.exists() and not calibration:
             data=json.loads(path.read_text());assert data['completed'];return data
         image,meta=texture(condition)
+        if camera is not None:image=camera.select(image,meta)
         np.random.seed(7300000+p['suites'].index(suite)*100000+task*1000+initial)
         paired.reset(suite,task,initial);before=current.get('uploads',0);start=time.monotonic()
         task_obj=suites[suite].get_task(task);state=suites[suite].get_task_init_states(task)[initial]
@@ -119,9 +130,12 @@ def main(a):
             host=os.uname().nodename,gpu=os.environ['CUDA_VISIBLE_DEVICES'])
         if p.get('target'):
             data['target']=p['target']
+        if camera is not None:
+            data.update(camera_mode=meta.get('camera_mode'),protocol_sha256=protocol_sha)
         if not calibration:write(path,data)
         print('EPISODE',suite,task,initial,condition,int(success),len(paired.rows),flush=True)
         return data
+    protocol_sha=hashlib.sha256(Path(protocol_path).read_bytes()).hexdigest()
     # Each freshly loaded model repeats an entire prescribed Plain trajectory.
     cal0=episode('spatial',0,10,'plain',True)
     cal1=episode('spatial',0,10,'plain',True)
@@ -148,13 +162,41 @@ def main(a):
         success_repeatable=success_repeatable,canonical_success=canonical_success,
         node=getattr(a,'node','4090'),mode='success' if allow_stochastic else 'trajectory',
         repeat_queries=[cal0['queries'],cal1['queries']],canonical_reference_available=baseline.exists()))
-    registration=dict(worker=a.worker,protocol_sha256=hashlib.sha256(Path(protocol_path).read_bytes()).hexdigest(),
+    registration=dict(worker=a.worker,protocol_sha256=protocol_sha,
         checkpoint=p['checkpoint'],noise_shape=noise_shape,mujoco=mujoco.__version__,pytorch=torch.__version__,
         gpu_name=torch.cuda.get_device_name(),host=os.uname().nodename,
         source_hashes={str(Path(inspect.getfile(v))):hashlib.sha256(Path(inspect.getfile(v)).read_bytes()).hexdigest() for v in [A,B,type(policy),type(policy._model)]},
         entry_sha256=ENTRY_SHA256,cpu_checkpoint_conversion=True,memory_fraction=a.memory_fraction,
         commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=a.repo,text=True).strip())
     write(worker/'registered.json',registration)
+    if getattr(a,'camera_preflight',False):
+        assert camera is not None
+        prior=Path(p['camera_diagnostic']['prior'])
+        replay=[]
+        for name in p['camera_diagnostic']['controls']:
+            direct=episode('object',0,10,name,True)
+            old=json.loads((prior/'evaluation/episodes'/f'object_t0_i10_{name}.json').read_text())
+            assert old['texture_sha256']==direct['texture_sha256']
+            assert old['trajectory'] and direct['trajectory']
+            keys=('noise_sha256','main_sha256','wrist_sha256','proprio_sha256')
+            first_match=all(old['trajectory'][0][key]==direct['trajectory'][0][key] for key in keys)
+            replay.append(dict(condition=name,first_query_exact=first_match,
+                               trajectory_exact=old['trajectory']==direct['trajectory'],
+                               outcome_exact=old['robot_success']==direct['robot_success']))
+            write(worker/(name+'_replay.json'),direct)
+        seed=p['camera_diagnostic']['seeds'][0]
+        hybrids=[]
+        for mode in ('ap','pa'):
+            name=f's{seed}_{mode}'
+            measured=episode('object',0,10,name,True)
+            assert measured['trajectory'] and 'camera_measurement' in measured['trajectory'][0]
+            write(worker/(name+'_smoke.json'),measured)
+            hybrids.append(name)
+        write(a.root/'camera_preflight.json',dict(passed=True,worker=a.worker,replayed=replay,
+            hybrids=hybrids,can_reuse_controls=all(
+                x['first_query_exact'] and x['trajectory_exact'] and x['outcome_exact'] for x in replay),
+            protocol_sha256=protocol_sha,peak_cuda_bytes=torch.cuda.max_memory_allocated()))
+        return
     if a.smoke:
         for condition in ['s7_native','s7_mr']:
             row=episode('spatial',0,10,condition,True)
@@ -216,4 +258,5 @@ if __name__=='__main__':
     p.add_argument('--node',choices=['4090','09'],default='4090')
     p.add_argument('--allow-stochastic-calibration',action='store_true')
     p.add_argument('--protocol',type=Path,help='Evaluation protocol; defaults to the original reference study')
+    p.add_argument('--camera-preflight',action='store_true')
     main(p.parse_args())

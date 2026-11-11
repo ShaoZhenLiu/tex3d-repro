@@ -38,6 +38,25 @@ def register_started_worker(proc, gpu, budget, label, root):
             time.sleep(.05)
 
 
+def worker_spec(root, node, gpu, name, evaluation_protocol=None, allow_stochastic_calibration=False):
+    env = os.environ.copy()
+    env.update(CUDA_VISIBLE_DEVICES=str(gpu), MUJOCO_EGL_DEVICE_ID=str(gpu),
+        MUJOCO_GL='egl', PYOPENGL_PLATFORM='egl', OMP_NUM_THREADS='2', MKL_NUM_THREADS='2',
+        MAX_JOBS='2', HF_HUB_OFFLINE='1', TOKENIZERS_PARALLELISM='false', PYTHONUNBUFFERED='1',
+        WANDB_MODE='disabled', USE_TF='0', TF_CPP_MIN_LOG_LEVEL='2', TORCHDYNAMO_DISABLE='1',
+        REFCLOTH_SURFACE_MODE='legacy', JAX_PLATFORMS='cpu', XLA_PYTHON_CLIENT_PREALLOCATE='false',
+        OPENPI_DATA_HOME='/data/shaozhen.liu/.cache/openpi', MPLCONFIGDIR='/tmp/refcloth_stability_mpl',
+        PYTHONPATH=':'.join([str(R / 'ops'), str(R), str(R / 'pi'), str(R / 'ops/stability_20261102'),
+                             '/data/shaozhen.liu/code/tex3d-deps/taming-transformers']))
+    command = ['/data/shaozhen.liu/envs/tex3d-pi0-mj330/bin/python', str(SCRIPT), '--repo', str(R),
+               '--root', str(root), '--worker', name, '--memory-fraction', '.31', '--node', node]
+    if allow_stochastic_calibration:
+        command.append('--allow-stochastic-calibration')
+    if evaluation_protocol is not None:
+        command += ['--protocol', str(evaluation_protocol)]
+    return command, env
+
+
 def main(study, publish, a, *, root=None, node='4090', allow_stochastic_calibration=False,
          evaluation_protocol=None, reused_episode_count=None, memory_budget_mib=None):
     coupling = study == 'coupling'
@@ -118,22 +137,7 @@ def main(study, publish, a, *, root=None, node='4090', allow_stochastic_calibrat
                     gpu = min(candidates, key=lambda g: sum(e['gpu'] == g for e in entries))
                     budget = worker_budget(gpu)
                     name = 'gpu%d_%s_%s_%d' % (gpu, node, study, int(time.time()))
-                    env = os.environ.copy()
-                    env.update(CUDA_VISIBLE_DEVICES=str(gpu), MUJOCO_EGL_DEVICE_ID=str(gpu),
-                        MUJOCO_GL='egl', PYOPENGL_PLATFORM='egl', OMP_NUM_THREADS='2', MKL_NUM_THREADS='2',
-                        MAX_JOBS='2', HF_HUB_OFFLINE='1', TOKENIZERS_PARALLELISM='false', PYTHONUNBUFFERED='1',
-                        WANDB_MODE='disabled', USE_TF='0', TF_CPP_MIN_LOG_LEVEL='2', TORCHDYNAMO_DISABLE='1',
-                        REFCLOTH_SURFACE_MODE='legacy', JAX_PLATFORMS='cpu', XLA_PYTHON_CLIENT_PREALLOCATE='false',
-                        OPENPI_DATA_HOME='/data/shaozhen.liu/.cache/openpi', MPLCONFIGDIR='/tmp/refcloth_stability_mpl',
-                        PYTHONPATH=':'.join([str(R / 'ops'), str(R), str(R / 'pi'), str(R / 'ops/stability_20261102'),
-                                           '/data/shaozhen.liu/code/tex3d-deps/taming-transformers']))
-                    cmd = ['/data/shaozhen.liu/envs/tex3d-pi0-mj330/bin/python', str(SCRIPT), '--repo', str(R),
-                           '--root', str(x), '--worker', name, '--memory-fraction', '.31']
-                    cmd += ['--node', node]
-                    if allow_stochastic_calibration:
-                        cmd.append('--allow-stochastic-calibration')
-                    if evaluation_protocol is not None:
-                        cmd += ['--protocol', str(evaluation_protocol)]
+                    cmd, env = worker_spec(x, node, gpu, name, evaluation_protocol, allow_stochastic_calibration)
                     proc = subprocess.Popen(cmd, cwd=R, env=env, stdin=subprocess.DEVNULL,
                         stdout=open(x / ('evaluation_' + name + '.log'), 'a'), stderr=subprocess.STDOUT,
                         start_new_session=True)
