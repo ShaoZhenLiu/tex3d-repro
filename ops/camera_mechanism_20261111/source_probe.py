@@ -51,7 +51,7 @@ def metrics(gm, gw):
         wrist_share=float(torch.dot(wrist, total)) / nt**2 if nt > 1e-15 else None)
 
 
-def split(ctx, task, index, uv, check):
+def split(ctx, task, index, uv, check, compare_model_backward):
     param = ctx.renderer.adv_noise
     fr, main, wrist = ctx.render_views(ctx.frames[task][index], uv)
     assert main.requires_grad and wrist.requires_grad
@@ -62,11 +62,19 @@ def split(ctx, task, index, uv, check):
     gw = torch.autograd.grad(wrist, param, dw, retain_graph=check)[0].detach()
     assert torch.isfinite(gm).all() and torch.isfinite(gw).all()
     residual = None
+    repeat = None
     if check:
-        direct = torch.autograd.grad(loss, param)[0].detach()
-        residual = float((gm + gw - direct).norm()) / max(float(gm.norm() + gw.norm()), 1e-15)
+        denominator = max(float(gm.norm() + gw.norm()), 1e-15)
+        direct = torch.autograd.grad((main, wrist), param, (dm, dw),
+                                     retain_graph=compare_model_backward)[0].detach()
+        residual = float((gm + gw - direct).norm()) / denominator
         assert residual <= .002, ('camera branch sum', task, index, residual)
-    return gm, gw, residual
+        if compare_model_backward:
+            first = torch.autograd.grad(loss, param, retain_graph=True)[0].detach()
+            second = torch.autograd.grad(loss, param)[0].detach()
+            repeat = dict(split_vs_full=float((gm + gw - first).norm()) / denominator,
+                          full_vs_repeated_full=float((first - second).norm()) / denominator)
+    return gm, gw, residual, repeat
 
 
 def measure(ctx, seed, update, checkpoint, frame_bank, receipt):
@@ -93,15 +101,19 @@ def measure(ctx, seed, update, checkpoint, frame_bank, receipt):
     for batch, spec in enumerate(frame_bank):
         uv = torch.tensor(spec['uv'], dtype=torch.float32, device='cuda')
         main, wrist = torch.zeros_like(param), torch.zeros_like(param)
-        residual = None
+        residual = repeat = None
         for position, (task, index) in enumerate(spec['frames']):
-            gm, gw, error = split(ctx, task, index, uv, position == 0)
+            gm, gw, error, backward_repeat = split(ctx, task, index, uv, position == 0,
+                                                  batch == 0 and position == 0)
             main += gm / len(spec['frames'])
             wrist += gw / len(spec['frames'])
             frames.append(dict(batch=batch, task=task, index=index, **metrics(gm, gw)))
             if error is not None:
                 residual = error
-        rows.append(dict(batch=batch, decomposition_residual=residual, **metrics(main, wrist)))
+            if backward_repeat is not None:
+                repeat = backward_repeat
+        rows.append(dict(batch=batch, decomposition_residual=residual, model_backward_repeat=repeat,
+                         **metrics(main, wrist)))
         vectors.append([main.cpu().numpy(), wrist.cpu().numpy()])
         print('GRADIENT_BATCH', seed, update, batch + 1, '/', BATCHES, flush=True)
         if guard.pause_requested():
