@@ -1,0 +1,27 @@
+{
+  "seeds": [42, 7, 66, 88],
+  "training": {
+    "source": "OpenVLA-OFT, 296 frozen Spatial frames from tasks 0/2/6/8",
+    "updates": 5000,
+    "batch": 8,
+    "reference": "Matched, with the inactive camera receiving same-path Plain",
+    "stream": "Original per-seed frame and full-precision UV stream. Seed 7 uses the verified reconstruction from its archived training log.",
+    "joint": "Reuse the original compatible joint texture. If source hardware must change for a seed, rerun the joint arm on the same hardware as its single-camera arms.",
+    "export": "Final update only"
+  },
+  "evaluation": {
+    "target": "pi05",
+    "config": "pi05_libero",
+    "checkpoint": "/data/shaozhen.liu/model/RLinf-Pi05-LIBERO-130-fullshot-SFT",
+    "suites": ["spatial", "object"],
+    "tasks": [0,1,2,3,4,5,6,7,8,9],
+    "initials": [10,11,12,13,14,15,16,17,18,19],
+    "max_steps": 400,
+    "settle_steps": 10,
+    "replan_steps": 5,
+    "num_denoise": 10,
+    "surface_mode": "legacy",
+    "noise": "6810000 + suite_index*1000000 + task*10000 + initial*100 + query",
+    "deployment": "One frozen texture on the entire cloth, visible through both native camera renderers. Keep each comparison on matched target hardware."
+  }
+}

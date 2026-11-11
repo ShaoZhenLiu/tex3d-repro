@@ -15,8 +15,8 @@ PYTHON = '/data/shaozhen.liu/envs/tex3d-oft-mj330/bin/python'
 
 
 def main(study, a, *, root=None, jobs_override=None, gpus_override=None,
-         gpu_required_mib=None, model_limit=None):
-    coupling = study == 'coupling'
+         gpu_required_mib=None, model_limit=None, camera_modes=False):
+    coupling = study == 'coupling' or camera_modes
     x = R / ('experiments/refcloth_coupling/20261102' if coupling else 'experiments/refcloth_stability/20261102')
     ops = R / ('ops/coupling_20261102' if coupling else 'ops/stability_20261102')
     script = ops / ('train_arm.py' if coupling else 'train_pair_arm.py')

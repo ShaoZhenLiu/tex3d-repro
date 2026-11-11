@@ -312,12 +312,13 @@ def can_launch(cold_gib=24, max_models=None):
 
 
 def gpu_headroom(gpu):
-    free = {int(r.split(',')[0]): int(r.split(',')[1]) for r in subprocess.check_output(
-        ['nvidia-smi', '--query-gpu=index,memory.free', '--format=csv,noheader,nounits'], universal_newlines=True, timeout=8).splitlines()}
+    command = ['nvidia-smi', '-i', str(gpu)]
+    free = int(subprocess.check_output(command + ['--query-gpu=memory.free', '--format=csv,noheader,nounits'],
+                                       universal_newlines=True, timeout=8).strip())
     used = {int(r.split(',')[0]): int(r.split(',')[1]) for r in subprocess.check_output(
-        ['nvidia-smi', '--query-compute-apps=pid,used_memory', '--format=csv,noheader,nounits'], universal_newlines=True, timeout=8).splitlines()
-        if r.split(',')[1].strip().isdigit()}
-    return free[gpu] - sum(max(0, e['budget'] - used.get(e['pid'], 0)) for e in active() if e['gpu'] == gpu)
+        command + ['--query-compute-apps=pid,used_memory', '--format=csv,noheader,nounits'],
+        universal_newlines=True, timeout=8).splitlines() if ',' in r and r.split(',')[1].strip().isdigit()}
+    return free - sum(max(0, e['budget'] - used.get(e['pid'], 0)) for e in active() if e['gpu'] == gpu)
 
 
 def cold_eval_cancellations(entries, headrooms):
