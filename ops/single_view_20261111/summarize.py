@@ -9,7 +9,10 @@ from evaluation import EVAL_PROTOCOL, INITIALS, SUITES
 from source import HERE, ROOT, SEEDS, guard, sha
 
 MODES = ('mr', 'main', 'wrist')
-CONDITIONS = ('plain',) + tuple(f's{s}_{m}' for s in SEEDS for m in MODES)
+
+
+def conditions(seeds):
+    return ('plain',) + tuple(f's{s}_{m}' for s in seeds for m in MODES)
 
 
 def table(path, rows):
@@ -19,8 +22,8 @@ def table(path, rows):
         writer.writerows(rows)
 
 
-def verify_inputs(manifest):
-    assert set(manifest) == set(CONDITIONS)
+def verify_inputs(manifest, seeds):
+    assert set(manifest) == set(conditions(seeds))
     inputs = guard.read(ROOT / 'prepared.json')['paired_replay']
     receipts = {}
     for name, entry in manifest.items():
@@ -41,7 +44,7 @@ def verify_inputs(manifest):
             else:
                 assert validation['wrist_uv_shared_draw']
         receipts[name] = record
-    for seed in SEEDS:
+    for seed in seeds:
         arms = [receipts[f's{seed}_{m}'] for m in MODES]
         assert len({arm['gpu_name'] for arm in arms}) == 1
         verified_init = {arm['theta_init_sha256'] for arm in arms if arm.get('theta_init_sha256')}
@@ -49,7 +52,7 @@ def verify_inputs(manifest):
     return receipts
 
 
-def verified_episodes(manifest, plan, reused):
+def verified_episodes(manifest, plan, reused, seeds):
     directory = ROOT / 'evaluation/episodes'
     evaluator_hash = sha(EVAL_PROTOCOL)
     workers = set()
@@ -59,7 +62,7 @@ def verified_episodes(manifest, plan, reused):
         for task in range(10):
             for initial in INITIALS:
                 baseline = None
-                for condition in CONDITIONS:
+                for condition in conditions(seeds):
                     name = f'{suite}_t{task}_i{initial}_{condition}.json'
                     path = directory / name
                     record = guard.read(path)
@@ -90,7 +93,7 @@ def verified_episodes(manifest, plan, reused):
                                      success=int(record['robot_success']), worker=record['worker'],
                                      reused=int(name in reused)))
     assert names == {path.name for path in directory.glob('*.json')}
-    assert len(rows) == 2600 and workers
+    assert len(rows) == 200 * len(conditions(seeds)) and workers
     for worker in workers:
         path = ROOT / 'evaluation/workers' / worker
         assert guard.read(path / 'calibration.json')['passed']
@@ -98,13 +101,13 @@ def verified_episodes(manifest, plan, reused):
     return rows, sorted(workers)
 
 
-def estimates(rows):
-    counts = {(suite, condition): 0 for suite in SUITES for condition in CONDITIONS}
+def estimates(rows, seeds=SEEDS):
+    counts = {(suite, condition): 0 for suite in SUITES for condition in conditions(seeds)}
     for row in rows:
         counts[row['suite'], row['condition']] += row['success']
     suites = []
     seed_rows = []
-    for seed in SEEDS:
+    for seed in seeds:
         for suite in SUITES:
             plain = counts[suite, 'plain']
             row = dict(seed=seed, suite=suite, plain_successes=plain)
@@ -124,7 +127,8 @@ def estimates(rows):
         if column == 'seed':
             continue
         values = [r[column] for r in seed_rows]
-        metrics[column] = dict(mean=statistics.mean(values), sample_sd=statistics.stdev(values),
+        metrics[column] = dict(mean=statistics.mean(values),
+                               sample_sd=statistics.stdev(values) if len(values) > 1 else None,
                                positive=sum(x > 0 for x in values), tied=values.count(0),
                                negative=sum(x < 0 for x in values))
     return suites, seed_rows, metrics
@@ -160,18 +164,19 @@ def archive(inputs, metadata):
 def main():
     done = guard.read(ROOT / 'eval_controller_done.json', {})
     assert done.get('completed')
-    manifest = guard.read(ROOT / 'texture_manifest.json')
-    inputs = verify_inputs(manifest)
     plan = guard.read(ROOT / 'evaluation_plan.json')
+    seeds = plan.get('seeds', SEEDS)
+    manifest = guard.read(ROOT / 'texture_manifest.json')
+    inputs = verify_inputs(manifest, seeds)
     reused = guard.read(ROOT / 'reused_rollouts.json')
-    rows, workers = verified_episodes(manifest, plan, reused)
-    suites, seeds, metrics = estimates(rows)
+    rows, workers = verified_episodes(manifest, plan, reused, seeds)
+    suites, seed_rows, metrics = estimates(rows, seeds)
     output = ROOT / 'analysis'
     output.mkdir(exist_ok=True)
     table(output / 'episode_outcomes.csv', rows)
     table(output / 'suite_results.csv', suites)
-    table(output / 'seed_means.csv', seeds)
-    summary = dict(plan=plan, seeds=seeds, estimates=metrics, calibrated_workers=workers,
+    table(output / 'seed_means.csv', seed_rows)
+    summary = dict(plan=plan, seeds=seed_rows, estimates=metrics, calibrated_workers=workers,
                    fresh_episodes=len(rows) - len(reused), reused_episodes=len(reused),
                    source_training_hardware={k: inputs[k]['gpu_name'] for k in inputs})
     guard.write(output / 'summary.json', summary)

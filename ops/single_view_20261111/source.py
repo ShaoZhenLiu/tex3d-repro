@@ -73,11 +73,15 @@ def main(a):
     allowed = {0, 1, 2, 3, 5, 6, 7} if node == '4090' else {0, 1, 2, 3}
     assert a.gpus and set(a.gpus) <= allowed
     assert set(a.train_joint) <= set(a.seeds)
+    if a.min_free_mib is not None:
+        assert node == '4090' and a.min_free_mib >= 22500
+    required = dict.fromkeys(a.gpus, a.min_free_mib) if a.min_free_mib else None
     prepare(node)
     jobs = [(seed, mode) for seed in a.seeds
             for mode in (('main', 'wrist', 'mr') if seed in a.train_joint else ('main', 'wrist'))]
     scheduler.main('single_view_20261111', SimpleNamespace(node=node, resume=True), root=ROOT,
                    jobs_override=jobs, gpus_override=a.gpus, camera_modes=True,
+                   gpu_required_mib=required,
                    model_limit=6 if node == '09' else 5)
 
 
@@ -87,4 +91,5 @@ if __name__ == '__main__':
     parser.add_argument('--seeds', nargs='+', type=int, choices=SEEDS, required=True)
     parser.add_argument('--gpus', nargs='+', type=int, required=True)
     parser.add_argument('--train-joint', nargs='+', type=int, choices=SEEDS, default=[])
+    parser.add_argument('--min-free-mib', type=int)
     main(parser.parse_args())

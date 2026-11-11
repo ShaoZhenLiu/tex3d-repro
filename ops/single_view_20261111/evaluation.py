@@ -42,18 +42,28 @@ def stage_joint(seeds):
         print('ORIGINAL_JOINT_READY', seed, receipt['texture_sha256'], flush=True)
 
 
-def prepare(node, original_joint):
+def prepare(node, original_joint, seeds, shrink_unstarted=False):
     plan_path = ROOT / 'evaluation_plan.json'
-    plan = {'node': node, 'original_joint': list(original_joint)}
+    assert len(set(seeds)) == len(seeds) and set(original_joint) <= set(seeds)
+    plan = {'node': node, 'original_joint': list(original_joint), 'seeds': list(seeds)}
     saved = guard.read(plan_path)
-    assert saved is None or saved == plan
     frozen = ROOT / 'frozen'
     outcomes = ROOT / 'evaluation/episodes'
+    conditions = ['plain'] + [f's{s}_{mode}' for s in seeds for mode in ('mr', 'main', 'wrist')]
+    if saved is not None:
+        saved.setdefault('seeds', list(SEEDS))
+        if saved != plan:
+            assert shrink_unstarted and saved['node'] == node
+            assert set(seeds) < set(saved['seeds']) and saved['original_joint'] == list(original_joint)
+            retained = {f'{suite}_t{task}_i{i}_{condition}.json' for suite in SUITES
+                        for task in range(10) for i in INITIALS for condition in conditions}
+            assert all(p.name in retained for p in outcomes.glob('*.json'))
     plain = PRIOR / 'frozen/plain.png'
     reference = PRIOR / 'evaluation/episodes/spatial_t0_i10_plain.json'
     plain_sha = guard.read(reference)['texture_sha256']
     freeze(plain, frozen / 'plain.png', plain_sha)
     manifest = guard.read(ROOT / 'texture_manifest.json', {})
+    assert set(manifest) <= set(conditions)
     manifest['plain'] = dict(path='frozen/plain.png', sha256=plain_sha, reference='plain')
     freeze(reference, ROOT / 'calibration/spatial_t0_i10_plain.json', sha(reference))
     cfg = guard.read(HERE / 'protocol.json')
@@ -68,12 +78,11 @@ def prepare(node, original_joint):
         assert old is None or old['texture_sha256'] == receipt['texture_sha256']
         guard.write(ROOT / 'arms' / key / 'completed.json', receipt)
     manifest_baseline = guard.read(PRIOR / 'baseline/manifest.json') if node == '4090' else {}
+    reused_conditions = {'plain'} | {f's{s}_mr' for s in original_joint}
     for suite in SUITES:
         for task in range(10):
-            conditions = ['plain'] + [f's{s}_{mode}' for s in SEEDS for mode in ('mr', 'main', 'wrist')]
             for condition in conditions:
-                reuse = node == '4090' and (condition == 'plain' or condition in {
-                    f's{s}_mr' for s in original_joint})
+                reuse = node == '4090' and condition in reused_conditions
                 if reuse:
                     for initial in INITIALS:
                         name = f'{suite}_t{task}_i{initial}_{condition}.json'
@@ -83,7 +92,7 @@ def prepare(node, original_joint):
                 else:
                     jobs.append(dict(id=f'{suite}_t{task}_{condition}', target='pi05',
                                      suite=suite, task=task, node=node, conditions=[condition]))
-    assert 10 * len(jobs) + len(reused) == 2600
+    assert 10 * len(jobs) + len(reused) == 200 * len(conditions)
     guard.write(ROOT / 'texture_manifest.json', manifest)
     guard.write(ROOT / 'evaluation/jobs.json', jobs)
     guard.write(ROOT / 'reused_rollouts.json', reused)
@@ -94,7 +103,8 @@ def prepare(node, original_joint):
 def publish():
     manifest = guard.read(ROOT / 'texture_manifest.json')
     changed = False
-    for seed in SEEDS:
+    plan = guard.read(ROOT / 'evaluation_plan.json')
+    for seed in plan.get('seeds', SEEDS):
         for mode in ('mr', 'main', 'wrist'):
             name = f's{seed}_{mode}'
             if name in manifest:
@@ -140,11 +150,13 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('stage', choices=('prepare', 'run', 'publish', 'stage-original'))
     parser.add_argument('--node', choices=('4090', '09'), required=True)
+    parser.add_argument('--seeds', nargs='+', type=int, choices=SEEDS, default=SEEDS)
     parser.add_argument('--original-joint', nargs='+', type=int, choices=SEEDS, default=[])
     parser.add_argument('--gpus', nargs='+', type=int, default=[])
+    parser.add_argument('--shrink-unstarted', action='store_true')
     args = parser.parse_args()
     if args.stage == 'prepare':
-        prepare(args.node, args.original_joint)
+        prepare(args.node, args.original_joint, args.seeds, args.shrink_unstarted)
     elif args.stage == 'run':
         assert args.gpus
         run(args.node, args.gpus)
